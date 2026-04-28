@@ -1,0 +1,44 @@
+{
+  "lex": {
+    "header": {
+      "messageId": "ACK-6a8e4595-6de2-4222-9595-8a6635a8b55b",
+      "messageType": "ACKNOWLEDGMENT",
+      "version": "1.0",
+      "timestamp": "2026-04-03T13:40:45.911Z",
+      "senderId": "SIM-RECEIVER-001",
+      "receiverId": "SIM-SENDER-001",
+      "encryptionMethod": "TLS1.3"
+    },
+    "payload": {
+      "acknowledgment": {
+        "acknowledgmentId": "ACK-6a8e4595-6de2-4222-9595-8a6635a8b55b",
+        "correlationId": "a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e",
+        "originalMessageId": "a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e",
+        "originalMessageType": "LEAD",
+        "status": "VALIDATED",
+        "statusReason": "SHA-256 integrity verified; message accepted",
+        "timestamp": "2026-04-03T13:40:45.911Z",
+        "_simulation": {
+          "industry": "heavy-equipment",
+          "format": "xml",
+          "integrityCheck": {
+            "algorithm": "SHA-256",
+            "expectedHash": "982e58e12cd54d1ae211eb91c0b0ee81acc13b4cdb9fba1c401560a8e54eaff0",
+            "computedHash": "982e58e12cd54d1ae211eb91c0b0ee81acc13b4cdb9fba1c401560a8e54eaff0",
+            "match": true
+          },
+          "fieldCoverage": {
+            "captured": 10,
+            "total": 10,
+            "missingFields": []
+          },
+          "sizeBytes": 6646,
+          "lexValidation": {
+            "valid": null,
+            "reason": "Library validation only available for JSON format"
+          }
+        }
+      }
+    }
+  }
+}

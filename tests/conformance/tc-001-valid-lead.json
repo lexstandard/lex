@@ -1,0 +1,55 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-001",
+  "title": "Valid Primary Lead",
+  "level": "L1",
+  "conformanceLevel": 1,
+  "category": "LEAD",
+  "description": "A well-formed LEAD message with all required header and payload fields. Validator MUST return valid=true with no errors.",
+  "specRef": "LEX_CONFORMANCE §2 TC-001",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000001",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:00:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC001-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "emailAddress": "jane.smith@example.com",
+            "phoneNumber": "+14155551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "assetClass": "VEHICLE",
+            "make": "Toyota",
+            "model": "Camry",
+            "year": 2027,
+            "condition": "NEW"
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:00:00Z",
+            "countryCode": "US",
+            "language": "en-US"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": true,
+    "httpStatus": 200,
+    "acknowledgmentStatus": "RECEIVED",
+    "errors": [],
+    "warnings": []
+  }
+}

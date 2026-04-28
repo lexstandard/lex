@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LEX Real Estate Lead - Primary Message (Phase 01: SHOPPING) -->
+<!-- Industry: REAL_ESTATE | Format: LEX-XML -->
+<lex xmlns="urn:lex:schema:v1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <header>
+    <messageId>a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d</messageId>
+    <messageType>LEAD</messageType>
+    <version>1.0</version>
+    <timestamp>2026-01-03T14:30:00Z</timestamp>
+    <senderId>RETAILER-KW-AUSTIN-WESTLAKE</senderId>
+    <receiverId>LEX-PLATFORM</receiverId>
+    <encryptionMethod>TLS1.3</encryptionMethod>
+    <signatureAlgorithm>HMAC-SHA256</signatureAlgorithm>
+  </header>
+
+  <payload>
+    <lead>
+      <leadId>LID-20260103-REES-001</leadId>
+      <leadType>PRIMARY</leadType>
+      <status>SHOPPING</status>
+      <source>RETAILER_WEBSITE</source>
+      <leadCreatedDate>2026-01-03T14:30:00Z</leadCreatedDate>
+      <leadVersion>1</leadVersion>
+
+      <sourceDetail>
+        <sourceType>RETAILER_WEBSITE</sourceType>
+        <sourceURL>https://www.kwaustin.com/listings/12847-ridgewood-trail-austin-tx</sourceURL>
+        <channel>DIGITAL</channel>
+        <leadEntryMethod>FORM_SUBMISSION</leadEntryMethod>
+        <formName>Property Enquiry Form</formName>
+        <leadQualityScore>8.7</leadQualityScore>
+        <customFields>
+          <listingMLS>MLS-ATX-2026-084712</listingMLS>
+          <propertyAddress>12847 Ridgewood Trail, Austin, TX 78738</propertyAddress>
+          <schoolDistrict>Lake Travis ISD</schoolDistrict>
+          <moveInTimeline>WITHIN_90_DAYS</moveInTimeline>
+          <preApprovedMortgage>YES</preApprovedMortgage>
+        </customFields>
+      </sourceDetail>
+
+      <customer>
+        <firstName>Michael</firstName>
+        <lastName>Torres</lastName>
+        <emailAddress>michael.torres@email.com</emailAddress>
+        <phoneNumber>+15125550234</phoneNumber>
+        <preferredContactMethod>EMAIL</preferredContactMethod>
+        <locale>en-US</locale>
+        <buyerType>INDIVIDUAL</buyerType>
+        <creditTier>PRIME</creditTier>
+        <address>
+          <street>3410 Westover Hills Blvd</street>
+          <city>Austin</city>
+          <state>TX</state>
+          <postalCode>78731</postalCode>
+          <country>US</country>
+        </address>
+        <coApplicant>
+          <firstName>Emma</firstName>
+          <lastName>Torres</lastName>
+          <emailAddress>emma.torres@email.com</emailAddress>
+          <phoneNumber>+15125550235</phoneNumber>
+          <relationship>SPOUSE</relationship>
+        </coApplicant>
+      </customer>
+
+      <desiredProduct>
+        <productType>REAL_ESTATE</productType>
+        <assetClass>REAL_ESTATE</assetClass>
+        <make>Custom Build</make>
+        <model>12847 Ridgewood Trail</model>
+        <year>2019</year>
+        <condition>USED</condition>
+        <budgetMin>820000</budgetMin>
+        <budgetMax>900000</budgetMax>
+        <currency>USD</currency>
+        <typeSpecificAttributes>
+          <propertyType>RESIDENTIAL_SINGLE_FAMILY</propertyType>
+          <listingMLS>MLS-ATX-2026-084712</listingMLS>
+          <streetAddress>12847 Ridgewood Trail</streetAddress>
+          <city>Austin</city>
+          <state>TX</state>
+          <zipCode>78738</zipCode>
+          <county>Travis</county>
+          <bedroomCount>4</bedroomCount>
+          <bathroomCount>3.5</bathroomCount>
+          <squareFeetLiving>3420</squareFeetLiving>
+          <squareFeetLot>10890</squareFeetLot>
+          <garageSpaces>2</garageSpaces>
+          <yearBuilt>2019</yearBuilt>
+          <pool>false</pool>
+          <schoolDistrict>Lake Travis ISD</schoolDistrict>
+          <hoaFeeMonthly>185</hoaFeeMonthly>
+          <zoning>SF-1</zoning>
+          <listingPrice>879000</listingPrice>
+          <pricePerSqFt>257</pricePerSqFt>
+          <daysOnMarket>12</daysOnMarket>
+        </typeSpecificAttributes>
+      </desiredProduct>
+
+      <realEstateLead>
+        <buyerRepresentationAgreementStatus>SIGNED</buyerRepresentationAgreementStatus>
+        <exchangeType>NONE</exchangeType>
+        <preApprovalAmount>875000</preApprovalAmount>
+        <preApprovalCurrency>USD</preApprovalCurrency>
+        <preApprovalExpiryDate>2026-04-01</preApprovalExpiryDate>
+        <preApprovalLender>Wells Fargo Home Mortgage</preApprovalLender>
+        <preApprovalLoanType>CONVENTIONAL</preApprovalLoanType>
+        <contingencies>
+          <contingency><type>FINANCING</type><status>PENDING</status><deadline>2026-01-28</deadline></contingency>
+          <contingency><type>INSPECTION</type><status>PENDING</status><deadline>2026-01-20</deadline></contingency>
+          <contingency><type>APPRAISAL</type><status>PENDING</status><deadline>2026-02-03</deadline></contingency>
+        </contingencies>
+        <sellerConcessionsRequested>true</sellerConcessionsRequested>
+        <sellerConcessionAmount>10000</sellerConcessionAmount>
+        <homeWarrantyRequested>true</homeWarrantyRequested>
+        <homeWarrantyCoveredBy>SELLER</homeWarrantyCoveredBy>
+        <propertyDisclosureStatus>RECEIVED</propertyDisclosureStatus>
+        <occupancyStatus>OWNER_OCCUPIED</occupancyStatus>
+        <saleType>STANDARD</saleType>
+        <firstTimeBuyer>false</firstTimeBuyer>
+        <targetClosingDate>2026-02-28</targetClosingDate>
+        <moveInDate>2026-03-01</moveInDate>
+        <leaseback>false</leaseback>
+        <buyerAgentLicenseNumber>TX-REALTOR-0078234</buyerAgentLicenseNumber>
+        <listingAgentLicenseNumber>TX-REALTOR-0042891</listingAgentLicenseNumber>
+      </realEstateLead>
+
+      <organizationContext>
+        <organizationId>ORG-KW-AUSTIN-WESTLAKE</organizationId>
+        <organizationName>Keller Williams Realty Austin Westlake</organizationName>
+        <timezone>America/Chicago</timezone>
+        <region>NA</region>
+      </organizationContext>
+
+      <metadata>
+        <createdAt>2026-01-03T14:30:00Z</createdAt>
+        <updatedAt>2026-01-03T14:30:00Z</updatedAt>
+        <auditTrail>
+          <event>
+            <timestamp>2026-01-03T14:30:00Z</timestamp>
+            <action>LEAD_CREATED</action>
+            <changedBy>RETAILER-KW-AUSTIN-WESTLAKE</changedBy>
+            <newValue>SHOPPING</newValue>
+          </event>
+        </auditTrail>
+      </metadata>
+    </lead>
+  </payload>
+
+</lex>

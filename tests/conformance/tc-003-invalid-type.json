@@ -1,0 +1,55 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-003",
+  "title": "Invalid MessageType",
+  "level": "L1",
+  "conformanceLevel": 1,
+  "category": "HEADER",
+  "description": "Message header declares messageType 'INQUIRY', which is not a member of the MessageType enum. Validator MUST return valid=false with a CRITICAL error on lex.header.messageType.",
+  "specRef": "LEX_CONFORMANCE §2 TC-003",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000003",
+        "messageType": "INQUIRY",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:02:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC003-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "emailAddress": "jane.smith@example.com",
+            "phoneNumber": "+14155551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW"
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:02:00Z"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "lex.header.messageType",
+        "code": "INVALID_ENUM_VALUE",
+        "level": "CRITICAL",
+        "rejectedValue": "INQUIRY",
+        "allowedValues": ["LEAD", "ASSET", "ACKNOWLEDGMENT", "SUBSCRIPTION", "LEAD_CLOSURE"]
+      }
+    ],
+    "warnings": []
+  }
+}

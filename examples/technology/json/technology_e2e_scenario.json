@@ -1,0 +1,713 @@
+{
+  "_metadata": {
+    "title": "LEX Technology End-to-End Scenario: Enterprise Device-as-a-Service Fleet Procurement",
+    "scenario": "NexaCorp Ltd (ENTERPRISE B2B buyer) procures 750 managed devices (250× Dell Latitude 7450 laptops + 500× iPhone 16 Pro smartphones) as a 36-month Device-as-a-Service subscription with MDM enrollment, including full lifecycle management. Deal brokered through Dell Technologies EMEA B2B. Full lifecycle: RFP submission → acknowledgment → expressed interest → in negotiation → master service agreement signed → MSA confirmed → devices deployed → lead closure (WON). Annual contract value USD 1.26M / TCV USD 3.78M.",
+    "industry": "TECHNOLOGY",
+    "assetClass": "TECHNOLOGY",
+    "buyerType": "ORGANIZATION",
+    "leadId": "LID-20260115-TECH-001",
+    "fleetQuantity": 750,
+    "procurementModel": "DEVICE_AS_A_SERVICE",
+    "leaseTerm": 36,
+    "totalContractValue": 3780000,
+    "currency": "USD",
+    "outcome": "WON",
+    "lifecycleDays": 62,
+    "messageCount": 9,
+    "phases": [
+      "01 - Enterprise RFP Submitted (SHOPPING)",
+      "02 - Platform Acknowledgment (VALIDATED)",
+      "03 - Expressed Interest (Dell Technologies shortlisted)",
+      "04 - Commercial & Legal Negotiation",
+      "05 - MSA / DaaS Agreement Signed (ORDER)",
+      "06 - Order Confirmed & MDM Pre-Provisioning",
+      "07 - Staged Device Deployment (IN_DELIVERY)",
+      "08 - Full Fleet Deployed & DELIVERED",
+      "09 - Lead Closure (WON)"
+    ]
+  },
+  "messages": [
+    {
+      "_phase": "01 - Enterprise RFP Submitted (SHOPPING)",
+      "lex": {
+        "header": {
+          "messageId": "a1d2e3f4-b5c6-4a7b-8c9d-0e1f2b3c4d5e",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-15T10:00:00Z",
+          "senderId": "RETAILER-DELL-EMEA-B2B",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "signatureAlgorithm": "HMAC-SHA256"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-TECH-001",
+            "leadType": "PRIMARY",
+            "status": "SHOPPING",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:00:00Z",
+            "leadVersion": 1,
+            "sourceDetail": {
+              "sourceType": "RETAILER_WEBSITE",
+              "sourceURL": "https://www.dell.com/en-gb/work/shop/daas",
+              "channel": "DIGITAL",
+              "leadEntryMethod": "FORM_SUBMISSION",
+              "formName": "Enterprise DaaS RFP",
+              "leadQualityScore": 9.4,
+              "customFields": {
+                "rfpReference": "NEXA-RFP-2026-DAAS-001",
+                "itContact": "i.okafor@nexacorp.com",
+                "deploymentTarget": "2026-03-01",
+                "currentDevicesEndOfLife": "2026-04-30",
+                "mdmPlatform": "Microsoft Intune",
+                "securityFramework": "ISO-27001",
+                "existingDellRelationship": "YES"
+              }
+            },
+            "customer": {
+              "firstName": "Ikem",
+              "lastName": "Okafor",
+              "emailAddress": "i.okafor@nexacorp.com",
+              "phoneNumber": "+442071234567",
+              "preferredContactMethod": "EMAIL",
+              "locale": "en-GB",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": {
+                "companyName": "NexaCorp Ltd",
+                "companyRegistrationNumber": "GB-14220348",
+                "taxIdentificationNumber": "GB-893421207",
+                "industryCode": "SIC-7372",
+                "companySize": "ENTERPRISE",
+                "existingFleetSize": 680,
+                "governmentEntity": false,
+                "procurementMethodology": "RFP",
+                "existingRelationship": "RENEWAL",
+                "budgetApprovalStatus": "APPROVED",
+                "procurementContact": {
+                  "firstName": "Ikem",
+                  "lastName": "Okafor",
+                  "title": "Head of IT Procurement",
+                  "email": "i.okafor@nexacorp.com",
+                  "department": "IT Operations"
+                }
+              },
+              "fleetBuyer": {
+                "isFleet": true,
+                "fleetSize": 680,
+                "unitsToOrder": 750,
+                "fleetManagerName": "Ikem Okafor",
+                "fleetManagerEmail": "i.okafor@nexacorp.com"
+              }
+            },
+            "desiredProduct": {
+              "productType": "IOT_DEVICE",
+              "assetClass": "TECHNOLOGY",
+              "make": "Mixed: Dell / Apple",
+              "model": "Latitude 7450 + iPhone 16 Pro",
+              "year": 2026,
+              "condition": "NEW",
+              "budgetMin": 3500000,
+              "budgetMax": 4000000,
+              "currency": "USD",
+              "typeSpecificAttributes": {
+                "deviceCategory": "MIXED_LAPTOP_SMARTPHONE",
+                "mdmCompatible": true,
+                "mdmPlatform": "Microsoft Intune",
+                "enterpriseSecurityCertified": true,
+                "securityFramework": "ISO-27001",
+                "osRequirements": ["Windows 11 Pro", "iOS 18"],
+                "minRamGb": 16,
+                "minStorageGb": 256,
+                "biometricAuthRequired": true,
+                "tpmVersion": "2.0",
+                "lteSimRequired": true
+              },
+              "factoryOrderPreference": "IN_STOCK_ONLY"
+            },
+            "technologyLead": {
+              "securityCertificationRequirements": ["ISO_27001", "FIPS_140_2"],
+              "evergreenRefreshTrigger": "EOL_DRIVEN",
+              "evergreenRefreshThresholdMonths": 36,
+              "sustainabilityRequirements": ["EPEAT_GOLD", "ENERGY_STAR"],
+              "conflictMineralsComplianceRequired": true
+            },
+            "fleetOrder": {
+              "quantity": 750,
+              "totalBudgetCap": 4000000,
+              "currency": "USD",
+              "mixedConfigAllowed": true,
+              "procurementReference": "NEXA-RFP-2026-DAAS-001",
+              "preferredDeliveryWindow": "Q1 2026",
+              "unitSpecifications": [
+                {
+                  "quantity": 250,
+                  "configurationCode": "DELL-LAT7450-16GB-512-WIN11-INTUNE",
+                  "specificOptions": [
+                    "INTEL-CORE-ULTRA-7-165U",
+                    "16GB-LPDDR5X",
+                    "512GB-NVMe-SSD",
+                    "WINDOWS-11-PRO",
+                    "INTUNE-ENROLL",
+                    "BITLOCKER-ENABLED",
+                    "4G-LTE-WWAN"
+                  ]
+                },
+                {
+                  "quantity": 500,
+                  "configurationCode": "APPLE-IP16PRO-256-NATURALTI-IOS18-INTUNE",
+                  "specificOptions": [
+                    "A18-PRO-CHIP",
+                    "256GB-STORAGE",
+                    "NATURAL-TITANIUM",
+                    "IOS-18-ENTERPRISE",
+                    "5G-DUAL-SIM",
+                    "INTUNE-ENROLL",
+                    "APPLE-DEP"
+                  ]
+                }
+              ]
+            },
+            "procurementFinancing": {
+              "procurementType": "DEVICE_AS_A_SERVICE",
+              "leaseTerm": 36,
+              "perUnitMonthlyFee": 140,
+              "totalMonthlyFee": 105000,
+              "currency": "USD",
+              "includesServices": [
+                "MDM_MANAGED",
+                "NEXT_BUSINESS_DAY_SUPPORT",
+                "ACCIDENTAL_DAMAGE_PROTECTION",
+                "END_OF_LEASE_REFRESH",
+                "ASSET_DISPOSAL_CERTIFIED"
+              ]
+            },
+            "organizationContext": {
+              "organizationId": "ORG-DELL-EMEA-B2B",
+              "organizationName": "Dell Technologies EMEA Enterprise",
+              "timezone": "Europe/London",
+              "region": "EMEA"
+            },
+            "leadAncestry": {
+              "originType": "DIRECT_INQUIRY",
+              "originDate": "2026-01-15T10:00:00Z",
+              "originSourceId": "NEXA-RFP-2026-DAAS-001",
+              "conversionPath": [
+                { "stage": "SHOPPING", "timestamp": "2026-01-15T10:00:00Z" }
+              ]
+            },
+            "leadHistory": [
+              {
+                "version": 1,
+                "previousStatus": null,
+                "newStatus": "SHOPPING",
+                "timestamp": "2026-01-15T10:00:00Z",
+                "changedBy": "RETAILER-DELL-EMEA-B2B",
+                "reason": "Enterprise DaaS RFP submitted by NexaCorp IT Procurement. 750 devices (250 laptops + 500 iPhones) 36-month managed service."
+              }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:00:00Z",
+              "updatedAt": "2026-01-15T10:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-15T10:00:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "SHOPPING" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "02 - Platform Acknowledgment (VALIDATED)",
+      "lex": {
+        "header": {
+          "messageId": "b2e3f4a5-c6d7-4b8c-9d0e-1f2a3b4c5d6e",
+          "messageType": "ACKNOWLEDGMENT",
+          "version": "1.0",
+          "timestamp": "2026-01-15T10:00:11Z",
+          "senderId": "LEX-PLATFORM",
+          "receiverId": "RETAILER-DELL-EMEA-B2B",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "a1d2e3f4-b5c6-4a7b-8c9d-0e1f2b3c4d5e"
+        },
+        "payload": {
+          "acknowledgment": {
+            "acknowledgmentId": "ACK-20260115-TECH-001",
+            "correlationId": "a1d2e3f4-b5c6-4a7b-8c9d-0e1f2b3c4d5e",
+            "originalMessageId": "a1d2e3f4-b5c6-4a7b-8c9d-0e1f2b3c4d5e",
+            "originalMessageType": "LEAD",
+            "status": "PROCESSED",
+            "statusReason": "Enterprise DaaS RFP validated. Routed to Dell Technology EMEA enterprise account team and Apple B2B channel.",
+            "timestamp": "2026-01-15T10:00:11Z",
+            "processingTime": 11300,
+            "validationResults": {
+              "isValid": true,
+              "schemaValidation": { "passed": true, "errors": [] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "03 - Expressed Interest (Dell Technologies shortlisted)",
+      "lex": {
+        "header": {
+          "messageId": "c3f4a5b6-d7e8-4c9d-0e1f-2a3b4c5d6e7f",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-20T14:00:00Z",
+          "senderId": "RETAILER-DELL-EMEA-B2B",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-TECH-001",
+            "leadType": "PRIMARY",
+            "status": "EXPRESSED_INTEREST",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:00:00Z",
+            "leadVersion": 2,
+            "customer": {
+              "firstName": "Ikem",
+              "lastName": "Okafor",
+              "emailAddress": "i.okafor@nexacorp.com",
+              "phoneNumber": "+442071234567",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "NexaCorp Ltd", "companySize": "ENTERPRISE" }
+            },
+            "desiredProduct": {
+              "productType": "IOT_DEVICE",
+              "assetClass": "TECHNOLOGY",
+              "make": "Mixed: Dell / Apple",
+              "model": "Latitude 7450 + iPhone 16 Pro"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-DELL-EMEA-B2B",
+              "organizationName": "Dell Technologies EMEA Enterprise",
+              "timezone": "Europe/London",
+              "region": "EMEA"
+            },
+            "dealerNotes": "Proof-of-concept devices (2× Latitude 7450, 5× iPhone 16 Pro) shipped to NexaCorp IT lab Jan 20. Intune enrollment tested successfully. CrowdStrike Falcon deployed. Security team sign-off expected Jan 27. Apple DEP configuration validated with NexaCorp Apple Business Manager tenant.",
+            "leadHistory": [
+              { "version": 1, "previousStatus": null, "newStatus": "SHOPPING", "timestamp": "2026-01-15T10:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "RFP received" },
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2026-01-20T14:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "PoC devices deployed. Intune + Apple DEP enrollment validated. Security sign-off in progress." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:00:00Z",
+              "updatedAt": "2026-01-20T14:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-15T10:00:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "SHOPPING" },
+                { "timestamp": "2026-01-20T14:00:00Z", "action": "STATUS_UPDATED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "EXPRESSED_INTEREST" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "04 - Commercial & Legal Negotiation",
+      "lex": {
+        "header": {
+          "messageId": "d4a5b6c7-e8f9-4d0e-1f2a-3b4c5d6e7f8a",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-28T09:00:00Z",
+          "senderId": "RETAILER-DELL-EMEA-B2B",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-TECH-001",
+            "leadType": "PRIMARY",
+            "status": "IN_NEGOTIATION",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:00:00Z",
+            "leadVersion": 3,
+            "customer": {
+              "firstName": "Ikem",
+              "lastName": "Okafor",
+              "emailAddress": "i.okafor@nexacorp.com",
+              "phoneNumber": "+442071234567",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "NexaCorp Ltd", "budgetApprovalStatus": "APPROVED" }
+            },
+            "desiredProduct": {
+              "productType": "IOT_DEVICE",
+              "assetClass": "TECHNOLOGY",
+              "make": "Mixed: Dell / Apple"
+            },
+            "procurementFinancing": {
+              "procurementType": "DEVICE_AS_A_SERVICE",
+              "leaseTerm": 36,
+              "perUnitMonthlyFee": 140,
+              "totalMonthlyFee": 105000,
+              "currency": "USD"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-DELL-EMEA-B2B",
+              "organizationName": "Dell Technologies EMEA Enterprise",
+              "timezone": "Europe/London",
+              "region": "EMEA"
+            },
+            "dealerNotes": "IT security sign-off received Jan 27. Now negotiating: per-unit fee (asking $140 from $148 list), data destruction certification SLA, staged rollout schedule (batch 1: 300 units Mar 1; batch 2: 450 units Apr 1). GDPR data processing addendum under legal review.",
+            "leadHistory": [
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2026-01-20T14:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "PoC validated" },
+              { "version": 3, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-28T09:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "Security approved. Negotiating per-unit fee $140, staged deployment, GDPR DPA under review." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:00:00Z",
+              "updatedAt": "2026-01-28T09:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-20T14:00:00Z", "action": "STATUS_UPDATED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "EXPRESSED_INTEREST" },
+                { "timestamp": "2026-01-28T09:00:00Z", "action": "STATUS_UPDATED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "IN_NEGOTIATION" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "05 - MSA / DaaS Agreement Signed (ORDER)",
+      "lex": {
+        "header": {
+          "messageId": "e5b6c7d8-f9a0-4e1f-2b3c-4d5e6f7a8b9c",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-02-05T11:00:00Z",
+          "senderId": "RETAILER-DELL-EMEA-B2B",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-TECH-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:00:00Z",
+            "leadVersion": 4,
+            "customer": {
+              "firstName": "Ikem",
+              "lastName": "Okafor",
+              "emailAddress": "i.okafor@nexacorp.com",
+              "phoneNumber": "+442071234567",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "NexaCorp Ltd", "companySize": "ENTERPRISE" }
+            },
+            "desiredProduct": {
+              "productType": "IOT_DEVICE",
+              "assetClass": "TECHNOLOGY",
+              "make": "Mixed: Dell / Apple",
+              "model": "Latitude 7450 + iPhone 16 Pro"
+            },
+            "fleetOrder": {
+              "quantity": 750,
+              "totalBudgetCap": 3780000,
+              "currency": "USD",
+              "mixedConfigAllowed": true,
+              "procurementReference": "NEXA-MSA-2026-DAAS-001"
+            },
+            "procurementFinancing": {
+              "procurementType": "DEVICE_AS_A_SERVICE",
+              "leaseTerm": 36,
+              "perUnitMonthlyFee": 140,
+              "totalMonthlyFee": 105000,
+              "currency": "USD",
+              "includesServices": [
+                "MDM_MANAGED",
+                "NEXT_BUSINESS_DAY_SUPPORT",
+                "ACCIDENTAL_DAMAGE_PROTECTION",
+                "END_OF_LEASE_REFRESH",
+                "ASSET_DISPOSAL_CERTIFIED"
+              ]
+            },
+            "customerOutcome": {
+              "purchaseConfirmed": true,
+              "financingUsed": true,
+              "financingType": "DEVICE_AS_A_SERVICE",
+              "financingAmount": 3780000,
+              "estimatedDeliveryDate": "2026-04-01T00:00:00Z"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-DELL-EMEA-B2B",
+              "organizationName": "Dell Technologies EMEA Enterprise",
+              "timezone": "Europe/London",
+              "region": "EMEA"
+            },
+            "dealerNotes": "MSA NEXA-MSA-2026-DAAS-001 signed. 750 devices @ $140/unit/month × 36 months = $3.78M TCV. Batch 1: 300 units (200 laptops + 100 iPhones) Mar 1. Batch 2: 450 units (50 laptops + 400 iPhones) Apr 1. GDPR DPA co-signed. Intune autopilot config submitted.",
+            "leadHistory": [
+              { "version": 3, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-28T09:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "Active negotiation" },
+              { "version": 4, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-02-05T11:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "MSA signed. $140/unit/month. Two staged deployments Mar 1 + Apr 1. GDPR DPA executed." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:00:00Z",
+              "updatedAt": "2026-02-05T11:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-28T09:00:00Z", "action": "STATUS_UPDATED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "IN_NEGOTIATION" },
+                { "timestamp": "2026-02-05T11:00:00Z", "action": "ORDER_PLACED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "ORDER" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "06 - Order Confirmed & MDM Pre-Provisioning",
+      "lex": {
+        "header": {
+          "messageId": "f6c7d8e9-a0b1-4f2a-3c4d-5e6f7a8b9c0d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-02-07T08:00:00Z",
+          "senderId": "RETAILER-DELL-EMEA-B2B",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-TECH-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER_CONFIRMED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:00:00Z",
+            "leadVersion": 5,
+            "customer": {
+              "firstName": "Ikem",
+              "lastName": "Okafor",
+              "emailAddress": "i.okafor@nexacorp.com",
+              "phoneNumber": "+442071234567",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "NexaCorp Ltd" }
+            },
+            "desiredProduct": {
+              "productType": "IOT_DEVICE",
+              "assetClass": "TECHNOLOGY",
+              "typeSpecificAttributes": {
+                "batch1OrderRef": "DELL-SO-2026-NEXA-B1",
+                "batch2OrderRef": "DELL-SO-2026-NEXA-B2",
+                "autopilotGroupTag": "NEXACORP-EMPLOYEES",
+                "mdmTenantId": "nexa-corp.onmicrosoft.com",
+                "appleDepOrgId": "NEXACORP-ABM-29847",
+                "batch1DispatchDate": "2026-02-25",
+                "batch2DispatchDate": "2026-03-25"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-DELL-EMEA-B2B",
+              "organizationName": "Dell Technologies EMEA Enterprise",
+              "timezone": "Europe/London",
+              "region": "EMEA"
+            },
+            "leadHistory": [
+              { "version": 4, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-02-05T11:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "MSA signed" },
+              { "version": 5, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-02-07T08:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "Factory orders DELL-SO-2026-NEXA-B1/B2 placed. Windows autopilot enrolled. Apple DEP org linked." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:00:00Z",
+              "updatedAt": "2026-02-07T08:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-02-05T11:00:00Z", "action": "ORDER_PLACED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "ORDER" },
+                { "timestamp": "2026-02-07T08:00:00Z", "action": "ORDER_CONFIRMED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "ORDER_CONFIRMED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "07 - Staged Device Deployment (IN_DELIVERY – Batch 1)",
+      "lex": {
+        "header": {
+          "messageId": "a7d8e9f0-b1c2-4a3b-4c5d-6e7f8a9b0c1d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-03-01T10:00:00Z",
+          "senderId": "RETAILER-DELL-EMEA-B2B",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-TECH-001",
+            "leadType": "PRIMARY",
+            "status": "IN_DELIVERY",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:00:00Z",
+            "leadVersion": 6,
+            "customer": {
+              "firstName": "Ikem",
+              "lastName": "Okafor",
+              "emailAddress": "i.okafor@nexacorp.com",
+              "phoneNumber": "+442071234567",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "NexaCorp Ltd" }
+            },
+            "desiredProduct": {
+              "productType": "IOT_DEVICE",
+              "assetClass": "TECHNOLOGY",
+              "typeSpecificAttributes": {
+                "batch1Delivered": true,
+                "batch1DeviceCount": 300,
+                "batch1Laptops": 200,
+                "batch1Phones": 100,
+                "batch1MdmEnrolled": 300,
+                "batch1DeliveryDate": "2026-03-01",
+                "batch2Scheduled": "2026-04-01",
+                "batch2DeviceCount": 450,
+                "deploymentProgressPct": 40
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-DELL-EMEA-B2B",
+              "organizationName": "Dell Technologies EMEA Enterprise",
+              "timezone": "Europe/London",
+              "region": "EMEA"
+            },
+            "dealerNotes": "Batch 1: 300 devices delivered to NexaCorp London HQ Mar 1. All 300 Intune-enrolled and zero-touch provisioned. 200 Dell Latitude 7450 + 100 iPhone 16 Pro. CrowdStrike Falcon active on all. Batch 2 (450 devices) on track for Apr 1.",
+            "leadHistory": [
+              { "version": 5, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-02-07T08:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "Orders placed, autopilot configured" },
+              { "version": 6, "previousStatus": "ORDER_CONFIRMED", "newStatus": "IN_DELIVERY", "timestamp": "2026-03-01T10:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "Batch 1 (300 devices) delivered and MDM-enrolled. Batch 2 (450 devices) scheduled Apr 1." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:00:00Z",
+              "updatedAt": "2026-03-01T10:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-02-07T08:00:00Z", "action": "ORDER_CONFIRMED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "ORDER_CONFIRMED" },
+                { "timestamp": "2026-03-01T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "IN_DELIVERY" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "08 - Full Fleet Deployed & DELIVERED",
+      "lex": {
+        "header": {
+          "messageId": "b8e9f0a1-c2d3-4b4c-5d6e-7f8a9b0c1d2e",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-04-01T16:00:00Z",
+          "senderId": "RETAILER-DELL-EMEA-B2B",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-TECH-001",
+            "leadType": "PRIMARY",
+            "status": "DELIVERED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:00:00Z",
+            "leadVersion": 7,
+            "customer": {
+              "firstName": "Ikem",
+              "lastName": "Okafor",
+              "emailAddress": "i.okafor@nexacorp.com",
+              "phoneNumber": "+442071234567",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "NexaCorp Ltd" }
+            },
+            "desiredProduct": {
+              "productType": "IOT_DEVICE",
+              "assetClass": "TECHNOLOGY",
+              "typeSpecificAttributes": {
+                "totalDevicesDeployed": 750,
+                "laptopsDeployed": 250,
+                "smartphonesDeployed": 500,
+                "totalMdmEnrolled": 750,
+                "fullDeploymentDate": "2026-04-01",
+                "leasePeriodStart": "2026-04-01",
+                "leasePeriodEnd": "2029-03-31",
+                "assetTagsRegistered": 750,
+                "servicePortalActivated": true
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-DELL-EMEA-B2B",
+              "organizationName": "Dell Technologies EMEA Enterprise",
+              "timezone": "Europe/London",
+              "region": "EMEA"
+            },
+            "metrics": {
+              "interactionCount": 27,
+              "customerSatisfactionRating": 4.9
+            },
+            "leadHistory": [
+              { "version": 6, "previousStatus": "ORDER_CONFIRMED", "newStatus": "IN_DELIVERY", "timestamp": "2026-03-01T10:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "Batch 1 delivered" },
+              { "version": 7, "previousStatus": "IN_DELIVERY", "newStatus": "DELIVERED", "timestamp": "2026-04-01T16:00:00Z", "changedBy": "RETAILER-DELL-EMEA-B2B", "reason": "Batch 2 (450 devices) delivered. All 750 devices MDM-enrolled. DaaS subscription active Apr 1. Service portal confirmed." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:00:00Z",
+              "updatedAt": "2026-04-01T16:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-03-01T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "IN_DELIVERY" },
+                { "timestamp": "2026-04-01T16:00:00Z", "action": "DELIVERED", "changedBy": "RETAILER-DELL-EMEA-B2B", "newValue": "DELIVERED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "09 - Lead Closure (WON)",
+      "lex": {
+        "header": {
+          "messageId": "c9f0a1b2-d3e4-4c5d-6e7f-8a9b0c1d2e3f",
+          "messageType": "LEAD_CLOSURE",
+          "version": "1.0",
+          "timestamp": "2026-04-02T09:00:00Z",
+          "senderId": "RETAILER-DELL-EMEA-B2B",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "a1d2e3f4-b5c6-4a7b-8c9d-0e1f2b3c4d5e"
+        },
+        "payload": {
+          "leadClosure": {
+            "originalLeadId": "LID-20260115-TECH-001",
+            "originalLeadSource": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:00:00Z",
+            "leadClosureDate": "2026-04-01T16:00:00Z",
+            "leadLifecycleDays": 76,
+            "closureStatus": "WON",
+            "closureReason": "750 devices fully deployed and MDM-enrolled. DaaS subscription active from Apr 1, 2026 through Mar 31, 2029. TCV USD 3.78M. NexaCorp IT team confirmed 100% successful MDM enrollment.",
+            "closureDetail": {
+              "purchaseConfirmed": true,
+              "orderPlacedDate": "2026-02-05T11:00:00Z",
+              "actualDeliveryDate": "2026-04-01",
+              "dealAmount": 3780000,
+              "currency": "USD"
+            },
+            "purchasedProduct": {
+              "productType": "IOT_DEVICE",
+              "assetClass": "TECHNOLOGY",
+              "manufacturer": "Mixed: Dell / Apple",
+              "model": "Latitude 7450 + iPhone 16 Pro",
+              "year": 2026,
+              "typeSpecificAttributes": {
+                "fleetQuantity": 750,
+                "laptopQuantity": 250,
+                "smartphoneQuantity": 500,
+                "procurementModel": "DEVICE_AS_A_SERVICE",
+                "leaseTerm": 36,
+                "monthlyFeePerUnit": 140,
+                "totalMonthlyFee": 105000,
+                "totalContractValue": 3780000,
+                "mdmPlatform": "Microsoft Intune",
+                "leasePeriodStart": "2026-04-01",
+                "leasePeriodEnd": "2029-03-31"
+              }
+            },
+            "retailerPerformance": {
+              "organizationId": "ORG-DELL-EMEA-B2B",
+              "organizationName": "Dell Technologies EMEA Enterprise",
+              "region": "EMEA"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "lex-e2e-integrity-simulation",
+  "version": "1.0.0",
+  "description": "LEX end-to-end integrity simulation — sender/receiver pipeline across all industries and formats with SHA-256 data-loss detection and ACK generation",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "simulate": "node src/index.js"
+  },
+  "dependencies": {
+    "@lexstandard/lex": "file:../../libraries/js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

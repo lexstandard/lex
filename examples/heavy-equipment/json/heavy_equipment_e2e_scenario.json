@@ -1,0 +1,722 @@
+{
+  "_metadata": {
+    "title": "LEX Heavy Equipment End-to-End Scenario: Fleet Excavator Acquisition with Part-Exchange",
+    "scenario": "Granite Peak Construction LLC (organisational buyer) acquires 3× Caterpillar 390 hydraulic excavators and part-exchanges 2× older Cat 374 units. Full lifecycle: dealer inquiry → site demonstration → negotiation → PO → delivery to site → lead closure (WON). Deal value USD 3.27 million.",
+    "industry": "HEAVY_EQUIPMENT",
+    "assetClass": "HEAVY_EQUIPMENT",
+    "buyerType": "ORGANIZATION",
+    "leadId": "LID-20260110-HEVY-001",
+    "fleetQuantity": 3,
+    "partExchangeQuantity": 2,
+    "totalDealValue": 3270000,
+    "currency": "USD",
+    "outcome": "WON",
+    "lifecycleDays": 45,
+    "messageCount": 9,
+    "phases": [
+      "01 - Feed Inquiry from Construction Company (SHOPPING)",
+      "02 - Platform Acknowledgment (VALIDATED)",
+      "03 - Demo Unit Requested / Appointment (APPOINTMENT_REQUEST)",
+      "04 - Site Demo Completed / Expressed Interest",
+      "05 - In Negotiation (part-exchange pricing, fleet discount)",
+      "06 - Purchase Order Placed (ORDER)",
+      "07 - Order Confirmed & Production Slot Allocated",
+      "08 - Equipment Delivered to Job Site (DELIVERED)",
+      "09 - Lead Closure (WON)"
+    ]
+  },
+  "messages": [
+    {
+      "_phase": "01 - Fleet Inquiry from Construction Company (SHOPPING)",
+      "lex": {
+        "header": {
+          "messageId": "a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-10T09:15:00Z",
+          "senderId": "RETAILER-CAT-MIDWEST",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "signatureAlgorithm": "HMAC-SHA256"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260110-HEVY-001",
+            "leadType": "PRIMARY",
+            "status": "SHOPPING",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-10T09:15:00Z",
+            "leadVersion": 1,
+            "sourceDetail": {
+              "sourceType": "RETAILER_WEBSITE",
+              "sourceURL": "https://www.altorfercat.com/equipment/caterpillar/390",
+              "channel": "DIGITAL",
+              "leadEntryMethod": "FORM_SUBMISSION",
+              "formName": "Equipment Fleet Enquiry",
+              "leadQualityScore": 9.2,
+              "customFields": {
+                "projectName": "I-70 Highway Expansion Phase 3",
+                "requiredOnSite": "2026-03-01",
+                "operatingEnvironment": "HEAVY_EARTHWORKS"
+              }
+            },
+            "customer": {
+              "firstName": "Richard",
+              "lastName": "Morales",
+              "emailAddress": "r.morales@granitepeakconstruction.com",
+              "phoneNumber": "+13035550987",
+              "preferredContactMethod": "PHONE",
+              "locale": "en-US",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": {
+                "companyName": "Granite Peak Construction LLC",
+                "companyRegistrationNumber": "US-CO-20180044712",
+                "taxIdentificationNumber": "84-3310052",
+                "industryCode": "NAICS-237310",
+                "companySize": "SME",
+                "existingFleetSize": 18,
+                "governmentEntity": false,
+                "procurementMethodology": "DIRECT_AWARD",
+                "existingRelationship": "RENEWAL",
+                "budgetApprovalStatus": "APPROVED",
+                "procurementContact": {
+                  "firstName": "Richard",
+                  "lastName": "Morales",
+                  "title": "Equipment Manager",
+                  "email": "r.morales@granitepeakconstruction.com",
+                  "department": "Operations"
+                }
+              },
+              "fleetBuyer": {
+                "isFleet": true,
+                "fleetSize": 18,
+                "unitsToOrder": 3,
+                "fleetManagerName": "Richard Morales",
+                "fleetManagerEmail": "r.morales@granitepeakconstruction.com"
+              }
+            },
+            "desiredProduct": {
+              "productType": "CONSTRUCTION_EQUIPMENT",
+              "assetClass": "HEAVY_EQUIPMENT",
+              "make": "Caterpillar",
+              "model": "390",
+              "year": 2026,
+              "condition": "NEW",
+              "budgetMin": 3000000,
+              "budgetMax": 3500000,
+              "currency": "USD",
+              "typeSpecificAttributes": {
+                "equipmentCategory": "HYDRAULIC_EXCAVATOR",
+                "operatingWeightKg": 90000,
+                "engineModel": "Cat C18 ACERT",
+                "netPowerKw": 394,
+                "bucketCapacityM3": 4.5,
+                "maxDigDepthMm": 8410,
+                "maxReachMm": 13930,
+                "hydraulicSystemPressureBar": 350,
+                "emissionsTier": "TIER_4_FINAL",
+                "cabFeatures": [
+                  "Cat GRADE with 2D",
+                  "Product Link PL641",
+                  "Rearview Camera",
+                  "Heated Air-Seat"
+                ],
+                "undercarriageType": "TRIPLE_GROUSER_SHOE",
+                "quickCouplerRequired": true,
+                "attachmentPackage": "HEAVY_DUTY_BUCKET_AND_THUMB"
+              },
+              "factoryOrderPreference": "DEALER_STOCK_PREFERRED",
+              "installedOptions": [
+                { "name": "Cat GRADE with 2D Grade Control", "source": "FACTORY", "partNumber": "CAT-GRADE-2D-390", "estimatedValue": 18500 },
+                { "name": "Hydraulic Thumb", "source": "DEALER_INSTALLED", "partNumber": "CAT-THUMB-390-HD", "estimatedValue": 9800 },
+                { "name": "Product Link PL641 Telematics", "source": "FACTORY", "partNumber": "CAT-PL641", "estimatedValue": 2200 }
+              ]
+            },
+            "heavyEquipmentLead": {
+              "attachmentCouplerStandard": "ISO_19296",
+              "jobSiteAltitude": 1800,
+              "exportLicenseRequired": false
+            },
+            "fleetOrder": {
+              "quantity": 3,
+              "unitBudgetCapUsd": 1100000,
+              "totalBudgetCap": 3300000,
+              "currency": "USD",
+              "mixedConfigAllowed": false,
+              "procurementReference": "GPC-PO-2026-EXCA-001",
+              "preferredDeliveryWindow": "Q1 2026",
+              "unitSpecifications": [
+                {
+                  "quantity": 3,
+                  "configurationCode": "CAT-390-2026-EARTHWORKS-V1",
+                  "specificOptions": [
+                    "GRADE_2D",
+                    "PRODUCT_LINK_PL641",
+                    "HEAVY_DUTY_BUCKET_3_5M3",
+                    "HYDRAULIC_THUMB",
+                    "FAST_FILL_FUEL"
+                  ]
+                }
+              ]
+            },
+            "partExchange": {
+              "assetType": "EQUIPMENT",
+              "quantity": 2,
+              "assetMake": "Caterpillar",
+              "assetModel": "374",
+              "assetYear": 2018,
+              "serialNumber": "CAT374-JTE00847 / CAT374-JTE00901",
+              "currentOwnerHours": 14800,
+              "conditionGrade": "FAIR",
+              "estimatedValue": 480000,
+              "currency": "USD",
+              "estimatedValueBasis": "MARKET",
+              "intendedDisposition": "TRADE_IN"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-ALTORFER-CAT-MIDWEST",
+              "organizationName": "Altorfer Cat",
+              "timezone": "America/Denver",
+              "region": "NA"
+            },
+            "leadAncestry": {
+              "originType": "DIRECT_INQUIRY",
+              "originDate": "2026-01-10T09:15:00Z",
+              "originSourceId": "GPC-RFQ-2026-001",
+              "conversionPath": [
+                { "stage": "SHOPPING", "timestamp": "2026-01-10T09:15:00Z" }
+              ]
+            },
+            "leadHistory": [
+              {
+                "version": 1,
+                "previousStatus": null,
+                "newStatus": "SHOPPING",
+                "timestamp": "2026-01-10T09:15:00Z",
+                "changedBy": "RETAILER-CAT-MIDWEST",
+                "reason": "Fleet enquiry received from Granite Peak Construction for 3× Cat 390 excavators"
+              }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-10T09:15:00Z",
+              "updatedAt": "2026-01-10T09:15:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-10T09:15:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-CAT-MIDWEST", "newValue": "SHOPPING" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "02 - Platform Acknowledgment (VALIDATED)",
+      "lex": {
+        "header": {
+          "messageId": "b2d3e4f5-a6b7-4c8d-9e0f-1a2b3c4d5e6f",
+          "messageType": "ACKNOWLEDGMENT",
+          "version": "1.0",
+          "timestamp": "2026-01-10T09:15:07Z",
+          "senderId": "LEX-PLATFORM",
+          "receiverId": "RETAILER-CAT-MIDWEST",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e"
+        },
+        "payload": {
+          "acknowledgment": {
+            "acknowledgmentId": "ACK-20260110-HEVY-001",
+            "correlationId": "a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e",
+            "originalMessageId": "a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e",
+            "originalMessageType": "LEAD",
+            "status": "PROCESSED",
+            "statusReason": "Fleet enquiry validated and routed to Altorfer Cat heavy equipment sales team.",
+            "timestamp": "2026-01-10T09:15:07Z",
+            "processingTime": 7100,
+            "validationResults": {
+              "isValid": true,
+              "schemaValidation": { "passed": true, "errors": [] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "03 - Site Demo Requested (APPOINTMENT_REQUEST)",
+      "lex": {
+        "header": {
+          "messageId": "c3e4f5a6-b7c8-4d9e-0f1a-2b3c4d5e6f7a",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-13T11:00:00Z",
+          "senderId": "RETAILER-CAT-MIDWEST",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260110-HEVY-001",
+            "leadType": "PRIMARY",
+            "status": "APPOINTMENT_REQUEST",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-10T09:15:00Z",
+            "leadVersion": 2,
+            "customer": {
+              "firstName": "Richard",
+              "lastName": "Morales",
+              "emailAddress": "r.morales@granitepeakconstruction.com",
+              "phoneNumber": "+13035550987",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Granite Peak Construction LLC" }
+            },
+            "desiredProduct": {
+              "productType": "CONSTRUCTION_EQUIPMENT",
+              "assetClass": "HEAVY_EQUIPMENT",
+              "make": "Caterpillar",
+              "model": "390",
+              "year": 2026,
+              "condition": "NEW"
+            },
+            "sourceDetail": {
+              "customFields": {
+                "demoDate": "2026-01-16T09:00:00Z",
+                "demoLocation": "Granite Peak I-70 Phase 3 Site, Vail, CO",
+                "demoUnit": "CAT390-DEMO-CO-007",
+                "accountManager": "Brett Callahan",
+                "accountManagerId": "AM-CAT-CO-15"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-ALTORFER-CAT-MIDWEST",
+              "organizationName": "Altorfer Cat",
+              "timezone": "America/Denver",
+              "region": "NA"
+            },
+            "leadHistory": [
+              { "version": 1, "previousStatus": null, "newStatus": "SHOPPING", "timestamp": "2026-01-10T09:15:00Z", "changedBy": "RETAILER-CAT-MIDWEST", "reason": "Fleet enquiry received" },
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "APPOINTMENT_REQUEST", "timestamp": "2026-01-13T11:00:00Z", "changedBy": "AM-CAT-CO-15", "reason": "Operator demo scheduled at customer job site Jan 16" }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-10T09:15:00Z",
+              "updatedAt": "2026-01-13T11:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-10T09:15:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-CAT-MIDWEST", "newValue": "SHOPPING" },
+                { "timestamp": "2026-01-13T11:00:00Z", "action": "STATUS_UPDATED", "changedBy": "AM-CAT-CO-15", "newValue": "APPOINTMENT_REQUEST" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "04 - Site Demo Completed / Expressed Interest",
+      "lex": {
+        "header": {
+          "messageId": "d4f5a6b7-c8d9-4e0f-1a2b-3c4d5e6f7a8b",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-16T15:30:00Z",
+          "senderId": "RETAILER-CAT-MIDWEST",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260110-HEVY-001",
+            "leadType": "PRIMARY",
+            "status": "EXPRESSED_INTEREST",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-10T09:15:00Z",
+            "leadVersion": 3,
+            "customer": {
+              "firstName": "Richard",
+              "lastName": "Morales",
+              "emailAddress": "r.morales@granitepeakconstruction.com",
+              "phoneNumber": "+13035550987",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Granite Peak Construction LLC" }
+            },
+            "desiredProduct": {
+              "productType": "CONSTRUCTION_EQUIPMENT",
+              "assetClass": "HEAVY_EQUIPMENT",
+              "make": "Caterpillar",
+              "model": "390",
+              "year": 2026,
+              "condition": "NEW"
+            },
+            "partExchange": {
+              "assetType": "EQUIPMENT",
+              "quantity": 2,
+              "assetMake": "Caterpillar",
+              "assetModel": "374",
+              "assetYear": 2018,
+              "currentOwnerHours": 14800,
+              "conditionGrade": "FAIR",
+              "estimatedValue": 480000,
+              "currency": "USD",
+              "estimatedValueBasis": "AS_IS",
+              "intendedDisposition": "TRADE_IN"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-ALTORFER-CAT-MIDWEST",
+              "organizationName": "Altorfer Cat",
+              "timezone": "America/Denver",
+              "region": "NA"
+            },
+            "dealerNotes": "Operator demo on I-70 site very positive. Operators preferred Cat 390 over Komatsu PC800 competitor. Richard confirmed interest in 3 units. Trade-in inspection of 2× Cat 374 conducted on-site: 14,800 hrs avg, assessed FAIR. Requesting formal quote with fleet discount.",
+            "leadHistory": [
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "APPOINTMENT_REQUEST", "timestamp": "2026-01-13T11:00:00Z", "changedBy": "AM-CAT-CO-15", "reason": "Demo scheduled" },
+              { "version": 3, "previousStatus": "APPOINTMENT_REQUEST", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2026-01-16T15:30:00Z", "changedBy": "AM-CAT-CO-15", "reason": "Site demo completed. Customer confirmed 3-unit intent. 2× trade-in appraised." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-10T09:15:00Z",
+              "updatedAt": "2026-01-16T15:30:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-13T11:00:00Z", "action": "STATUS_UPDATED", "changedBy": "AM-CAT-CO-15", "newValue": "APPOINTMENT_REQUEST" },
+                { "timestamp": "2026-01-16T15:30:00Z", "action": "STATUS_UPDATED", "changedBy": "AM-CAT-CO-15", "newValue": "EXPRESSED_INTEREST" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "05 - In Negotiation (fleet discount + part-exchange)",
+      "lex": {
+        "header": {
+          "messageId": "e5a6b7c8-d9e0-4f1a-2b3c-4d5e6f7a8b9c",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-20T10:00:00Z",
+          "senderId": "RETAILER-CAT-MIDWEST",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260110-HEVY-001",
+            "leadType": "PRIMARY",
+            "status": "IN_NEGOTIATION",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-10T09:15:00Z",
+            "leadVersion": 4,
+            "customer": {
+              "firstName": "Richard",
+              "lastName": "Morales",
+              "emailAddress": "r.morales@granitepeakconstruction.com",
+              "phoneNumber": "+13035550987",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Granite Peak Construction LLC", "budgetApprovalStatus": "APPROVED" }
+            },
+            "desiredProduct": {
+              "productType": "CONSTRUCTION_EQUIPMENT",
+              "assetClass": "HEAVY_EQUIPMENT",
+              "make": "Caterpillar",
+              "model": "390",
+              "year": 2026,
+              "condition": "NEW"
+            },
+            "fleetOrder": {
+              "quantity": 3,
+              "unitBudgetCapUsd": 1100000,
+              "procurementReference": "GPC-PO-2026-EXCA-001"
+            },
+            "partExchange": {
+              "assetType": "EQUIPMENT",
+              "quantity": 2,
+              "assetMake": "Caterpillar",
+              "assetModel": "374",
+              "estimatedValue": 460000,
+              "currency": "USD",
+              "estimatedValueBasis": "AS_IS",
+              "intendedDisposition": "TRADE_IN"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-ALTORFER-CAT-MIDWEST",
+              "organizationName": "Altorfer Cat",
+              "timezone": "America/Denver",
+              "region": "NA"
+            },
+            "dealerNotes": "Formal quote submitted: 3× Cat 390 at $1,090,000 each = $3,270,000. Fleet discount 3%. Trade-in credit $460,000. Net balance $2,810,000. Customer requesting extended warranty 5000hr + free Cat CVA subscription 3yr.",
+            "leadHistory": [
+              { "version": 3, "previousStatus": "APPOINTMENT_REQUEST", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2026-01-16T15:30:00Z", "changedBy": "AM-CAT-CO-15", "reason": "Demo completed, interest confirmed" },
+              { "version": 4, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-20T10:00:00Z", "changedBy": "AM-CAT-CO-15", "reason": "Formal quote issued. Customer negotiating warranty and trade-in credit terms." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-10T09:15:00Z",
+              "updatedAt": "2026-01-20T10:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-16T15:30:00Z", "action": "STATUS_UPDATED", "changedBy": "AM-CAT-CO-15", "newValue": "EXPRESSED_INTEREST" },
+                { "timestamp": "2026-01-20T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "AM-CAT-CO-15", "newValue": "IN_NEGOTIATION" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "06 - Purchase Order Placed (ORDER)",
+      "lex": {
+        "header": {
+          "messageId": "f6b7c8d9-e0f1-4a2b-3c4d-5e6f7a8b9c0d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-23T14:00:00Z",
+          "senderId": "RETAILER-CAT-MIDWEST",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260110-HEVY-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-10T09:15:00Z",
+            "leadVersion": 5,
+            "customer": {
+              "firstName": "Richard",
+              "lastName": "Morales",
+              "emailAddress": "r.morales@granitepeakconstruction.com",
+              "phoneNumber": "+13035550987",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Granite Peak Construction LLC" }
+            },
+            "desiredProduct": {
+              "productType": "CONSTRUCTION_EQUIPMENT",
+              "assetClass": "HEAVY_EQUIPMENT",
+              "make": "Caterpillar",
+              "model": "390",
+              "year": 2026,
+              "condition": "NEW"
+            },
+            "fleetOrder": {
+              "quantity": 3,
+              "totalBudgetCap": 3270000,
+              "currency": "USD",
+              "procurementReference": "GPC-PO-2026-EXCA-001"
+            },
+            "partExchange": {
+              "assetType": "EQUIPMENT",
+              "quantity": 2,
+              "assetMake": "Caterpillar",
+              "assetModel": "374",
+              "estimatedValue": 460000,
+              "currency": "USD",
+              "intendedDisposition": "TRADE_IN"
+            },
+            "customerOutcome": {
+              "purchaseConfirmed": true,
+              "financingUsed": true,
+              "financingType": "THIRD_PARTY",
+              "financingAmount": 2350000,
+              "downPayment": 460000,
+              "tradeInAccepted": true,
+              "tradeInValue": 460000,
+              "estimatedDeliveryDate": "2026-02-28T00:00:00Z"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-ALTORFER-CAT-MIDWEST",
+              "organizationName": "Altorfer Cat",
+              "timezone": "America/Denver",
+              "region": "NA"
+            },
+            "dealerNotes": "PO GPC-PO-2026-EXCA-001 signed. 3× Cat 390 at $1,090,000 = $3,270,000. Trade-in $460K + Cat Financial $2.35M @5.2% APR 60 months. 5000hr warranty included. CVA subscription 3yr included. Delivery to I-70 site confirmed Feb 28.",
+            "leadHistory": [
+              { "version": 4, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-20T10:00:00Z", "changedBy": "AM-CAT-CO-15", "reason": "Quote issued" },
+              { "version": 5, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-01-23T14:00:00Z", "changedBy": "AM-CAT-CO-15", "reason": "PO signed. Warranty and CVA included. Cat Financial approved." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-10T09:15:00Z",
+              "updatedAt": "2026-01-23T14:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-20T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "AM-CAT-CO-15", "newValue": "IN_NEGOTIATION" },
+                { "timestamp": "2026-01-23T14:00:00Z", "action": "ORDER_PLACED", "changedBy": "AM-CAT-CO-15", "newValue": "ORDER" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "07 - Order Confirmed & Production Slot Allocated",
+      "lex": {
+        "header": {
+          "messageId": "a7c8d9e0-f1a2-4b3c-4d5e-6f7a8b9c0d1e",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-24T07:30:00Z",
+          "senderId": "MANUFACTURER-CATERPILLAR-NA",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260110-HEVY-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER_CONFIRMED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-10T09:15:00Z",
+            "leadVersion": 6,
+            "customer": {
+              "firstName": "Richard",
+              "lastName": "Morales",
+              "emailAddress": "r.morales@granitepeakconstruction.com",
+              "phoneNumber": "+13035550987",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Granite Peak Construction LLC" }
+            },
+            "desiredProduct": {
+              "productType": "CONSTRUCTION_EQUIPMENT",
+              "assetClass": "HEAVY_EQUIPMENT",
+              "make": "Caterpillar",
+              "model": "390",
+              "condition": "NEW",
+              "typeSpecificAttributes": {
+                "serialNumbers": ["CAT390-2026-SN10047", "CAT390-2026-SN10048", "CAT390-2026-SN10049"],
+                "assemblyPlant": "CATERPILLAR-AURORA-IL",
+                "estimatedShipDate": "2026-02-21"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-ALTORFER-CAT-MIDWEST",
+              "organizationName": "Altorfer Cat",
+              "timezone": "America/Denver",
+              "region": "NA"
+            },
+            "leadHistory": [
+              { "version": 5, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-01-23T14:00:00Z", "changedBy": "AM-CAT-CO-15", "reason": "PO signed" },
+              { "version": 6, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-01-24T07:30:00Z", "changedBy": "MANUFACTURER-CATERPILLAR-NA", "reason": "Production slots confirmed at Aurora IL plant. SNs 10047–10049. Ship date Feb 21." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-10T09:15:00Z",
+              "updatedAt": "2026-01-24T07:30:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-23T14:00:00Z", "action": "ORDER_PLACED", "changedBy": "AM-CAT-CO-15", "newValue": "ORDER" },
+                { "timestamp": "2026-01-24T07:30:00Z", "action": "ORDER_CONFIRMED", "changedBy": "MANUFACTURER-CATERPILLAR-NA", "newValue": "ORDER_CONFIRMED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "08 - Equipment Delivered to Job Site (DELIVERED)",
+      "lex": {
+        "header": {
+          "messageId": "b8d9e0f1-a2b3-4c4d-5e6f-7a8b9c0d1e2f",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-02-28T11:00:00Z",
+          "senderId": "RETAILER-CAT-MIDWEST",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260110-HEVY-001",
+            "leadType": "PRIMARY",
+            "status": "DELIVERED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-10T09:15:00Z",
+            "leadVersion": 7,
+            "customer": {
+              "firstName": "Richard",
+              "lastName": "Morales",
+              "emailAddress": "r.morales@granitepeakconstruction.com",
+              "phoneNumber": "+13035550987",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Granite Peak Construction LLC" }
+            },
+            "desiredProduct": {
+              "productType": "CONSTRUCTION_EQUIPMENT",
+              "assetClass": "HEAVY_EQUIPMENT",
+              "make": "Caterpillar",
+              "model": "390",
+              "condition": "NEW",
+              "typeSpecificAttributes": {
+                "serialNumbers": ["CAT390-2026-SN10047", "CAT390-2026-SN10048", "CAT390-2026-SN10049"],
+                "deliverySite": "I-70 Phase 3, Vail, CO 81657",
+                "deliveryConfirmedBy": "Richard Morales"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-ALTORFER-CAT-MIDWEST",
+              "organizationName": "Altorfer Cat",
+              "timezone": "America/Denver",
+              "region": "NA"
+            },
+            "metrics": {
+              "showroomVisits": 1,
+              "interactionCount": 12,
+              "customerSatisfactionRating": 4.8
+            },
+            "leadHistory": [
+              { "version": 6, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-01-24T07:30:00Z", "changedBy": "MANUFACTURER-CATERPILLAR-NA", "reason": "Production confirmed" },
+              { "version": 7, "previousStatus": "ORDER_CONFIRMED", "newStatus": "DELIVERED", "timestamp": "2026-02-28T11:00:00Z", "changedBy": "AM-CAT-CO-15", "reason": "All 3 units delivered and commissioned at I-70 site. Operator training completed. Trade-in units collected." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-10T09:15:00Z",
+              "updatedAt": "2026-02-28T11:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-24T07:30:00Z", "action": "ORDER_CONFIRMED", "changedBy": "MANUFACTURER-CATERPILLAR-NA", "newValue": "ORDER_CONFIRMED" },
+                { "timestamp": "2026-02-28T11:00:00Z", "action": "DELIVERED", "changedBy": "AM-CAT-CO-15", "newValue": "DELIVERED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "09 - Lead Closure (WON)",
+      "lex": {
+        "header": {
+          "messageId": "c9e0f1a2-b3c4-4d5e-6f7a-8b9c0d1e2f3a",
+          "messageType": "LEAD_CLOSURE",
+          "version": "1.0",
+          "timestamp": "2026-03-01T09:00:00Z",
+          "senderId": "RETAILER-CAT-MIDWEST",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e"
+        },
+        "payload": {
+          "leadClosure": {
+            "originalLeadId": "LID-20260110-HEVY-001",
+            "originalLeadSource": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-10T09:15:00Z",
+            "leadClosureDate": "2026-02-28T11:00:00Z",
+            "leadLifecycleDays": 49,
+            "closureStatus": "WON",
+            "closureReason": "3× Caterpillar 390 hydraulic excavators delivered and commissioned at I-70 Phase 3 job site. Operator training completed. 2× Cat 374 trade-in units collected.",
+            "closureDetail": {
+              "purchaseConfirmed": true,
+              "orderPlacedDate": "2026-01-23T14:00:00Z",
+              "actualDeliveryDate": "2026-02-28",
+              "dealAmount": 3270000,
+              "currency": "USD"
+            },
+            "purchasedProduct": {
+              "productType": "CONSTRUCTION_EQUIPMENT",
+              "assetClass": "HEAVY_EQUIPMENT",
+              "manufacturer": "Caterpillar",
+              "model": "390",
+              "year": 2026,
+              "typeSpecificAttributes": {
+                "fleetQuantity": 3,
+                "serialNumbers": ["CAT390-2026-SN10047", "CAT390-2026-SN10048", "CAT390-2026-SN10049"],
+                "warrantyHours": 5000,
+                "cvaSubscriptionYears": 3
+              }
+            },
+            "retailerPerformance": {
+              "organizationId": "ORG-ALTORFER-CAT-MIDWEST",
+              "organizationName": "Altorfer Cat",
+              "salespersonId": "AM-CAT-CO-15",
+              "salespersonName": "Brett Callahan",
+              "region": "NA"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

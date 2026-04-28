@@ -1,0 +1,67 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-020",
+  "title": "Retry Context on Retransmission",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "TRANSPORT_RESILIENCE",
+  "description": "LEAD message carries header.retryContext.attemptNumber=3, indicating this is the third delivery attempt of an original message. The receiver MUST process the message idempotently — if a record with this messageId already exists, no duplicate lead MUST be created. retryContext is informational and MUST NOT cause rejection.",
+  "specRef": "LEX_CONFORMANCE §2 TC-020",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000020",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:19:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001",
+        "retryContext": {
+          "originalTimestamp": "2026-04-03T09:50:00Z",
+          "attemptNumber": 3,
+          "maxAttempts": 6
+        }
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC020-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Sofia",
+            "lastName": "Rossi",
+            "emailAddress": "sofia.rossi@example.com",
+            "phoneNumber": "+393385551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Ferrari",
+            "model": "Roma",
+            "year": 2027
+          },
+          "consentRecord": {
+            "gdpr": {
+              "legalBasis": "CONSENT",
+              "consentTimestamp": "2026-04-03T09:50:00Z",
+              "consentWithdrawn": false
+            }
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T09:50:00Z",
+            "updatedDate": "2026-04-03T10:19:00Z",
+            "countryCode": "IT"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": true,
+    "httpStatus": 200,
+    "acknowledgmentStatus": "RECEIVED",
+    "idempotent": true,
+    "note": "If a lead with messageId 'a1b2c3d4-e5f6-4a7b-8c9d-000000000020' already exists, acknowledge success without creating a duplicate. retryContext MUST NOT cause validation failure.",
+    "errors": [],
+    "warnings": []
+  }
+}

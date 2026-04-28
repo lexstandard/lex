@@ -1,0 +1,123 @@
+{
+  "alx": {
+    "version": "1.0.0",
+    "header": {
+      "messageId": "550e8400-e29b-41d4-a716-446655440000",
+      "messageType": "LEAD",
+      "timestamp": "2026-03-23T14:30:00Z",
+      "senderId": "DEALER-001",
+      "receiverId": "MANUFACTURER-ABC",
+      "correlationId": null
+    },
+    "payload": {
+      "lead": {
+        "leadId": "LEAD-2026-001234",
+        "status": "EXPRESSED_INTEREST",
+        "source": "DEALER_WEBSITE",
+        "sourceDetail": {
+          "channel": "online",
+          "platform": "dealership_website",
+          "languageCode": "en-US"
+        },
+        "customer": {
+          "firstName": "John",
+          "lastName": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "+13125551234",
+          "dateOfBirth": "1985-05-15",
+          "gender": "M",
+          "address": {
+            "street1": "123 Main Street",
+            "street2": "Suite 100",
+            "city": "Springfield",
+            "state": "IL",
+            "postalCode": "62701",
+            "country": "US"
+          },
+          "preferences": {
+            "preferredContactMethod": "EMAIL",
+            "preferredContactTime": "EVENINGS",
+            "doNotCall": false,
+            "doNotEmail": false
+          }
+        },
+        "desiredVehicle": {
+          "make": "Toyota",
+          "model": "Camry",
+          "year": 2026,
+          "trim": ["LE", "SE"],
+          "bodyType": "SEDAN",
+          "transmission": "AUTOMATIC",
+          "fuelType": "HYBRID",
+          "desiredFeatures": [
+            "ALL_WHEEL_DRIVE",
+            "LEATHER_INTERIOR",
+            "SUNROOF",
+            "NAVIGATION_SYSTEM",
+            "BACKUP_CAMERA"
+          ],
+          "excludedFeatures": [
+            "REMOTE_START"
+          ],
+          "priceRange": {
+            "minUSD": 25000,
+            "maxUSD": 35000,
+            "currency": "USD"
+          },
+          "deliveryType": "IMMEDIATE"
+        },
+        "tradeIn": {
+          "hasTradeIn": true,
+          "year": 2018,
+          "make": "Honda",
+          "model": "Accord",
+          "estimatedValue": 18000,
+          "condition": "GOOD",
+          "mileage": 45000,
+          "vin": "1HGCV1F32JA123456"
+        },
+        "financing": {
+          "interestedInFinancing": true,
+          "preferredLoanTerm": 60,
+          "downPaymentRange": {
+            "minUSD": 5000,
+            "maxUSD": 10000
+          },
+          "creditTierPreference": "GOOD"
+        },
+        "metadata": {
+          "createdAt": "2026-03-20T10:15:00Z",
+          "updatedAt": "2026-03-23T14:30:00Z",
+          "expirationDate": "2026-04-23T14:30:00Z",
+          "priority": "HIGH",
+          "ownershipChain": [
+            "DEALER-001",
+            "MANUFACTURER-ABC"
+          ],
+          "sourceSystem": "DEALERSHIP_CRM_v2.1",
+          "customFields": {
+            "salesRepId": "SR-456",
+            "campaignCode": "SPRING_2026_PROMOTION",
+            "internalNotes": "Customer visited showroom on 3/19, interested in hybrid models"
+          },
+          "compliance": {
+            "gdprConsent": true,
+            "ccpaOptOut": false,
+            "marketingEmailConsent": true,
+            "timestamp": "2026-03-20T10:15:00Z"
+          }
+        },
+        "subscriptionPreferences": {
+          "wantsPriceUpdates": true,
+          "wantsInventoryUpdates": true,
+          "wantsServiceReminders": false,
+          "updateFrequency": "WEEKLY"
+        }
+      }
+    },
+    "validation": {
+      "checksum": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signature": null
+    }
+  }
+}

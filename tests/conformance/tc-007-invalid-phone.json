@@ -1,0 +1,57 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-007",
+  "title": "Invalid Phone Number Format",
+  "level": "L2",
+  "conformanceLevel": 2,
+  "category": "FIELD_VALIDATION",
+  "description": "customer.phoneNumber is '123', which is too short to be a valid E.164 number (minimum +1 country code plus digits). Validator MUST return valid=false with an INVALID_PHONE_FORMAT error.",
+  "specRef": "LEX_CONFORMANCE §2 TC-007",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000007",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:06:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC007-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "emailAddress": "jane.smith@example.com",
+            "phoneNumber": "123"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Chevrolet",
+            "model": "Silverado"
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:06:00Z"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "customer.phoneNumber",
+        "code": "INVALID_PHONE_FORMAT",
+        "level": "ERROR",
+        "rejectedValue": "123",
+        "suggestion": "Phone numbers SHOULD be in E.164 format (e.g. +14155551234)"
+      }
+    ],
+    "warnings": []
+  }
+}

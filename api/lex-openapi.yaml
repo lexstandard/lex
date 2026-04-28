@@ -1,0 +1,960 @@
+﻿# SPDX-License-Identifier: Apache-2.0
+# Copyright (c) 2026 LEX Lead Exchange Standard Contributors
+# Canonical specification: https://lexstandard.org
+
+openapi: 3.1.0
+
+info:
+  title: LEX — Lead Exchange Standard REST API
+  version: 1.0.0
+  description: |
+    REST API for the LEX (Lead Exchange Standard) protocol.
+    
+    ## Overview
+    LEX is a platform-agnostic specification for universal sales lead data exchange
+    across industries including automotive, aviation, maritime, real estate,
+    heavy equipment, and technology.
+    This OpenAPI spec covers the **REST/Webhook transport layer** — the primary
+    integration method for web-connected systems.
+    
+    ## Authentication
+    LEX defines OAuth 2.0 Client Credentials (machine-to-machine) as the
+    authentication pattern. Your platform implements the token endpoint.
+    Include the Bearer token in the `Authorization` header on every request.
+    
+    ## Idempotency
+    All POST endpoints are idempotent on `messageId`. Submitting the same
+    `messageId` twice returns 200 OK with the original response — no duplicate
+    processing occurs.
+    
+    ## Rate Limits
+    - Standard tier: 1,000 requests/minute
+    - Enterprise tier: 10,000 requests/minute
+    - Batch endpoint: 100 messages/call
+    
+    ## Versioning
+    The API version is in the URL path (`/v1/`). The LEX spec version is in
+    each message's `header.version` field.
+    
+  contact:
+    name: LEX Standard Working Group
+    url: https://lexstandard.org/docs
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: https://api.lexstandard.org/v1
+    description: Production
+  - url: https://sandbox.lexstandard.org/v1
+    description: Sandbox — for integration testing and conformance validation
+
+security:
+  - oauth2: []
+
+tags:
+  - name: messages
+    description: Submit and retrieve LEX messages
+  - name: leads
+    description: Lead-specific operations
+  - name: assets
+    description: Asset inventory operations
+  - name: subscriptions
+    description: Subscription management
+  - name: conformance
+    description: Integration conformance testing
+  - name: schema
+    description: Schema retrieval
+
+paths:
+  /messages:
+    post:
+      tags: [messages]
+      operationId: submitMessage
+      summary: Submit a LEX message
+      description: |
+        Submit any LEX message type (LEAD, ASSET, ACKNOWLEDGMENT, SUBSCRIPTION, LEAD_CLOSURE).
+        
+        The server will:
+        1. Validate the message envelope (header fields, message type)
+        2. Apply schema validation for the payload
+        3. Apply business rule validation
+        4. Route to the receiver identified by `receiverId`
+        5. Return the validation result synchronously
+        
+        **Idempotency:** Duplicate `messageId` submissions return 200 OK without
+        reprocessing. This is the expected behavior for retry scenarios.
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnyLexMessage'
+            examples:
+              lead:
+                summary: LEAD message — customer expressing interest
+                value:
+                  lex:
+                    header:
+                      messageId: "MSG-2026-LEAD-001234"
+                      messageType: LEAD
+                      version: "1.0"
+                      timestamp: "2026-03-25T09:00:00Z"
+                      senderId: "PLATFORM-TOYOTA-US"
+                      receiverId: "RETAILER-TOYOTA-FREMONT-001"
+                      encryptionMethod: TLS1.3
+                    payload:
+                      lead:
+                        leadId: "LEAD-2026-003321"
+                        status: EXPRESSED_INTEREST
+                        source: MANUFACTURER_WEBSITE
+                        customer:
+                          firstName: Marcus
+                          lastName: Okafor
+                          email: marcus.okafor@email.com
+                          phone: "+14085559023"
+                        desiredProduct:
+                          productType: VEHICLE
+                          manufacturers: [Toyota]
+                          preferredModels: ["RAV4 Hybrid"]
+                        metadata:
+                          createdAt: "2026-03-25T09:00:00Z"
+                          version: "1.0"
+      responses:
+        '200':
+          description: Message processed (includes idempotent re-submissions)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageSubmitResponse'
+        '400':
+          description: Message validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationFailureResponse'
+              example:
+                messageId: "MSG-2026-LEAD-001234"
+                valid: false
+                errors:
+                  - level: ERROR
+                    field: "payload.lead.customer.email"
+                    message: "Invalid email format"
+                    code: INVALID_EMAIL_FORMAT
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /messages/{messageId}:
+    get:
+      tags: [messages]
+      operationId: getMessage
+      summary: Retrieve a submitted message
+      description: Retrieve a previously submitted LEX message by its messageId.
+      parameters:
+        - $ref: '#/components/parameters/MessageId'
+      responses:
+        '200':
+          description: Message found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageRecord'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /messages/{messageId}/acknowledgment:
+    get:
+      tags: [messages]
+      operationId: getAcknowledgment
+      summary: Get acknowledgment for a submitted message
+      description: |
+        Retrieve the ACKNOWLEDGMENT generated for a submitted message.
+        ACKs are typically available within milliseconds for synchronous
+        receivers and within the configured TTL for async receivers.
+      parameters:
+        - $ref: '#/components/parameters/MessageId'
+      responses:
+        '200':
+          description: Acknowledgment found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcknowledgmentRecord'
+        '202':
+          description: Acknowledgment pending — receiver has not yet processed the message
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /messages/batch:
+    post:
+      tags: [messages]
+      operationId: submitBatch
+      summary: Submit a batch of LEX messages
+      description: |
+        Submit up to 100 LEX messages in a single request. Each message is
+        validated and processed independently. The response includes per-message
+        results.
+        
+        Processing is **not transactional** — some messages may succeed while
+        others fail.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [messages]
+              properties:
+                messages:
+                  type: array
+                  minItems: 1
+                  maxItems: 100
+                  items:
+                    $ref: '#/components/schemas/AnyLexMessage'
+      responses:
+        '200':
+          description: Batch processed (partial success possible)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalCount:
+                    type: integer
+                  successCount:
+                    type: integer
+                  failureCount:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MessageSubmitResponse'
+        '400':
+          description: Entire batch rejected (e.g., exceeded 100 message limit)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /leads:
+    post:
+      tags: [leads]
+      operationId: submitLead
+      summary: Submit a LEAD message (type-specific shorthand)
+      description: |
+        Convenience endpoint for LEAD messages only. Equivalent to `POST /messages`
+        with `messageType: LEAD` but with Lead-specific request/response shapes
+        for easier client implementation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LexLeadRequest'
+      responses:
+        '200':
+          description: Lead submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadSubmitResponse'
+        '400':
+          $ref: '#/components/responses/ValidationFailed'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /leads/{leadId}/closure:
+    post:
+      tags: [leads]
+      operationId: submitLeadClosure
+      summary: Submit a LEAD_CLOSURE for a lead
+      description: |
+        Report the final outcome of a lead. Used by dealers/DMS to close the
+        feedback loop with the originating platform or OEM.
+      parameters:
+        - name: leadId
+          in: path
+          required: true
+          description: The original lead ID (from the LEAD message's `lead.leadId`)
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadClosureRequest'
+            examples:
+              won:
+                summary: Won deal closure
+                value:
+                  closureStatus: WON
+                  closureDate: "2026-03-25T14:00:00Z"
+                  closureReason: CUSTOMER_PURCHASED_ASSET
+                  dealAmount: 48500.00
+                  currency: USD
+              lost:
+                summary: Lost deal closure
+                value:
+                  closureStatus: LOST
+                  closureDate: "2026-03-25T14:00:00Z"
+                  closureReason: CUSTOMER_BOUGHT_COMPETITOR
+      responses:
+        '200':
+          description: Closure recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageSubmitResponse'
+        '400':
+          $ref: '#/components/responses/ValidationFailed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /assets:
+    post:
+      tags: [assets]
+      operationId: submitAsset
+      summary: Submit an ASSET inventory message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnyLexMessage'
+      responses:
+        '200':
+          description: Asset message submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageSubmitResponse'
+        '400':
+          $ref: '#/components/responses/ValidationFailed'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /subscriptions:
+    post:
+      tags: [subscriptions]
+      operationId: createSubscription
+      summary: Create a new message subscription
+      description: |
+        Register to receive LEX messages matching specified filters.
+        The system will POST matching messages to your `deliveryEndpoint`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+            example:
+              eventTypes: [LEAD_STATUS_CHANGED, LEAD_CLOSED]
+              filters:
+                productTypes: [VEHICLE, MOTORCYCLE, AIRCRAFT_NEW]
+                leadStatuses: [ORDER, IN_DELIVERY, DELIVERED]
+                regions: [US, CA]
+              deliveryEndpoint: "https://dms.example.com/lex/webhook"
+              deliveryFormat: JSON_EDI
+              hmacSecret: "your-webhook-signing-secret"
+      responses:
+        '201':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionRecord'
+        '400':
+          $ref: '#/components/responses/ValidationFailed'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    get:
+      tags: [subscriptions]
+      operationId: listSubscriptions
+      summary: List active subscriptions for the authenticated organization
+      responses:
+        '200':
+          description: Subscription list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriptions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SubscriptionRecord'
+
+  /subscriptions/{subscriptionId}:
+    delete:
+      tags: [subscriptions]
+      operationId: cancelSubscription
+      summary: Cancel an active subscription
+      parameters:
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Subscription cancelled
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /conformance/run:
+    post:
+      tags: [conformance]
+      operationId: runConformance
+      summary: Run conformance test suite
+      description: |
+        Run the LEX conformance test suite against your integration.
+        Returns a certification token on pass.
+        
+        See `specs/LEX_CONFORMANCE.md` for full test case library.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [organizationId, targetLevel]
+              properties:
+                organizationId:
+                  type: string
+                targetLevel:
+                  type: integer
+                  enum: [1, 2, 3]
+                contactEmail:
+                  type: string
+                  format: email
+                includeTestCases:
+                  type: array
+                  items:
+                    type: string
+                  description: Specific test case IDs to run (omit for full suite)
+      responses:
+        '200':
+          description: Conformance run completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConformanceReport'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /conformance/report/{sessionId}:
+    get:
+      tags: [conformance]
+      operationId: getConformanceReport
+      summary: Retrieve a previous conformance report
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Conformance report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConformanceReport'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /schema/{messageType}:
+    get:
+      tags: [schema]
+      operationId: getSchema
+      summary: Retrieve JSON Schema for a message type
+      parameters:
+        - name: messageType
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [LEAD, ASSET, ACKNOWLEDGMENT, SUBSCRIPTION, LEAD_CLOSURE, MESSAGE_ENVELOPE]
+      responses:
+        '200':
+          description: JSON Schema document
+          content:
+            application/json:
+              schema:
+                type: object
+                description: JSON Schema (draft-07 — http://json-schema.org/draft-07/schema#)
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /health:
+    get:
+      tags: [messages]
+      operationId: healthCheck
+      summary: API health check
+      security: []
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  version:
+                    type: string
+                    example: "1.0.0"
+                  timestamp:
+                    type: string
+                    format: date-time
+
+components:
+  parameters:
+    MessageId:
+      name: messageId
+      in: path
+      required: true
+      description: Unique LEX message identifier
+      schema:
+        type: string
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: false
+      description: |
+        Optional client-provided idempotency key. If provided, must match the
+        `lex.header.messageId` in the request body. Used by clients to detect
+        duplicate submissions at the HTTP layer before message parsing.
+      schema:
+        type: string
+
+  schemas:
+    AnyLexMessage:
+      type: object
+      required: [lex]
+      properties:
+        lex:
+          type: object
+          required: [header, payload]
+          properties:
+            header:
+              type: object
+              required: [messageId, messageType, version, timestamp, senderId, receiverId]
+              properties:
+                messageId:
+                  type: string
+                messageType:
+                  type: string
+                  enum: [LEAD, ASSET, ACKNOWLEDGMENT, SUBSCRIPTION, LEAD_CLOSURE]
+                version:
+                  type: string
+                timestamp:
+                  type: string
+                  format: date-time
+                senderId:
+                  type: string
+                receiverId:
+                  type: string
+                encryptionMethod:
+                  type: string
+                  enum: [NONE, TLS1.2, TLS1.3, END_TO_END]
+                  default: TLS1.3
+                correlationId:
+                  type: string
+                ttl:
+                  type: object
+                  properties:
+                    maxAgeSeconds:
+                      type: integer
+                      default: 3600
+                    expiresAt:
+                      type: string
+                      format: date-time
+                    onExpiry:
+                      type: string
+                      enum: [DLQ, DISCARD, RETURN]
+            payload:
+              type: object
+              description: Message-type-specific payload
+
+    LexLeadRequest:
+      type: object
+      description: Standalone LEAD message request body
+      required: [lex]
+      properties:
+        lex:
+          type: object
+          required: [header, payload]
+          properties:
+            header:
+              $ref: '#/components/schemas/AnyLexMessage/properties/lex/properties/header'
+            payload:
+              type: object
+              required: [lead]
+              properties:
+                lead:
+                  type: object
+                  description: See LEX_LEAD_SCHEMA.json for full schema
+
+    LeadClosureRequest:
+      type: object
+      required: [closureStatus, closureDate]
+      properties:
+        closureStatus:
+          type: string
+          enum: [WON, LOST, ABANDONED, REASSIGNED, CANCELLED, DUPLICATE]
+        closureDate:
+          type: string
+          format: date-time
+        closureReason:
+          type: string
+        dealAmount:
+          type: number
+          minimum: 0
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+        actualDeliveryDate:
+          type: string
+          format: date
+
+    MessageSubmitResponse:
+      type: object
+      required: [messageId, valid, processedAt]
+      properties:
+        messageId:
+          type: string
+        valid:
+          type: boolean
+        processedAt:
+          type: string
+          format: date-time
+        processingTimeMs:
+          type: integer
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+        idempotent:
+          type: boolean
+          description: True if this was a duplicate submission — no reprocessing occurred
+
+    LeadSubmitResponse:
+      allOf:
+        - $ref: '#/components/schemas/MessageSubmitResponse'
+        - type: object
+          properties:
+            leadId:
+              type: string
+            routedTo:
+              type: string
+              description: LEX organization ID the message was routed to
+
+    ValidationFailureResponse:
+      type: object
+      required: [messageId, valid, errors]
+      properties:
+        messageId:
+          type: string
+        valid:
+          type: boolean
+          example: false
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+        processingTimeMs:
+          type: integer
+
+    ValidationIssue:
+      type: object
+      required: [level, field, message]
+      properties:
+        level:
+          type: string
+          enum: [CRITICAL, ERROR, WARNING]
+        field:
+          type: string
+          description: JSON path to the problematic field (e.g., payload.lead.customer.email)
+        message:
+          type: string
+        code:
+          type: string
+          description: Machine-readable error code
+        suggestion:
+          type: string
+          description: Human-readable fix suggestion
+
+    MessageRecord:
+      type: object
+      properties:
+        messageId:
+          type: string
+        messageType:
+          type: string
+        receivedAt:
+          type: string
+          format: date-time
+        senderId:
+          type: string
+        status:
+          type: string
+          enum: [RECEIVED, PROCESSED, REJECTED, DELIVERED, DLQ]
+        message:
+          $ref: '#/components/schemas/AnyLexMessage'
+
+    AcknowledgmentRecord:
+      type: object
+      properties:
+        originalMessageId:
+          type: string
+        status:
+          type: string
+          enum: [RECEIVED, PROCESSED, REJECTED, ERROR]
+        processedAt:
+          type: string
+          format: date-time
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+
+    SubscriptionRequest:
+      type: object
+      required: [eventTypes, deliveryEndpoint]
+      properties:
+        eventTypes:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            enum:
+              - LEAD_RECEIVED
+              - LEAD_CREATED
+              - LEAD_UPDATED
+              - LEAD_STATUS_CHANGED
+              - LEAD_CLOSED
+              - LEAD_ASSIGNED
+              - LEAD_REASSIGNED
+              - ASSET_ADDED
+              - ASSET_UPDATED
+              - ASSET_SOLD
+              - ASSET_REMOVED
+              - MESSAGE_FAILED
+              - MESSAGE_PROCESSED
+              - ALL
+        filters:
+          type: object
+          properties:
+            productTypes:
+              type: array
+              items:
+                type: string
+            leadStatuses:
+              type: array
+              items:
+                type: string
+            regions:
+              type: array
+              items:
+                type: string
+            senderIds:
+              type: array
+              items:
+                type: string
+        deliveryEndpoint:
+          type: string
+          format: uri
+          description: HTTPS webhook URL to deliver matching messages to
+        deliveryFormat:
+          type: string
+          enum: [JSON_EDI, XML_EDI]
+          default: JSON_EDI
+        hmacSecret:
+          type: string
+          description: |
+            Shared secret for HMAC-SHA256 webhook signature verification.
+            The server will include `X-LEX-Signature: sha256=<hmac>` on each delivery.
+
+    SubscriptionRecord:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+        organizationId:
+          type: string
+        eventTypes:
+          type: array
+          items:
+            type: string
+        filters:
+          type: object
+        deliveryEndpoint:
+          type: string
+        status:
+          type: string
+          enum: [ACTIVE, PAUSED, CANCELLED]
+        createdAt:
+          type: string
+          format: date-time
+        lastDeliveryAt:
+          type: string
+          format: date-time
+        deliveryCount:
+          type: integer
+
+    ConformanceReport:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        organizationId:
+          type: string
+        targetLevel:
+          type: integer
+        runAt:
+          type: string
+          format: date-time
+        result:
+          type: string
+          enum: [PASS, FAIL, PARTIAL]
+        passCount:
+          type: integer
+        failCount:
+          type: integer
+        warnCount:
+          type: integer
+        testResults:
+          type: array
+          items:
+            type: object
+            properties:
+              testCaseId:
+                type: string
+              status:
+                type: string
+                enum: [PASS, FAIL, WARN, SKIP]
+              durationMs:
+                type: integer
+              errors:
+                type: array
+                items:
+                  type: string
+        certificationToken:
+          type: string
+          description: |
+            Present only when result = PASS. Valid for 12 months.
+            Format: LEX-L{level}-CERT-{year}-{orgId}-{signature}
+
+    ErrorResponse:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
+
+  responses:
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: UNAUTHORIZED
+            message: "Bearer token missing or expired"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: NOT_FOUND
+            message: "No message found with the given ID"
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds until the rate limit window resets
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: RATE_LIMITED
+            message: "1000 requests/minute limit exceeded"
+    ValidationFailed:
+      description: Message validation failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationFailureResponse'
+    InternalError:
+      description: Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: INTERNAL_ERROR
+            message: "An unexpected error occurred. Request ID included for support."
+
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: |
+        OAuth 2.0 Client Credentials for machine-to-machine authentication.
+        LEX defines this as the required auth pattern — your platform supplies
+        the token endpoint. Replace the tokenUrl below with your auth server.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{your-auth-server}/oauth/token
+          scopes:
+            lex:leads:read: Read LEAD messages
+            lex:leads:write: Submit and update LEAD messages
+            lex:assets:read: Read ASSET messages
+            lex:assets:write: Submit ASSET messages
+            lex:closures:write: Submit LEAD_CLOSURE messages
+            lex:subscriptions:manage: Create and manage subscriptions
+            lex:conformance: Run conformance tests

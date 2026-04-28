@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>LexSampleSteeltoe</AssemblyName>
+    <RootNamespace>LexSample.Steeltoe</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- LEX C# library — local project reference -->
+    <ProjectReference Include="..\..\libraries\csharp\lex.csproj" />
+
+    <!-- Steeltoe cloud-native extensions -->
+    <PackageReference Include="Steeltoe.Extensions.Configuration.CloudFoundryCore" Version="3.2.8" />
+    <PackageReference Include="Steeltoe.Management.EndpointCore"                   Version="3.2.8" />
+
+    <!-- HTTP client -->
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

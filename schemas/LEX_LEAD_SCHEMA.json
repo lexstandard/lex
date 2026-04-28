@@ -1,0 +1,1833 @@
+﻿{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexstandard.org/schemas/v1/LEX_LEAD_SCHEMA.json",
+  "title": "LEX - LEAD Message Schema",
+  "description": "Schema for LEAD message type - lead information with full lifecycle support",
+  "type": "object",
+  "required": ["payload"],
+  "properties": {
+    "payload": {
+      "type": "object",
+      "required": ["lead"],
+      "properties": {
+        "lead": {
+          "type": "object",
+          "required": [
+            "leadId",
+            "status",
+            "source",
+            "customer",
+            "desiredProduct",
+            "metadata"
+          ],
+          "properties": {
+            "leadId": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 50,
+              "description": "Unique lead identifier"
+            },
+            "status": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadStatus"
+            },
+            "leadType": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadType",
+              "description": "Type of lead - PRIMARY, CART, TEST_DRIVE, POST_ORDER, CROSS_SELL, etc."
+            },
+            "source": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadSource"
+            },
+            "leadCreatedDate": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When this lead was originally created"
+            },
+            "leadVersion": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Version number for this lead (incremented on significant updates)"
+            },
+            "parentOrderId": {
+              "type": "string",
+              "description": "For POST_ORDER leads: ID of the original purchase order this lead is related to"
+            },
+            "parentLeadId": {
+              "type": "string",
+              "description": "For child leads: ID of parent lead (e.g., test drive → full lead)"
+            },
+            "relatedOrderIds": {
+              "type": "array",
+              "description": "For cross-sell/accessory leads: IDs of related purchase orders",
+              "items": {
+                "type": "string"
+              }
+            },
+            "relatedLeadIds": {
+              "type": "array",
+              "description": "Child leads spawned from this lead (e.g., accessories after main vehicle order)",
+              "items": {
+                "type": "string"
+              }
+            },
+            "leadAncestry": {
+              "type": "object",
+              "description": "Tracks the complete path of this lead from origin to current state",
+              "properties": {
+                "originType": {
+                  "type": "string",
+                  "enum": ["CART", "TEST_DRIVE", "DIRECT_INQUIRY", "THIRD_PARTY", "INTERNAL", "OTHER"],
+                  "description": "Where this lead journey started"
+                },
+                "originDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "originSourceId": {
+                  "type": "string",
+                  "description": "ID in original system (e.g., cart ID, test drive ID)"
+                },
+                "conversionPath": {
+                  "type": "array",
+                  "description": "Breadcrumb trail: CART → TEST_DRIVE → SHOPPING → ORDER → DELIVERED",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "stage": {
+                        "type": "string"
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "duration": {
+                        "type": "integer",
+                        "description": "Seconds spent in this stage"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "leadHistory": {
+              "type": "array",
+              "description": "Complete timeline of all lead updates - allows tracking non-linear progression",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "integer"
+                  },
+                  "previousStatus": {
+                    "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadStatus"
+                  },
+                  "newStatus": {
+                    "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadStatus"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "changedBy": {
+                    "type": "string",
+                    "description": "System or user that made the change"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "Reason for status change (e.g., customer withdrew, reconsidered, redirected to different product)"
+                  },
+                  "dataChanged": {
+                    "type": "object",
+                    "description": "Fields that changed in this update",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "sourceDetail": {
+              "type": "object",
+              "description": "Detailed source information",
+              "properties": {
+                "sourceType": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadSource"
+                },
+                "sourceURL": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "specificPage": {
+                  "type": "string"
+                },
+                "pageTitle": {
+                  "type": "string"
+                },
+                "channel": {
+                  "type": "string",
+                  "enum": ["DIGITAL", "PHONE", "PHYSICAL", "PARTNER"]
+                },
+                "subChannel": {
+                  "type": "string"
+                },
+                "campaignCode": {
+                  "type": "string"
+                },
+                "campaignName": {
+                  "type": "string"
+                },
+                "marketingSource": {
+                  "type": "string",
+                  "enum": ["ORGANIC", "PAID_SEARCH", "SOCIAL", "EMAIL", "REFERRAL", "DIRECT", "PARTNERSHIP"]
+                },
+                "adNetwork": {
+                  "type": "string"
+                },
+                "deviceType": {
+                  "type": "string",
+                  "enum": ["MOBILE", "DESKTOP", "TABLET", "KIOSK", "OTHER"]
+                },
+                "deviceOS": {
+                  "type": "string"
+                },
+                "browser": {
+                  "type": "string"
+                },
+                "referrerURL": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "leadEntryMethod": {
+                  "type": "string",
+                  "enum": ["FORM_SUBMISSION", "PHONE", "CHAT", "LIVE_AGENT", "KIOSK", "OTHER"]
+                },
+                "formName": {
+                  "type": "string"
+                },
+                "formCompletionTime": {
+                  "type": "integer",
+                  "description": "Seconds to complete form"
+                },
+                "submissionTimezone": {
+                  "type": "string"
+                },
+                "submissionDayOfWeek": {
+                  "type": "string"
+                },
+                "estimatedCustomerLocation": {
+                  "type": "string"
+                },
+                "languagePreference": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ISO639Language"
+                },
+                "leadQualityScore": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "sessionId": {
+                  "type": "string"
+                },
+                "utmSource": { "type": "string", "description": "UTM source parameter (e.g., google, newsletter)" },
+                "utmMedium": { "type": "string", "description": "UTM medium parameter (e.g., cpc, email)" },
+                "utmCampaign": { "type": "string", "description": "UTM campaign name" },
+                "utmContent": { "type": "string", "description": "UTM content differentiator" },
+                "utmTerm": { "type": "string", "description": "UTM keyword term" },
+                "cartValue": { "type": "number", "minimum": 0, "description": "Total cart value at lead capture" },
+                "cartItems": { "type": "array", "items": { "type": "string" } },
+                "testDriveVehicleVIN": { "type": "string", "description": "VIN of vehicle used in test drive" },
+                "testDriveRequestedDate": { "type": "string", "format": "date-time" },
+                "testDriveCompletedDate": { "type": "string", "format": "date-time" },
+                "testDriveNotes": { "type": "string" },
+                "relatedOrderId": { "type": "string", "description": "For post-order leads: originating order ID" },
+                "offerValidUntil": { "type": "string", "format": "date-time" },
+                "customFields": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            },
+            "customer": {
+              "type": "object",
+              "description": "Customer information",
+              "required": ["emailAddress", "phoneNumber"],
+              "properties": {
+                "customerId": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "lastName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "emailAddress": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "phoneNumber": {
+                  "type": "string"
+                },
+                "phoneNumbers": {
+                  "type": "array",
+                  "description": "Structured multi-entry phone list. Supersedes phoneNumber when multiple entries are needed. phoneNumber is retained for backward compatibility.",
+                  "items": {
+                    "type": "object",
+                    "required": ["number"],
+                    "properties": {
+                      "number": { "type": "string", "description": "Phone number — E.164 format recommended (e.g. +16155559087)" },
+                      "type": { "type": "string", "enum": ["VOICE", "MOBILE", "FAX", "PAGER", "WORK", "HOME"], "default": "VOICE" },
+                      "bestTime": { "type": "string", "enum": ["MORNING", "AFTERNOON", "EVENING", "NOPREFERENCE", "ANYTIME"], "default": "ANYTIME", "description": "Best time to reach customer on this number" },
+                      "preferred": { "type": "boolean", "default": false, "description": "Set true for exactly one entry — the primary contact number" },
+                      "countryCode": { "type": "string", "description": "ISO 3166-1 alpha-2 country code for this number" }
+                    }
+                  }
+                },
+                "phoneCountryCode": {
+                  "type": "string"
+                },
+                "preferredContactMethod": {
+                  "type": "string",
+                  "enum": ["EMAIL", "PHONE", "SMS", "WHATSAPP", "TELEGRAM"]
+                },
+                "preferredContactTime": {
+                  "type": "string",
+                  "enum": ["MORNING", "AFTERNOON", "EVENING", "ANYTIME"],
+                  "description": "Preferred time window for being contacted"
+                },
+                "locale": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ISO639Language",
+                  "description": "Customer's locale preference (e.g. en-US, fr-FR)"
+                },
+                "ageRange": {
+                  "type": "string",
+                  "enum": ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"]
+                },
+                "occupationType": {
+                  "type": "string"
+                },
+                "address": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Address"
+                },
+                "addresses": {
+                  "type": "array",
+                  "description": "Multi-typed address list. Supersedes address when multiple address types are needed. address is retained for backward compatibility.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "addressType": {
+                        "type": "string",
+                        "enum": ["HOME", "WORK", "DELIVERY", "BILLING", "REGISTERED", "MAILING"],
+                        "description": "Classification of this address entry"
+                      },
+                      "primary": { "type": "boolean", "default": false, "description": "Set true for exactly one entry" },
+                      "street": { "type": "string" },
+                      "street2": { "type": "string" },
+                      "city": { "type": "string" },
+                      "state": { "type": "string" },
+                      "postalCode": { "type": "string" },
+                      "country": { "type": "string", "description": "ISO 3166-1 alpha-2" }
+                    }
+                  }
+                },
+                "buyingIntention": {
+                  "type": "object",
+                  "properties": {
+                    "purchaseTimeline": {
+                      "type": "string",
+                      "enum": ["IMMEDIATE", "1_WEEK", "2_WEEKS", "1_MONTH", "1-3_MONTHS", "3-6_MONTHS", "6_PLUS_MONTHS"]
+                    },
+                    "budgetRange": {
+                      "type": "string"
+                    },
+                    "primaryUsageType": {
+                      "type": "string"
+                    },
+                    "monthlyPaymentCapacity": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  }
+                },
+                "creditTier": {
+                  "type": "string",
+                  "enum": ["SUPER_PRIME", "PRIME", "NEAR_PRIME", "NONPRIME", "DEEP_SUBPRIME"],
+                  "description": "Self-reported or soft-pull derived credit bracket — determines lender and rate tier routing before formal credit application submission"
+                },
+                "fleetBuyer": {
+                  "type": "object",
+                  "description": "Fleet purchase context — populated when customer is procuring 5+ units. Routes lead away from retail F&I queue to fleet desk.",
+                  "properties": {
+                    "isFleet": { "type": "boolean" },
+                    "fleetSize": { "type": "integer", "minimum": 1, "description": "Total size of customer's existing fleet" },
+                    "unitsToOrder": { "type": "integer", "minimum": 1, "description": "Number of units in this specific procurement" },
+                    "fleetManagerName": { "type": "string" },
+                    "fleetManagerEmail": { "type": "string", "format": "email" }
+                  }
+                },
+                "buyerType": {
+                  "type": "string",
+                  "enum": ["INDIVIDUAL", "ORGANIZATION"],
+                  "description": "Buyer classification. Populate organizationBuyer when ORGANIZATION. Spec: LEX_MULTI_INDUSTRY"
+                },
+                "organizationBuyer": {
+                  "type": "object",
+                  "description": "B2B / government buyer details. Populated when buyerType=ORGANIZATION. Spec: LEX_MULTI_INDUSTRY §2",
+                  "required": ["companyName"],
+                  "properties": {
+                    "companyName": { "type": "string" },
+                    "companyRegistrationNumber": { "type": "string" },
+                    "taxIdentificationNumber": { "type": "string" },
+                    "industryCode": { "type": "string", "description": "NAICS / SIC / ISIC code" },
+                    "companySize": {
+                      "type": "string",
+                      "enum": ["SME", "MID_MARKET", "ENTERPRISE", "GOVERNMENT", "NGO"]
+                    },
+                    "existingFleetSize": { "type": "integer", "minimum": 0 },
+                    "governmentEntity": { "type": "boolean" },
+                    "procurementMethodology": {
+                      "type": "string",
+                      "enum": ["TENDER", "DIRECT_AWARD", "FRAMEWORK", "RFP", "CONSORTIUM"]
+                    },
+                    "existingRelationship": {
+                      "type": "string",
+                      "enum": ["NEW_CUSTOMER", "RENEWAL", "EXPANSION"]
+                    },
+                    "preferredSupplierStatus": { "type": "boolean" },
+                    "budgetApprovalStatus": {
+                      "type": "string",
+                      "enum": ["APPROVED", "PENDING", "CONTINGENT"]
+                    },
+                    "procurementContact": {
+                      "type": "object",
+                      "required": ["firstName", "lastName", "email"],
+                      "properties": {
+                        "firstName": { "type": "string" },
+                        "lastName": { "type": "string" },
+                        "title": { "type": "string" },
+                        "email": { "type": "string", "format": "email" },
+                        "phone": { "type": "string" },
+                        "department": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "desiredProduct": {
+              "type": "object",
+              "description": "Desired product specifications — works across all asset classes.",
+              "required": ["productType"],
+              "properties": {
+                "productType": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ProductType"
+                },
+                "assetClass": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/AssetClass"
+                },
+                "make":       { "type": "string", "description": "Manufacturer / brand name (e.g. Toyota, Airbus, Boeing)" },
+                "model":      { "type": "string", "description": "Model name (e.g. Corolla, A320)" },
+                "trim":       { "type": "string", "description": "Trim / variant level (e.g. XSE, Premium)" },
+                "bodyStyle":  { "type": "string", "description": "Body style (e.g. COUPE, SEDAN, SUV, HATCHBACK)" },
+                "year": {
+                  "type": "integer",
+                  "minimum": 1900,
+                  "maximum": 2100,
+                  "description": "Model year"
+                },
+                "condition": {
+                  "type": "string",
+                  "enum": ["NEW", "USED", "CERTIFIED_PRE_OWNED", "DEMO"],
+                  "description": "Asset condition"
+                },
+                "desiredColor": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "Acceptable exterior colour names"
+                },
+                "interiorColor": { "type": "string" },
+                "budgetMin": { "type": "number", "minimum": 0 },
+                "budgetMax": { "type": "number", "minimum": 0 },
+                "budgetCurrency": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency" },
+                "transmission": {
+                  "type": "string",
+                  "enum": ["AUTOMATIC", "MANUAL", "CVT", "DCT"]
+                },
+                "fuelType": {
+                  "type": "string",
+                  "enum": ["GASOLINE", "DIESEL", "HYBRID", "ELECTRIC", "HYDROGEN", "OTHER"]
+                },
+                "features": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "Desired feature list — flat strings. Use featurePreferences[] when priority weighting is needed."
+                },
+                "featurePreferences": {
+                  "type": "array",
+                  "description": "Weighted feature preference list. Extends features[] with priority signals. +100 = essential to have, -100 = essential to NOT have, 0 = indifferent. Applies across all industries: automotive options, aircraft avionics, property amenities, equipment attachments, software capabilities. Directly corresponds to ADF <option><weighting> but generalized for all asset classes.",
+                  "items": {
+                    "type": "object",
+                    "required": ["feature"],
+                    "properties": {
+                      "feature": { "type": "string", "description": "Feature or option name (e.g. 'Keyless Entry', 'APU', 'Swimming Pool', 'MDM Enrollment', 'Crane Attachment')" },
+                      "weighting": {
+                        "type": "integer",
+                        "minimum": -100,
+                        "maximum": 100,
+                        "default": 0,
+                        "description": "+100 = essential to have. -100 = essential to NOT have. 0 = no preference. Matches ADF weighting range."
+                      },
+                      "category": { "type": "string", "description": "Optional grouping label (e.g. SAFETY, COMFORT, PERFORMANCE, TECHNOLOGY, AVIONICS, AMENITY)" }
+                    }
+                  }
+                },
+                "colorPreferences": {
+                  "type": "array",
+                  "description": "Ranked exterior/interior color combinations in order of preference. Rank 1 = most preferred. Applicable to automotive, maritime (vessel livery), custom-built assets, and aviation interiors. Directly corresponds to ADF <colorcombination><preference>.",
+                  "items": {
+                    "type": "object",
+                    "required": ["rank"],
+                    "properties": {
+                      "exterior": { "type": "string", "description": "Exterior / hull / body color name" },
+                      "interior": { "type": "string", "description": "Interior / cabin color or material name" },
+                      "rank": { "type": "integer", "minimum": 1, "description": "1 = most preferred. Lower = higher preference." }
+                    }
+                  }
+                },
+                "priceOffer": {
+                  "type": "object",
+                  "description": "Structured price expression with semantic type. Provides richer intent than budgetMin/budgetMax alone. Directly corresponds to ADF <price> with type, delta, relativeTo, and source attributes, extended for all asset classes.",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["QUOTE", "OFFER", "MSRP", "INVOICE", "APPRAISAL", "ASKING", "LIST", "CLOSING"],
+                      "description": "Semantic type of this price expression: OFFER = what buyer is willing to pay; APPRAISAL = assessed value; LIST = seller's listed price"
+                    },
+                    "amount": { "type": "number", "minimum": 0 },
+                    "currency": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency" },
+                    "delta": {
+                      "type": "string",
+                      "enum": ["ABSOLUTE", "RELATIVE", "PERCENTAGE"],
+                      "description": "How amount relates to relativeTo. PERCENTAGE: amount=2 means 2% above relativeTo value."
+                    },
+                    "relativeTo": {
+                      "type": "string",
+                      "enum": ["MSRP", "INVOICE", "LIST", "APPRAISAL"],
+                      "description": "Reference point for delta calculation (e.g. 2% above invoice)."
+                    },
+                    "source": { "type": "string", "description": "Source of price data (e.g. 'Kelley Blue Book', 'RICS Valuation', 'JD Power', 'AVAC')" },
+                    "validUntil": { "type": "string", "format": "date", "description": "Date until which this price offer or appraisal is considered valid" }
+                  }
+                },
+                "installedOptions": {
+                  "type": "array",
+                  "description": "Options/accessories already installed on the target vehicle. Distinct from featurePreferences[] (what the customer wants). Source classification determines MSRP inclusion, warranty scope, and appraisal treatment.",
+                  "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                      "name": { "type": "string", "description": "Option or accessory name (e.g. 'Tow Package', 'Paint Protection Film', 'OEM Navigation')" },
+                      "source": {
+                        "type": "string",
+                        "enum": ["OEM_FACTORY", "DEALER_INSTALLED", "AFTERMARKET"],
+                        "description": "OEM_FACTORY = included in MSRP; DEALER_INSTALLED = added by dealer post-build; AFTERMARKET = non-OEM third party"
+                      },
+                      "partNumber": { "type": "string" },
+                      "estimatedValue": { "type": "number", "minimum": 0 }
+                    }
+                  }
+                },
+                "factoryOrderPreference": {
+                  "type": "string",
+                  "enum": ["IN_STOCK_ONLY", "WILL_WAIT_FACTORY_ORDER", "FACTORY_ORDER_PREFERRED"],
+                  "description": "Factory order eligibility — FACTORY_ORDER_PREFERRED triggers allocation request and production scheduling workflow (6–16 week lead time)"
+                },
+                "manufacturers": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "preferredModels": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "vehiclePreferences": {
+                  "type": "object",
+                  "description": "Legacy / backward-compat bag for older producers",
+                  "additionalProperties": true
+                },
+                "typeSpecificPreferences": {
+                  "type": "object",
+                  "description": "Industry-specific extra attributes",
+                  "additionalProperties": true
+                }
+              }
+            },
+            "tradeIn": {
+              "type": "object",
+              "description": "Trade-in vehicle information",
+              "properties": {
+                "tradeInVehicleOffered": {
+                  "type": "boolean"
+                },
+                "tradeInYear": {
+                  "type": "integer"
+                },
+                "tradeInMake": {
+                  "type": "string"
+                },
+                "tradeInModel": {
+                  "type": "string"
+                },
+                "tradeInMileage": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "tradeInCondition": {
+                  "type": "string",
+                  "enum": ["EXCELLENT", "GOOD", "FAIR", "POOR"]
+                },
+                "estimatedTradeInValue": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "tradeInOdometerStatus": {
+                  "type": "string",
+                  "enum": ["ORIGINAL", "REPLACED", "ROLLOVER", "TAMPERED", "UNKNOWN"],
+                  "description": "Odometer reading integrity — required for compliant title disclosure (49 CFR Part 580). A bare mileage integer is legally insufficient without this qualifier."
+                },
+                "tradeInTitleStatus": {
+                  "type": "string",
+                  "enum": ["CLEAN", "SALVAGE", "REBUILT", "FLOOD", "LEMON_LAW_BUYBACK", "JUNK", "BONDED"],
+                  "description": "Title brand — salvage/flood/lemon titles disqualify trade-ins from most captive lender programs and trigger separate appraisal workflows"
+                },
+                "tradeInPayoffAmount": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Remaining loan balance owed on the trade-in — gap between payoff and ACV determines negative equity that rolls into the new deal structure"
+                },
+                "tradeInPayoffCurrency": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency"
+                },
+                "tradeInPreviousOwnerCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Number of prior titled owners — affects ACV and CPO program eligibility (most OEM CPO programs require ≤2 prior owners)"
+                },
+                "tradeInAccidentHistory": {
+                  "type": "object",
+                  "description": "Accident history disclosure for the trade-in vehicle",
+                  "properties": {
+                    "reportedAccidentCount": { "type": "integer", "minimum": 0 },
+                    "airbagDeployment": {
+                      "type": "boolean",
+                      "description": "At least one airbag deployed — reduces ACV 15–40% and affects CPO eligibility"
+                    },
+                    "frameOrStructuralDamage": {
+                      "type": "boolean",
+                      "description": "Frame or structural damage recorded — triggers separate high-value appraisal path"
+                    }
+                  }
+                },
+                "tradeInVehicleHistoryReport": {
+                  "type": "object",
+                  "description": "Vehicle history report reference — enables downstream DMS/lender to retrieve without re-pulling and incurring duplicate fees",
+                  "properties": {
+                    "reportType": { "type": "string", "enum": ["CARFAX", "AUTOCHECK", "NMVTIS", "OTHER"] },
+                    "reportReferenceId": { "type": "string" },
+                    "pullDate": { "type": "string", "format": "date" }
+                  }
+                }
+              }
+            },
+            "financing": {
+              "type": "object",
+              "description": "Financing preferences",
+              "properties": {
+                "needsFinancing": {
+                  "type": "boolean"
+                },
+                "downPaymentCapacity": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "preferredMonthlyPayment": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "loanTerm": {
+                  "type": "integer",
+                  "minimum": 12,
+                  "maximum": 84,
+                  "description": "Months"
+                },
+                "creditScore": {
+                  "type": "string",
+                  "enum": ["EXCELLENT", "GOOD", "FAIR", "POOR", "UNKNOWN"]
+                }
+              }
+            },
+            "relatedProducts": {
+              "type": "object",
+              "description": "Post-order related products and accessories (for CROSS_SELL, ACCESSORY, PROTECTION_PLAN, SUBSCRIPTION leads)",
+              "properties": {
+                "accessories": {
+                  "type": "array",
+                  "description": "Vehicle accessories and add-ons (seat packages, wheels, paint protection, audio upgrades, etc.)",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accessoryId": {
+                        "type": "string",
+                        "description": "Unique identifier for the accessory in platform inventory"
+                      },
+                      "accessoryName": {
+                        "type": "string"
+                      },
+                      "accessoryCategory": {
+                        "type": "string",
+                        "enum": ["SEAT_PACKAGE", "PAINT_PROTECTION", "WHEEL_UPGRADE", "AUDIO_UPGRADE", "INTERIOR_PACKAGE", "EXTERIOR_PACKAGE", "SAFETY_PACKAGE", "TECHNOLOGY_PACKAGE", "OTHER"]
+                      },
+                      "estimatedPrice": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "currency": {
+                        "type": "string"
+                      },
+                      "installationType": {
+                        "type": "string",
+                        "enum": ["FACTORY_INSTALL", "DEALER_INSTALL", "AFTERMARKET_INSTALL"]
+                      }
+                    }
+                  }
+                },
+                "protectionPlans": {
+                  "type": "array",
+                  "description": "Protection plans and warranty extensions (extended warranty, gap insurance, maintenance plans, road hazard protection)",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "planId": {
+                        "type": "string",
+                        "description": "Unique identifier for the protection plan"
+                      },
+                      "planName": {
+                        "type": "string"
+                      },
+                      "planType": {
+                        "type": "string",
+                        "enum": ["EXTENDED_WARRANTY", "GAP_INSURANCE", "MAINTENANCE_PLAN", "ROAD_HAZARD", "THEFT_PROTECTION", "ACCIDENT_PROTECTION", "TIRE_PLAN", "HYBRID_BATTERY_PLAN"]
+                      },
+                      "coveragePeriod": {
+                        "type": "integer",
+                        "description": "Coverage in months"
+                      },
+                      "estimatedPrice": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "currency": {
+                        "type": "string"
+                      },
+                      "deductible": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "coverageDetails": {
+                        "type": "string",
+                        "description": "Human-readable description of what's covered"
+                      }
+                    }
+                  }
+                },
+                "subscriptions": {
+                  "type": "array",
+                  "description": "Recurring subscription services (telematics, charging network, navigation updates, roadside assistance, in-vehicle wifi)",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "subscriptionId": {
+                        "type": "string",
+                        "description": "Unique identifier for the subscription service"
+                      },
+                      "subscriptionName": {
+                        "type": "string"
+                      },
+                      "subscriptionType": {
+                        "type": "string",
+                        "enum": ["TELEMATICS", "CHARGING_NETWORK", "NAVIGATION_UPDATES", "ROADSIDE_ASSISTANCE", "IN_VEHICLE_WIFI", "MOBILE_APP", "PREMIUM_FEATURES", "CONCIERGE_SERVICE"]
+                      },
+                      "billingFrequency": {
+                        "type": "string",
+                        "enum": ["MONTHLY", "QUARTERLY", "ANNUALLY"]
+                      },
+                      "monthlyPrice": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "currency": {
+                        "type": "string"
+                      },
+                      "initialDuration": {
+                        "type": "integer",
+                        "description": "Initial subscription commitment in months (0 = month-to-month)"
+                      },
+                      "autoRenewal": {
+                        "type": "boolean"
+                      },
+                      "serviceDescription": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "retailerInstalledOptions": {
+                  "type": "array",
+                  "description": "Retailer-specific installed options and customizations (aftermarket upgrades, local retailer add-ons)",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "optionId": {
+                        "type": "string",
+                        "description": "Unique identifier for the option"
+                      },
+                      "optionName": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string",
+                        "enum": ["PERFORMANCE", "CUSTOMIZATION", "CONVENIENCE", "AESTHETIC", "SECURITY", "COMFORT"]
+                      },
+                      "manufacturer": {
+                        "type": "string",
+                        "description": "Aftermarket manufacturer if applicable"
+                      },
+                      "installationLocation": {
+                        "type": "string"
+                      },
+                      "estimatedPrice": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "currency": {
+                        "type": "string"
+                      },
+                      "installationTime": {
+                        "type": "integer",
+                        "description": "Estimated installation time in hours"
+                      }
+                    }
+                  }
+                },
+                "serviceUpgrades": {
+                  "type": "array",
+                  "description": "Service-related upgrades (premium oil changes, detailing packages, loaner vehicle program)",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "upgradeId": {
+                        "type": "string"
+                      },
+                      "upgradeName": {
+                        "type": "string"
+                      },
+                      "serviceType": {
+                        "type": "string",
+                        "enum": ["DETAILING_PACKAGE", "MAINTENANCE_UPGRADE", "LOANER_PROGRAM", "INSPECTION_PACKAGE", "TIRE_ROTATION_PLAN", "FLUID_CHANGE_PLAN"]
+                      },
+                      "frequency": {
+                        "type": "string",
+                        "enum": ["ONE_TIME", "QUARTERLY", "SEMI_ANNUAL", "ANNUAL"]
+                      },
+                      "estimatedPrice": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "currency": {
+                        "type": "string"
+                      },
+                      "validityPeriod": {
+                        "type": "integer",
+                        "description": "Validity in months"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "assignedTo": {
+              "type": "object",
+              "description": "Staff member or agent assigned to handle this lead. In automotive: internet sales manager or salesperson. In real estate: buyer's agent or listing agent. In aviation/maritime/enterprise: account manager or sales engineer. Completes the ADF <vendor><contact> capability gap.",
+              "properties": {
+                "staffId": { "type": "string", "description": "Internal staff identifier" },
+                "name": { "type": "string" },
+                "email": { "type": "string", "format": "email" },
+                "phoneNumbers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["number"],
+                    "properties": {
+                      "number": { "type": "string" },
+                      "type": { "type": "string", "enum": ["VOICE", "MOBILE", "FAX", "WORK"] }
+                    }
+                  }
+                },
+                "role": { "type": "string", "description": "e.g. INTERNET_SALES_MANAGER, BUYER_AGENT, LISTING_AGENT, ACCOUNT_MANAGER, SALES_ENGINEER, BROKER" },
+                "assignedAt": { "type": "string", "format": "date-time" },
+                "organisationId": { "type": "string", "description": "LEX org ID of the assigning organisation" }
+              }
+            },
+            "purchaseTimeframe": {
+              "type": "object",
+              "description": "Customer-stated purchase window — when they intend to buy or complete a transaction. Distinct from metadata.expirationDate, which is a system-level lead TTL. Directly corresponds to ADF <timeframe><earliestdate>/<latestdate>.",
+              "properties": {
+                "description": { "type": "string", "description": "Free-text description (e.g. 'Within 1 month', 'Before end of Q2 2026')" },
+                "earliestDate": { "type": "string", "format": "date", "description": "Earliest date the customer intends to complete the purchase" },
+                "latestDate": { "type": "string", "format": "date", "description": "Latest date the customer intends to complete the purchase" },
+                "urgency": { "type": "string", "enum": ["IMMEDIATE", "THIS_WEEK", "THIS_MONTH", "THIS_QUARTER", "THIS_YEAR", "NO_RUSH"], "description": "Machine-readable urgency tier derived from dates or customer statement" }
+              }
+            },
+            "organizationContext": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/OrganizationContext"
+            },
+            "aviationLead": {
+              "type": "object",
+              "description": "Aviation-specific lead context. Populate when desiredProduct.assetClass = AVIATION.",
+              "properties": {
+                "operatorCertificate": {
+                  "type": "string",
+                  "enum": ["PART_121", "PART_135", "PART_91", "AOC", "NONE"],
+                  "description": "Operator's regulatory certificate \u2014 determines which aircraft category can be legally operated"
+                },
+                "intendedUse": {
+                  "type": "string",
+                  "enum": ["OWNER_OPERATION", "ACMI_LEASE", "DRY_LEASE", "WET_LEASE", "CHARTER_PROGRAM", "FRACTIONAL"],
+                  "description": "Intended operational structure \u2014 dry/wet leases involve different parties and contractual frameworks; ACMI requires a licensed operator entity"
+                },
+                "importExportJurisdiction": {
+                  "type": "object",
+                  "description": "Cross-registry intent \u2014 triggers Export Certificate of Airworthiness and bilateral airworthiness agreement verification",
+                  "properties": {
+                    "currentRegistryCountry": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ISO3166Country" },
+                    "targetRegistryCountry": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ISO3166Country" }
+                  }
+                }
+              }
+            },
+            "maritimeLead": {
+              "type": "object",
+              "description": "Maritime-specific lead context. Populate when desiredProduct.assetClass = MARITIME.",
+              "properties": {
+                "charterType": {
+                  "type": "string",
+                  "enum": ["TIME_CHARTER", "VOYAGE_CHARTER", "BAREBOAT", "CONTRACT_OF_AFFREIGHTMENT", "SPOT", "DEMISE"],
+                  "description": "Charter form determines operational responsibility and legal structure \u2014 cannot be interchanged in a lead queue"
+                },
+                "intendedTradingArea": {
+                  "type": "string",
+                  "description": "Intended trading area with any exclusions \u2014 affects class notation requirements, insurance cover, war risk endorsements, and ECA fuel compliance"
+                },
+                "intendedCargoType": {
+                  "type": "string",
+                  "description": "Primary intended cargo type \u2014 used to verify vessel cargo compatibility against last cargo history"
+                }
+              }
+            },
+            "heavyEquipmentLead": {
+              "type": "object",
+              "description": "Heavy equipment-specific lead context. Populate when desiredProduct.assetClass = HEAVY_EQUIPMENT.",
+              "properties": {
+                "attachmentCouplerStandard": {
+                  "type": "string",
+                  "enum": ["S_TYPE", "ENGCON", "OEM_CAT", "OEM_KOMATSU", "OEM_VOLVO", "OEM_HITACHI", "PIN_ON", "OTHER"],
+                  "description": "Required hydraulic coupler standard \u2014 mismatches require adapter kits ($1,500\u2013$8,000) or make attachments completely incompatible"
+                },
+                "jobSiteAltitude": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Job site altitude in meters above sea level \u2014 diesel engines lose ~3% power per 300m; machines above 3,000m require de-rating or special configuration"
+                },
+                "exportLicenseRequired": {
+                  "type": "boolean",
+                  "description": "Machine being exported across customs borders \u2014 triggers OEM export compliance review before release order"
+                },
+                "exportDestinationCountry": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ISO3166Country"
+                }
+              }
+            },
+            "realEstateLead": {
+              "type": "object",
+              "description": "Real estate-specific lead context. Populate when desiredProduct is real property (productType = GENERAL_PROCUREMENT and asset is a property).",
+              "properties": {
+                "buyerRepresentationAgreementStatus": {
+                  "type": "string",
+                  "enum": ["EXECUTED", "PENDING", "DECLINED", "NOT_REQUIRED"],
+                  "description": "NAR settlement compliance \u2014 effective August 2024, buyer agents must execute representation agreement before showing properties"
+                },
+                "exchangeType": {
+                  "type": "string",
+                  "enum": ["STANDARD_PURCHASE", "1031_EXCHANGE", "TIC_1031", "PRIMARY_RESIDENCE_EXCLUSION"],
+                  "description": "Tax exchange classification \u2014 1031 exchange imposes strict IRS deadlines (45-day identification, 180-day close) and requires a Qualified Intermediary"
+                },
+                "preApprovalDetails": {
+                  "type": "object",
+                  "description": "Buyer mortgage pre-approval \u2014 first document sellers require; loan type determines concession limits and property condition requirements",
+                  "properties": {
+                    "lenderName": { "type": "string" },
+                    "preApprovalDate": { "type": "string", "format": "date" },
+                    "loanType": { "type": "string", "enum": ["CONVENTIONAL", "FHA", "VA", "USDA", "JUMBO", "NON_QM"] },
+                    "preApprovalAmount": { "type": "number", "minimum": 0 },
+                    "currency": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency" }
+                  }
+                },
+                "contingencies": {
+                  "type": "array",
+                  "description": "Offer contingencies \u2014 core milestone tracking; an offer without structured contingencies cannot drive escrow routing",
+                  "items": {
+                    "type": "object",
+                    "required": ["type", "status"],
+                    "properties": {
+                      "type": { "type": "string", "enum": ["INSPECTION", "FINANCING", "APPRAISAL", "SALE_OF_HOME", "HOA_REVIEW", "TITLE", "ENVIRONMENTAL"] },
+                      "status": { "type": "string", "enum": ["PENDING", "CLEARED", "WAIVED"] },
+                      "deadline": { "type": "string", "format": "date" },
+                      "notes": { "type": "string" }
+                    }
+                  }
+                },
+                "sellerConcessions": {
+                  "type": "object",
+                  "description": "Concessions requested from seller \u2014 present in 40\u201360% of US offers; affects appraisal net price and FHA/VA lender caps",
+                  "properties": {
+                    "amount": { "type": "number", "minimum": 0 },
+                    "currency": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency" },
+                    "percentageOfSalePrice": { "type": "number", "minimum": 0, "maximum": 100 },
+                    "purpose": { "type": "string", "enum": ["CLOSING_COSTS", "REPAIRS", "RATE_BUYDOWN", "OTHER"] }
+                  }
+                },
+                "homeWarrantyRequest": {
+                  "type": "object",
+                  "description": "Home warranty terms \u2014 standard US offer line item; lost without a structured field during CRM-to-escrow handoff",
+                  "properties": {
+                    "requested": { "type": "boolean" },
+                    "coveredBy": { "type": "string", "enum": ["BUYER", "SELLER", "NEGOTIATED"] },
+                    "warrantyProvider": { "type": "string" },
+                    "coverageTermMonths": { "type": "integer", "minimum": 1 }
+                  }
+                },
+                "propertyDisclosures": {
+                  "type": "object",
+                  "description": "Material property disclosures \u2014 discovering these post-contract collapses deals in escrow",
+                  "properties": {
+                    "saleType": { "type": "string", "enum": ["STANDARD", "SHORT_SALE", "REO", "PROBATE", "FORECLOSURE_AUCTION"] },
+                    "occupancyStatus": { "type": "string", "enum": ["OWNER_OCCUPIED", "TENANT_OCCUPIED", "VACANT"] },
+                    "tenantsLeaseEndDate": { "type": "string", "format": "date" },
+                    "asIsSale": { "type": "boolean", "description": "Property sold without repair obligations \u2014 affects FHA/VA financing eligibility" },
+                    "hoaPendingLitigation": { "type": "boolean" },
+                    "hoaSpecialAssessment": { "type": "boolean" },
+                    "hoaSpecialAssessmentAmount": { "type": "number", "minimum": 0 },
+                    "leadPaintPre1978": { "type": "boolean" },
+                    "floodInsuranceRequired": { "type": "boolean" },
+                    "undergroundStorageTank": { "type": "boolean" },
+                    "naturalHazardZone": { "type": "string" },
+                    "titleSeasoningFlag": { "type": "boolean", "description": "Title transferred within 90 days \u2014 may trigger FHA/VA title seasoning hold" }
+                  }
+                }
+              }
+            },
+            "technologyLead": {
+              "type": "object",
+              "description": "Technology/device-specific lead context. Populate when desiredProduct.assetClass = TECHNOLOGY or TELECOM.",
+              "properties": {
+                "securityCertificationRequirements": {
+                  "type": "array",
+                  "description": "Required device or vendor security certifications \u2014 gate criterion for government and regulated enterprise procurement",
+                  "items": {
+                    "type": "string",
+                    "enum": ["FIPS_140_2", "FIPS_140_3", "COMMON_CRITERIA_EAL2", "COMMON_CRITERIA_EAL4", "FEDRAMP_LOW", "FEDRAMP_MODERATE", "FEDRAMP_HIGH", "DISA_STIG", "CMMC_LEVEL_1", "CMMC_LEVEL_2", "CMMC_LEVEL_3", "NIST_CSF", "ISO_27001"]
+                  }
+                },
+                "evergreenRefreshTrigger": {
+                  "type": "string",
+                  "enum": ["CALENDAR", "OS_EOL", "PERFORMANCE_THRESHOLD", "HARDWARE_FAILURE_RATE"],
+                  "description": "DaaS contract refresh trigger \u2014 different triggers produce fundamentally different cost structures and risk allocation"
+                },
+                "evergreenRefreshThreshold": {
+                  "type": "string",
+                  "description": "Threshold value for the selected refresh trigger (e.g. '80%' battery SoH, '36 months' for calendar)"
+                },
+                "sustainabilityRequirements": {
+                  "type": "array",
+                  "description": "Required ecolabel certifications \u2014 legally mandatory for US federal procurement (Executive Order 13514) and EU public sector",
+                  "items": {
+                    "type": "string",
+                    "enum": ["EPEAT_GOLD", "EPEAT_SILVER", "EPEAT_BRONZE", "TCO_CERTIFIED", "ENERGY_STAR", "EU_ECOLABEL", "BLUE_ANGEL"]
+                  }
+                },
+                "conflictMineralsComplianceRequired": {
+                  "type": "boolean",
+                  "description": "Requires Section 1502 (Dodd-Frank) conflict minerals declaration and RoHS/WEEE compliance documentation"
+                }
+              }
+            },
+            "consentRecord": {
+              "type": "object",
+              "description": "Regulatory consent record. Required for all leads containing PII. Spec: LEX_CONSENT_MODEL",
+              "properties": {
+                "tcpa": {
+                  "type": "object",
+                  "description": "US TCPA (Telephone Consumer Protection Act) consent",
+                  "required": ["expressWrittenConsent"],
+                  "properties": {
+                    "expressWrittenConsent": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" },
+                    "consentSource": { "type": "string", "enum": ["WEB_FORM", "IVR", "TEXT_OPT_IN", "SIGNED_DOCUMENT", "VERBAL"] },
+                    "verificationId": { "type": "string" }
+                  }
+                },
+                "gdpr": {
+                  "type": "object",
+                  "description": "EU GDPR consent",
+                  "required": ["legalBasis"],
+                  "properties": {
+                    "legalBasis": { "type": "string", "enum": ["CONSENT", "LEGITIMATE_INTEREST", "CONTRACT", "VITAL_INTEREST", "PUBLIC_TASK", "LEGAL_OBLIGATION"] },
+                    "purposeCodes": { "type": "array", "items": { "type": "string" } },
+                    "retentionPeriodDays": { "type": "integer", "minimum": 1 },
+                    "dataControllerName": { "type": "string" },
+                    "withdrawalAvailable": { "type": "boolean" }
+                  }
+                },
+                "ukGdpr": {
+                  "type": "object",
+                  "description": "UK GDPR / Data Protection Act 2018 consent (applies to GB customers)",
+                  "required": ["legalBasis"],
+                  "properties": {
+                    "legalBasis": { "type": "string", "enum": ["CONSENT", "LEGITIMATE_INTEREST", "CONTRACT", "VITAL_INTEREST", "PUBLIC_TASK", "LEGAL_OBLIGATION"] },
+                    "purposeCodes": { "type": "array", "items": { "type": "string" } },
+                    "retentionPeriodDays": { "type": "integer", "minimum": 1 },
+                    "dataControllerName": { "type": "string" },
+                    "icoRegistrationNumber": { "type": "string" },
+                    "withdrawalAvailable": { "type": "boolean" }
+                  }
+                },
+                "ccpa": {
+                  "type": "object",
+                  "description": "California CCPA/CPRA consent",
+                  "required": ["optedOut"],
+                  "properties": {
+                    "optedOut": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" },
+                    "globalPrivacyControlHonored": { "type": "boolean" }
+                  }
+                },
+                "usStatePrivacy": {
+                  "type": "object",
+                  "description": "US State Privacy Laws (Virginia CDPA, Colorado CPA, Connecticut CTDPA, Texas TDPSA, Montana MCDPA, Oregon OCPA, and others)",
+                  "properties": {
+                    "statesOptedOut": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]{2}$" }, "description": "US state codes where customer has opted out" },
+                    "universalOptOut": { "type": "boolean" },
+                    "gpcHonored": { "type": "boolean" }
+                  }
+                },
+                "dpdp": {
+                  "type": "object",
+                  "description": "India Digital Personal Data Protection Act 2023 (DPDPA) consent",
+                  "required": ["consentGiven"],
+                  "properties": {
+                    "consentGiven": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" },
+                    "purposeDescription": { "type": "string" }
+                  }
+                },
+                "pipl": {
+                  "type": "object",
+                  "description": "China Personal Information Protection Law (Nov 2021) consent",
+                  "required": ["consentGranted", "processingPurpose", "sensitiveDataIncluded", "crossBorderTransferApproved"],
+                  "properties": {
+                    "consentGranted": { "type": "boolean" },
+                    "processingPurpose": { "type": "string" },
+                    "sensitiveDataIncluded": { "type": "boolean" },
+                    "crossBorderTransferApproved": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "lgpd": {
+                  "type": "object",
+                  "description": "Brazil LGPD (Lei Geral de Proteção de Dados) consent",
+                  "required": ["legalBasis", "consentGranted"],
+                  "properties": {
+                    "legalBasis": { "type": "string", "enum": ["CONSENT", "LEGITIMATE_INTEREST", "CONTRACT", "LEGAL_OBLIGATION", "VITAL_INTEREST", "RESEARCH", "CREDIT_PROTECTION", "JUDICIAL", "HEALTH", "REGULATORY"] },
+                    "consentGranted": { "type": "boolean" },
+                    "purposeDescription": { "type": "string" },
+                    "dataControllerCnpj": { "type": "string" },
+                    "retentionPeriodDays": { "type": "integer", "minimum": 1 },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "popia": {
+                  "type": "object",
+                  "description": "South Africa POPIA (Protection of Personal Information Act, Jul 2021) consent",
+                  "required": ["consentGranted", "responsiblePartyName", "dataSubjectRightsNotified"],
+                  "properties": {
+                    "consentGranted": { "type": "boolean" },
+                    "purposeDescription": { "type": "string" },
+                    "responsiblePartyName": { "type": "string" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" },
+                    "dataSubjectRightsNotified": { "type": "boolean" }
+                  }
+                },
+                "pipeda": {
+                  "type": "object",
+                  "description": "Canada PIPEDA / Quebec Law 25 consent",
+                  "required": ["consentGranted", "impliedConsent", "quebecLaw25Applicable"],
+                  "properties": {
+                    "consentGranted": { "type": "boolean" },
+                    "purposeDescription": { "type": "string" },
+                    "impliedConsent": { "type": "boolean" },
+                    "quebecLaw25Applicable": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "pdpaSg": {
+                  "type": "object",
+                  "description": "Singapore PDPA (Personal Data Protection Act 2012, amended 2020) consent",
+                  "required": ["consentGranted", "doNotCallRegistryChecked"],
+                  "properties": {
+                    "consentGranted": { "type": "boolean" },
+                    "purposeDescription": { "type": "string" },
+                    "doNotCallRegistryChecked": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "appi": {
+                  "type": "object",
+                  "description": "Japan APPI (Act on Protection of Personal Information, 2022 amendment) consent",
+                  "required": ["consentGranted", "thirdPartyProvisionConsent", "crossBorderTransferConsent"],
+                  "properties": {
+                    "consentGranted": { "type": "boolean" },
+                    "purposeDescription": { "type": "string" },
+                    "thirdPartyProvisionConsent": { "type": "boolean" },
+                    "crossBorderTransferConsent": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "nfadp": {
+                  "type": "object",
+                  "description": "Switzerland nFADP (revised Federal Act on Data Protection, Sep 2023) consent",
+                  "required": ["legalBasis", "dataControllerName"],
+                  "properties": {
+                    "legalBasis": { "type": "string", "enum": ["CONSENT", "LEGITIMATE_INTEREST", "CONTRACT", "LEGAL_OBLIGATION"] },
+                    "purposeDescription": { "type": "string" },
+                    "dataControllerName": { "type": "string" },
+                    "retentionPeriodDays": { "type": "integer", "minimum": 1 },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "pipaKr": {
+                  "type": "object",
+                  "description": "South Korea PIPA-K (Personal Information Protection Act, 2023 amendment) consent",
+                  "required": ["consentGranted", "sensitiveDataIncluded", "thirdPartyProvisionConsent"],
+                  "properties": {
+                    "consentGranted": { "type": "boolean" },
+                    "purposeDescription": { "type": "string" },
+                    "sensitiveDataIncluded": { "type": "boolean" },
+                    "thirdPartyProvisionConsent": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "pdplSa": {
+                  "type": "object",
+                  "description": "Saudi Arabia PDPL (Personal Data Protection Law, effective Mar 2024) consent",
+                  "required": ["consentGranted", "sensitiveDataIncluded", "crossBorderTransferApproved"],
+                  "properties": {
+                    "consentGranted": { "type": "boolean" },
+                    "processingPurpose": { "type": "string" },
+                    "sensitiveDataIncluded": { "type": "boolean" },
+                    "crossBorderTransferApproved": { "type": "boolean" },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "pdpaTh": {
+                  "type": "object",
+                  "description": "Thailand PDPA (Personal Data Protection Act, Jun 2022) consent",
+                  "required": ["legalBasis", "consentGranted", "dataControllerName"],
+                  "properties": {
+                    "legalBasis": { "type": "string", "enum": ["CONSENT", "CONTRACT", "LEGAL_OBLIGATION", "VITAL_INTEREST", "PUBLIC_TASK", "LEGITIMATE_INTEREST"] },
+                    "consentGranted": { "type": "boolean" },
+                    "purposeDescription": { "type": "string" },
+                    "dataControllerName": { "type": "string" },
+                    "retentionPeriodDays": { "type": "integer", "minimum": 1 },
+                    "consentTimestamp": { "type": "string", "format": "date-time" }
+                  }
+                },
+                "marketing": {
+                  "type": "object",
+                  "properties": {
+                    "emailMarketing": { "type": "boolean" },
+                    "smsMarketing": { "type": "boolean" },
+                    "phoneMarketing": { "type": "boolean" },
+                    "postalMarketing": { "type": "boolean" },
+                    "thirdPartySharing": { "type": "boolean" }
+                  }
+                },
+                "recordedAt": { "type": "string", "format": "date-time" },
+                "consentVersion": { "type": "string" },
+                "consentIpAddress": { "type": "string", "description": "IPv4 or IPv6 address for audit trail" }
+              }
+            },
+            "deduplication": {
+              "type": "object",
+              "description": "Deduplication fingerprint and cross-platform linkage. Spec: LEX_DEDUPLICATION",
+              "required": ["customerFingerprint"],
+              "properties": {
+                "customerFingerprint": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$",
+                  "description": "SHA-256 hex (64 chars). Algorithm: SHA256(email|phone|lastName) all lowercase"
+                },
+                "deduplicationWindowHours": { "type": "integer", "minimum": 1, "maximum": 720 },
+                "crossPlatformIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["platformName", "externalLeadId"],
+                    "properties": {
+                      "platformName": { "type": "string" },
+                      "externalLeadId": { "type": "string" },
+                      "receivedAt": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                },
+                "duplicateOfLeadId": { "type": "string", "description": "Set if this is a known duplicate of an existing lead" },
+                "deduplicationPolicy": { "type": "string", "enum": ["REJECT", "MERGE", "FLAG"] }
+              }
+            },
+            "leadIntelligence": {
+              "type": "object",
+              "description": "ML-driven lead scoring and behavioural signals. Spec: LEX_LEAD_INTELLIGENCE",
+              "properties": {
+                "intentScore": { "type": "number", "minimum": 0, "maximum": 1, "description": "Purchase intent probability (0.0–1.0)" },
+                "buyingWindowDays": { "type": "integer", "minimum": 1, "maximum": 365 },
+                "confidenceLevel": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "VERY_HIGH"], "description": "Overall model confidence. Required when intentScore is present" },
+                "churnRisk": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"], "description": "Probability of lead going cold without engagement" },
+                "leadQualityTier": { "type": "string", "enum": ["PLATINUM", "GOLD", "SILVER", "BRONZE", "COLD"], "description": "Quality tier derived from intentScore range" },
+                "scoreGrade": { "type": "string", "enum": ["A", "B", "C", "D"], "description": "Letter-grade bucketing: A=PLATINUM/GOLD, D=COLD" },
+                "scoreTrend": { "type": "string", "enum": ["IMPROVING", "DECLINING", "STEADY", "INSUFFICIENT_DATA"], "description": "Score direction relative to prior evaluation" },
+                "scoringReasons": {
+                  "type": "array",
+                  "description": "Top factors driving the score, sorted by weight descending. Max 5 recommended.",
+                  "items": {
+                    "type": "object",
+                    "required": ["factor", "direction", "weight"],
+                    "properties": {
+                      "factor": { "type": "string", "description": "Machine-readable factor code, e.g. RETURN_VISIT, PAYMENT_CALCULATOR_USED" },
+                      "direction": { "type": "string", "enum": ["POSITIVE", "NEGATIVE"] },
+                      "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+                      "description": { "type": "string", "description": "Human-readable explanation for CRM/DMS display" }
+                    }
+                  }
+                },
+                "behavioralSignals": { "type": "array", "items": { "type": "string" }, "description": "Registered behavioral signal codes, e.g. VDP_VIEW_3X, PAYMENT_CALCULATOR_USED" },
+                "predictedProducts": {
+                  "type": "array",
+                  "description": "Ranked list of predicted products, sorted by confidenceScore descending",
+                  "items": {
+                    "type": "object",
+                    "required": ["productType", "confidenceScore"],
+                    "properties": {
+                      "productType": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ProductType" },
+                      "manufacturer": { "type": "string" },
+                      "model": { "type": "string" },
+                      "trim": { "type": "string" },
+                      "confidenceScore": { "type": "number", "minimum": 0, "maximum": 1 }
+                    }
+                  }
+                },
+                "priceRangeFit": { "type": "string", "enum": ["BELOW_RANGE", "LOWER_RANGE", "EXACT", "UPPER_RANGE", "ABOVE_RANGE"] },
+                "financingLikelihood": { "type": "number", "minimum": 0, "maximum": 1 },
+                "tradeInLikelihood": { "type": "number", "minimum": 0, "maximum": 1 },
+                "evInterestScore": { "type": "number", "minimum": 0, "maximum": 1, "description": "EV/clean-energy interest (0=none, 1=strong)" },
+                "channelAffinity": {
+                  "type": "array",
+                  "description": "Contact channels ranked by predicted response probability",
+                  "items": {
+                    "type": "object",
+                    "required": ["channel", "affinityScore"],
+                    "properties": {
+                      "channel": { "type": "string", "enum": ["EMAIL", "PHONE", "SMS", "IN_PERSON", "CHAT", "VIDEO_CALL"] },
+                      "affinityScore": { "type": "number", "minimum": 0, "maximum": 1 }
+                    }
+                  }
+                },
+                "recommendedResponseSla": { "type": "string", "description": "ISO 8601 duration, e.g. PT2H for 2-hour SLA" },
+                "optimalContactTimes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "dayOfWeek": { "type": "string", "enum": ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"] },
+                      "hourUtc": { "type": "integer", "minimum": 0, "maximum": 23 },
+                      "preferredChannel": { "type": "string", "enum": ["EMAIL", "PHONE", "SMS", "IN_PERSON", "CHAT", "VIDEO_CALL"] }
+                    }
+                  }
+                },
+                "enrichmentSources": {
+                  "type": "array",
+                  "description": "Data provenance: which sources contributed signals to this score",
+                  "items": {
+                    "type": "object",
+                    "required": ["type", "provider"],
+                    "properties": {
+                      "type": { "type": "string", "enum": ["FIRST_PARTY_BEHAVIORAL", "THIRD_PARTY_INTENT", "CRM_HISTORICAL", "SOCIAL_SIGNAL", "FIRMOGRAPHIC", "TELEMATICS"] },
+                      "provider": { "type": "string" },
+                      "refreshedAt": { "type": "string", "format": "date-time" },
+                      "signalCount": { "type": "integer", "minimum": 0 }
+                    }
+                  }
+                },
+                "modelMetadata": {
+                  "type": "object",
+                  "required": ["modelId", "modelVersion", "scoredAt"],
+                  "properties": {
+                    "source": { "type": "string", "enum": ["PLATFORM_ML_ENGINE", "DMS_SCORING", "OEM_CRM", "THIRD_PARTY_ENRICHMENT", "GENERATIVE_AI", "ENSEMBLE_MODEL", "FEDERATED_MODEL"] },
+                    "modelId": { "type": "string" },
+                    "modelVersion": { "type": "string" },
+                    "scoredAt": { "type": "string", "format": "date-time" },
+                    "dataFreshnessDays": { "type": "integer", "minimum": 0 },
+                    "trainingDataCutoff": { "type": "string", "format": "date" }
+                  }
+                }
+              }
+            },
+            "aiInsights": {
+              "type": "object",
+              "description": "GenAI and NLP-produced artefacts: summaries, intent, next-best-actions. Spec: LEX_AI_INSIGHTS",
+              "required": ["generatedBy"],
+              "properties": {
+                "conversationInsights": {
+                  "type": "object",
+                  "properties": {
+                    "summary": { "type": "string", "description": "LLM-generated narrative summary. MUST NOT contain full PII." },
+                    "sentiment": { "type": "string", "enum": ["POSITIVE", "NEUTRAL", "NEGATIVE", "MIXED"] },
+                    "sentimentScore": { "type": "number", "minimum": 0, "maximum": 1 },
+                    "detectedLanguage": { "type": "string", "description": "BCP-47 language code, e.g. en, fr-CA" },
+                    "intentClassifications": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["intent", "confidence"],
+                        "properties": {
+                          "intent": { "type": "string", "enum": ["PURCHASE_INTENT", "FINANCING_INQUIRY", "TRADE_IN_INTEREST", "TEST_DRIVE_REQUEST", "SERVICE_INQUIRY", "COMPLAINT", "RESEARCH_ONLY"] },
+                          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+                        }
+                      }
+                    },
+                    "keyTopics": { "type": "array", "items": { "type": "string" } },
+                    "objections": { "type": "array", "items": { "type": "string" } },
+                    "openQuestions": { "type": "array", "items": { "type": "string" } },
+                    "analyzedAt": { "type": "string", "format": "date-time" },
+                    "sourceTranscriptId": { "type": "string" }
+                  }
+                },
+                "nextBestActions": {
+                  "type": "array",
+                  "maxItems": 5,
+                  "description": "Recommended seller follow-up actions, sorted by confidence descending",
+                  "items": {
+                    "type": "object",
+                    "required": ["actionCode", "urgency", "confidence"],
+                    "properties": {
+                      "actionCode": { "type": "string" },
+                      "description": { "type": "string" },
+                      "urgency": { "type": "string", "enum": ["IMMEDIATE", "WITHIN_2H", "WITHIN_24H", "THIS_WEEK", "LOW_PRIORITY"] },
+                      "channel": { "type": "string", "enum": ["EMAIL", "PHONE", "SMS", "IN_PERSON", "CHAT", "VIDEO_CALL"] },
+                      "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+                      "rationale": { "type": "string" }
+                    }
+                  }
+                },
+                "competitorMentions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["competitor"],
+                    "properties": {
+                      "competitor": { "type": "string", "minLength": 1 },
+                      "context": { "type": "string" },
+                      "sentiment": { "type": "string", "enum": ["POSITIVE", "NEUTRAL", "NEGATIVE"] }
+                    }
+                  }
+                },
+                "generatedBy": {
+                  "type": "object",
+                  "required": ["engine", "provider", "generatedAt"],
+                  "properties": {
+                    "engine": { "type": "string", "description": "AI model, e.g. GPT-4O, CLAUDE-3-OPUS" },
+                    "provider": { "type": "string", "enum": ["OPENAI", "ANTHROPIC", "GOOGLE", "META", "MICROSOFT", "DMS_PROPRIETARY", "OEM_INTERNAL", "OTHER"] },
+                    "orchestrator": { "type": "string" },
+                    "modelVersion": { "type": "string" },
+                    "generatedAt": { "type": "string", "format": "date-time" },
+                    "promptVersion": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "fleetOrder": {
+              "type": "object",
+              "description": "Multi-unit / fleet procurement block. Spec: LEX_MULTI_INDUSTRY §1",
+              "required": ["quantity"],
+              "properties": {
+                "quantity": { "type": "integer", "minimum": 1 },
+                "unitBudgetCapUsd": { "type": "number", "minimum": 0 },
+                "totalBudgetCap": { "type": "number", "minimum": 0 },
+                "currency": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency" },
+                "mixedConfigAllowed": { "type": "boolean" },
+                "procurementReference": { "type": "string", "description": "PO / tender / RFQ reference number" },
+                "evaluationUnits": { "type": "integer", "minimum": 0 },
+                "preferredDeliveryWindow": { "type": "string", "description": "e.g. Q3 2025" },
+                "frameworkContractId": { "type": "string" },
+                "deliverySchedule": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["quantity", "targetDate", "targetLocation"],
+                    "properties": {
+                      "quantity": { "type": "integer", "minimum": 1 },
+                      "targetDate": { "type": "string", "format": "date" },
+                      "targetLocation": { "type": "string" },
+                      "locationAddress": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Address" }
+                    }
+                  }
+                },
+                "unitSpecifications": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["quantity", "configurationCode"],
+                    "properties": {
+                      "quantity": { "type": "integer", "minimum": 1 },
+                      "configurationCode": { "type": "string" },
+                      "specificOptions": { "type": "array", "items": { "type": "string" } }
+                    }
+                  }
+                }
+              }
+            },
+            "partExchange": {
+              "type": "object",
+              "description": "Generic asset part-exchange (any asset class). Spec: LEX_MULTI_INDUSTRY §4",
+              "required": ["assetType", "quantity"],
+              "properties": {
+                "assetType": { "type": "string", "enum": ["VEHICLE","AIRCRAFT","TRAIN","VESSEL","EQUIPMENT","TECHNOLOGY","OTHER"] },
+                "quantity": { "type": "integer", "minimum": 1 },
+                "assetMake": { "type": "string" },
+                "assetModel": { "type": "string" },
+                "assetYear": { "type": "integer" },
+                "serialNumber": { "type": "string" },
+                "currentOwnerHours": { "type": "number", "minimum": 0 },
+                "odometer": { "type": "integer", "minimum": 0 },
+                "conditionGrade": { "type": "string", "enum": ["EXCELLENT","GOOD","FAIR","POOR","FOR_PARTS","FOR_RECYCLING"] },
+                "estimatedValue": { "type": "number", "minimum": 0 },
+                "currency": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency" },
+                "estimatedValueBasis": { "type": "string", "enum": ["BOOK","MARKET","AS_IS","CMV","INSURERS"] },
+                "regulatoryStatus": { "type": "string", "description": "e.g. AIRWORTHY, SEAWORTHY, UNSERVICEABLE" },
+                "intendedDisposition": { "type": "string", "enum": ["TRADE_IN","PART_OUT","DONATE","SCRAP","RECYCLE","AUCTION"] }
+              }
+            },
+            "procurementFinancing": {
+              "type": "object",
+              "description": "B2B / government procurement financing structure. Spec: LEX_MULTI_INDUSTRY §5",
+              "required": ["procurementType"],
+              "properties": {
+                "procurementType": {
+                  "type": "string",
+                  "enum": ["PURCHASE_ORDER","TENDER","FRAMEWORK_CONTRACT","DIRECT_LEASE","SALE_LEASEBACK","POWER_BY_THE_HOUR","BOND_FINANCE","EXPORT_CREDIT_AGENCY","GRANT","DEVICE_AS_A_SERVICE","SUBSCRIPTION"]
+                },
+                "leaseTerm": { "type": "integer", "minimum": 1, "maximum": 360, "description": "Months" },
+                "exportCreditAgency": { "type": "string", "description": "e.g. US_EXIM, UKEF, COFACE" },
+                "tenderReference": { "type": "string" },
+                "frameworkContractId": { "type": "string" },
+                "budgetYear": { "type": "string", "description": "e.g. FY2026" },
+                "publicFundingProgram": { "type": "string" },
+                "deliveryCondition": { "type": "string", "description": "INCOTERMS 2020 (EXW, FCA, CPT, CIP, DAP, DPU, DDP, FAS, FOB, CFR, CIF)" },
+                "escrowRequired": { "type": "boolean" },
+                "perUnitMonthlyFee": { "type": "number", "minimum": 0 },
+                "currency": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency" },
+                "downPaymentPct": { "type": "number", "minimum": 0, "maximum": 100 },
+                "progressPayments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["milestoneDescription", "paymentPct"],
+                    "properties": {
+                      "milestoneDescription": { "type": "string" },
+                      "paymentPct": { "type": "number", "minimum": 0, "maximum": 100 },
+                      "dueDate": { "type": "string", "format": "date" }
+                    }
+                  }
+                }
+              }
+            },
+            "metadata": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Metadata"
+            },
+            "financialSummary": {
+              "$ref": "#/definitions/FinancialSummary",
+              "description": "Optional structured pricing/tax breakdown. Meaningful only at IN_NEGOTIATION, ORDER, or DELIVERED status. taxesAndFees.isEstimate MUST be true in LEAD messages."
+            },
+            "captiveFinance": {
+              "$ref": "#/definitions/CaptiveFinance",
+              "description": "Optional OEM captive lender program snapshot. Meaningful at IN_NEGOTIATION or ORDER. bindingCommitment MUST be false in LEAD messages."
+            },
+            "dealLineage": {
+              "$ref": "#/definitions/DealLineage",
+              "description": "Optional append-only audit trail of deal changes across system hops. See specs/LEX_DEAL_LINEAGE.md."
+            },
+            "structuredNotes": {
+              "$ref": "#/definitions/StructuredNotes",
+              "description": "Optional attributed contextual notes. DEALER_INTERNAL visibility must be stripped before forwarding to non-dealer recipients."
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FinancialSummary": {
+      "type": "object",
+      "description": "Structured pricing, tax, and fee breakdown. See specs/LEX_FINANCIAL_SUMMARY.md.",
+      "properties": {
+        "vehiclePrice": { "type": "number", "minimum": 0, "description": "Base asset price before negotiation." },
+        "negotiatedPrice": { "type": "number", "minimum": 0, "description": "Post-negotiation price." },
+        "tradeInAllowance": { "type": "number", "minimum": 0, "description": "Gross trade-in credit offered." },
+        "tradeInPayoff": { "type": "number", "minimum": 0, "description": "Outstanding loan balance on trade-in." },
+        "netTradeIn": { "type": "number", "description": "tradeInAllowance minus tradeInPayoff. May be negative." },
+        "netCapCost": { "type": "number", "minimum": 0, "description": "Net capitalized cost for leases." },
+        "currency": { "type": "string", "minLength": 3, "maxLength": 3, "description": "ISO 4217 currency code (e.g., USD, EUR, CAD)." },
+        "taxesAndFees": {
+          "type": "object",
+          "required": ["calculatedBy", "calculatedAt", "jurisdictionCodes", "lineItems", "totalTaxesAndFees", "isEstimate"],
+          "properties": {
+            "calculatedBy": { "type": "string", "description": "LEX org ID of the system that produced these calculations." },
+            "calculatedAt": { "type": "string", "format": "date-time", "description": "When the calculation was produced." },
+            "jurisdictionCodes": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string" },
+              "description": "ISO 3166-2 jurisdiction codes (e.g., US-IL, US-IL-031)."
+            },
+            "lineItems": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["label", "type", "amount"],
+                "properties": {
+                  "label": { "type": "string", "description": "Human-readable label." },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "STATE_TAX", "COUNTY_TAX", "CITY_TAX", "LOCAL_TAX", "FEDERAL_TAX",
+                      "GST", "VAT", "PST", "HST",
+                      "TRADE_IN_CREDIT", "DOC_FEE", "TITLE_FEE", "REGISTRATION_FEE",
+                      "INSPECTION_FEE", "DEALER_FEE", "LENDER_FEE", "ACQUISITION_FEE",
+                      "DISPOSITION_FEE", "FEDERAL_CREDIT", "STATE_CREDIT", "REBATE",
+                      "FREIGHT", "STAMP_DUTY", "OTHER_FEE", "OTHER_CREDIT"
+                    ]
+                  },
+                  "rate": { "type": ["number", "null"], "description": "Tax rate as decimal (0.0625 = 6.25%). Null for flat fees." },
+                  "amount": { "type": "number", "description": "Amount for this line item. Negative for credits." },
+                  "basis": {
+                    "type": "string",
+                    "enum": [
+                      "NEGOTIATED_PRICE", "MSRP", "NET_TRADE_IN", "OUT_OF_POCKET",
+                      "CAP_COST", "VEHICLE_WEIGHT", "STATE_SCHEDULE", "FLAT_FEE", "STATUTORY"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "totalTaxesAndFees": { "type": "number", "description": "Sum of all lineItems[].amount. May be negative (net credit)." },
+            "totalOutOfPocket": { "type": "number", "minimum": 0, "description": "Final buyer out-of-pocket amount." },
+            "estimatedMonthlyPayment": { "type": "number", "minimum": 0, "description": "Estimated periodic payment." },
+            "taxCalculationVersion": { "type": "string", "description": "Tax engine and version identifier. Informational." },
+            "isEstimate": { "type": "boolean", "description": "MUST be true in LEAD messages. Only false valid in LEAD_CLOSURE." },
+            "disclaimer": { "type": "string", "maxLength": 1000, "description": "Human-readable disclaimer for display." }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["currency"]
+    },
+    "CaptiveFinance": {
+      "type": "object",
+      "description": "OEM captive lender program snapshot. See specs/LEX_CAPTIVE_FINANCE.md.",
+      "required": ["captiveOrg", "programId", "programName", "programType", "dealStructure", "snapshotTimestamp", "evaluatedBy", "evaluatedAt", "disclaimer", "bindingCommitment"],
+      "properties": {
+        "captiveOrg": { "type": "string", "description": "LEX org ID of the captive lender." },
+        "programId": { "type": "string", "description": "Unique program identifier assigned by the captive lender." },
+        "programName": { "type": "string", "description": "Human-readable program name." },
+        "programType": {
+          "type": "string",
+          "enum": ["APR_SUBVENTION", "STANDARD_APR", "LEASE_SUBVENTION", "LEASE_STANDARD", "BALLOON_FINANCE", "DEFERRED_PAYMENT", "EMPLOYER_PROGRAM", "LOYALTY_PROGRAM", "CERTIFIED_PRE_OWNED", "OTHER"]
+        },
+        "dealStructure": { "type": "string", "enum": ["RETAIL_FINANCE", "LEASE"] },
+        "snapshotTimestamp": { "type": "string", "format": "date-time", "description": "When program data was retrieved." },
+        "programExpiresAt": { "type": "string", "format": "date-time", "description": "Program expiry. Validators warn if past header.timestamp." },
+        "programVersion": { "type": "string", "description": "Version or iteration of the program. Informational." },
+        "retailFinance": {
+          "type": "object",
+          "required": ["offeredApr", "termMonths", "currency"],
+          "properties": {
+            "offeredApr": { "type": "number", "minimum": 0, "description": "Program APR as percentage (1.9 = 1.9%)." },
+            "standardApr": { "type": "number", "minimum": 0, "description": "Standard non-incentivized APR for reference." },
+            "termMonths": { "type": "integer", "minimum": 1, "maximum": 120 },
+            "maxLoanAmount": { "type": "number", "minimum": 0 },
+            "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+          }
+        },
+        "leaseTerms": {
+          "type": "object",
+          "required": ["moneyFactor", "residualValuePercent", "termMonths", "currency"],
+          "properties": {
+            "moneyFactor": { "type": "number", "minimum": 0, "description": "Money factor (multiply by 2400 for approximate APR equivalent)." },
+            "residualValuePercent": { "type": "number", "minimum": 0, "maximum": 100, "description": "Residual value as percentage of MSRP." },
+            "termMonths": { "type": "integer", "minimum": 1, "maximum": 120 },
+            "annualMileageLimit": { "type": "integer", "minimum": 0 },
+            "acquisitionFee": { "type": "number", "minimum": 0 },
+            "capCostReduction": { "type": "number", "minimum": 0 },
+            "captiveSubventionAmount": { "type": "number", "minimum": 0, "description": "Dollar value of captive's subsidy built into program. Informational." },
+            "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+          }
+        },
+        "eligibility": {
+          "type": "object",
+          "properties": {
+            "creditTierRequired": { "type": "string" },
+            "minFicoScore": { "type": "integer", "minimum": 300, "maximum": 850 },
+            "regions": { "type": "array", "items": { "type": "string" } },
+            "excludedRegions": { "type": "array", "items": { "type": "string" } },
+            "vehicleModels": { "type": "array", "items": { "type": "string" } },
+            "newVehicleOnly": { "type": "boolean" },
+            "maxVehicleMsrp": { "type": "number", "minimum": 0 },
+            "employeeDiscountStackable": { "type": "boolean" }
+          }
+        },
+        "bonusIncentives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "amount", "currency"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["LOYALTY_BONUS", "CONQUEST_BONUS", "MILITARY_BONUS", "FIRST_RESPONDER_BONUS", "COLLEGE_GRAD_BONUS", "RIDESHARE_DRIVER_BONUS", "FLEET_BONUS", "RETURNING_LESSEE_BONUS", "CASH_ALLOWANCE", "OEM_REBATE", "REGIONAL_BONUS", "OTHER_BONUS"]
+              },
+              "amount": { "type": "number" },
+              "currency": { "type": "string", "minLength": 3, "maxLength": 3 },
+              "requiresPriorOwnership": { "type": "boolean" },
+              "eligibleCompetitors": { "type": "array", "items": { "type": "string" } },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "appliedIncentivesTotal": { "type": "number", "description": "Sum of all bonusIncentives[].amount. Feeds into financialSummary as a REBATE." },
+        "disclaimer": { "type": "string", "minLength": 10, "description": "Required human-readable non-binding disclosure." },
+        "evaluatedBy": { "type": "string", "description": "LEX org ID of the system that evaluated program eligibility." },
+        "evaluatedAt": { "type": "string", "format": "date-time" },
+        "bindingCommitment": { "type": "boolean", "description": "MUST be false in LEAD messages. True only in formal loan documents (outside LEX scope)." }
+      }
+    },
+    "DealLineage": {
+      "type": "object",
+      "description": "Append-only distributed audit trail of deal changes across system hops. See specs/LEX_DEAL_LINEAGE.md.",
+      "required": ["version", "entries"],
+      "properties": {
+        "version": { "type": "integer", "minimum": 1, "description": "Monotonically increasing count of entries. Incremented each time a system appends." },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["seq", "systemId", "systemType", "timestamp", "action"],
+            "properties": {
+              "seq": { "type": "integer", "minimum": 1, "description": "Monotonically increasing sequence number within this lineage." },
+              "systemId": { "type": "string", "description": "LEX organization ID of the appending system." },
+              "systemType": {
+                "type": "string",
+                "enum": ["MANUFACTURER", "CAPTIVE_LENDER", "DEALER", "DMS", "CRM", "FI_PLATFORM", "DESKING_TOOL", "MARKETPLACE", "LOGISTICS", "ANALYTICS", "THIRD_PARTY", "OTHER"]
+              },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "LEAD_CREATED", "LEAD_INGESTED", "LEAD_UPDATED", "DEAL_MODIFIED",
+                  "INCENTIVE_APPLIED", "INCENTIVE_REMOVED", "TAX_CALCULATED",
+                  "PAYMENT_RECALCULATED", "PRICE_NEGOTIATED", "TRADE_IN_APPRAISED",
+                  "FINANCING_APPROVED", "ORDER_SUBMITTED", "DEAL_CANCELLED",
+                  "DEAL_CLOSED", "DATA_FORWARDED"
+                ]
+              },
+              "dealSnapshot": {
+                "type": "object",
+                "description": "Flexible key-value snapshot of deal values at this hop. No rigid sub-schema.",
+                "additionalProperties": true
+              },
+              "deltaFromPrevious": {
+                "type": ["object", "null"],
+                "description": "Machine-readable diff. Each key is a field name; value is {from, to, reason}.",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "from": {},
+                    "to": {},
+                    "reason": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "StructuredNotes": {
+      "type": "array",
+      "description": "Attributed, categorized context notes. See specs/LEX_DEAL_LINEAGE.md §5.",
+      "items": {
+        "type": "object",
+        "required": ["noteId", "category", "visibility", "authorId", "timestamp", "body"],
+        "properties": {
+          "noteId": { "type": "string", "description": "Unique note identifier." },
+          "category": {
+            "type": "string",
+            "enum": ["DEAL_CHANGE", "CUSTOMER_COMMUNICATION", "COMPLIANCE_NOTE", "ESCALATION", "TRADE_IN_NOTE", "FINANCING_NOTE", "PRICING_NOTE", "DELIVERY_NOTE", "GENERAL"]
+          },
+          "visibility": {
+            "type": "string",
+            "enum": ["DEALER_INTERNAL", "DMS_ONLY", "MANUFACTURER_SHARED", "PLATFORM_SHARED", "ALL_PARTIES"],
+            "description": "DEALER_INTERNAL notes MUST be stripped before forwarding to non-dealer recipients."
+          },
+          "authorId": { "type": "string", "description": "System user or org ID of the note author." },
+          "authorRole": { "type": "string", "description": "Role of author (e.g., SALES_REP, FINANCE_MANAGER)." },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "subject": { "type": "string", "maxLength": 200 },
+          "body": { "type": "string", "description": "Full note text." },
+          "linkedTo": {
+            "type": "object",
+            "properties": {
+              "dealLineageSeq": { "type": "integer" },
+              "fieldChanged": { "type": "string" },
+              "relatedNoteId": { "type": "string" }
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

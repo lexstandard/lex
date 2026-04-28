@@ -1,0 +1,47 @@
+{
+  "lex": {
+    "header": {
+      "messageId": "ACK-94b7893f-a459-4376-9862-f810224614d5",
+      "messageType": "ACKNOWLEDGMENT",
+      "version": "1.0",
+      "timestamp": "2026-04-03T13:40:45.915Z",
+      "senderId": "SIM-RECEIVER-001",
+      "receiverId": "SIM-SENDER-001",
+      "encryptionMethod": "TLS1.3"
+    },
+    "payload": {
+      "acknowledgment": {
+        "acknowledgmentId": "ACK-94b7893f-a459-4376-9862-f810224614d5",
+        "correlationId": "c059b9c3-9c74-475b-8fd7-ddd6785e3762",
+        "originalMessageId": "c059b9c3-9c74-475b-8fd7-ddd6785e3762",
+        "originalMessageType": "LEAD",
+        "status": "VALIDATED",
+        "statusReason": "SHA-256 integrity verified; message accepted",
+        "timestamp": "2026-04-03T13:40:45.915Z",
+        "_simulation": {
+          "industry": "real-estate",
+          "format": "x12",
+          "integrityCheck": {
+            "algorithm": "SHA-256",
+            "expectedHash": "0600efd38b762b14cee0d4c6d76e959368fa70120f656b7933bc85b035fa5f31",
+            "computedHash": "0600efd38b762b14cee0d4c6d76e959368fa70120f656b7933bc85b035fa5f31",
+            "match": true
+          },
+          "fieldCoverage": {
+            "captured": 8,
+            "total": 10,
+            "missingFields": [
+              "messageId",
+              "leadStatus"
+            ]
+          },
+          "sizeBytes": 1948,
+          "lexValidation": {
+            "valid": null,
+            "reason": "Library validation only available for JSON format"
+          }
+        }
+      }
+    }
+  }
+}

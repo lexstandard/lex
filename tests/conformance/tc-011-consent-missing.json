@@ -1,0 +1,59 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-011",
+  "title": "Consent Record Missing for PII Lead",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "CONSENT",
+  "description": "LEAD contains customer.emailAddress and customer.phoneNumber (PII) but has no consentRecord block. Under LEX_CONSENT_MODEL, a consentRecord is required for any lead carrying PII. Validator MUST return valid=false with a CONSENT_RECORD_REQUIRED error.",
+  "specRef": "LEX_CONFORMANCE §2 TC-011",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000011",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:10:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC011-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Alice",
+            "lastName": "Walker",
+            "emailAddress": "alice.walker@example.com",
+            "phoneNumber": "+12125550145"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "assetClass": "VEHICLE",
+            "make": "Mercedes-Benz",
+            "model": "C-Class",
+            "year": 2027
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:10:00Z",
+            "countryCode": "US"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "lead.consentRecord",
+        "code": "CONSENT_RECORD_REQUIRED",
+        "level": "ERROR",
+        "suggestion": "Include a consentRecord block when customer PII (email, phone) is present. See LEX_CONSENT_MODEL."
+      }
+    ],
+    "warnings": []
+  }
+}

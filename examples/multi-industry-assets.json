@@ -1,0 +1,114 @@
+{
+  "assets": [
+    {
+      "comment": "--- Example 1: Commercial Aircraft ---",
+      "lex": {
+        "header": {
+          "messageId": "MSG-PLANE-001",
+          "messageType": "ASSET",
+          "version": "1.0"
+        },
+        "payload": {
+          "asset": {
+            "assetId": "AIRCRAFT-787-101",
+            "assetClass": "AVIATION",
+            "manufacturer": "Boeing",
+            "model": "787-9 Dreamliner",
+            "year": 2026,
+            "status": "AVAILABLE",
+            "aircraft": {
+              "tailNumber": "N789BA",
+              "totalHours": 150.5,
+              "totalCycles": 45,
+              "engineModel": "GEnx-1B",
+              "maintenanceStatus": "CURRENT",
+              "configuration": "PASSENGER"
+            }
+          }
+        }
+      }
+    },
+    {
+      "comment": "--- Example 2: Heavy Construction Equipment ---",
+      "lex": {
+        "header": {
+          "messageId": "MSG-HEAVY-002",
+          "messageType": "ASSET",
+          "version": "1.0"
+        },
+        "payload": {
+          "asset": {
+            "assetId": "EXC-CAT-320-99",
+            "assetClass": "HEAVY_EQUIPMENT",
+            "manufacturer": "Caterpillar",
+            "model": "320",
+            "year": 2024,
+            "status": "AVAILABLE",
+            "heavyEquipment": {
+              "equipmentType": "EXCAVATOR",
+              "operatingWeightKg": 22500,
+              "enginePowerKw": 117,
+              "trackWidthMm": 600,
+              "bucketCapacityCbm": 1.19
+            }
+          }
+        }
+      }
+    },
+    {
+      "comment": "--- Example 3: Enterprise Technology/Server ---",
+      "lex": {
+        "header": {
+          "messageId": "MSG-TECH-003",
+          "messageType": "ASSET",
+          "version": "1.0"
+        },
+        "payload": {
+          "asset": {
+            "assetId": "SRV-DELL-R750-X",
+            "assetClass": "TECHNOLOGY",
+            "manufacturer": "Dell",
+            "model": "PowerEdge R750",
+            "year": 2025,
+            "status": "AVAILABLE",
+            "technologyDevice": {
+              "processorType": "Intel Xeon Gold 6330",
+              "memoryGb": 512,
+              "storageGb": 15360,
+              "formFactor": "2U Rack",
+              "osLicense": "None"
+            }
+          }
+        }
+      }
+    },
+    {
+      "comment": "--- Example 4: Maritime/Watercraft ---",
+      "lex": {
+        "header": {
+          "messageId": "MSG-BOAT-004",
+          "messageType": "ASSET",
+          "version": "1.0"
+        },
+        "payload": {
+          "asset": {
+            "assetId": "YACHT-PRIN-62",
+            "assetClass": "MARITIME",
+            "manufacturer": "Princess Yachts",
+            "model": "F62",
+            "year": 2025,
+            "status": "AVAILABLE",
+            "watercraft": {
+              "lengthMeters": 19.34,
+              "beamMeters": 5.03,
+              "draftMeters": 1.49,
+              "hullMaterial": "FIBERGLASS",
+              "propulsionType": "INBOARD",
+              "fuelCapacityLiters": 3400
+            }
+          }
+        }
+      }
+    }
+  ]
+}

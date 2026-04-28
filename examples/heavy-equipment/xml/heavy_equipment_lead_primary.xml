@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LEX Heavy Equipment Lead - Primary Message (Phase 01: SHOPPING) -->
+<!-- Industry: HEAVY_EQUIPMENT | Format: LEX-XML -->
+<lex xmlns="urn:lex:schema:v1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <header>
+    <messageId>a1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e</messageId>
+    <messageType>LEAD</messageType>
+    <version>1.0</version>
+    <timestamp>2026-01-10T09:15:00Z</timestamp>
+    <senderId>RETAILER-CAT-MIDWEST</senderId>
+    <receiverId>LEX-PLATFORM</receiverId>
+    <encryptionMethod>TLS1.3</encryptionMethod>
+    <signatureAlgorithm>HMAC-SHA256</signatureAlgorithm>
+  </header>
+
+  <payload>
+    <lead>
+      <leadId>LID-20260110-HEVY-001</leadId>
+      <leadType>PRIMARY</leadType>
+      <status>SHOPPING</status>
+      <source>RETAILER_WEBSITE</source>
+      <leadCreatedDate>2026-01-10T09:15:00Z</leadCreatedDate>
+      <leadVersion>1</leadVersion>
+
+      <sourceDetail>
+        <sourceType>RETAILER_WEBSITE</sourceType>
+        <sourceURL>https://www.altorfercat.com/equipment/caterpillar/390</sourceURL>
+        <channel>DIGITAL</channel>
+        <leadEntryMethod>FORM_SUBMISSION</leadEntryMethod>
+        <formName>Equipment Fleet Enquiry</formName>
+        <leadQualityScore>9.2</leadQualityScore>
+        <customFields>
+          <projectName>I-70 Highway Expansion Phase 3</projectName>
+          <requiredOnSite>2026-03-01</requiredOnSite>
+          <operatingEnvironment>HEAVY_EARTHWORKS</operatingEnvironment>
+        </customFields>
+      </sourceDetail>
+
+      <customer>
+        <firstName>Richard</firstName>
+        <lastName>Morales</lastName>
+        <emailAddress>r.morales@granitepeakconstruction.com</emailAddress>
+        <phoneNumber>+13035550987</phoneNumber>
+        <preferredContactMethod>PHONE</preferredContactMethod>
+        <locale>en-US</locale>
+        <buyerType>ORGANIZATION</buyerType>
+        <organizationBuyer>
+          <companyName>Granite Peak Construction LLC</companyName>
+          <companyRegistrationNumber>US-CO-20180044712</companyRegistrationNumber>
+          <taxIdentificationNumber>84-3310052</taxIdentificationNumber>
+          <industryCode>NAICS-237310</industryCode>
+          <companySize>SME</companySize>
+          <existingFleetSize>18</existingFleetSize>
+          <governmentEntity>false</governmentEntity>
+          <procurementMethodology>DIRECT_AWARD</procurementMethodology>
+          <existingRelationship>RENEWAL</existingRelationship>
+          <budgetApprovalStatus>APPROVED</budgetApprovalStatus>
+          <procurementContact>
+            <firstName>Richard</firstName>
+            <lastName>Morales</lastName>
+            <title>Equipment Manager</title>
+            <email>r.morales@granitepeakconstruction.com</email>
+            <department>Operations</department>
+          </procurementContact>
+        </organizationBuyer>
+        <fleetBuyer>
+          <isFleet>true</isFleet>
+          <fleetSize>18</fleetSize>
+          <unitsToOrder>3</unitsToOrder>
+          <fleetManagerName>Richard Morales</fleetManagerName>
+          <fleetManagerEmail>r.morales@granitepeakconstruction.com</fleetManagerEmail>
+        </fleetBuyer>
+      </customer>
+
+      <desiredProduct>
+        <productType>CONSTRUCTION_EQUIPMENT</productType>
+        <assetClass>HEAVY_EQUIPMENT</assetClass>
+        <make>Caterpillar</make>
+        <model>390</model>
+        <year>2026</year>
+        <condition>NEW</condition>
+        <budgetMin>3000000</budgetMin>
+        <budgetMax>3500000</budgetMax>
+        <currency>USD</currency>
+        <factoryOrderPreference>DEALER_STOCK_PREFERRED</factoryOrderPreference>
+        <installedOptions>
+          <option>
+            <optionName>Cat GRADE with 2D</optionName>
+            <partNumber>CAT-GRADE-2D-390</partNumber>
+            <optionPrice>18500</optionPrice>
+            <currency>USD</currency>
+          </option>
+          <option>
+            <optionName>Hydraulic Thumb Heavy Duty</optionName>
+            <partNumber>CAT-THUMB-390-HD</partNumber>
+            <optionPrice>9800</optionPrice>
+            <currency>USD</currency>
+          </option>
+          <option>
+            <optionName>Product Link PL641 Telematics</optionName>
+            <partNumber>CAT-PL641</partNumber>
+            <optionPrice>2200</optionPrice>
+            <currency>USD</currency>
+          </option>
+        </installedOptions>
+        <typeSpecificAttributes>
+          <equipmentCategory>HYDRAULIC_EXCAVATOR</equipmentCategory>
+          <operatingWeightKg>90000</operatingWeightKg>
+          <engineModel>Cat C18 ACERT</engineModel>
+          <netPowerKw>394</netPowerKw>
+          <bucketCapacityM3>4.5</bucketCapacityM3>
+          <maxDigDepthMm>8410</maxDigDepthMm>
+          <maxReachMm>13930</maxReachMm>
+          <hydraulicSystemPressureBar>350</hydraulicSystemPressureBar>
+          <emissionsTier>TIER_4_FINAL</emissionsTier>
+          <cabFeatures>
+            <feature>Cat GRADE with 2D</feature>
+            <feature>Product Link PL641</feature>
+            <feature>Rearview Camera</feature>
+            <feature>Heated Air-Seat</feature>
+          </cabFeatures>
+          <undercarriageType>TRIPLE_GROUSER_SHOE</undercarriageType>
+          <quickCouplerRequired>true</quickCouplerRequired>
+          <attachmentPackage>HEAVY_DUTY_BUCKET_AND_THUMB</attachmentPackage>
+        </typeSpecificAttributes>
+      </desiredProduct>
+
+      <fleetOrder>
+        <quantity>3</quantity>
+        <unitBudgetCapUsd>1100000</unitBudgetCapUsd>
+        <totalBudgetCap>3300000</totalBudgetCap>
+        <currency>USD</currency>
+        <mixedConfigAllowed>false</mixedConfigAllowed>
+        <procurementReference>GPC-PO-2026-EXCA-001</procurementReference>
+        <preferredDeliveryWindow>Q1 2026</preferredDeliveryWindow>
+        <unitSpecifications>
+          <spec>
+            <quantity>3</quantity>
+            <configurationCode>CAT-390-2026-EARTHWORKS-V1</configurationCode>
+            <specificOptions>
+              <option>GRADE_2D</option>
+              <option>PRODUCT_LINK_PL641</option>
+              <option>HEAVY_DUTY_BUCKET_3_5M3</option>
+              <option>HYDRAULIC_THUMB</option>
+              <option>FAST_FILL_FUEL</option>
+            </specificOptions>
+          </spec>
+        </unitSpecifications>
+      </fleetOrder>
+
+      <heavyEquipmentLead>
+        <attachmentCouplerStandard>ISO_19296</attachmentCouplerStandard>
+        <jobSiteAltitude>1800</jobSiteAltitude>
+        <exportLicenseRequired>false</exportLicenseRequired>
+      </heavyEquipmentLead>
+
+      <partExchange>
+        <assetType>EQUIPMENT</assetType>
+        <quantity>2</quantity>
+        <assetMake>Caterpillar</assetMake>
+        <assetModel>374</assetModel>
+        <assetYear>2018</assetYear>
+        <serialNumber>CAT374-JTE00847 / CAT374-JTE00901</serialNumber>
+        <currentOwnerHours>14800</currentOwnerHours>
+        <conditionGrade>FAIR</conditionGrade>
+        <estimatedValue>480000</estimatedValue>
+        <currency>USD</currency>
+        <estimatedValueBasis>MARKET</estimatedValueBasis>
+        <intendedDisposition>TRADE_IN</intendedDisposition>
+      </partExchange>
+
+      <organizationContext>
+        <organizationId>ORG-ALTORFER-CAT-MIDWEST</organizationId>
+        <organizationName>Altorfer Cat</organizationName>
+        <timezone>America/Denver</timezone>
+        <region>NA</region>
+      </organizationContext>
+
+      <metadata>
+        <createdAt>2026-01-10T09:15:00Z</createdAt>
+        <updatedAt>2026-01-10T09:15:00Z</updatedAt>
+        <auditTrail>
+          <event>
+            <timestamp>2026-01-10T09:15:00Z</timestamp>
+            <action>LEAD_CREATED</action>
+            <changedBy>RETAILER-CAT-MIDWEST</changedBy>
+            <newValue>SHOPPING</newValue>
+          </event>
+        </auditTrail>
+      </metadata>
+    </lead>
+  </payload>
+
+</lex>

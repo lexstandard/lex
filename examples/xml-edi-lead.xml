@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ALXMessage version="1.0.0" xmlns="http://alx.automotive.org/1.0.0">
+  <Header>
+    <MessageID>550e8400-e29b-41d4-a716-446655440000</MessageID>
+    <MessageType>LEAD</MessageType>
+    <Timestamp>2026-03-23T14:30:00Z</Timestamp>
+    <SenderID>DEALER-001</SenderID>
+    <ReceiverID>MANUFACTURER-ABC</ReceiverID>
+    <CorrelationID></CorrelationID>
+  </Header>
+
+  <Payload>
+    <Lead>
+      <!-- Lead Identification -->
+      <LeadID>LEAD-2026-001234</LeadID>
+      <Status>EXPRESSED_INTEREST</Status>
+      <Source>DEALER_WEBSITE</Source>
+      <SourceDetail>
+        <Channel>online</Channel>
+        <Platform>dealership_website</Platform>
+        <LanguageCode>en-US</LanguageCode>
+      </SourceDetail>
+
+      <!-- Customer Information -->
+      <Customer>
+        <FirstName>John</FirstName>
+        <LastName>Doe</LastName>
+        <Email>john.doe@example.com</Email>
+        <Phone>+13125551234</Phone>
+        <DateOfBirth>1985-05-15</DateOfBirth>
+        <Gender>M</Gender>
+        <Address>
+          <Street1>123 Main Street</Street1>
+          <Street2>Suite 100</Street2>
+          <City>Springfield</City>
+          <State>IL</State>
+          <PostalCode>62701</PostalCode>
+          <Country>US</Country>
+        </Address>
+        <Preferences>
+          <PreferredContactMethod>EMAIL</PreferredContactMethod>
+          <PreferredContactTime>EVENINGS</PreferredContactTime>
+          <DoNotCall>false</DoNotCall>
+          <DoNotEmail>false</DoNotEmail>
+        </Preferences>
+      </Customer>
+
+      <!-- Desired Vehicle Information -->
+      <DesiredVehicle>
+        <Make>Toyota</Make>
+        <Model>Camry</Model>
+        <Year>2026</Year>
+        <Trim>LE</Trim>
+        <Trim>SE</Trim>
+        <BodyType>SEDAN</BodyType>
+        <Transmission>AUTOMATIC</Transmission>
+        <FuelType>HYBRID</FuelType>
+        <DesiredFeatures>
+          <Feature>ALL_WHEEL_DRIVE</Feature>
+          <Feature>LEATHER_INTERIOR</Feature>
+          <Feature>SUNROOF</Feature>
+          <Feature>NAVIGATION_SYSTEM</Feature>
+          <Feature>BACKUP_CAMERA</Feature>
+        </DesiredFeatures>
+        <ExcludedFeatures>
+          <Feature>REMOTE_START</Feature>
+        </ExcludedFeatures>
+        <PriceRange>
+          <MinUSD>25000</MinUSD>
+          <MaxUSD>35000</MaxUSD>
+          <Currency>USD</Currency>
+        </PriceRange>
+        <DeliveryType>IMMEDIATE</DeliveryType>
+      </DesiredVehicle>
+
+      <!-- Trade-In Information -->
+      <TradeIn>
+        <HasTradeIn>true</HasTradeIn>
+        <Year>2018</Year>
+        <Make>Honda</Make>
+        <Model>Accord</Model>
+        <EstimatedValue>18000</EstimatedValue>
+        <Condition>GOOD</Condition>
+        <Mileage>45000</Mileage>
+        <VIN>1HGCV1F32JA123456</VIN>
+      </TradeIn>
+
+      <!-- Financing Information -->
+      <Financing>
+        <InterestedInFinancing>true</InterestedInFinancing>
+        <PreferredLoanTermMonths>60</PreferredLoanTermMonths>
+        <DownPaymentRange>
+          <MinUSD>5000</MinUSD>
+          <MaxUSD>10000</MaxUSD>
+        </DownPaymentRange>
+        <CreditTierPreference>GOOD</CreditTierPreference>
+      </Financing>
+
+      <!-- Metadata -->
+      <Metadata>
+        <CreatedAt>2026-03-20T10:15:00Z</CreatedAt>
+        <UpdatedAt>2026-03-23T14:30:00Z</UpdatedAt>
+        <ExpirationDate>2026-04-23T14:30:00Z</ExpirationDate>
+        <Priority>HIGH</Priority>
+        <OwnershipChain>
+          <Owner>DEALER-001</Owner>
+          <Owner>MANUFACTURER-ABC</Owner>
+        </OwnershipChain>
+        <SourceSystem>DEALERSHIP_CRM_v2.1</SourceSystem>
+        <CustomFields>
+          <Field name="salesRepId">SR-456</Field>
+          <Field name="campaignCode">SPRING_2026_PROMOTION</Field>
+          <Field name="internalNotes">Customer visited showroom on 3/19, interested in hybrid models</Field>
+        </CustomFields>
+        <Compliance>
+          <GDPRConsent>true</GDPRConsent>
+          <CCPAOptOut>false</CCPAOptOut>
+          <MarketingEmailConsent>true</MarketingEmailConsent>
+          <ConsentTimestamp>2026-03-20T10:15:00Z</ConsentTimestamp>
+        </Compliance>
+      </Metadata>
+
+      <!-- Subscription Preferences -->
+      <SubscriptionPreferences>
+        <WantsPriceUpdates>true</WantsPriceUpdates>
+        <WantsInventoryUpdates>true</WantsInventoryUpdates>
+        <WantsServiceReminders>false</WantsServiceReminders>
+        <UpdateFrequency>WEEKLY</UpdateFrequency>
+      </SubscriptionPreferences>
+    </Lead>
+  </Payload>
+
+  <Validation>
+    <Checksum algorithm="sha256">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</Checksum>
+    <Signature></Signature>
+  </Validation>
+</ALXMessage>

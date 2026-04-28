@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LEX Aviation Primary Lead — XML Representation
+  Scenario : SkyBridge Airlines / 6× Airbus A320neo fleet acquisition
+  Phase    : Phase 01 — Initial Fleet RFP Inquiry (SHOPPING)
+  Spec Ref : LEX_SPECIFICATION.md §2 / LEX_MULTI_INDUSTRY.md §1,5
+-->
+<lex version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <header>
+    <messageId>10a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c</messageId>
+    <messageType>LEAD</messageType>
+    <version>1.0</version>
+    <timestamp>2025-06-01T08:00:00Z</timestamp>
+    <senderId>RETAILER-AIRBUS-ORDERDESK</senderId>
+    <receiverId>LEX-PLATFORM</receiverId>
+    <encryptionMethod>TLS1.3</encryptionMethod>
+    <signatureAlgorithm>HMAC-SHA256</signatureAlgorithm>
+  </header>
+  <payload>
+    <lead>
+      <leadId>LID-20250601-AVIA-001</leadId>
+      <leadType>PRIMARY</leadType>
+      <status>SHOPPING</status>
+      <source>MANUFACTURER_WEBSITE</source>
+      <leadCreatedDate>2025-06-01T08:00:00Z</leadCreatedDate>
+      <leadVersion>1</leadVersion>
+
+      <sourceDetail>
+        <sourceType>MANUFACTURER_WEBSITE</sourceType>
+        <sourceURL>https://www.airbus.com/en/products-services/commercial-aircraft/a320-family/a320neo</sourceURL>
+        <channel>DIGITAL</channel>
+        <leadEntryMethod>FORM_SUBMISSION</leadEntryMethod>
+        <formName>Aircraft Acquisition RFP</formName>
+        <leadQualityScore>9.8</leadQualityScore>
+        <customFields>
+          <rfpReference>RFP-2025-SKYBRIDGE-A320-NEO</rfpReference>
+          <procurementOfficer>Marcus Reid</procurementOfficer>
+          <targetFleetEntry>Q1 2026</targetFleetEntry>
+        </customFields>
+      </sourceDetail>
+
+      <customer>
+        <firstName>Marcus</firstName>
+        <lastName>Reid</lastName>
+        <emailAddress>m.reid@skybridgeair.com</emailAddress>
+        <phoneNumber>+4420555501234</phoneNumber>
+        <preferredContactMethod>EMAIL</preferredContactMethod>
+        <locale>en-GB</locale>
+        <buyerType>ORGANIZATION</buyerType>
+        <organizationBuyer>
+          <companyName>SkyBridge Airlines Ltd</companyName>
+          <companyRegistrationNumber>GB09123456</companyRegistrationNumber>
+          <taxIdentificationNumber>GB-VAT-123456789</taxIdentificationNumber>
+          <companySize>MID_MARKET</companySize>
+          <existingFleetSize>22</existingFleetSize>
+          <governmentEntity>false</governmentEntity>
+          <procurementMethodology>RFP</procurementMethodology>
+          <existingRelationship>RENEWAL</existingRelationship>
+          <budgetApprovalStatus>APPROVED</budgetApprovalStatus>
+          <procurementContact>
+            <firstName>Marcus</firstName>
+            <lastName>Reid</lastName>
+            <title>VP Fleet Planning</title>
+            <email>m.reid@skybridgeair.com</email>
+            <department>Fleet and Technical</department>
+          </procurementContact>
+        </organizationBuyer>
+        <fleetBuyer>
+          <isFleet>true</isFleet>
+          <fleetSize>22</fleetSize>
+          <unitsToOrder>6</unitsToOrder>
+          <fleetManagerName>Marcus Reid</fleetManagerName>
+          <fleetManagerEmail>m.reid@skybridgeair.com</fleetManagerEmail>
+        </fleetBuyer>
+      </customer>
+
+      <desiredProduct>
+        <productType>AIRCRAFT_NEW</productType>
+        <assetClass>AVIATION</assetClass>
+        <make>Airbus</make>
+        <model>A320neo</model>
+        <year>2026</year>
+        <condition>NEW</condition>
+        <budgetMin>590000000</budgetMin>
+        <budgetMax>640000000</budgetMax>
+        <currency>USD</currency>
+        <factoryOrderPreference>FACTORY_ORDER_ONLY</factoryOrderPreference>
+        <installedOptions>
+          <option>
+            <optionName>Sharklet Winglet Upgrade</optionName>
+            <partNumber>AIRBUS-S18001-00</partNumber>
+            <optionPrice>850000</optionPrice>
+            <currency>USD</currency>
+          </option>
+          <option>
+            <optionName>Ka-band In-Flight Wi-Fi System</optionName>
+            <partNumber>AIRBUS-IFE-KA-001</partNumber>
+            <optionPrice>1200000</optionPrice>
+            <currency>USD</currency>
+          </option>
+          <option>
+            <optionName>Thales AVANT+ Avionics Suite</optionName>
+            <partNumber>AIRBUS-AVANT-PLUS-001</partNumber>
+            <optionPrice>2500000</optionPrice>
+            <currency>USD</currency>
+          </option>
+        </installedOptions>
+        <typeSpecificAttributes>
+          <engineOption>CFM LEAP-1A26</engineOption>
+          <cabinConfiguration>SINGLE_AISLE_174_SEATS</cabinConfiguration>
+          <seatConfiguration>3-3</seatConfiguration>
+          <cabinWidth>NARROWBODY</cabinWidth>
+          <rangeKm>6300</rangeKm>
+          <icaoTypeDesignator>A20N</icaoTypeDesignator>
+          <icaoAircraftCategory>M</icaoAircraftCategory>
+          <maxSpeedKmh>833</maxSpeedKmh>
+          <mtowKg>79000</mtowKg>
+          <avionicsStandard>Thales AVANT+</avionicsStandard>
+          <cabinLayout>ALL_ECONOMY</cabinLayout>
+          <wifiCapability>HIGH_SPEED_KA_BAND</wifiCapability>
+        </typeSpecificAttributes>
+      </desiredProduct>
+
+      <fleetOrder>
+        <quantity>6</quantity>
+        <unitBudgetCapUsd>104000000</unitBudgetCapUsd>
+        <totalBudgetCap>624000000</totalBudgetCap>
+        <currency>USD</currency>
+        <mixedConfigAllowed>false</mixedConfigAllowed>
+        <procurementReference>RFP-2025-SKYBRIDGE-A320-NEO</procurementReference>
+        <preferredDeliveryWindow>Q1 2026 – Q4 2026</preferredDeliveryWindow>
+        <evaluationUnits>1</evaluationUnits>
+        <deliverySchedule>
+          <slot><slotNumber>1</slotNumber><quantity>2</quantity><targetDate>2026-03-15</targetDate><targetLocation>AIRBUS-TOULOUSE-FAL</targetLocation></slot>
+          <slot><slotNumber>2</slotNumber><quantity>2</quantity><targetDate>2026-06-30</targetDate><targetLocation>AIRBUS-TOULOUSE-FAL</targetLocation></slot>
+          <slot><slotNumber>3</slotNumber><quantity>2</quantity><targetDate>2026-11-15</targetDate><targetLocation>AIRBUS-TOULOUSE-FAL</targetLocation></slot>
+        </deliverySchedule>
+      </fleetOrder>
+
+      <aviationLead>
+        <operatorCertificate>PART_121</operatorCertificate>
+        <intendedUse>CHARTER</intendedUse>
+        <currentRegistryCountry>GB</currentRegistryCountry>
+        <targetRegistryCountry>GB</targetRegistryCountry>
+      </aviationLead>
+
+      <procurementFinancing>
+        <procurementType>EXPORT_CREDIT_AGENCY</procurementType>
+        <exportCreditAgency>US_EXIM</exportCreditAgency>
+        <leaseTerm>144</leaseTerm>
+        <tenderReference>RFP-2025-SKYBRIDGE-A320-NEO</tenderReference>
+        <escrowRequired>true</escrowRequired>
+        <downPaymentPct>15.0</downPaymentPct>
+        <currency>USD</currency>
+      </procurementFinancing>
+
+      <organizationContext>
+        <organizationId>ORG-AIRBUS-COMMERCIAL</organizationId>
+        <organizationName>Airbus Commercial Aircraft</organizationName>
+        <timezone>Europe/Paris</timezone>
+        <region>EU</region>
+      </organizationContext>
+
+      <leadHistory>
+        <entry>
+          <version>1</version>
+          <previousStatus/>
+          <newStatus>SHOPPING</newStatus>
+          <timestamp>2025-06-01T08:00:00Z</timestamp>
+          <changedBy>RETAILER-AIRBUS-ORDERDESK</changedBy>
+          <reason>Formal RFP received from SkyBridge Airlines for 6x A320neo fleet replacement</reason>
+        </entry>
+      </leadHistory>
+
+      <metadata>
+        <createdAt>2025-06-01T08:00:00Z</createdAt>
+        <updatedAt>2025-06-01T08:00:00Z</updatedAt>
+        <auditTrail>
+          <entry>
+            <timestamp>2025-06-01T08:00:00Z</timestamp>
+            <action>LEAD_CREATED</action>
+            <changedBy>RETAILER-AIRBUS-ORDERDESK</changedBy>
+            <newValue>SHOPPING</newValue>
+          </entry>
+        </auditTrail>
+      </metadata>
+    </lead>
+  </payload>
+</lex>

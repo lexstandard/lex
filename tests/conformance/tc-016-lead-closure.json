@@ -1,0 +1,43 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-016",
+  "title": "Valid Lead Closure — WON",
+  "level": "L2",
+  "conformanceLevel": 2,
+  "category": "LEAD_CLOSURE",
+  "description": "A well-formed LEAD_CLOSURE message with closureStatus WON referencing a valid originalLeadId. Validator MUST return valid=true and an ACKNOWLEDGMENT with status PROCESSED.",
+  "specRef": "LEX_CONFORMANCE §2 TC-016",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000016",
+        "messageType": "LEAD_CLOSURE",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:15:00Z",
+        "senderId": "DEALER-001",
+        "receiverId": "PORTAL-001"
+      },
+      "payload": {
+        "leadClosure": {
+          "originalLeadId": "LEAD-TC001-0001",
+          "originalLeadSource": "RETAILER_WEBSITE",
+          "closureStatus": "WON",
+          "closureReason": "Customer purchased vehicle",
+          "leadCreatedDate": "2026-04-03T10:00:00Z",
+          "leadClosureDate": "2026-04-03T10:15:00Z",
+          "leadLifecycleDays": 0,
+          "closureDetail": {
+            "purchaseConfirmed": true
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": true,
+    "httpStatus": 200,
+    "acknowledgmentStatus": "PROCESSED",
+    "errors": [],
+    "warnings": []
+  }
+}

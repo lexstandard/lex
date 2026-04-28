@@ -1,0 +1,57 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-006",
+  "title": "Invalid Email Format",
+  "level": "L2",
+  "conformanceLevel": 2,
+  "category": "FIELD_VALIDATION",
+  "description": "customer.emailAddress contains a string that is not a valid RFC 5321 email address. Validator MUST return valid=false with an INVALID_EMAIL_FORMAT error.",
+  "specRef": "LEX_CONFORMANCE §2 TC-006",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000006",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:05:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC006-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "emailAddress": "not-an-email",
+            "phoneNumber": "+14155551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Ford",
+            "model": "F-150"
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:05:00Z",
+            "countryCode": "US"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "customer.emailAddress",
+        "code": "INVALID_EMAIL_FORMAT",
+        "level": "ERROR",
+        "rejectedValue": "not-an-email"
+      }
+    ],
+    "warnings": []
+  }
+}

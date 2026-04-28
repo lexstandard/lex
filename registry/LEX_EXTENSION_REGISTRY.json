@@ -1,0 +1,136 @@
+﻿{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "_comment": "LEX Extension Namespace Registry — Community-maintained, advisory only. NOT a required approval gate. See specs/LEX_EXTENSION_STANDARD.md §9 for governance rules.",
+  "_governance": {
+    "license": "Apache-2.0",
+    "maintainer": "LEX Community (open contributions via pull request)",
+    "registrationRequired": false,
+    "registrationFee": "none",
+    "registrationURL": "https://github.com/lexstandard/registry/pulls",
+    "rejectionPolicy": "Only rejected for: (1) collision with lex.core.* reserved prefix, or (2) demonstrably malicious content impersonating another registered organization."
+  },
+  "registryVersion": "1.0.0",
+  "lastUpdated": "2026-03-28",
+  "namespaces": [
+    {
+      "namespace": "lex.core.ev",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for electric vehicle specifications, charging, range, and tax credit eligibility.",
+      "specRef": "specs/LEX_EV_EXTENSIONS.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.ev/1.0.0",
+      "registeredAt": "2026-03-01"
+    },
+    {
+      "namespace": "lex.core.deduplication",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for cross-platform deduplication signals and fingerprinting.",
+      "specRef": "specs/LEX_DEDUPLICATION.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.deduplication/1.0.0",
+      "registeredAt": "2026-03-01"
+    },
+    {
+      "namespace": "lex.core.intelligence",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for lead intelligence, behavioral signals, and intent scoring.",
+      "specRef": "specs/LEX_LEAD_INTELLIGENCE.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.intelligence/1.0.0",
+      "registeredAt": "2026-03-01"
+    },
+    {
+      "namespace": "lex.core.consent",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for customer consent records (GDPR, TCPA, CCPA, PIPEDA).",
+      "specRef": "specs/LEX_CONSENT_MODEL.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.consent/1.0.0",
+      "registeredAt": "2026-03-01"
+    },
+    {
+      "namespace": "lex.core.transport",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for transport resilience: TTL, retry, dead-letter queue signals.",
+      "specRef": "specs/LEX_TRANSPORT_RESILIENCE.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.transport/1.0.0",
+      "registeredAt": "2026-03-01"
+    },
+    {
+      "namespace": "lex.core.realestate",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for real estate procurement leads: property attributes (typed), listing info (MLS, agents), property pricing (list/offer/appraisal/closing), mortgage pre-qualification, co-applicant support, escrow tracking, and viewing history.",
+      "specRef": "specs/LEX_REAL_ESTATE_EXTENSIONS.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.realestate/1.0.0",
+      "registeredAt": "2026-04-03"
+    },
+    {
+      "namespace": "lex.core.aviation",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for aircraft procurement leads: aircraft technical spec (ICAO type, engine, MTOW, range, seat config), production slot/delivery position, regulatory and type certificate data (FAA/EASA), ECA/EETC financing structures, technical evaluation stages, and airline fleet context.",
+      "specRef": "specs/LEX_AVIATION_EXTENSIONS.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.aviation/1.0.0",
+      "registeredAt": "2026-04-03"
+    },
+    {
+      "namespace": "lex.core.maritime",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for vessel procurement leads: vessel specification (type, DWT, GT, fuel, speed), broker information (role and commission — mandatory in maritime), shipyard details (hull number, keel, progress payments), classification requirements (class society notation, MARPOL), maritime financing (Korea/Norwegian ECA, bareboat charter), and charter context.",
+      "specRef": "specs/LEX_MARITIME_EXTENSIONS.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.maritime/1.0.0",
+      "registeredAt": "2026-04-03"
+    },
+    {
+      "namespace": "lex.core.heavyequipment",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for heavy equipment procurement leads: equipment specification (category, operating weight, engine tier, bucket capacity), attachments with weighted priority, job site context (terrain, elevation, climate), utilization requirements (hours/day, duty cycle), service and telematics plan, and site demonstration request tracking.",
+      "specRef": "specs/LEX_HEAVY_EQUIPMENT_EXTENSIONS.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.heavyequipment/1.0.0",
+      "registeredAt": "2026-04-03"
+    },
+    {
+      "namespace": "lex.core.technology",
+      "status": "RESERVED",
+      "owner": "LEX Working Group",
+      "description": "LEX standard extensions for enterprise technology procurement leads: procurement model (DaaS, SaaS, lease, outright purchase), device specification (typed hardware attributes), software bundle and license model, MDM/deployment configuration, compliance certification requirements (ISO 27001, SOC2, FedRAMP, GDPR DPA), integration requirements (ERP, IAM, ITSM), and DaaS/subscription term parameters.",
+      "specRef": "specs/LEX_TECHNOLOGY_EXTENSIONS.md",
+      "latestVersion": "1.0.0",
+      "schemaUri": "lex://registry/extensions/lex.core.technology/1.0.0",
+      "registeredAt": "2026-04-03"
+    }
+  ],
+  "_addingYourNamespace": {
+    "instructions": [
+      "1. Fork the LEX registry repository.",
+      "2. Add your entry to the 'namespaces' array following the schema below.",
+      "3. Submit a pull request. No approval fee. No editorial review of content.",
+      "4. Your namespace is VALID whether or not it appears here.",
+      "   This registry is for discoverability only."
+    ],
+    "entrySchema": {
+      "namespace": "string — your.org.purpose format",
+      "status": "REGISTERED (community) | RESERVED (lex.core.* only)",
+      "owner": "Your organization name",
+      "description": "Brief description of what data this namespace carries",
+      "specRef": "Optional URL or path to your extension's spec documentation",
+      "latestVersion": "semver string of your current latest extension version",
+      "schemaUri": "Optional URL to a JSON Schema for your extension data object",
+      "registeredAt": "ISO 8601 date string (YYYY-MM-DD)"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-005",
+  "title": "Future Timestamp",
+  "level": "L1",
+  "conformanceLevel": 1,
+  "category": "SECURITY",
+  "description": "LEAD message header timestamp is 5 minutes in the future (beyond the 60-second tolerance window). Validator MUST return valid=false with a TIMESTAMP_IN_FUTURE error on lex.header.timestamp.",
+  "specRef": "LEX_CONFORMANCE §2 TC-005",
+  "note": "Runner substitutes {{NOW_PLUS_300S}} with current_time + 5 minutes at test execution time.",
+  "timestampOffsetSeconds": 300,
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000005",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "{{NOW_PLUS_300S}}",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC005-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "emailAddress": "jane.smith@example.com",
+            "phoneNumber": "+14155551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW"
+          },
+          "metadata": {
+            "createdDate": "{{NOW_PLUS_300S}}"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "lex.header.timestamp",
+        "code": "TIMESTAMP_IN_FUTURE",
+        "level": "CRITICAL"
+      }
+    ],
+    "warnings": []
+  }
+}

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LEX Technology Lead - Primary Message (Phase 01: SHOPPING / Enterprise DaaS RFP) -->
+<!-- Industry: TECHNOLOGY | Format: LEX-XML -->
+<lex xmlns="urn:lex:schema:v1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <header>
+    <messageId>a1d2e3f4-b5c6-4a7b-8c9d-0e1f2b3c4d5e</messageId>
+    <messageType>LEAD</messageType>
+    <version>1.0</version>
+    <timestamp>2026-01-15T10:00:00Z</timestamp>
+    <senderId>RETAILER-DELL-EMEA-B2B</senderId>
+    <receiverId>LEX-PLATFORM</receiverId>
+    <encryptionMethod>TLS1.3</encryptionMethod>
+    <signatureAlgorithm>HMAC-SHA256</signatureAlgorithm>
+  </header>
+
+  <payload>
+    <lead>
+      <leadId>LID-20260115-TECH-001</leadId>
+      <leadType>PRIMARY</leadType>
+      <status>SHOPPING</status>
+      <source>RETAILER_WEBSITE</source>
+      <leadCreatedDate>2026-01-15T10:00:00Z</leadCreatedDate>
+      <leadVersion>1</leadVersion>
+
+      <sourceDetail>
+        <sourceType>RETAILER_WEBSITE</sourceType>
+        <sourceURL>https://www.dell.com/en-gb/work/shop/daas</sourceURL>
+        <channel>DIGITAL</channel>
+        <leadEntryMethod>FORM_SUBMISSION</leadEntryMethod>
+        <formName>Enterprise DaaS RFP</formName>
+        <leadQualityScore>9.4</leadQualityScore>
+        <customFields>
+          <rfpReference>NEXA-RFP-2026-DAAS-001</rfpReference>
+          <deploymentTarget>2026-03-01</deploymentTarget>
+          <currentDevicesEndOfLife>2026-04-30</currentDevicesEndOfLife>
+          <mdmPlatform>Microsoft Intune</mdmPlatform>
+          <securityFramework>ISO-27001</securityFramework>
+          <existingDellRelationship>YES</existingDellRelationship>
+        </customFields>
+      </sourceDetail>
+
+      <customer>
+        <firstName>Ikem</firstName>
+        <lastName>Okafor</lastName>
+        <emailAddress>i.okafor@nexacorp.com</emailAddress>
+        <phoneNumber>+442071234567</phoneNumber>
+        <preferredContactMethod>EMAIL</preferredContactMethod>
+        <locale>en-GB</locale>
+        <buyerType>ORGANIZATION</buyerType>
+        <organizationBuyer>
+          <companyName>NexaCorp Ltd</companyName>
+          <companyRegistrationNumber>GB-14220348</companyRegistrationNumber>
+          <taxIdentificationNumber>GB-893421207</taxIdentificationNumber>
+          <industryCode>SIC-7372</industryCode>
+          <companySize>ENTERPRISE</companySize>
+          <existingFleetSize>680</existingFleetSize>
+          <governmentEntity>false</governmentEntity>
+          <procurementMethodology>RFP</procurementMethodology>
+          <existingRelationship>RENEWAL</existingRelationship>
+          <budgetApprovalStatus>APPROVED</budgetApprovalStatus>
+          <procurementContact>
+            <firstName>Ikem</firstName>
+            <lastName>Okafor</lastName>
+            <title>Head of IT Procurement</title>
+            <email>i.okafor@nexacorp.com</email>
+            <department>IT Operations</department>
+          </procurementContact>
+        </organizationBuyer>
+        <fleetBuyer>
+          <isFleet>true</isFleet>
+          <fleetSize>680</fleetSize>
+          <unitsToOrder>750</unitsToOrder>
+          <fleetManagerName>Ikem Okafor</fleetManagerName>
+          <fleetManagerEmail>i.okafor@nexacorp.com</fleetManagerEmail>
+        </fleetBuyer>
+      </customer>
+
+      <desiredProduct>
+        <productType>TECHNOLOGY_DEVICE</productType>
+        <assetClass>TECHNOLOGY_DEVICE</assetClass>
+        <make>Mixed: Dell / Apple</make>
+        <model>Latitude 7450 + iPhone 16 Pro</model>
+        <year>2026</year>
+        <condition>NEW</condition>
+        <budgetMin>3500000</budgetMin>
+        <budgetMax>4000000</budgetMax>
+        <currency>USD</currency>
+        <factoryOrderPreference>IN_STOCK_ONLY</factoryOrderPreference>
+        <typeSpecificAttributes>
+          <deviceCategory>MIXED_LAPTOP_SMARTPHONE</deviceCategory>
+          <mdmCompatible>true</mdmCompatible>
+          <mdmPlatform>Microsoft Intune</mdmPlatform>
+          <enterpriseSecurityCertified>true</enterpriseSecurityCertified>
+          <securityFramework>ISO-27001</securityFramework>
+          <osRequirements>
+            <os>Windows 11 Pro</os>
+            <os>iOS 18</os>
+          </osRequirements>
+          <minRamGb>16</minRamGb>
+          <minStorageGb>256</minStorageGb>
+          <biometricAuthRequired>true</biometricAuthRequired>
+          <tpmVersion>2.0</tpmVersion>
+          <lteSimRequired>true</lteSimRequired>
+        </typeSpecificAttributes>
+      </desiredProduct>
+
+      <fleetOrder>
+        <quantity>750</quantity>
+        <totalBudgetCap>4000000</totalBudgetCap>
+        <currency>USD</currency>
+        <mixedConfigAllowed>true</mixedConfigAllowed>
+        <procurementReference>NEXA-RFP-2026-DAAS-001</procurementReference>
+        <preferredDeliveryWindow>Q1 2026</preferredDeliveryWindow>
+        <unitSpecifications>
+          <spec>
+            <quantity>250</quantity>
+            <configurationCode>DELL-LAT7450-16GB-512-WIN11-INTUNE</configurationCode>
+            <specificOptions>
+              <option>INTEL-CORE-ULTRA-7-165U</option>
+              <option>16GB-LPDDR5X</option>
+              <option>512GB-NVMe-SSD</option>
+              <option>WINDOWS-11-PRO</option>
+              <option>INTUNE-ENROLL</option>
+              <option>BITLOCKER-ENABLED</option>
+              <option>4G-LTE-WWAN</option>
+            </specificOptions>
+          </spec>
+          <spec>
+            <quantity>500</quantity>
+            <configurationCode>APPLE-IP16PRO-256-NATURALTI-IOS18-INTUNE</configurationCode>
+            <specificOptions>
+              <option>A18-PRO-CHIP</option>
+              <option>256GB-STORAGE</option>
+              <option>NATURAL-TITANIUM</option>
+              <option>IOS-18-ENTERPRISE</option>
+              <option>5G-DUAL-SIM</option>
+              <option>INTUNE-ENROLL</option>
+              <option>APPLE-DEP</option>
+            </specificOptions>
+          </spec>
+        </unitSpecifications>
+      </fleetOrder>
+
+      <technologyLead>
+        <securityCertificationRequirements>
+          <requirement>ISO_27001</requirement>
+          <requirement>FIPS_140_2</requirement>
+        </securityCertificationRequirements>
+        <evergreenRefreshTrigger>EOL_DRIVEN</evergreenRefreshTrigger>
+        <evergreenRefreshThresholdMonths>36</evergreenRefreshThresholdMonths>
+        <sustainabilityRequirements>
+          <requirement>EPEAT_GOLD</requirement>
+          <requirement>ENERGY_STAR</requirement>
+        </sustainabilityRequirements>
+        <conflictMineralsComplianceRequired>true</conflictMineralsComplianceRequired>
+      </technologyLead>
+
+      <procurementFinancing>
+        <procurementType>DEVICE_AS_A_SERVICE</procurementType>
+        <leaseTerm>36</leaseTerm>
+        <perUnitMonthlyFee>140</perUnitMonthlyFee>
+        <totalMonthlyFee>105000</totalMonthlyFee>
+        <currency>USD</currency>
+        <includesServices>
+          <service>MDM_MANAGED</service>
+          <service>NEXT_BUSINESS_DAY_SUPPORT</service>
+          <service>ACCIDENTAL_DAMAGE_PROTECTION</service>
+          <service>END_OF_LEASE_REFRESH</service>
+          <service>ASSET_DISPOSAL_CERTIFIED</service>
+        </includesServices>
+      </procurementFinancing>
+
+      <organizationContext>
+        <organizationId>ORG-DELL-EMEA-B2B</organizationId>
+        <organizationName>Dell Technologies EMEA Enterprise</organizationName>
+        <timezone>Europe/London</timezone>
+        <region>EMEA</region>
+      </organizationContext>
+
+      <metadata>
+        <createdAt>2026-01-15T10:00:00Z</createdAt>
+        <updatedAt>2026-01-15T10:00:00Z</updatedAt>
+        <auditTrail>
+          <event>
+            <timestamp>2026-01-15T10:00:00Z</timestamp>
+            <action>LEAD_CREATED</action>
+            <changedBy>RETAILER-DELL-EMEA-B2B</changedBy>
+            <newValue>SHOPPING</newValue>
+          </event>
+        </auditTrail>
+      </metadata>
+    </lead>
+  </payload>
+
+</lex>

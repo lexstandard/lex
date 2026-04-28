@@ -1,0 +1,865 @@
+﻿{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexstandard.org/schemas/v1/LEX_ASSET_SCHEMA.json",
+  "title": "LEX - ASSET Message Schema",
+  "description": "Schema for ASSET message type - universal inventory and specifications for all 18 asset classes (ground vehicles, motorcycles, aviation, rail, maritime, heavy equipment, technology, energy, healthcare, space, defense, and more).",
+  "type": "object",
+  "required": ["payload"],
+  "properties": {
+    "payload": {
+      "type": "object",
+      "required": ["asset"],
+      "properties": {
+        "asset": {
+          "type": "object",
+          "description": "Universal asset base - fields shared across all asset classes. Populate one implementation block (groundVehicle, aircraft, etc.) matching the assetClass.",
+          "required": ["assetId", "status", "manufacturer", "model", "year"],
+          "properties": {
+
+            "assetId": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 50,
+              "description": "Universal asset identifier: VIN (automotive), MSN (aircraft), IMO number (maritime), IMEI (mobile), serial number, or SKU."
+            },
+            "assetClass": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/AssetClass"
+            },
+            "productType": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ProductType"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["AVAILABLE", "RESERVED", "SOLD", "INCOMING", "DAMAGED", "RECALLED", "DISCONTINUED"],
+              "description": "Current availability / lifecycle status"
+            },
+            "condition": {
+              "type": "string",
+              "enum": ["NEW", "USED", "CERTIFIED_PRE_OWNED", "REFURBISHED", "DAMAGED", "EX_GOVERNMENT", "DEMONSTRATION", "END_OF_LEASE"],
+              "description": "Asset condition and ownership history"
+            },
+            "lastStatusUpdate": {
+              "type": "string",
+              "format": "date-time"
+            },
+
+            "manufacturer": {
+              "type": "string",
+              "description": "OEM / brand name (Toyota, Airbus, Siemens, Apple, GE Healthcare, etc.)"
+            },
+            "model": {
+              "type": "string",
+              "description": "Model / product name"
+            },
+            "year": {
+              "type": "integer",
+              "minimum": 1800,
+              "maximum": 2100,
+              "description": "Model year or manufacture year"
+            },
+
+            "assetSerialNumber": {
+              "type": "string",
+              "description": "Universal serial or registration number. Format standard specified in serialNumberFormat."
+            },
+            "serialNumberFormat": {
+              "type": "string",
+              "enum": ["VIN", "MSN", "UIC", "IMO", "IMEI", "SERVICE_TAG", "TAIL_NUMBER", "CUSTOM"],
+              "description": "VIN=automotive, MSN=aircraft, UIC=rail, IMO=maritime, IMEI=mobile"
+            },
+            "configurationCode": {
+              "type": "string",
+              "description": "OEM/vendor configuration or variant code"
+            },
+            "operatingHours": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Cumulative operating hours (flight hours, engine hours, machine hours, etc.)"
+            },
+            "maintenanceCycleStatus": {
+              "type": "string",
+              "enum": ["ON_SCHEDULE", "OVERDUE", "IN_MAINTENANCE", "QUARANTINED"]
+            },
+
+            "pricing": {
+              "type": "object",
+              "properties": {
+                "basePrice": { "type": "number", "minimum": 0 },
+                "currency": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency" },
+                "discountAmount": { "type": "number", "minimum": 0 },
+                "discountReason": { "type": "string" },
+                "finalPrice": { "type": "number", "minimum": 0 },
+                "monthlyPaymentOption": { "type": "number" },
+                "priceInclusions": { "type": "array", "items": { "type": "string" } }
+              }
+            },
+
+            "warranty": {
+              "type": "object",
+              "properties": {
+                "warrantyPeriod": { "type": "integer", "description": "Warranty in months" },
+                "warrantyKm": { "type": "integer" },
+                "warrantyDetails": { "type": "string" },
+                "extendedWarrantyAvailable": { "type": "boolean" }
+              }
+            },
+
+            "features": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "enum": ["SAFETY", "COMFORT", "TECHNOLOGY", "CONVENIENCE", "PERFORMANCE", "LUXURY", "COMPLIANCE", "OTHER"]
+                  },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            },
+
+            "environmentalCompliance": {
+              "type": "object",
+              "properties": {
+                "emissionNorm": {
+                  "type": "string",
+                  "enum": [
+                    "BS-I", "BS-II", "BS-III", "BS-IV", "BS-VI",
+                    "EURO-1", "EURO-2", "EURO-3", "EURO-4", "EURO-5", "EURO-6", "EURO-7",
+                    "EPA_TIER1", "EPA_TIER2", "EPA_TIER3", "CARB",
+                    "IMO_TIER_2", "IMO_TIER_3", "MARPOL_ANNEX_VI",
+                    "ZERO_EMISSION", "OTHER"
+                  ]
+                },
+                "co2Emission": { "type": "number", "description": "CO2 in g/km or equivalent" },
+                "environmentalCertifications": { "type": "array", "items": { "type": "string" } }
+              }
+            },
+
+            "dealerAvailability": {
+              "type": "object",
+              "properties": {
+                "dealerId": { "type": "string" },
+                "dealerLocation": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Address" },
+                "stockQuantity": { "type": "integer", "minimum": 0 },
+                "daysInStock": { "type": "integer", "minimum": 0 },
+                "viewingAvailable": { "type": "boolean" },
+                "testDriveAvailable": { "type": "boolean" },
+                "inspectionReport": { "type": "string" }
+              }
+            },
+
+            "groundVehicle": {
+              "type": "object",
+              "description": "Automotive / ground vehicle specific attributes. Use when assetClass = VEHICLE, COMMERCIAL, RECREATIONAL, or MICROMOBILITY.",
+              "properties": {
+                "vin": {
+                  "type": "string",
+                  "pattern": "^[A-Z0-9]{17}$",
+                  "description": "Vehicle Identification Number - automotive assets only"
+                },
+                "trim": { "type": "string" },
+                "color": { "type": "string" },
+                "bodyType": {
+                  "type": "string",
+                  "description": "Body / configuration type for ground vehicles",
+                  "enum": [
+                    "SEDAN", "SUV", "TRUCK", "HATCHBACK", "COUPE", "CONVERTIBLE",
+                    "VAN", "WAGON", "CROSSOVER", "MINIVAN", "PICKUP",
+                    "ATV", "THREE_WHEELER", "CARGO_BIKE",
+                    "BUS", "MINIBUS", "COACH",
+                    "TRACTOR_UNIT", "RIGID_TRUCK", "TIPPER", "REFRIGERATED_TRUCK",
+                    "PANEL_VAN", "BOX_TRUCK", "FLATBED",
+                    "MOTORHOME_CLASS_A", "MOTORHOME_CLASS_B", "MOTORHOME_CLASS_C",
+                    "TRAVEL_TRAILER", "FIFTH_WHEEL",
+                    "ELECTRIC_MICROCAR", "ELECTRIC_QUADRICYCLE",
+                    "OTHER"
+                  ]
+                },
+                "doors": { "type": "integer", "minimum": 0, "maximum": 10 },
+                "seats": { "type": "integer", "minimum": 1, "maximum": 100 },
+                "engine": {
+                  "type": "object",
+                  "properties": {
+                    "engineType": {
+                      "type": "string",
+                      "enum": ["PETROL", "DIESEL", "HYBRID", "ELECTRIC", "CNG", "LPG", "HYDROGEN", "OTHER"]
+                    },
+                    "displacement": { "type": "number", "description": "Displacement in cc" },
+                    "power": { "type": "number", "description": "Power in bhp or kW" },
+                    "torque": { "type": "number", "description": "Torque in Nm" },
+                    "transmission": {
+                      "type": "string",
+                      "enum": ["MANUAL", "AUTOMATIC", "CVT", "SEMI_AUTOMATIC", "ELECTRIC"]
+                    },
+                    "driveType": { "type": "string", "enum": ["FWD", "RWD", "AWD", "4WD"] },
+                    "fuelTankCapacity": { "type": "number" },
+                    "batteryCapacity": { "type": "number" },
+                    "fuelEfficiency": { "type": "number" },
+                    "maxRange": { "type": "number" }
+                  }
+                },
+                "mileage": {
+                  "type": "object",
+                  "properties": {
+                    "odometer": { "type": "number", "minimum": 0 },
+                    "odometerStatus": {
+                      "type": "string",
+                      "enum": ["ORIGINAL", "REPLACED", "ROLLOVER", "TAMPERED", "UNKNOWN"],
+                      "description": "Odometer reading integrity — required for compliant title transfer (49 CFR Part 580). A bare mileage number is legally insufficient without this qualifier."
+                    },
+                    "odometerUnit": { "type": "string", "enum": ["MILES", "KILOMETERS"], "default": "MILES" },
+                    "condition": { "type": "string", "enum": ["EXCELLENT", "GOOD", "FAIR", "POOR"] },
+                    "lastServiceDate": { "type": "string", "format": "date" },
+                    "nextServiceDue": { "type": "string", "format": "date" }
+                  }
+                },
+                "installedOptions": {
+                  "type": "array",
+                  "description": "Options and accessories installed on this specific unit. Source classification determines MSRP inclusion and warranty scope.",
+                  "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                      "name": { "type": "string" },
+                      "source": {
+                        "type": "string",
+                        "enum": ["OEM_FACTORY", "DEALER_INSTALLED", "AFTERMARKET"],
+                        "description": "OEM_FACTORY = included in MSRP; DEALER_INSTALLED = dealer add-on post-build; AFTERMARKET = non-OEM"
+                      },
+                      "partNumber": { "type": "string" },
+                      "installedValue": { "type": "number", "minimum": 0 }
+                    }
+                  }
+                }
+              }
+            },
+
+            "motorcycle": {
+              "type": "object",
+              "description": "Two-wheeler / motorcycle specifications. Use when assetClass = MOTORCYCLE or MICROMOBILITY. Spec: LEX_TWO_WHEELER_EXAMPLES.md",
+              "properties": {
+                "motorType": { "type": "string", "enum": ["BRUSHLESS_DC", "BRUSHED_DC", "PMSM", "ICE", "OTHER"] },
+                "motorPowerW": { "type": "number", "minimum": 0 },
+                "engineDisplacementCc": { "type": "number", "minimum": 0 },
+                "batteryCapacityWh": { "type": "number", "minimum": 0 },
+                "estimatedRangeKm": { "type": "number", "minimum": 0 },
+                "maxSpeedKph": { "type": "number", "minimum": 0 },
+                "chargingTimeHours": { "type": "number", "minimum": 0 },
+                "chargingType": { "type": "string", "enum": ["STANDARD", "FAST_CHARGE", "SWAP_BATTERY", "NONE"] },
+                "absType": { "type": "string", "enum": ["SINGLE_CHANNEL", "DUAL_CHANNEL", "NONE"] },
+                "brakeType": { "type": "string", "enum": ["DISC_DISC", "DISC_DRUM", "DRUM_DRUM", "COMBINED_CBS"] },
+                "suspensionType": { "type": "string" },
+                "waterResistanceRating": { "type": "string" },
+                "vehicleWeightKg": { "type": "number", "minimum": 0 },
+                "loadCapacityKg": { "type": "number", "minimum": 0 },
+                "rideModesCount": { "type": "integer", "minimum": 0 },
+                "connectivityFeatures": { "type": "array", "items": { "type": "string" } },
+                "governmentSubsidyEligible": { "type": "boolean" }
+              }
+            },
+
+            "aircraft": {
+              "type": "object",
+              "description": "Aviation asset specifications. Use when assetClass = AVIATION. Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "drivetrainType": { "type": "string", "enum": ["TURBOFAN", "TURBOPROP", "PISTON", "TURBOSHAFT", "ELECTRIC", "HYBRID", "OTHER"] },
+                "icaoTypeDesignator": { "type": "string" },
+                "tailNumber": { "type": "string" },
+                "aircraftCategory": {
+                  "type": "string",
+                  "enum": ["NARROWBODY_JET", "WIDEBODY_JET", "REGIONAL_JET", "TURBOPROP", "BUSINESS_JET", "HELICOPTER", "UAV", "CARGO_AIRCRAFT", "MILITARY", "TRAINING", "OTHER"]
+                },
+                "seatingCapacity": { "type": "integer", "minimum": 0 },
+                "seatingConfiguration": { "type": "string" },
+                "maxTakeoffWeightKg": { "type": "number", "minimum": 0 },
+                "rangeKm": { "type": "number", "minimum": 0 },
+                "cruiseSpeedKph": { "type": "number", "minimum": 0 },
+                "engineCount": { "type": "integer", "minimum": 1 },
+                "engineModel": { "type": "string" },
+                "cabinWidth": { "type": "string", "enum": ["NARROWBODY", "WIDEBODY", "REGIONAL", "VIP"] },
+                "freightCapacityM3": { "type": "number", "minimum": 0 },
+                "icaoAircraftCategory": { "type": "string", "enum": ["L", "M", "H", "J"] },
+                "totalFlightHours": { "type": "number", "minimum": 0 },
+                "airworthinessCertificate": { "type": "string" },
+                "avionicsStandard": { "type": "string" },
+                "registrationCountry": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ISO3166Country" },
+                "manufacturerSerialNumber": {
+                  "type": "string",
+                  "description": "MSN — permanent unique airframe identifier that never changes regardless of registry, operator, or refurbishment"
+                },
+                "totalLandings": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Total pressurisation cycles / landings — cycle-limited structural items dominate valuation for short-haul narrowbodies (737, A320)"
+                },
+                "engines": {
+                  "type": "array",
+                  "description": "Per-engine record — engines are valued independently from the airframe; green-time vs. PBH-enrolled engines carry different market premiums",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "engineSerial": { "type": "string" },
+                      "engineModel": { "type": "string" },
+                      "position": { "type": "string", "description": "e.g. ENG_1, ENG_2, APU" },
+                      "timeSinceNewHours": { "type": "number", "minimum": 0 },
+                      "timeSinceOverhaulHours": { "type": "number", "minimum": 0 },
+                      "cyclesSinceNew": { "type": "integer", "minimum": 0 },
+                      "cyclesSinceOverhaul": { "type": "integer", "minimum": 0 },
+                      "programEnrollment": {
+                        "type": "string",
+                        "enum": ["GE_ONPOINT", "RR_TOTALCARE", "CFM_RATE_PER_FLIGHT_HOUR", "PW_ESP", "IAE_V2500_SELECT", "NONE", "OTHER"],
+                        "description": "Power-by-the-hour or engine health program — enrolled engines carry coverage premium over green-time engines"
+                      }
+                    }
+                  }
+                },
+                "openAirworthinessDirectives": {
+                  "type": "object",
+                  "description": "AD compliance status — open ADs are a direct discount or deal-stopper; recurring ADs represent future cost obligations buyers must price in",
+                  "properties": {
+                    "openCount": { "type": "integer", "minimum": 0, "description": "Number of non-complied ADs" },
+                    "recurringADs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "adNumber": { "type": "string" },
+                          "description": { "type": "string" },
+                          "nextComplianceDate": { "type": "string", "format": "date" },
+                          "intervalHours": { "type": "number", "minimum": 0 }
+                        }
+                      }
+                    }
+                  }
+                },
+                "lastHeavyMaintenanceCheck": {
+                  "type": "object",
+                  "description": "Most recent heavy check (C/D-check) — costs $1–8M and due on fixed intervals; imminent check creates major buyer capital exposure",
+                  "properties": {
+                    "checkType": { "type": "string", "enum": ["A_CHECK", "B_CHECK", "C_CHECK", "D_CHECK", "ISI", "HEAVY_MAINTENANCE_VISIT"] },
+                    "completedDate": { "type": "string", "format": "date" },
+                    "mroFacility": { "type": "string" },
+                    "nextCheckDueDate": { "type": "string", "format": "date" },
+                    "nextCheckDueHours": { "type": "number", "minimum": 0 }
+                  }
+                },
+                "supplementalTypeCertificates": {
+                  "type": "array",
+                  "description": "STCs installed on this airframe — FAA/EASA-approved modifications affecting ADS-B compliance, resale value, and modification compatibility",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "stcNumber": { "type": "string" },
+                      "description": { "type": "string" },
+                      "approvalHolder": { "type": "string" },
+                      "issuingAuthority": { "type": "string", "enum": ["FAA", "EASA", "CAAC", "TCCA", "OTHER"] }
+                    }
+                  }
+                },
+                "storageStatus": {
+                  "type": "string",
+                  "enum": ["OPERATIONAL", "SHORT_TERM_STORAGE", "LONG_TERM_STORAGE", "IN_MAINTENANCE", "PARTED_OUT"],
+                  "description": "Long-term stored aircraft require Return-to-Service inspections and de-preservation before delivery — directly affects timeline and cost"
+                },
+                "cabinRefurbishmentStatus": {
+                  "type": "string",
+                  "enum": ["CURRENT", "NEEDS_REFURBISHMENT", "REFURBISHMENT_PLANNED", "IN_REFURBISHMENT"],
+                  "description": "Cabin condition relative to market expectations — a needed refurb is a separate cost bucket in offer construction"
+                },
+                "cabinRefurbishmentEstimatedCostUsd": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Estimated cabin refurbishment cost in USD"
+                }
+              }
+            },
+
+            "railAsset": {
+              "type": "object",
+              "description": "Rail asset specifications. Use when assetClass = RAIL. Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "unitType": { "type": "string", "enum": ["EMU", "DMU", "LOCOMOTIVE", "HST", "LRV_TRAM", "METRO", "FREIGHT_WAGON", "PASSENGER_COACH", "OTHER"] },
+                "trackGaugeMm": { "type": "integer", "minimum": 0, "description": "Track gauge in mm (1435=standard, 1000=metre, 1676=Indian broad)" },
+                "tractionType": { "type": "string", "enum": ["ELECTRIC_25KV_AC", "ELECTRIC_15KV_AC", "ELECTRIC_750V_DC", "DIESEL", "HYDROGEN", "BATTERY", "DUAL_MODE"] },
+                "maxSpeedKph": { "type": "number", "minimum": 0 },
+                "seatingCapacity": { "type": "integer", "minimum": 0 },
+                "payloadTonnes": { "type": "number", "minimum": 0 },
+                "axleLoadTonnes": { "type": "number", "minimum": 0 },
+                "uicFleetNumber": { "type": "string" },
+                "carCount": { "type": "integer", "minimum": 1 },
+                "multipleUnitCompatible": { "type": "boolean" },
+                "unitLengthM": { "type": "number", "minimum": 0 },
+                "airConditioned": { "type": "boolean" },
+                "iceClass": { "type": "string" },
+                "totalRunningHours": { "type": "number", "minimum": 0 }
+              }
+            },
+
+            "watercraft": {
+              "type": "object",
+              "description": "Maritime / vessel specifications. Use when assetClass = MARITIME. Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "vesselType": { "type": "string", "enum": ["BULK_CARRIER", "CONTAINER", "TANKER", "RO_RO", "FERRY", "CRUISE", "YACHT", "PATROL", "OFFSHORE", "FISHING", "RESEARCH", "WARSHIP", "OTHER"] },
+                "grossTonnage": { "type": "number", "minimum": 0 },
+                "deadweightTonnage": { "type": "number", "minimum": 0 },
+                "cargoCapacityTeu": { "type": "number", "minimum": 0 },
+                "passengerCapacity": { "type": "integer", "minimum": 0 },
+                "imoNumber": { "type": "string", "pattern": "^IMO[0-9]{7}$" },
+                "flagState": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ISO3166Country" },
+                "classificationSociety": { "type": "string", "enum": ["LR", "DNV", "BV", "ABS", "RINA", "CCS", "NK", "OTHER"] },
+                "propulsionType": { "type": "string", "enum": ["DIESEL", "DUAL_FUEL_LNG", "METHANOL", "HYDROGEN", "ELECTRIC", "HYBRID", "WIND_ASSIST", "SAIL", "OTHER"] },
+                "hullMaterial": { "type": "string", "enum": ["STEEL", "ALUMINIUM", "FIBREGLASS", "COMPOSITE", "OTHER"] },
+                "lengthOverallM": { "type": "number", "minimum": 0 },
+                "iceClass": { "type": "string" },
+                "buildYear": { "type": "integer", "minimum": 1800 },
+                "totalEngineHours": { "type": "number", "minimum": 0 },
+                "classNotation": {
+                  "type": "string",
+                  "description": "Full classification society notation string (e.g. '+100A1', '+1A1 Tanker for Oil ESP', 'BV I Hull AUT-UMS') — encodes approved trade routes, structural standards, and automation level"
+                },
+                "ciiRating": {
+                  "type": "object",
+                  "description": "IMO Carbon Intensity Indicator — mandatory since IMO 2023; D/E rating for 3 consecutive years triggers trading restrictions and ESG financing issues",
+                  "properties": {
+                    "rating": { "type": "string", "enum": ["A", "B", "C", "D", "E"] },
+                    "reportingYear": { "type": "integer", "minimum": 2023 }
+                  }
+                },
+                "drydockSchedule": {
+                  "type": "object",
+                  "description": "Drydock schedule — costs $0.5M–5M+ with 10–40 days off-hire; imminent drydock is a major capital exposure for buyers",
+                  "properties": {
+                    "lastDrydockDate": { "type": "string", "format": "date" },
+                    "nextDrydockDueDate": { "type": "string", "format": "date" },
+                    "surveyType": { "type": "string", "enum": ["INTERMEDIATE", "SPECIAL", "DOCKING"] }
+                  }
+                },
+                "specialSurveyDueDate": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "5-year class renewal survey due date — more extensive than intermediate; major negotiating point in S&P transactions"
+                },
+                "pniClub": {
+                  "type": "object",
+                  "description": "P&I Club cover — required by most time-charter parties; outstanding claims affect coverage transferability",
+                  "properties": {
+                    "clubName": { "type": "string" },
+                    "policyYear": { "type": "integer" },
+                    "hasOutstandingClaims": { "type": "boolean" }
+                  }
+                },
+                "inventoryOfHazardousMaterials": {
+                  "type": "object",
+                  "description": "IHM compliance — required for EU Ship Recycling Regulation; non-compliance blocks sale into certain jurisdictions",
+                  "properties": {
+                    "status": { "type": "string", "enum": ["PART_I_COMPLETE", "PART_II_III_IN_PROGRESS", "NOT_COMMENCED", "FULLY_COMPLETE"] },
+                    "surveyCompany": { "type": "string" },
+                    "completedDate": { "type": "string", "format": "date" }
+                  }
+                },
+                "speedConsumptionWarranty": {
+                  "type": "object",
+                  "description": "Warranted speed and fuel consumption — present in main terms of every charter party; basis for off-hire claims",
+                  "properties": {
+                    "warrantedSpeedKnots": { "type": "number", "minimum": 0 },
+                    "fuelConsumptionMtPerDay": { "type": "number", "minimum": 0 },
+                    "seaStateBeaufort": { "type": "integer", "minimum": 0, "maximum": 12 },
+                    "fuelType": { "type": "string", "enum": ["VLSFO", "MGO", "LNG", "METHANOL", "HFO"] },
+                    "speedBasis": { "type": "string", "enum": ["FULL_SPEED", "ECONOMICAL", "SLOW_STEAMING"] }
+                  }
+                },
+                "portStateControlRecord": {
+                  "type": "object",
+                  "description": "PSC inspection record — multiple detentions signal maintenance culture issues and appear on Tokyo/Paris MOU targeting lists",
+                  "properties": {
+                    "detentionsLast36Months": { "type": "integer", "minimum": 0 },
+                    "deficiencyCountLast36Months": { "type": "integer", "minimum": 0 },
+                    "lastInspectionDate": { "type": "string", "format": "date" },
+                    "lastInspectionPort": { "type": "string" }
+                  }
+                },
+                "lastCargoDetails": {
+                  "type": "object",
+                  "description": "Last cargo carried — tanker operators require last three cargoes for compatibility assessment; missing this defers to costly on-site inspection",
+                  "properties": {
+                    "lastCargo": { "type": "string" },
+                    "cleanlinessStatus": { "type": "string", "enum": ["CLEAN", "DIRTY", "CLINGAGE_IN_PROGRESS", "UNKNOWN"] },
+                    "lastThreeCargoNames": { "type": "array", "items": { "type": "string" }, "maxItems": 3 }
+                  }
+                }
+              }
+            },
+
+            "heavyEquipment": {
+              "type": "object",
+              "description": "Construction, mining, and agricultural equipment. Use when assetClass = HEAVY_EQUIPMENT. Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "equipmentCategory": {
+                  "type": "string",
+                  "enum": ["EXCAVATOR", "WHEEL_LOADER", "BULLDOZER", "CRANE", "DUMP_TRUCK", "HAUL_TRUCK", "DRILL_RIG", "TRACTOR", "COMBINE_HARVESTER", "FORKLIFT", "AERIAL_PLATFORM", "COMPACTOR", "GRADER", "OTHER"]
+                },
+                "enginePowerKw": { "type": "number", "minimum": 0 },
+                "operatingWeightKg": { "type": "number", "minimum": 0 },
+                "payloadCapacityTonnes": { "type": "number", "minimum": 0 },
+                "bucketCapacityM3": { "type": "number", "minimum": 0 },
+                "liftCapacityKg": { "type": "number", "minimum": 0 },
+                "maxDiggingDepthM": { "type": "number", "minimum": 0 },
+                "maxReachM": { "type": "number", "minimum": 0 },
+                "tierEmissionLevel": {
+                  "type": "string",
+                  "enum": ["TIER_1", "TIER_2", "TIER_3", "TIER_4_INTERIM", "TIER_4_FINAL", "STAGE_V", "STAGE_V_PLUS"]
+                },
+                "fuelType": { "type": "string", "enum": ["DIESEL", "ELECTRIC", "HYBRID", "LNG", "HYDROGEN", "OTHER"] },
+                "undercarriageType": { "type": "string", "enum": ["CRAWLER_TRACKS", "WHEELS", "SKID_STEER", "OTHER"] },
+                "telematics": { "type": "boolean" },
+                "serialNumberFormat": { "type": "string", "description": "PIN (ANSI/ISO 10261) or proprietary format" },
+                "totalMachineHours": { "type": "number", "minimum": 0 },
+                "pin": {
+                  "type": "string",
+                  "description": "Product Identification Number per ISO 10261 — 17-char universal identifier used across OEM DMS, telematics platforms, and auction systems"
+                },
+                "idleHoursRatio": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "description": "Percentage of total SMU recorded as engine idle (telematics-derived) — high idle ratio reduces effective drivetrain wear vs. same-SMU working machine"
+                },
+                "undercarriageWear": {
+                  "type": "object",
+                  "description": "Crawler undercarriage component wear — replacement costs $80,000–$250,000; broken out as a separate line item in every used equipment appraisal",
+                  "properties": {
+                    "trackLinksWearPct": { "type": "number", "minimum": 0, "maximum": 100 },
+                    "trackShoesWearPct": { "type": "number", "minimum": 0, "maximum": 100 },
+                    "sprocketsWearPct": { "type": "number", "minimum": 0, "maximum": 100 },
+                    "idlersWearPct": { "type": "number", "minimum": 0, "maximum": 100 },
+                    "inspectionDate": { "type": "string", "format": "date" }
+                  }
+                },
+                "majorComponentHistory": {
+                  "type": "array",
+                  "description": "Rebuild/replacement history for major components — defines whether hours are on original or rebuilt components; standard in Ritchie Bros./IronPlanet listings",
+                  "items": {
+                    "type": "object",
+                    "required": ["componentType", "eventType", "smuAtEvent"],
+                    "properties": {
+                      "componentType": { "type": "string", "enum": ["ENGINE", "FINAL_DRIVE_LEFT", "FINAL_DRIVE_RIGHT", "HYDRAULIC_PUMP", "TURBOCHARGER", "TRANSMISSION", "SWING_MOTOR", "OTHER"] },
+                      "eventType": { "type": "string", "enum": ["REBUILT", "REPLACED", "INSPECTED", "OVERHAULED"] },
+                      "smuAtEvent": { "type": "number", "minimum": 0 },
+                      "performingWorkshop": { "type": "string" },
+                      "eventDate": { "type": "string", "format": "date" }
+                    }
+                  }
+                },
+                "telematicsPlatform": {
+                  "type": "string",
+                  "enum": ["CAT_PRODUCT_LINK", "KOMTRAX", "JD_LINK", "VOLVO_CARETRACK", "DOOSAN_SMARTPLUS", "LIEBHERR_LIDOS", "AEMP_COMPLIANT", "NONE", "OTHER"],
+                  "description": "Enrolled telematics platform — NONE means all hour/idle data is self-reported and unverifiable; AEMP_COMPLIANT allows cross-OEM data access"
+                },
+                "dutyCycle": {
+                  "type": "string",
+                  "enum": ["QUARRY", "DEMOLITION", "ROAD_BUILDING", "METRO_CONSTRUCTION", "AGRICULTURAL", "FORESTRY", "UNDERGROUND_MINING", "GENERAL_CONSTRUCTION", "RENTAL_FLEET", "OTHER"],
+                  "description": "Primary operational duty — same SMU means very different wear rates; appraisers and OEM residual programs apply duty-cycle adjustment factors"
+                },
+                "rentalFleetHistory": {
+                  "type": "object",
+                  "description": "Rental fleet background — rental machines accumulate SMU faster and under less controlled conditions; specific discount trigger in dealer and auction valuations",
+                  "properties": {
+                    "wasRentalFleet": { "type": "boolean" },
+                    "rentalFleetOwner": { "type": "string" },
+                    "periodInFleetService": { "type": "string", "description": "e.g. '2018–2022'" }
+                  }
+                },
+                "detailedWarrantyStatus": {
+                  "type": "object",
+                  "description": "Active OEM or extended warranty — active warranty commands a price premium and constrains service interval requirements to maintain coverage",
+                  "properties": {
+                    "warrantyType": { "type": "string", "enum": ["OEM_NEW", "OEM_EXTENDED", "DEALER_EXTENDED", "THIRD_PARTY", "NONE"] },
+                    "expiryDate": { "type": "string", "format": "date" },
+                    "expirySmu": { "type": "number", "minimum": 0, "description": "Expiry in service meter units — whichever (date or SMU) comes first" },
+                    "programName": { "type": "string", "description": "e.g. 'CAT Certified Rebuild', 'Komatsu RECONDITIONED'" }
+                  }
+                }
+              }
+            },
+
+            "technologyDevice": {
+              "type": "object",
+              "description": "Technology / IT / Telecom asset specifications. Use when assetClass = TECHNOLOGY or TELECOM. Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "deviceCategory": {
+                  "type": "string",
+                  "enum": ["SMARTPHONE", "TABLET", "LAPTOP", "DESKTOP", "SERVER", "NETWORK_EQUIPMENT", "WEARABLE", "IOT_DEVICE", "STORAGE", "PRINTER", "DISPLAY", "RADIO_BASE_STATION", "TELECOM_INFRASTRUCTURE", "CUSTOM"]
+                },
+                "productLine": { "type": "string" },
+                "storageGb": { "type": "number", "minimum": 0 },
+                "ramGb": { "type": "number", "minimum": 0 },
+                "processorModel": { "type": "string" },
+                "screenSizeInches": { "type": "number", "minimum": 0 },
+                "connectivity": {
+                  "type": "array",
+                  "items": { "type": "string", "enum": ["WIFI_6E", "WIFI_7", "5G", "4G_LTE", "BLUETOOTH_52", "NFC", "USB_C", "USB_A", "ETHERNET_10G", "OTHER"] }
+                },
+                "operatingSystem": { "type": "string" },
+                "osVersion": { "type": "string" },
+                "imei": { "type": "string", "pattern": "^[0-9]{15}$" },
+                "serviceTag": { "type": "string" },
+                "mdmEnrolled": { "type": "boolean" },
+                "enterpriseSecurityCertified": { "type": "boolean" },
+                "warrantyYears": { "type": "integer", "minimum": 0 },
+                "extendedSupportAvailable": { "type": "boolean" },
+                "bulkLicensingAvailable": { "type": "boolean" },
+                "batteryCapacityMah": { "type": "integer", "minimum": 0 },
+                "biosLockStatus": {
+                  "type": "string",
+                  "enum": ["UNLOCKED", "BIOS_PASSWORD_LOCKED", "MDM_SUPERVISED", "CARRIER_LOCKED", "ACTIVATION_LOCK"],
+                  "description": "Device lock state — MDM_SUPERVISED or ACTIVATION_LOCK means device cannot be provisioned for a new organization without unlock; #1 cause of failed ITAD transactions"
+                },
+                "dataSanitizationRecord": {
+                  "type": "object",
+                  "description": "Data destruction certification — hard blocker for regulated sector procurement (GDPR Art. 5, HIPAA, PCI DSS 9.8)",
+                  "properties": {
+                    "method": {
+                      "type": "string",
+                      "enum": ["NIST_800_88_PURGE", "NIST_800_88_CLEAR", "DOD_5220_22_M", "PHYSICAL_DESTRUCTION", "CRYPTOGRAPHIC_ERASE", "NOT_PERFORMED"]
+                    },
+                    "certificateId": { "type": "string" },
+                    "performingVendor": { "type": "string" },
+                    "sanitizationDate": { "type": "string", "format": "date" }
+                  }
+                },
+                "batteryHealthPct": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "description": "Battery State of Health as % of original design capacity — enterprise deployments typically require ≥80% for DaaS SLA eligibility"
+                },
+                "imeiNumbers": {
+                  "type": "array",
+                  "description": "Per-radio IMEI/MEID records with carrier lock and GSMA blacklist status — blacklisted devices cannot be activated on any major carrier",
+                  "items": {
+                    "type": "object",
+                    "required": ["imei"],
+                    "properties": {
+                      "imei": { "type": "string", "pattern": "^[0-9]{15}$" },
+                      "radioType": { "type": "string", "enum": ["PRIMARY_5G", "PRIMARY_4G", "SECONDARY_SIM", "ESIM"] },
+                      "carrierLockStatus": { "type": "string", "enum": ["UNLOCKED", "CARRIER_LOCKED", "NETWORK_LOCKED"] },
+                      "gsmaBlacklistStatus": { "type": "string", "enum": ["CLEAN", "BLACKLISTED", "NOT_CHECKED"] },
+                      "blacklistCheckDate": { "type": "string", "format": "date" }
+                    }
+                  }
+                },
+                "cosmeticGrade": {
+                  "type": "string",
+                  "enum": ["FMR", "GRADE_A", "GRADE_B", "GRADE_C", "FOR_PARTS"],
+                  "description": "Standardized cosmetic condition per ITAD industry standard — FMR=Factory Mint Refurbished; Grade A minimum typically required for DaaS SLA contracts"
+                },
+                "softwareLicensePortability": {
+                  "type": "array",
+                  "description": "Pre-installed software license transferability — OEM OS licenses transfer with hardware; volume licenses require Software Assurance for transfer rights",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "softwareTitle": { "type": "string" },
+                      "licenseType": { "type": "string", "enum": ["OEM", "VOLUME_VL", "RETAIL", "SUBSCRIPTION", "OPEN_SOURCE"] },
+                      "transferable": { "type": "boolean" }
+                    }
+                  }
+                },
+                "osEolDate": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "End-of-Life date for currently installed OS — EOL before DaaS contract expiry triggers mandatory mid-term refresh event"
+                },
+                "assetTagId": {
+                  "type": "string",
+                  "description": "Enterprise asset tag from current owner's CMDB/ITAM system — operational handoff identifier between seller ITAM and buyer's receiving process"
+                }
+              }
+            },
+
+            "medicalDevice": {
+              "type": "object",
+              "description": "Medical device / healthcare equipment. Use when assetClass = HEALTHCARE. Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "deviceCategory": {
+                  "type": "string",
+                  "enum": ["IMAGING_MRI", "IMAGING_CT", "IMAGING_XRAY", "IMAGING_ULTRASOUND", "IMAGING_PET", "SURGICAL_ROBOT", "SURGICAL_LAPAROSCOPIC", "PATIENT_MONITORING", "INFUSION_PUMP", "VENTILATOR", "DIALYSIS", "DENTAL", "OPHTHALMOLOGY", "LAB_ANALYZER", "PATHOLOGY", "OTHER"]
+                },
+                "regulatoryClass": {
+                  "type": "string",
+                  "enum": ["CLASS_I", "CLASS_II", "CLASS_III", "CLASS_IIA", "CLASS_IIB"]
+                },
+                "regulatoryApprovals": {
+                  "type": "array",
+                  "items": { "type": "string", "enum": ["FDA_510K", "FDA_PMA", "CE_MDR", "CE_IVDR", "CDSCO_IN", "TGA_AU", "PMDA_JP", "OTHER"] }
+                },
+                "udiCode": { "type": "string" },
+                "isImplantable": { "type": "boolean" },
+                "fieldOfView": { "type": "string" },
+                "magneticFieldStrengthT": { "type": "number", "minimum": 0 },
+                "powerRequirementsKva": { "type": "number", "minimum": 0 },
+                "installationRequirements": { "type": "array", "items": { "type": "string" } },
+                "softwareVersion": { "type": "string" },
+                "iotConnected": { "type": "boolean" },
+                "warrantyYears": { "type": "integer", "minimum": 0 }
+              }
+            },
+
+            "energyAsset": {
+              "type": "object",
+              "description": "Energy generation and storage asset. Use when assetClass = ENERGY. Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "energyCategory": {
+                  "type": "string",
+                  "enum": ["WIND_TURBINE_ONSHORE", "WIND_TURBINE_OFFSHORE", "SOLAR_PV", "SOLAR_CSP", "BATTERY_STORAGE", "GENERATOR_DIESEL", "GENERATOR_GAS", "HYDROPOWER", "GEOTHERMAL", "TRANSFORMER", "SUBSTATION", "OTHER"]
+                },
+                "ratedPowerKw": { "type": "number", "minimum": 0 },
+                "energyStorageKwh": { "type": "number", "minimum": 0 },
+                "voltageRatingKv": { "type": "number", "minimum": 0 },
+                "rotorDiameterM": { "type": "number", "minimum": 0 },
+                "hubHeightM": { "type": "number", "minimum": 0 },
+                "panelEfficiencyPct": { "type": "number", "minimum": 0, "maximum": 100 },
+                "panelCount": { "type": "integer", "minimum": 0 },
+                "gridConnectionType": { "type": "string", "enum": ["GRID_TIED", "OFF_GRID", "HYBRID", "BEHIND_THE_METER"] },
+                "certifications": { "type": "array", "items": { "type": "string" } },
+                "warrantyYears": { "type": "integer", "minimum": 0 },
+                "projectReference": { "type": "string" }
+              }
+            },
+
+            "spaceAsset": {
+              "type": "object",
+              "description": "Space asset specifications. Use when assetClass = SPACE. Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "spaceCategory": {
+                  "type": "string",
+                  "enum": ["LEO_SATELLITE", "MEO_SATELLITE", "GEO_SATELLITE", "SMALLSAT", "CUBESAT", "LAUNCH_VEHICLE", "UPPER_STAGE", "GROUND_SEGMENT", "PAYLOAD", "OTHER"]
+                },
+                "orbitType": { "type": "string", "enum": ["LEO", "MEO", "GEO", "HEO", "SSO", "GRAVEYARD"] },
+                "massKg": { "type": "number", "minimum": 0 },
+                "powerW": { "type": "number", "minimum": 0 },
+                "designLifeYears": { "type": "number", "minimum": 0 },
+                "launchDate": { "type": "string", "format": "date" },
+                "noradId": { "type": "string" },
+                "internationalDesignator": { "type": "string" },
+                "payloadBandwidth": { "type": "string" },
+                "propulsionType": { "type": "string", "enum": ["CHEMICAL", "ELECTRIC_ION", "ELECTRIC_HALL", "COLD_GAS", "NONE"] }
+              }
+            },
+
+            "defenseAsset": {
+              "type": "object",
+              "description": "Defense asset specifications. Use when assetClass = DEFENSE. Sensitive - populate per export control rules (ITAR/EAR/EU CFSP). Spec: LEX_MULTI_INDUSTRY.md",
+              "properties": {
+                "defenseCategory": {
+                  "type": "string",
+                  "enum": ["ARMOURED_VEHICLE", "TACTICAL_VEHICLE", "SUPPORT_VEHICLE", "FIGHTER_AIRCRAFT", "TRANSPORT_AIRCRAFT", "HELICOPTER_MILITARY", "UAV_MILITARY", "SURFACE_VESSEL", "SUBMARINE", "PATROL_CRAFT", "C4ISR_SYSTEM", "RADAR", "COMMUNICATIONS", "MISSILE_SYSTEM", "OTHER"]
+                },
+                "platformDesignation": { "type": "string" },
+                "exportControlClassification": { "type": "string" },
+                "endUserCountry": { "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ISO3166Country" },
+                "contractType": { "type": "string", "enum": ["FMS", "DCS", "GOVERNMENT_TO_GOVERNMENT", "DOMESTIC", "NATO_SHARED"] },
+                "isMissionCritical": { "type": "boolean" }
+              }
+            },
+
+            "evSpecifications": {
+              "type": "object",
+              "description": "Cross-cutting electric/hybrid drivetrain spec. Attach to any electric asset regardless of assetClass. Spec: LEX_EV_EXTENSIONS.md",
+              "properties": {
+                "drivetrainType": {
+                  "type": "string",
+                  "enum": ["BEV", "PHEV", "HEV", "FCEV", "MHEV", "EREV"],
+                  "description": "BEV=pure electric, PHEV=plug-in hybrid, HEV=self-charging hybrid, FCEV=hydrogen, MHEV=48V mild hybrid, EREV=range-extended EV"
+                },
+                "batteryCapacityKwh": { "type": "number", "minimum": 0 },
+                "usableBatteryCapacityKwh": { "type": "number", "minimum": 0 },
+                "batteryChemistry": { "type": "string", "enum": ["NMC", "LFP", "NCA", "SOLID_STATE", "OTHER"] },
+                "estimatedRange": {
+                  "type": "object",
+                  "properties": {
+                    "rangeKm": { "type": "integer", "minimum": 0 },
+                    "standard": { "type": "string", "enum": ["EPA", "WLTP", "CLTC", "JC08", "NEDC"] },
+                    "epa": { "type": "number", "minimum": 0 },
+                    "wltp": { "type": "number", "minimum": 0 },
+                    "cltc": { "type": "number", "minimum": 0 },
+                    "jc08": { "type": "number", "minimum": 0 }
+                  }
+                },
+                "chargePorts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "standard": { "type": "string", "enum": ["NACS", "CCS1", "CCS2", "CHAdeMO", "GB_T", "TYPE2", "TYPE1", "WIRELESS_SAE_J2954"] },
+                      "acLevel": { "type": "string", "enum": ["LEVEL_1", "LEVEL_2", "LEVEL_3_DC"] },
+                      "isPrimary": { "type": "boolean" },
+                      "portLocation": { "type": "string", "enum": ["FRONT", "REAR", "DRIVER_SIDE", "PASSENGER_SIDE", "UNDERCARRIAGE"] }
+                    }
+                  }
+                },
+                "maxAcChargingKw": { "type": "number", "minimum": 0 },
+                "maxDcChargingKw": { "type": "number", "minimum": 0 },
+                "chargingTimeTo80PctMinutes": { "type": "integer", "minimum": 0 },
+                "vehicleToGridCapable": { "type": "boolean" },
+                "vehicleToLoadCapable": { "type": "boolean" },
+                "batteryWarranty": {
+                  "type": "object",
+                  "properties": {
+                    "warrantyYears": { "type": "integer", "minimum": 0 },
+                    "warrantyKm": { "type": "integer", "minimum": 0 },
+                    "minimumRetainedCapacityPct": { "type": "number", "minimum": 0, "maximum": 100 }
+                  }
+                },
+                "homeChargingInterest": {
+                  "type": "object",
+                  "properties": {
+                    "hasHomeCharger": { "type": "boolean" },
+                    "interestedInInstallation": { "type": "boolean" },
+                    "parkingType": { "type": "string", "enum": ["GARAGE", "DRIVEWAY", "STREET", "APARTMENT_SHARED", "NONE"] },
+                    "homeChargerKw": { "type": "number", "minimum": 0 }
+                  }
+                },
+                "taxCreditEligibility": {
+                  "type": "object",
+                  "description": "Informational only - asOf date required for accuracy",
+                  "properties": {
+                    "region": { "type": "string" },
+                    "federalCreditUsd": { "type": "number", "minimum": 0 },
+                    "stateCreditUsd": { "type": "number", "minimum": 0 },
+                    "eligibilityNotes": { "type": "string" },
+                    "asOf": { "type": "string", "format": "date" },
+                    "programCode": { "type": "string" }
+                  }
+                },
+                "chargingInfrastructureAwareness": {
+                  "type": "object",
+                  "properties": {
+                    "nearestDcFastChargerKm": { "type": "number", "minimum": 0 },
+                    "nearestL2ChargerKm": { "type": "number", "minimum": 0 },
+                    "customerChargingAnxiety": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] }
+                  }
+                }
+              }
+            },
+
+            "typeSpecificAttributes": {
+              "type": "object",
+              "description": "Organisation-specific extension fields. Use OrganizationContext extension schemas.",
+              "additionalProperties": true
+            },
+            "organizationContext": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/OrganizationContext"
+            },
+            "metadata": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Metadata"
+            }
+          }
+        }
+      }
+    }
+  }
+}

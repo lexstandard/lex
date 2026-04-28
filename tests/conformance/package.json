@@ -1,0 +1,15 @@
+{
+  "name": "lex-conformance-test-vectors",
+  "version": "1.0.0",
+  "description": "LEX canonical test vector library — 20 test cases covering L1/L2/L3 conformance levels",
+  "type": "module",
+  "scripts": {
+    "test":    "node run.js",
+    "test:L1": "node run.js --level L1",
+    "test:L2": "node run.js --level L2",
+    "test:L3": "node run.js --level L3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

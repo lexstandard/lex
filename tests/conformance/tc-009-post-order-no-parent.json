@@ -1,0 +1,59 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-009",
+  "title": "Post-Order Lead Without parentOrderId",
+  "level": "L2",
+  "conformanceLevel": 2,
+  "category": "BUSINESS_RULES",
+  "description": "A lead with leadType ACCESSORY must include parentOrderId linking it to the originating purchase order. This message omits parentOrderId. Validator MUST return valid=false with a POST_ORDER_REQUIRES_PARENT_ID error.",
+  "specRef": "LEX_CONFORMANCE §2 TC-009",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000009",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:08:00Z",
+        "senderId": "DEALER-001",
+        "receiverId": "PORTAL-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC009-0001",
+          "status": "EXPRESSED_INTEREST",
+          "leadType": "ACCESSORY",
+          "source": "POST_ORDER_SUGGESTION",
+          "customer": {
+            "firstName": "Michael",
+            "lastName": "Chen",
+            "emailAddress": "m.chen@example.com",
+            "phoneNumber": "+16505550187"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "assetClass": "VEHICLE",
+            "make": "Ford",
+            "model": "Mustang Mach-E"
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:08:00Z",
+            "countryCode": "US"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "lead.parentOrderId",
+        "code": "POST_ORDER_REQUIRES_PARENT_ID",
+        "level": "ERROR",
+        "suggestion": "Set lead.parentOrderId to the ID of the originating purchase order"
+      }
+    ],
+    "warnings": []
+  }
+}

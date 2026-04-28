@@ -1,0 +1,63 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-008",
+  "title": "Invalid Status Transition — DELIVERED → IN_NEGOTIATION",
+  "level": "L2",
+  "conformanceLevel": 2,
+  "category": "LIFECYCLE",
+  "description": "A lead update message attempts to move status from DELIVERED back to IN_NEGOTIATION. This is a prohibited backward transition. Validator MUST return valid=false with an INVALID_STATUS_TRANSITION error on lead.status. This is a two-state test: 'previousState' documents the existing record; 'input' is the update message to validate.",
+  "specRef": "LEX_CONFORMANCE §2 TC-008",
+  "scenario": "STATUS_TRANSITION",
+  "previousState": {
+    "leadId": "LEAD-TC008-0001",
+    "status": "DELIVERED"
+  },
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000008",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:07:00Z",
+        "senderId": "DEALER-001",
+        "receiverId": "PORTAL-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC008-0001",
+          "status": "IN_NEGOTIATION",
+          "source": "RETAILER_CRM",
+          "customer": {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "emailAddress": "jane.smith@example.com",
+            "phoneNumber": "+14155551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Toyota",
+            "model": "RAV4"
+          },
+          "metadata": {
+            "createdDate": "2026-03-01T09:00:00Z",
+            "updatedDate": "2026-04-03T10:07:00Z"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "lead.status",
+        "code": "INVALID_STATUS_TRANSITION",
+        "level": "ERROR",
+        "fromStatus": "DELIVERED",
+        "toStatus": "IN_NEGOTIATION"
+      }
+    ],
+    "warnings": []
+  }
+}

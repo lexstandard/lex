@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LEX Automotive Primary Lead — XML Representation
+  Scenario : Sarah Johnson / 2026 BMW M4 Competition purchase
+  Phase    : Phase 01 — Initial Lead (SHOPPING)
+  Spec Ref : LEX_SPECIFICATION.md §2 / LEX_MESSAGE_SCHEMA.json
+-->
+<lex version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <header>
+    <messageId>c3a1e2f0-1b2d-4e5f-8a6b-7c8d9e0f1a2b</messageId>
+    <messageType>LEAD</messageType>
+    <version>1.0</version>
+    <timestamp>2026-01-15T10:22:00Z</timestamp>
+    <senderId>RETAILER-BMW-NASHVILLE</senderId>
+    <receiverId>LEX-PLATFORM</receiverId>
+    <encryptionMethod>TLS1.3</encryptionMethod>
+    <signatureAlgorithm>HMAC-SHA256</signatureAlgorithm>
+  </header>
+  <payload>
+    <lead>
+      <leadId>LID-20260115-AUTO-001</leadId>
+      <leadType>PRIMARY</leadType>
+      <status>SHOPPING</status>
+      <source>RETAILER_WEBSITE</source>
+      <leadCreatedDate>2026-01-15T10:22:00Z</leadCreatedDate>
+      <leadVersion>1</leadVersion>
+
+      <sourceDetail>
+        <sourceType>RETAILER_WEBSITE</sourceType>
+        <sourceURL>https://www.bmwnashville.com/new/BMW/2026-BMW-M4</sourceURL>
+        <specificPage>/configure/m4-competition</specificPage>
+        <channel>DIGITAL</channel>
+        <marketingSource>PAID_SEARCH</marketingSource>
+        <deviceType>DESKTOP</deviceType>
+        <browser>Chrome</browser>
+        <leadEntryMethod>FORM_SUBMISSION</leadEntryMethod>
+        <formName>Vehicle Inquiry Form</formName>
+        <formCompletionTime>187</formCompletionTime>
+        <leadQualityScore>8.5</leadQualityScore>
+        <utmSource>google</utmSource>
+        <utmMedium>cpc</utmMedium>
+        <utmCampaign>bmw-m4-launch-2026</utmCampaign>
+        <sessionId>sess-bwm-9ab712cd</sessionId>
+      </sourceDetail>
+
+      <customer>
+        <firstName>Sarah</firstName>
+        <lastName>Johnson</lastName>
+        <emailAddress>sarah.johnson@example.com</emailAddress>
+        <phoneNumber>+16155559087</phoneNumber>
+        <preferredContactMethod>EMAIL</preferredContactMethod>
+        <preferredContactTime>EVENING</preferredContactTime>
+        <locale>en-US</locale>
+        <address>
+          <street>4820 Hillsboro Pike</street>
+          <city>Nashville</city>
+          <state>TN</state>
+          <postalCode>37215</postalCode>
+          <country>US</country>
+        </address>
+        <creditTier>PRIME</creditTier>
+      </customer>
+
+      <desiredProduct>
+        <productType>COUPE</productType>
+        <assetClass>VEHICLE</assetClass>
+        <make>BMW</make>
+        <model>M4 Competition</model>
+        <year>2026</year>
+        <condition>NEW</condition>
+        <trim>Competition xDrive</trim>
+        <preferredColor>Alpine White</preferredColor>
+        <interiorColor>Merino Black Leather</interiorColor>
+        <budgetMin>75000</budgetMin>
+        <budgetMax>90000</budgetMax>
+        <currency>USD</currency>
+        <transmission>AUTOMATIC</transmission>
+        <fuelType>GASOLINE</fuelType>
+        <factoryOrderPreference>FACTORY_ORDER_PREFERRED</factoryOrderPreference>
+        <installedOptions>
+          <option>
+            <optionName>M Carbon Bucket Seats</optionName>
+            <partNumber>BMW-M-41-OPT-2CS</partNumber>
+            <optionPrice>3900</optionPrice>
+            <currency>USD</currency>
+          </option>
+          <option>
+            <optionName>M Carbon Exterior Package</optionName>
+            <partNumber>BMW-M-41-OPT-CEP</partNumber>
+            <optionPrice>5200</optionPrice>
+            <currency>USD</currency>
+          </option>
+          <option>
+            <optionName>Bang &amp; Olufsen Sound System</optionName>
+            <partNumber>BMW-HK-OPT-688</partNumber>
+            <optionPrice>1900</optionPrice>
+            <currency>USD</currency>
+          </option>
+        </installedOptions>
+        <features>
+          <feature>M Carbon Bucket Seats</feature>
+          <feature>M Carbon Exterior Package</feature>
+          <feature>Bang &amp; Olufsen Sound System</feature>
+          <feature>Driving Assistance Professional Package</feature>
+          <feature>Adaptive M Suspension</feature>
+        </features>
+        <typeSpecificAttributes>
+          <engineDisplacementL>3.0</engineDisplacementL>
+          <horsepower>503</horsepower>
+          <torqueLbFt>479</torqueLbFt>
+          <drivetrainType>AWD</drivetrainType>
+          <doors>2</doors>
+          <seatingCapacity>4</seatingCapacity>
+          <estimatedMpgCity>16</estimatedMpgCity>
+          <estimatedMpgHighway>23</estimatedMpgHighway>
+        </typeSpecificAttributes>
+      </desiredProduct>
+
+      <financing>
+        <needsFinancing>true</needsFinancing>
+        <financingType>LOAN</financingType>
+        <downPaymentCapacity>15000</downPaymentCapacity>
+        <preferredMonthlyPayment>1200</preferredMonthlyPayment>
+        <loanTerm>60</loanTerm>
+        <creditScore>EXCELLENT</creditScore>
+        <currency>USD</currency>
+      </financing>
+
+      <tradeIn>
+        <make>BMW</make>
+        <model>330i</model>
+        <year>2021</year>
+        <vin>WBA5R1C51LFH12345</vin>
+        <mileage>42000</mileage>
+        <odometerStatus>ACTUAL</odometerStatus>
+        <condition>GOOD</condition>
+        <titleStatus>CLEAN</titleStatus>
+        <estimatedValue>28000</estimatedValue>
+        <payoffAmount>8400</payoffAmount>
+        <payoffCurrency>USD</payoffCurrency>
+        <previousOwnerCount>1</previousOwnerCount>
+        <currency>USD</currency>
+        <accidentHistory>
+          <reportedAccidentCount>0</reportedAccidentCount>
+          <airbagDeployment>false</airbagDeployment>
+          <frameOrStructuralDamage>false</frameOrStructuralDamage>
+        </accidentHistory>
+        <vehicleHistoryReport>
+          <reportType>CARFAX</reportType>
+          <reportReferenceId>CFX-WBA5R1C51LFH12345-20260115</reportReferenceId>
+          <pullDate>2026-01-15</pullDate>
+        </vehicleHistoryReport>
+      </tradeIn>
+
+      <organizationContext>
+        <organizationId>ORG-BMW-NASHVILLE</organizationId>
+        <organizationName>BMW of Nashville</organizationName>
+        <timezone>America/Chicago</timezone>
+        <region>NA</region>
+      </organizationContext>
+
+      <leadAncestry>
+        <originType>DIRECT_INQUIRY</originType>
+        <originDate>2026-01-15T10:22:00Z</originDate>
+        <originSourceId>SESS-BMW-9AB712CD</originSourceId>
+        <conversionPath>
+          <entry>
+            <stage>SHOPPING</stage>
+            <timestamp>2026-01-15T10:22:00Z</timestamp>
+          </entry>
+        </conversionPath>
+      </leadAncestry>
+
+      <leadHistory>
+        <entry>
+          <version>1</version>
+          <previousStatus/>
+          <newStatus>SHOPPING</newStatus>
+          <timestamp>2026-01-15T10:22:00Z</timestamp>
+          <changedBy>RETAILER-BMW-NASHVILLE</changedBy>
+          <reason>Initial lead submission from website</reason>
+        </entry>
+      </leadHistory>
+
+      <metadata>
+        <createdAt>2026-01-15T10:22:00Z</createdAt>
+        <updatedAt>2026-01-15T10:22:00Z</updatedAt>
+        <auditTrail>
+          <entry>
+            <timestamp>2026-01-15T10:22:00Z</timestamp>
+            <action>LEAD_CREATED</action>
+            <changedBy>RETAILER-BMW-NASHVILLE</changedBy>
+            <newValue>SHOPPING</newValue>
+          </entry>
+        </auditTrail>
+      </metadata>
+    </lead>
+  </payload>
+</lex>

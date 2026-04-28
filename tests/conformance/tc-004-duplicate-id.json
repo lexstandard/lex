@@ -1,0 +1,92 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-004",
+  "title": "Duplicate MessageID — Idempotency",
+  "level": "L1",
+  "conformanceLevel": 1,
+  "category": "IDEMPOTENCY",
+  "description": "Two LEAD messages with the same messageId submitted within 60 seconds. The second submission MUST return 200 OK with a response identical to the first (no duplicate lead created). This is a two-request test — run 'input' first, then 'duplicate' within the deduplication window.",
+  "specRef": "LEX_CONFORMANCE §2 TC-004",
+  "scenario": "DUPLICATE_SUBMISSION",
+  "deduplicationWindowSeconds": 60,
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000004",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:03:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC004-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "emailAddress": "jane.smith@example.com",
+            "phoneNumber": "+14155551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Honda",
+            "model": "Accord"
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:03:00Z"
+          }
+        }
+      }
+    }
+  },
+  "duplicate": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000004",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:03:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC004-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "emailAddress": "jane.smith@example.com",
+            "phoneNumber": "+14155551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Honda",
+            "model": "Accord"
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:03:00Z"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "firstSubmission": {
+      "valid": true,
+      "httpStatus": 200,
+      "acknowledgmentStatus": "RECEIVED"
+    },
+    "duplicateSubmission": {
+      "valid": true,
+      "httpStatus": 200,
+      "acknowledgmentStatus": "RECEIVED",
+      "idempotent": true,
+      "note": "Response MUST be identical to first submission. No duplicate lead created or event emitted."
+    }
+  }
+}

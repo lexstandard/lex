@@ -1,0 +1,63 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-019",
+  "title": "Message TTL Expired",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "TRANSPORT_RESILIENCE",
+  "description": "Message header.ttl.expiresAt is set to a timestamp in the past. The receiver MUST NOT process this message; it SHOULD route it to the dead-letter queue (DLQ) per LEX_TRANSPORT_RESILIENCE §2. If a notificationWebhook is registered for the sender, an expiry notification MUST be dispatched.",
+  "specRef": "LEX_CONFORMANCE §2 TC-019",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000019",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-01-01T08:00:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001",
+        "ttl": {
+          "maxAgeSeconds": 3600,
+          "expiresAt": "2026-01-01T09:00:00Z",
+          "onExpiry": "DLQ"
+        }
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC019-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Tom",
+            "lastName": "Nguyen",
+            "emailAddress": "tom.nguyen@example.com",
+            "phoneNumber": "+17135550112"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Kia",
+            "model": "EV9"
+          },
+          "metadata": {
+            "createdDate": "2026-01-01T08:00:00Z"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 410,
+    "routing": "DLQ",
+    "errors": [
+      {
+        "field": "lex.header.ttl.expiresAt",
+        "code": "MESSAGE_TTL_EXPIRED",
+        "level": "CRITICAL",
+        "rejectedValue": "2026-01-01T09:00:00Z",
+        "note": "Message MUST NOT be processed. Route to DLQ per onExpiry policy."
+      }
+    ],
+    "warnings": []
+  }
+}

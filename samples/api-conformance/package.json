@@ -1,0 +1,20 @@
+{
+  "name": "lex-api-conformance",
+  "version": "1.0.0",
+  "description": "LEX API conformance proof — validates OpenAPI spec and exercises AsyncAPI channels",
+  "type": "module",
+  "scripts": {
+    "start":      "node src/index.js",
+    "test:openapi": "node src/openapi-proof.js",
+    "test:asyncapi": "node src/asyncapi-proof.js",
+    "test:sandbox":  "node src/sandbox-proof.js"
+  },
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^10.1.0",
+    "@lexstandard/lex": "file:../../libraries/js",
+    "express": "^4.19.2",
+    "amqplib":  "^0.10.4",
+    "kafkajs":  "^2.2.4",
+    "undici":   "^6.11.0"
+  }
+}

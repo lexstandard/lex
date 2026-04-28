@@ -1,0 +1,61 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-012",
+  "title": "Invalid Customer Fingerprint Format",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "DEDUPLICATION",
+  "description": "deduplication.customerFingerprint is provided but is not a valid 64-character lowercase hex string (SHA-256). Validator MUST return valid=false with an INVALID_FINGERPRINT_FORMAT error. Algorithm spec: SHA256(lowercase(email) + '|' + phone + '|' + lowercase(lastName)).",
+  "specRef": "LEX_CONFORMANCE §2 TC-012",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000012",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:11:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC012-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Carlos",
+            "lastName": "Rivera",
+            "emailAddress": "carlos.rivera@example.com",
+            "phoneNumber": "+13055550167"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Volkswagen",
+            "model": "ID.4"
+          },
+          "deduplication": {
+            "customerFingerprint": "NOT-A-VALID-SHA256-FINGERPRINT",
+            "deduplicationWindowHours": 24
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:11:00Z"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "deduplication.customerFingerprint",
+        "code": "INVALID_FINGERPRINT_FORMAT",
+        "level": "ERROR",
+        "rejectedValue": "NOT-A-VALID-SHA256-FINGERPRINT",
+        "constraint": "Must be a 64-character lowercase hex string (SHA-256)"
+      }
+    ],
+    "warnings": []
+  }
+}

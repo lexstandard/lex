@@ -1,0 +1,46 @@
+{
+  "lex": {
+    "header": {
+      "messageId": "ACK-e33e058b-cc32-47df-b4d2-44d22f07d128",
+      "messageType": "ACKNOWLEDGMENT",
+      "version": "1.0",
+      "timestamp": "2026-04-03T13:40:45.914Z",
+      "senderId": "SIM-RECEIVER-001",
+      "receiverId": "SIM-SENDER-001",
+      "encryptionMethod": "TLS1.3"
+    },
+    "payload": {
+      "acknowledgment": {
+        "acknowledgmentId": "ACK-e33e058b-cc32-47df-b4d2-44d22f07d128",
+        "correlationId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+        "originalMessageId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+        "originalMessageType": "LEAD",
+        "status": "VALIDATED",
+        "statusReason": "SHA-256 integrity verified; LEX schema validation FAILED: [ERROR] lex.header.timestamp: Timestamp is older than 24 hours",
+        "timestamp": "2026-04-03T13:40:45.914Z",
+        "_simulation": {
+          "industry": "real-estate",
+          "format": "json",
+          "integrityCheck": {
+            "algorithm": "SHA-256",
+            "expectedHash": "5cc4c2577f4b648cdab9226e6aba99076c57c28a92ecf2abff9a35ba5d583f07",
+            "computedHash": "5cc4c2577f4b648cdab9226e6aba99076c57c28a92ecf2abff9a35ba5d583f07",
+            "match": true
+          },
+          "fieldCoverage": {
+            "captured": 10,
+            "total": 10,
+            "missingFields": []
+          },
+          "sizeBytes": 29237,
+          "lexValidation": {
+            "valid": false,
+            "errors": [
+              "[ERROR] lex.header.timestamp: Timestamp is older than 24 hours"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

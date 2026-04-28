@@ -1,0 +1,671 @@
+{
+  "_metadata": {
+    "title": "LEX Real Estate End-to-End Scenario: Residential Property Purchase",
+    "scenario": "Michael and Emma Torres (B2C, individual buyers) purchase a 4-bedroom family home in Austin, TX through Keller Williams Realty. Full lifecycle: property inquiry → acknowledgment → property viewing (appointment) → expressed interest → offer & negotiation → contract signed → in-escrow / inspection period → keys delivered at closing → lead closure (WON). Deal value USD 875,000.",
+    "industry": "GENERAL_GOODS",
+    "assetClass": "GENERAL_GOODS",
+    "buyerType": "INDIVIDUAL",
+    "leadId": "LID-20260103-REES-001",
+    "propertyType": "RESIDENTIAL_SINGLE_FAMILY",
+    "totalDealValue": 875000,
+    "currency": "USD",
+    "outcome": "WON",
+    "lifecycleDays": 68,
+    "messageCount": 9,
+    "phases": [
+      "01 - Property Inquiry via Portal (SHOPPING)",
+      "02 - Platform Acknowledgment (VALIDATED)",
+      "03 - Property Viewing Scheduled (APPOINTMENT_REQUEST)",
+      "04 - Viewing Completed / Expressed Interest",
+      "05 - Offer Submitted / In Negotiation",
+      "06 - Offer Accepted / Contract Signed (ORDER)",
+      "07 - Order Confirmed – Escrow & Inspection Period",
+      "08 - Closing / Keys Delivered (DELIVERED)",
+      "09 - Lead Closure (WON)"
+    ]
+  },
+  "messages": [
+    {
+      "_phase": "01 - Property Inquiry via Portal (SHOPPING)",
+      "lex": {
+        "header": {
+          "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-03T14:30:00Z",
+          "senderId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "signatureAlgorithm": "HMAC-SHA256"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260103-REES-001",
+            "leadType": "PRIMARY",
+            "status": "SHOPPING",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-03T14:30:00Z",
+            "leadVersion": 1,
+            "sourceDetail": {
+              "sourceType": "RETAILER_WEBSITE",
+              "sourceURL": "https://www.kwaustin.com/listings/12847-ridgewood-trail-austin-tx",
+              "channel": "DIGITAL",
+              "leadEntryMethod": "FORM_SUBMISSION",
+              "formName": "Property Enquiry Form",
+              "leadQualityScore": 8.7,
+              "customFields": {
+                "listingMLS": "MLS-ATX-2026-084712",
+                "propertyAddress": "12847 Ridgewood Trail, Austin, TX 78738",
+                "propertyZipCode": "78738",
+                "schoolDistrict": "Lake Travis ISD",
+                "moveInTimeline": "WITHIN_90_DAYS",
+                "preApprovedMortgage": "YES"
+              }
+            },
+            "customer": {
+              "firstName": "Michael",
+              "lastName": "Torres",
+              "emailAddress": "michael.torres@email.com",
+              "phoneNumber": "+15125550234",
+              "preferredContactMethod": "EMAIL",
+              "locale": "en-US",
+              "buyerType": "INDIVIDUAL",
+              "creditTier": "PRIME",
+              "address": {
+                "street": "3410 Westover Hills Blvd",
+                "city": "Austin",
+                "state": "TX",
+                "postalCode": "78731",
+                "country": "US"
+              },
+              "coApplicant": {
+                "firstName": "Emma",
+                "lastName": "Torres",
+                "emailAddress": "emma.torres@email.com",
+                "phoneNumber": "+15125550235",
+                "relationship": "SPOUSE"
+              }
+            },
+            "desiredProduct": {
+              "productType": "GENERAL_PROCUREMENT",
+              "assetClass": "GENERAL_GOODS",
+              "make": "Custom Build",
+              "model": "12847 Ridgewood Trail",
+              "year": 2019,
+              "condition": "USED",
+              "budgetMin": 820000,
+              "budgetMax": 900000,
+              "currency": "USD",
+              "typeSpecificAttributes": {
+                "propertyType": "RESIDENTIAL_SINGLE_FAMILY",
+                "listingMLS": "MLS-ATX-2026-084712",
+                "streetAddress": "12847 Ridgewood Trail",
+                "city": "Austin",
+                "state": "TX",
+                "zipCode": "78738",
+                "county": "Travis",
+                "bedroomCount": 4,
+                "bathroomCount": 3.5,
+                "squareFeetLiving": 3420,
+                "squareFeetLot": 10890,
+                "garageSpaces": 2,
+                "yearBuilt": 2019,
+                "pool": false,
+                "masterOnMain": false,
+                "schoolDistrict": "Lake Travis ISD",
+                "hoaFeeMonthly": 185,
+                "zoning": "SF-1",
+                "listingPrice": 879000,
+                "pricePerSqFt": 257,
+                "daysOnMarket": 12
+              }
+            },
+            "realEstateLead": {
+              "buyerRepresentationAgreementStatus": "SIGNED",
+              "exchangeType": "NONE",
+              "preApprovalAmount": 875000,
+              "preApprovalCurrency": "USD",
+              "preApprovalExpiryDate": "2026-04-01",
+              "preApprovalLender": "Wells Fargo Home Mortgage",
+              "preApprovalLoanType": "CONVENTIONAL",
+              "contingencies": [
+                { "type": "FINANCING", "status": "PENDING", "deadline": "2026-01-28", "notes": "Conventional loan at 6.875% fixed 30-year" },
+                { "type": "INSPECTION", "status": "PENDING", "deadline": "2026-01-20", "notes": "General inspection + foundation specialist" },
+                { "type": "APPRAISAL", "status": "PENDING", "deadline": "2026-02-03", "notes": "Lender-ordered appraisal required" }
+              ],
+              "sellerConcessionsRequested": true,
+              "sellerConcessionAmount": 10000,
+              "sellerConcessionCurrency": "USD",
+              "homeWarrantyRequested": true,
+              "homeWarrantyCoveredBy": "SELLER",
+              "propertyDisclosureStatus": "RECEIVED",
+              "occupancyStatus": "OWNER_OCCUPIED",
+              "saleType": "STANDARD",
+              "firstTimeBuyer": false,
+              "investmentPurpose": false,
+              "targetClosingDate": "2026-02-28",
+              "moveInDate": "2026-03-01",
+              "leaseback": false,
+              "buyerAgentLicenseNumber": "TX-REALTOR-0078234",
+              "buyerAgentStateLicense": "TX",
+              "listingAgentLicenseNumber": "TX-REALTOR-0042891",
+              "listingAgentStateLicense": "TX"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-KW-AUSTIN-WESTLAKE",
+              "organizationName": "Keller Williams Realty Austin Westlake",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "leadAncestry": {
+              "originType": "DIRECT_INQUIRY",
+              "originDate": "2026-01-03T14:30:00Z",
+              "originSourceId": "MLS-ATX-2026-084712",
+              "conversionPath": [
+                { "stage": "SHOPPING", "timestamp": "2026-01-03T14:30:00Z" }
+              ]
+            },
+            "leadHistory": [
+              {
+                "version": 1,
+                "previousStatus": null,
+                "newStatus": "SHOPPING",
+                "timestamp": "2026-01-03T14:30:00Z",
+                "changedBy": "RETAILER-KW-AUSTIN-WESTLAKE",
+                "reason": "Buyer inquiry via KW portal – 12847 Ridgewood Trail, Austin TX 78738. Pre-approved mortgage confirmed."
+              }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-03T14:30:00Z",
+              "updatedAt": "2026-01-03T14:30:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-03T14:30:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-KW-AUSTIN-WESTLAKE", "newValue": "SHOPPING" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "02 - Platform Acknowledgment (VALIDATED)",
+      "lex": {
+        "header": {
+          "messageId": "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e",
+          "messageType": "ACKNOWLEDGMENT",
+          "version": "1.0",
+          "timestamp": "2026-01-03T14:30:09Z",
+          "senderId": "LEX-PLATFORM",
+          "receiverId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"
+        },
+        "payload": {
+          "acknowledgment": {
+            "acknowledgmentId": "ACK-20260103-REES-001",
+            "correlationId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+            "originalMessageId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+            "originalMessageType": "LEAD",
+            "status": "PROCESSED",
+            "statusReason": "Residential property enquiry validated and assigned to listing agent at KW Austin Westlake.",
+            "timestamp": "2026-01-03T14:30:09Z",
+            "processingTime": 9200,
+            "validationResults": {
+              "isValid": true,
+              "schemaValidation": { "passed": true, "errors": [] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "03 - Property Viewing Scheduled (APPOINTMENT_REQUEST)",
+      "lex": {
+        "header": {
+          "messageId": "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-05T10:00:00Z",
+          "senderId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260103-REES-001",
+            "leadType": "PRIMARY",
+            "status": "APPOINTMENT_REQUEST",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-03T14:30:00Z",
+            "leadVersion": 2,
+            "customer": {
+              "firstName": "Michael",
+              "lastName": "Torres",
+              "emailAddress": "michael.torres@email.com",
+              "phoneNumber": "+15125550234",
+              "buyerType": "INDIVIDUAL"
+            },
+            "desiredProduct": {
+              "productType": "GENERAL_PROCUREMENT",
+              "assetClass": "GENERAL_GOODS",
+              "typeSpecificAttributes": {
+                "listingMLS": "MLS-ATX-2026-084712",
+                "propertyType": "RESIDENTIAL_SINGLE_FAMILY",
+                "streetAddress": "12847 Ridgewood Trail, Austin TX 78738"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-KW-AUSTIN-WESTLAKE",
+              "organizationName": "Keller Williams Realty Austin Westlake",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "sourceDetail": {
+              "customFields": {
+                "viewingDate": "2026-01-07T11:00:00Z",
+                "viewingAddress": "12847 Ridgewood Trail, Austin, TX 78738",
+                "listingAgentName": "Sophia Ruiz",
+                "listingAgentId": "KW-ATX-AGENT-0042",
+                "buyersAgentName": "Carlos Herrera",
+                "buyersAgentId": "KW-ATX-AGENT-0078"
+              }
+            },
+            "leadHistory": [
+              { "version": 1, "previousStatus": null, "newStatus": "SHOPPING", "timestamp": "2026-01-03T14:30:00Z", "changedBy": "RETAILER-KW-AUSTIN-WESTLAKE", "reason": "Buyer inquiry received" },
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "APPOINTMENT_REQUEST", "timestamp": "2026-01-05T10:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "Property showing booked Jan 7 at 11:00 AM. Both buyers attending." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-03T14:30:00Z",
+              "updatedAt": "2026-01-05T10:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-03T14:30:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-KW-AUSTIN-WESTLAKE", "newValue": "SHOPPING" },
+                { "timestamp": "2026-01-05T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "APPOINTMENT_REQUEST" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "04 - Viewing Completed / Expressed Interest",
+      "lex": {
+        "header": {
+          "messageId": "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-07T13:00:00Z",
+          "senderId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260103-REES-001",
+            "leadType": "PRIMARY",
+            "status": "EXPRESSED_INTEREST",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-03T14:30:00Z",
+            "leadVersion": 3,
+            "customer": {
+              "firstName": "Michael",
+              "lastName": "Torres",
+              "emailAddress": "michael.torres@email.com",
+              "phoneNumber": "+15125550234",
+              "buyerType": "INDIVIDUAL"
+            },
+            "desiredProduct": {
+              "productType": "GENERAL_PROCUREMENT",
+              "assetClass": "GENERAL_GOODS",
+              "typeSpecificAttributes": {
+                "listingMLS": "MLS-ATX-2026-084712",
+                "propertyType": "RESIDENTIAL_SINGLE_FAMILY",
+                "streetAddress": "12847 Ridgewood Trail, Austin TX 78738",
+                "bedroomCount": 4,
+                "bathroomCount": 3.5,
+                "squareFeetLiving": 3420
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-KW-AUSTIN-WESTLAKE",
+              "organizationName": "Keller Williams Realty Austin Westlake",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "dealerNotes": "Both Michael and Emma viewed property Jan 7. Very positive reaction to open plan kitchen, Lake Travis ISD schools, and Westlake Hills proximity. Minor concern about pool-less lot – buyers accepted. Requesting pre-offer CMA report. Target offer price $862,000.",
+            "leadHistory": [
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "APPOINTMENT_REQUEST", "timestamp": "2026-01-05T10:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "Showing booked" },
+              { "version": 3, "previousStatus": "APPOINTMENT_REQUEST", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2026-01-07T13:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "Property showing completed. Strong buyer interest. CMA requested. Target offer $862K." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-03T14:30:00Z",
+              "updatedAt": "2026-01-07T13:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-05T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "APPOINTMENT_REQUEST" },
+                { "timestamp": "2026-01-07T13:00:00Z", "action": "STATUS_UPDATED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "EXPRESSED_INTEREST" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "05 - Offer Submitted / In Negotiation",
+      "lex": {
+        "header": {
+          "messageId": "e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-09T16:00:00Z",
+          "senderId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260103-REES-001",
+            "leadType": "PRIMARY",
+            "status": "IN_NEGOTIATION",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-03T14:30:00Z",
+            "leadVersion": 4,
+            "customer": {
+              "firstName": "Michael",
+              "lastName": "Torres",
+              "emailAddress": "michael.torres@email.com",
+              "phoneNumber": "+15125550234",
+              "buyerType": "INDIVIDUAL"
+            },
+            "desiredProduct": {
+              "productType": "GENERAL_PROCUREMENT",
+              "assetClass": "GENERAL_GOODS",
+              "typeSpecificAttributes": {
+                "listingMLS": "MLS-ATX-2026-084712",
+                "streetAddress": "12847 Ridgewood Trail, Austin TX 78738",
+                "listingPrice": 879000
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-KW-AUSTIN-WESTLAKE",
+              "organizationName": "Keller Williams Realty Austin Westlake",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "dealerNotes": "Buyers submitted offer $862,000 with 20% down, conventional financing, 30-day close, $25K earnest money, survey/inspection contingency. Seller countered $875,000 with 45-day close, waive inspection contingency. Buyers accepted $875,000 with standard inspection retained. Pending title commitment.",
+            "leadHistory": [
+              { "version": 3, "previousStatus": "APPOINTMENT_REQUEST", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2026-01-07T13:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "Showing completed" },
+              { "version": 4, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-09T16:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "Offer submitted $862K. Seller counter $875K. Negotiating close date and inspection contingency." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-03T14:30:00Z",
+              "updatedAt": "2026-01-09T16:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-07T13:00:00Z", "action": "STATUS_UPDATED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "EXPRESSED_INTEREST" },
+                { "timestamp": "2026-01-09T16:00:00Z", "action": "STATUS_UPDATED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "IN_NEGOTIATION" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "06 - Offer Accepted / Contract Signed (ORDER)",
+      "lex": {
+        "header": {
+          "messageId": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-11T09:00:00Z",
+          "senderId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260103-REES-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-03T14:30:00Z",
+            "leadVersion": 5,
+            "customer": {
+              "firstName": "Michael",
+              "lastName": "Torres",
+              "emailAddress": "michael.torres@email.com",
+              "phoneNumber": "+15125550234",
+              "buyerType": "INDIVIDUAL"
+            },
+            "desiredProduct": {
+              "productType": "GENERAL_PROCUREMENT",
+              "assetClass": "GENERAL_GOODS",
+              "typeSpecificAttributes": {
+                "listingMLS": "MLS-ATX-2026-084712",
+                "streetAddress": "12847 Ridgewood Trail, Austin TX 78738",
+                "contractPrice": 875000,
+                "earnestMoney": 25000,
+                "closingDate": "2026-02-25",
+                "titleCompany": "Austin Title Company",
+                "purchaseContractRef": "TREC-RESI-EXST-2026-00847"
+              }
+            },
+            "customerOutcome": {
+              "purchaseConfirmed": true,
+              "financingUsed": true,
+              "financingType": "MORTGAGE",
+              "financingAmount": 700000,
+              "downPayment": 175000,
+              "estimatedDeliveryDate": "2026-02-25T00:00:00Z"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-KW-AUSTIN-WESTLAKE",
+              "organizationName": "Keller Williams Realty Austin Westlake",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "dealerNotes": "TREC contract executed. Purchase price $875,000. $25K earnest money deposited at Austin Title. Conventional 30yr mortgage $700,000 at 6.75% APR (Wells Fargo pre-approved). Inspection period 10 days from execution. Close date Feb 25.",
+            "leadHistory": [
+              { "version": 4, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-09T16:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "Negotiation in progress" },
+              { "version": 5, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-01-11T09:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "TREC contract signed $875K. Earnest $25K deposited. Inspect period 10 days. Close Feb 25." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-03T14:30:00Z",
+              "updatedAt": "2026-01-11T09:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-09T16:00:00Z", "action": "STATUS_UPDATED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "IN_NEGOTIATION" },
+                { "timestamp": "2026-01-11T09:00:00Z", "action": "ORDER_PLACED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "ORDER" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "07 - Order Confirmed – Escrow & Inspection",
+      "lex": {
+        "header": {
+          "messageId": "a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-21T14:00:00Z",
+          "senderId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260103-REES-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER_CONFIRMED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-03T14:30:00Z",
+            "leadVersion": 6,
+            "customer": {
+              "firstName": "Michael",
+              "lastName": "Torres",
+              "emailAddress": "michael.torres@email.com",
+              "phoneNumber": "+15125550234",
+              "buyerType": "INDIVIDUAL"
+            },
+            "desiredProduct": {
+              "productType": "GENERAL_PROCUREMENT",
+              "assetClass": "GENERAL_GOODS",
+              "typeSpecificAttributes": {
+                "listingMLS": "MLS-ATX-2026-084712",
+                "streetAddress": "12847 Ridgewood Trail, Austin TX 78738",
+                "contractPrice": 875000,
+                "closingDate": "2026-02-25",
+                "titleCommitmentReceived": true,
+                "inspectionStatus": "PASSED",
+                "inspectionCreditNegotiated": 3500,
+                "mortgageAppraisalValue": 882000,
+                "mortgageAppraisalStatus": "PASSED"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-KW-AUSTIN-WESTLAKE",
+              "organizationName": "Keller Williams Realty Austin Westlake",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "dealerNotes": "Inspection cleared – minor HVAC filter and caulking items. Seller agreed $3,500 credit. Appraisal $882K (above contract). Title commitment received. Mortgage underwriting clear to close. All contingencies satisfied. On track for Feb 25 close.",
+            "leadHistory": [
+              { "version": 5, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-01-11T09:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "Contract executed" },
+              { "version": 6, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-01-21T14:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "All contingencies cleared. Inspection passed, $3.5K credit. Appraisal $882K. CTC received." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-03T14:30:00Z",
+              "updatedAt": "2026-01-21T14:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-11T09:00:00Z", "action": "ORDER_PLACED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "ORDER" },
+                { "timestamp": "2026-01-21T14:00:00Z", "action": "ORDER_CONFIRMED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "ORDER_CONFIRMED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "08 - Closing / Keys Delivered (DELIVERED)",
+      "lex": {
+        "header": {
+          "messageId": "b8c9d0e1-f2a3-4b4c-5d6e-7f8a9b0c1d2e",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-02-25T16:00:00Z",
+          "senderId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260103-REES-001",
+            "leadType": "PRIMARY",
+            "status": "DELIVERED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-03T14:30:00Z",
+            "leadVersion": 7,
+            "customer": {
+              "firstName": "Michael",
+              "lastName": "Torres",
+              "emailAddress": "michael.torres@email.com",
+              "phoneNumber": "+15125550234",
+              "buyerType": "INDIVIDUAL"
+            },
+            "desiredProduct": {
+              "productType": "GENERAL_PROCUREMENT",
+              "assetClass": "GENERAL_GOODS",
+              "typeSpecificAttributes": {
+                "listingMLS": "MLS-ATX-2026-084712",
+                "streetAddress": "12847 Ridgewood Trail, Austin TX 78738",
+                "contractPrice": 875000,
+                "closingDate": "2026-02-25",
+                "recordedDeedNumber": "DEED-TRAVIS-2026-044712",
+                "keysDeliveredTo": "Michael Torres",
+                "titleInsurancePolicyIssued": true
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-KW-AUSTIN-WESTLAKE",
+              "organizationName": "Keller Williams Realty Austin Westlake",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "metrics": {
+              "showroomVisits": 1,
+              "interactionCount": 19,
+              "customerSatisfactionRating": 5.0
+            },
+            "leadHistory": [
+              { "version": 6, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-01-21T14:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "All contingencies cleared" },
+              { "version": 7, "previousStatus": "ORDER_CONFIRMED", "newStatus": "DELIVERED", "timestamp": "2026-02-25T16:00:00Z", "changedBy": "KW-ATX-AGENT-0078", "reason": "Closing completed at Austin Title. Deed recorded DEED-TRAVIS-2026-044712. Keys handed to Michael & Emma Torres." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-03T14:30:00Z",
+              "updatedAt": "2026-02-25T16:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-21T14:00:00Z", "action": "ORDER_CONFIRMED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "ORDER_CONFIRMED" },
+                { "timestamp": "2026-02-25T16:00:00Z", "action": "DELIVERED", "changedBy": "KW-ATX-AGENT-0078", "newValue": "DELIVERED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "09 - Lead Closure (WON)",
+      "lex": {
+        "header": {
+          "messageId": "c9d0e1f2-a3b4-4c5d-6e7f-8a9b0c1d2e3f",
+          "messageType": "LEAD_CLOSURE",
+          "version": "1.0",
+          "timestamp": "2026-02-26T09:00:00Z",
+          "senderId": "RETAILER-KW-AUSTIN-WESTLAKE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"
+        },
+        "payload": {
+          "leadClosure": {
+            "originalLeadId": "LID-20260103-REES-001",
+            "originalLeadSource": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-03T14:30:00Z",
+            "leadClosureDate": "2026-02-25T16:00:00Z",
+            "leadLifecycleDays": 53,
+            "closureStatus": "WON",
+            "closureReason": "12847 Ridgewood Trail closed at $875,000. Deed recorded Travis County. Keys delivered to Michael & Emma Torres on Feb 25.",
+            "closureDetail": {
+              "purchaseConfirmed": true,
+              "orderPlacedDate": "2026-01-11T09:00:00Z",
+              "actualDeliveryDate": "2026-02-25",
+              "dealAmount": 875000,
+              "currency": "USD"
+            },
+            "purchasedProduct": {
+              "productType": "GENERAL_PROCUREMENT",
+              "assetClass": "GENERAL_GOODS",
+              "manufacturer": "Custom Build",
+              "model": "12847 Ridgewood Trail",
+              "year": 2019,
+              "typeSpecificAttributes": {
+                "listingMLS": "MLS-ATX-2026-084712",
+                "streetAddress": "12847 Ridgewood Trail",
+                "city": "Austin",
+                "state": "TX",
+                "zipCode": "78738",
+                "deedReference": "DEED-TRAVIS-2026-044712",
+                "squareFeetLiving": 3420,
+                "bedroomCount": 4,
+                "bathroomCount": 3.5
+              }
+            },
+            "retailerPerformance": {
+              "organizationId": "ORG-KW-AUSTIN-WESTLAKE",
+              "organizationName": "Keller Williams Realty Austin Westlake",
+              "salespersonId": "KW-ATX-AGENT-0078",
+              "salespersonName": "Carlos Herrera",
+              "region": "NA"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

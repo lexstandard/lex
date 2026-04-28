@@ -1,0 +1,426 @@
+﻿{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexstandard.org/schemas/v1/LEX_LEAD_CLOSURE_SCHEMA.json",
+  "title": "LEX - LEAD_CLOSURE Message Schema",
+  "description": "Schema for LEAD_CLOSURE message type - report outcome of lead (WON/LOST/ABANDONED)",
+  "type": "object",
+  "required": ["payload"],
+  "properties": {
+    "payload": {
+      "type": "object",
+      "required": ["leadClosure"],
+      "properties": {
+        "leadClosure": {
+          "type": "object",
+          "required": [
+            "originalLeadId",
+            "closureStatus",
+            "leadCreatedDate",
+            "leadClosureDate"
+          ],
+          "properties": {
+            "originalLeadId": {
+              "type": "string",
+              "description": "Reference to original LEAD message ID"
+            },
+            "originalLeadSource": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadSource"
+            },
+            "originalSourceURL": {
+              "type": "string",
+              "format": "uri"
+            },
+            "leadCreatedDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "leadClosureDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "leadLifecycleDays": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Days from creation to closure"
+            },
+            "closureStatus": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ClosureStatus"
+            },
+            "closureReason": {
+              "type": "string",
+              "description": "Specific reason for closure status"
+            },
+            "closureDetail": {
+              "type": "object",
+              "description": "Detailed closure information",
+              "properties": {
+                "purchaseConfirmed": {
+                  "type": "boolean"
+                },
+                "orderPlacedDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "actualDeliveryDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "dealAmount": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "currency": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Currency"
+                }
+              }
+            },
+            "purchasedProduct": {
+              "type": "object",
+              "description": "Product that was purchased",
+              "required": ["productType"],
+              "properties": {
+                "productType": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ProductType"
+                },
+                "assetClass": {
+                  "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/AssetClass"
+                },
+                "manufacturer": {
+                  "type": "string"
+                },
+                "model": {
+                  "type": "string"
+                },
+                "year": {
+                  "type": "integer"
+                },
+                "sku": {
+                  "type": "string"
+                },
+                "color": {
+                  "type": "string"
+                },
+                "typeSpecificAttributes": {
+                  "type": "object",
+                  "description": "Product-type-specific specification",
+                  "additionalProperties": true
+                }
+              }
+            },
+            "customerOutcome": {
+              "type": "object",
+              "description": "Customer and transaction outcome",
+              "properties": {
+                "customerId": {
+                  "type": "string"
+                },
+                "purchaseConfirmed": {
+                  "type": "boolean"
+                },
+                "financingUsed": {
+                  "type": "boolean"
+                },
+                "financingType": {
+                  "type": "string",
+                  "enum": ["DEALER_ARRANGED", "THIRD_PARTY", "GOVERNMENT_SUBSIDY_WITH_EMI", "CASH"]
+                },
+                "financingAmount": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "downPayment": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "monthlyPayment": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "loanTerm": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "governmentSubsidyApplied": {
+                  "type": "boolean"
+                },
+                "subsidyAmount": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "tradeInAccepted": {
+                  "type": "boolean"
+                },
+                "tradeInValue": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "estimatedDeliveryDate": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "dealerNotes": {
+              "type": "string",
+              "maxLength": 2000,
+              "description": "Free-text notes about the deal"
+            },
+            "metrics": {
+              "type": "object",
+              "description": "Engagement and performance metrics",
+              "properties": {
+                "interactionCount": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "showroomVisits": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "testDrivesCompleted": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "dealerQualityScore": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "customerSatisfactionRating": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 5
+                },
+                "npsScore": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                }
+              }
+            },
+            "relatedLeads": {
+              "type": "object",
+              "description": "Tracking of related post-order leads and accessories (for primary vehicle orders or cross-sell parent leads)",
+              "properties": {
+                "parentOrderId": {
+                  "type": "string",
+                  "description": "If this is a POST_ORDER lead closure, reference to the primary vehicle order ID"
+                },
+                "parentOrderStatus": {
+                  "type": "string",
+                  "enum": ["ORDER", "IN_DELIVERY", "DELIVERED", "UNKNOWN"],
+                  "description": "Status of parent vehicle order at time of closure"
+                },
+                "childLeadClosures": {
+                  "type": "array",
+                  "description": "Closures of child leads (accessories, protection plans, subscriptions) spawned from this lead",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "childLeadId": {
+                        "type": "string"
+                      },
+                      "childLeadType": {
+                        "type": "string",
+                        "enum": ["ACCESSORY", "PROTECTION_PLAN", "SUBSCRIPTION", "RETAILER_INSTALLED_OPTION", "SERVICE_UPGRADE"]
+                      },
+                      "childLeadStatus": {
+                        "type": "string",
+                        "enum": ["WON", "LOST", "ABANDONED", "PENDING"]
+                      },
+                      "itemDescription": {
+                        "type": "string"
+                      },
+                      "itemPrice": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "closureDate": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                },
+                "accessoryClosures": {
+                  "type": "array",
+                  "description": "Closure information for accessories sold with primary vehicle",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accessoryLeadId": {
+                        "type": "string"
+                      },
+                      "accessoryName": {
+                        "type": "string"
+                      },
+                      "accessoryCategory": {
+                        "type": "string",
+                        "enum": ["SEAT_PACKAGE", "PAINT_PROTECTION", "WHEEL_UPGRADE", "AUDIO_UPGRADE", "INTERIOR_PACKAGE", "EXTERIOR_PACKAGE", "SAFETY_PACKAGE", "TECHNOLOGY_PACKAGE", "OTHER"]
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": ["ACCEPTED", "REJECTED", "PENDING", "CANCELLED"]
+                      },
+                      "price": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "installationType": {
+                        "type": "string",
+                        "enum": ["FACTORY_INSTALL", "DEALER_INSTALL", "DECLINED"]
+                      }
+                    }
+                  }
+                },
+                "protectionPlanClosures": {
+                  "type": "array",
+                  "description": "Closure information for protection plans sold with primary vehicle",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "planLeadId": {
+                        "type": "string"
+                      },
+                      "planName": {
+                        "type": "string"
+                      },
+                      "planType": {
+                        "type": "string",
+                        "enum": ["EXTENDED_WARRANTY", "GAP_INSURANCE", "MAINTENANCE_PLAN", "ROAD_HAZARD", "THEFT_PROTECTION", "ACCIDENT_PROTECTION", "TIRE_PLAN", "HYBRID_BATTERY_PLAN"]
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": ["ACCEPTED", "REJECTED", "PENDING", "CANCELLED"]
+                      },
+                      "price": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "coveragePeriod": {
+                        "type": "integer",
+                        "description": "Coverage in months"
+                      }
+                    }
+                  }
+                },
+                "subscriptionClosures": {
+                  "type": "array",
+                  "description": "Closure information for subscription services linked to vehicle order",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "subscriptionLeadId": {
+                        "type": "string"
+                      },
+                      "subscriptionName": {
+                        "type": "string"
+                      },
+                      "subscriptionType": {
+                        "type": "string",
+                        "enum": ["TELEMATICS", "CHARGING_NETWORK", "NAVIGATION_UPDATES", "ROADSIDE_ASSISTANCE", "IN_VEHICLE_WIFI", "MOBILE_APP", "PREMIUM_FEATURES", "CONCIERGE_SERVICE"]
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": ["ACCEPTED", "REJECTED", "PENDING", "CANCELLED"]
+                      },
+                      "monthlyPrice": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "initialDuration": {
+                        "type": "integer",
+                        "description": "months"
+                      },
+                      "autoRenewal": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "crossSellMetrics": {
+              "type": "object",
+              "description": "Metrics about post-order items and services sold",
+              "properties": {
+                "primaryProductPrice": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "totalAccessoriesPrice": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "totalProtectionPlansPrice": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "totalSubscriptionInitialPrice": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Initial period cost of subscriptions"
+                },
+                "totalRetailerOptionsPrice": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "totalDealValue": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Primary product + all post-order items"
+                },
+                "accessoriesCount": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "protectionPlansCount": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "subscriptionsCount": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "retailerOptionsCount": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "crossSellConversionRate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "Percentage of offered items accepted (0.0 - 1.0)"
+                }
+              }
+            },
+            "organizationContext": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/OrganizationContext"
+            },
+            "metadata": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Metadata"
+            },
+            "financialSummary": {
+              "$ref": "LEX_LEAD_SCHEMA.json#/definitions/FinancialSummary",
+              "description": "Recommended when closureStatus is WON. taxesAndFees.isEstimate should be false for a closed deal (final DMS record)."
+            },
+            "captiveFinance": {
+              "$ref": "LEX_LEAD_SCHEMA.json#/definitions/CaptiveFinance",
+              "description": "Record of the captive finance program that was applied to the closed deal."
+            },
+            "dealLineage": {
+              "$ref": "LEX_LEAD_SCHEMA.json#/definitions/DealLineage",
+              "description": "Recommended when closureStatus is WON. Authoritative deal audit record."
+            },
+            "structuredNotes": {
+              "$ref": "LEX_LEAD_SCHEMA.json#/definitions/StructuredNotes",
+              "description": "Deal notes record. DEALER_INTERNAL notes must be stripped for non-dealer recipients."
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

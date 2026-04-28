@@ -1,0 +1,57 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-002",
+  "title": "Missing Required Field — customer.firstName",
+  "level": "L1",
+  "conformanceLevel": 1,
+  "category": "LEAD",
+  "description": "LEAD message omits customer.firstName. Validator MUST return valid=false with a REQUIRED_FIELD_MISSING error on payload.lead.customer.firstName.",
+  "specRef": "LEX_CONFORMANCE §2 TC-002",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000002",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:01:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC002-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "lastName": "Smith",
+            "emailAddress": "jane.smith@example.com",
+            "phoneNumber": "+14155551234"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "assetClass": "VEHICLE",
+            "make": "Toyota",
+            "model": "Camry",
+            "year": 2027
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:01:00Z",
+            "countryCode": "US"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "payload.lead.customer.firstName",
+        "code": "REQUIRED_FIELD_MISSING",
+        "level": "ERROR"
+      }
+    ],
+    "warnings": []
+  }
+}

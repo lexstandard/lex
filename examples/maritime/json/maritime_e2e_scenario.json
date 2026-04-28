@@ -1,0 +1,720 @@
+{
+  "_metadata": {
+    "title": "LEX Maritime End-to-End Scenario: New Build Container Vessel Acquisition",
+    "scenario": "Meridian Shipping S.A. (institutional/B2B buyer) acquires a new-build 4,500 TEU container vessel from Hyundai-Ulsan shipyard, brokered through Nordic Maritime Brokers. Vessel is classified by Lloyd's Register, flagged Marshall Islands. ECA-backed financing via Korea EXIM. Full lifecycle: RFQ → acknowledgment → expressed interest → negotiation → shipbuilding contract → keel laid / in-delivery → delivered → closure (WON). Deal value USD 68 million.",
+    "industry": "MARITIME",
+    "assetClass": "MARITIME",
+    "buyerType": "ORGANIZATION",
+    "leadId": "LID-20251105-MARI-001",
+    "vesselType": "CONTAINER",
+    "teuCapacity": 4500,
+    "totalDealValue": 68000000,
+    "currency": "USD",
+    "outcome": "WON",
+    "lifecycleDays": 730,
+    "messageCount": 9,
+    "phases": [
+      "01 - RFQ Submitted by Shipowner (SHOPPING)",
+      "02 - Platform Acknowledgment (VALIDATED)",
+      "03 - Expressed Interest (broker + shipyard shortlisted)",
+      "04 - Technical Clarification / In Negotiation",
+      "05 - Shipbuilding Contract Signed (ORDER)",
+      "06 - Contract Confirmed & IMO Number Allocated",
+      "07 - Keel Laid / In Delivery",
+      "08 - Sea Trials Passed / Delivered",
+      "09 - Lead Closure (WON)"
+    ]
+  },
+  "messages": [
+    {
+      "_phase": "01 - RFQ Submitted by Shipowner (SHOPPING)",
+      "lex": {
+        "header": {
+          "messageId": "d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2025-11-05T08:00:00Z",
+          "senderId": "BROKER-NORDIC-MARITIME",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "signatureAlgorithm": "HMAC-SHA256"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20251105-MARI-001",
+            "leadType": "PRIMARY",
+            "status": "SHOPPING",
+            "source": "BROKER",
+            "leadCreatedDate": "2025-11-05T08:00:00Z",
+            "leadVersion": 1,
+            "sourceDetail": {
+              "sourceType": "BROKER",
+              "channel": "B2B_DIRECT",
+              "leadEntryMethod": "BROKER_SUBMISSION",
+              "formName": "New-Build Vessel RFQ",
+              "leadQualityScore": 9.5,
+              "customFields": {
+                "rfqReference": "NMBI-RFQ-2025-MARIDIAN-001",
+                "targetDelivery": "Q4 2027",
+                "operationalRoute": "ASIA-EUROPE-TRANSPACIFIC",
+                "classificationRequired": "LR"
+              }
+            },
+            "customer": {
+              "firstName": "Andreas",
+              "lastName": "Papadopoulos",
+              "emailAddress": "a.papadopoulos@meridianshipping.gr",
+              "phoneNumber": "+302109876543",
+              "preferredContactMethod": "EMAIL",
+              "locale": "el-GR",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": {
+                "companyName": "Meridian Shipping S.A.",
+                "companyRegistrationNumber": "GR-MAR-2003-044981",
+                "taxIdentificationNumber": "EL-800443219",
+                "industryCode": "NACE-5020",
+                "companySize": "MID_MARKET",
+                "existingFleetSize": 9,
+                "governmentEntity": false,
+                "procurementMethodology": "RFQ",
+                "existingRelationship": "NEW",
+                "budgetApprovalStatus": "APPROVED",
+                "procurementContact": {
+                  "firstName": "Andreas",
+                  "lastName": "Papadopoulos",
+                  "title": "Chief Operating Officer",
+                  "email": "a.papadopoulos@meridianshipping.gr",
+                  "department": "Fleet Acquisition"
+                }
+              },
+              "fleetBuyer": {
+                "isFleet": true,
+                "fleetSize": 9,
+                "unitsToOrder": 1,
+                "fleetManagerName": "Andreas Papadopoulos",
+                "fleetManagerEmail": "a.papadopoulos@meridianshipping.gr"
+              }
+            },
+            "desiredProduct": {
+              "productType": "CARGO_VESSEL",
+              "assetClass": "MARITIME",
+              "make": "Hyundai Heavy Industries",
+              "model": "4500 TEU Container Vessel",
+              "year": 2027,
+              "condition": "NEW",
+              "budgetMin": 60000000,
+              "budgetMax": 72000000,
+              "currency": "USD",
+              "typeSpecificAttributes": {
+                "vesselType": "CONTAINER",
+                "teuCapacity": 4500,
+                "grossTonnage": 52000,
+                "deadweightTonnage": 64000,
+                "overallLengthMm": 294600,
+                "beamMm": 32200,
+                "scantlingDraughtMm": 13500,
+                "serviceSpeedKnots": 21.5,
+                "mainEngineMake": "MAN Energy Solutions",
+                "mainEngineModel": "MAN B&W 8S80ME-C10.5",
+                "engineOutputKw": 31640,
+                "fuelType": "VLSFO_LNG_DUAL",
+                "classificationSociety": "LR",
+                "flagState": "MH",
+                "iceClass": "NONE",
+                "scrubberFitted": false,
+                "dualFuelReady": true,
+                "methanolReady": false,
+                "digitalTwinEnabled": true,
+                "aisClass": "A",
+                "referFittings": 500
+              },
+              "factoryOrderPreference": "FACTORY_ORDER_ONLY"
+            },
+            "maritimeLead": {
+              "charterType": "TIME_CHARTER",
+              "intendedTradingArea": "ASIA-EUROPE-TRANSPACIFIC",
+              "intendedCargoType": "DRY_CONTAINERS"
+            },
+            "fleetOrder": {
+              "quantity": 1,
+              "totalBudgetCap": 72000000,
+              "currency": "USD",
+              "procurementReference": "NMBI-RFQ-2025-MARIDIAN-001",
+              "preferredDeliveryWindow": "Q4 2027",
+              "unitSpecifications": [
+                {
+                  "quantity": 1,
+                  "configurationCode": "HHI-4500TEU-DUAL-LNG-LR-V1",
+                  "specificOptions": [
+                    "MAN-B-W-8S80ME-C10-5",
+                    "DUAL_FUEL_LNG_VLSFO",
+                    "DIGITAL_TWIN",
+                    "500_REEFER_PLUGS",
+                    "LR_CLASS"
+                  ]
+                }
+              ]
+            },
+            "procurementFinancing": {
+              "procurementType": "ECA_BACKED_LOAN",
+              "financingInstitution": "Korea EXIM Bank",
+              "ecaBody": "KEXIM",
+              "loanToValuePct": 80,
+              "downPaymentPct": 20,
+              "loanTermYears": 12,
+              "estimatedFinancingAmount": 54400000,
+              "currency": "USD",
+              "progressPayments": [
+                { "milestone": "CONTRACT", "pct": 5, "amountUsd": 3400000 },
+                { "milestone": "KEEL_LAID", "pct": 5, "amountUsd": 3400000 },
+                { "milestone": "LAUNCH", "pct": 5, "amountUsd": 3400000 },
+                { "milestone": "DELIVERY", "pct": 85, "amountUsd": 57800000 }
+              ]
+            },
+            "organizationContext": {
+              "organizationId": "ORG-NORDIC-MARITIME-BROKERS",
+              "organizationName": "Nordic Maritime Brokers International AS",
+              "timezone": "Europe/Oslo",
+              "region": "EMEA"
+            },
+            "leadAncestry": {
+              "originType": "DIRECT_INQUIRY",
+              "originDate": "2025-11-05T08:00:00Z",
+              "originSourceId": "NMBI-RFQ-2025-MARIDIAN-001",
+              "conversionPath": [
+                { "stage": "SHOPPING", "timestamp": "2025-11-05T08:00:00Z" }
+              ]
+            },
+            "leadHistory": [
+              {
+                "version": 1,
+                "previousStatus": null,
+                "newStatus": "SHOPPING",
+                "timestamp": "2025-11-05T08:00:00Z",
+                "changedBy": "BROKER-NORDIC-MARITIME",
+                "reason": "New-build RFQ submitted by Meridian Shipping for 4,500 TEU dual-fuel container vessel. Q4 2027 target delivery."
+              }
+            ],
+            "metadata": {
+              "createdAt": "2025-11-05T08:00:00Z",
+              "updatedAt": "2025-11-05T08:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-11-05T08:00:00Z", "action": "LEAD_CREATED", "changedBy": "BROKER-NORDIC-MARITIME", "newValue": "SHOPPING" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "02 - Platform Acknowledgment (VALIDATED)",
+      "lex": {
+        "header": {
+          "messageId": "e2f3a4b5-c6d7-4e8f-9a0b-1c2d3e4f5a6b",
+          "messageType": "ACKNOWLEDGMENT",
+          "version": "1.0",
+          "timestamp": "2025-11-05T08:00:14Z",
+          "senderId": "LEX-PLATFORM",
+          "receiverId": "BROKER-NORDIC-MARITIME",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a"
+        },
+        "payload": {
+          "acknowledgment": {
+            "acknowledgmentId": "ACK-20251105-MARI-001",
+            "correlationId": "d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a",
+            "originalMessageId": "d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a",
+            "originalMessageType": "LEAD",
+            "status": "PROCESSED",
+            "statusReason": "Maritime vessel RFQ validated and distributed to registered shipyards for 4,500 TEU dual-fuel new-build.",
+            "timestamp": "2025-11-05T08:00:14Z",
+            "processingTime": 14200,
+            "validationResults": {
+              "isValid": true,
+              "schemaValidation": { "passed": true, "errors": [] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "03 - Expressed Interest (Hyundai shortlisted)",
+      "lex": {
+        "header": {
+          "messageId": "f3a4b5c6-d7e8-4f9a-0b1c-2d3e4f5a6b7c",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2025-12-15T10:00:00Z",
+          "senderId": "BROKER-NORDIC-MARITIME",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20251105-MARI-001",
+            "leadType": "PRIMARY",
+            "status": "EXPRESSED_INTEREST",
+            "source": "BROKER",
+            "leadCreatedDate": "2025-11-05T08:00:00Z",
+            "leadVersion": 2,
+            "customer": {
+              "firstName": "Andreas",
+              "lastName": "Papadopoulos",
+              "emailAddress": "a.papadopoulos@meridianshipping.gr",
+              "phoneNumber": "+302109876543",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Meridian Shipping S.A." }
+            },
+            "desiredProduct": {
+              "productType": "CARGO_VESSEL",
+              "assetClass": "MARITIME",
+              "make": "Hyundai Heavy Industries",
+              "model": "4500 TEU Container Vessel",
+              "year": 2027,
+              "condition": "NEW"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-NORDIC-MARITIME-BROKERS",
+              "organizationName": "Nordic Maritime Brokers International AS",
+              "timezone": "Europe/Oslo",
+              "region": "EMEA"
+            },
+            "dealerNotes": "Meridian Shipping confirmed Hyundai Ulsan as preferred yard after ABS technical evaluation of 3 shortlisted yards (HHI, DSME, Yangzijiang). Key differentiator: HHI dual-fuel gas handling experience and digital twin service. LR classification confirmed. Formal term sheet requested.",
+            "leadHistory": [
+              { "version": 1, "previousStatus": null, "newStatus": "SHOPPING", "timestamp": "2025-11-05T08:00:00Z", "changedBy": "BROKER-NORDIC-MARITIME", "reason": "RFQ created" },
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2025-12-15T10:00:00Z", "changedBy": "BROKER-NORDIC-MARITIME", "reason": "Hyundai HII shortlisted. LR classification and dual-fuel confirmed. Term sheet requested." }
+            ],
+            "metadata": {
+              "createdAt": "2025-11-05T08:00:00Z",
+              "updatedAt": "2025-12-15T10:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-11-05T08:00:00Z", "action": "LEAD_CREATED", "changedBy": "BROKER-NORDIC-MARITIME", "newValue": "SHOPPING" },
+                { "timestamp": "2025-12-15T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "BROKER-NORDIC-MARITIME", "newValue": "EXPRESSED_INTEREST" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "04 - In Negotiation (commercial + technical terms)",
+      "lex": {
+        "header": {
+          "messageId": "a4b5c6d7-e8f9-4a0b-1c2d-3e4f5a6b7c8d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-20T09:00:00Z",
+          "senderId": "BROKER-NORDIC-MARITIME",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20251105-MARI-001",
+            "leadType": "PRIMARY",
+            "status": "IN_NEGOTIATION",
+            "source": "BROKER",
+            "leadCreatedDate": "2025-11-05T08:00:00Z",
+            "leadVersion": 3,
+            "customer": {
+              "firstName": "Andreas",
+              "lastName": "Papadopoulos",
+              "emailAddress": "a.papadopoulos@meridianshipping.gr",
+              "phoneNumber": "+302109876543",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Meridian Shipping S.A." }
+            },
+            "desiredProduct": {
+              "productType": "CARGO_VESSEL",
+              "assetClass": "MARITIME",
+              "make": "Hyundai Heavy Industries",
+              "model": "4500 TEU Container Vessel",
+              "condition": "NEW"
+            },
+            "procurementFinancing": {
+              "procurementType": "ECA_BACKED_LOAN",
+              "financingInstitution": "Korea EXIM Bank",
+              "ecaBody": "KEXIM",
+              "loanToValuePct": 80,
+              "estimatedFinancingAmount": 54400000,
+              "currency": "USD"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-NORDIC-MARITIME-BROKERS",
+              "organizationName": "Nordic Maritime Brokers International AS",
+              "timezone": "Europe/Oslo",
+              "region": "EMEA"
+            },
+            "dealerNotes": "Negotiating shipbuilding contract SBC-HHI-2026-MERID-001. Key open items: steel price variation clause capped at ±3%; LNG bunkering port adaptation cost sharing; delivery date Q4 2027; KEXIM drawdown schedule aligned to progress payments. MARPOL CII rating A confirmed by LR preliminary design review.",
+            "leadHistory": [
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2025-12-15T10:00:00Z", "changedBy": "BROKER-NORDIC-MARITIME", "reason": "HHI shortlisted" },
+              { "version": 3, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-20T09:00:00Z", "changedBy": "BROKER-NORDIC-MARITIME", "reason": "Term sheet exchanged. SBC draft under review by both legal teams and KEXIM." }
+            ],
+            "metadata": {
+              "createdAt": "2025-11-05T08:00:00Z",
+              "updatedAt": "2026-01-20T09:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-12-15T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "BROKER-NORDIC-MARITIME", "newValue": "EXPRESSED_INTEREST" },
+                { "timestamp": "2026-01-20T09:00:00Z", "action": "STATUS_UPDATED", "changedBy": "BROKER-NORDIC-MARITIME", "newValue": "IN_NEGOTIATION" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "05 - Shipbuilding Contract Signed (ORDER)",
+      "lex": {
+        "header": {
+          "messageId": "b5c6d7e8-f9a0-4b1c-2d3e-4f5a6b7c8d9e",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-03-10T10:00:00Z",
+          "senderId": "BROKER-NORDIC-MARITIME",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20251105-MARI-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER",
+            "source": "BROKER",
+            "leadCreatedDate": "2025-11-05T08:00:00Z",
+            "leadVersion": 4,
+            "customer": {
+              "firstName": "Andreas",
+              "lastName": "Papadopoulos",
+              "emailAddress": "a.papadopoulos@meridianshipping.gr",
+              "phoneNumber": "+302109876543",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Meridian Shipping S.A." }
+            },
+            "desiredProduct": {
+              "productType": "CARGO_VESSEL",
+              "assetClass": "MARITIME",
+              "make": "Hyundai Heavy Industries",
+              "model": "4500 TEU Container Vessel",
+              "year": 2027,
+              "condition": "NEW",
+              "typeSpecificAttributes": {
+                "shipbuildingContractRef": "SBC-HHI-2026-MERID-001",
+                "hullNumber": "HHI-ULSAN-H3042",
+                "yardSlot": "ULSAN-DOCK-7",
+                "contractDate": "2026-03-10",
+                "targetDeliveryDate": "2027-10-15"
+              }
+            },
+            "procurementFinancing": {
+              "procurementType": "ECA_BACKED_LOAN",
+              "financingInstitution": "Korea EXIM Bank",
+              "ecaBody": "KEXIM",
+              "loanToValuePct": 80,
+              "loanTermYears": 12,
+              "estimatedFinancingAmount": 54400000,
+              "downPaymentPct": 20,
+              "currency": "USD",
+              "progressPayments": [
+                { "milestone": "CONTRACT", "pct": 5, "amountUsd": 3400000, "paidDate": "2026-03-10" },
+                { "milestone": "KEEL_LAID", "pct": 5, "amountUsd": 3400000 },
+                { "milestone": "LAUNCH", "pct": 5, "amountUsd": 3400000 },
+                { "milestone": "DELIVERY", "pct": 85, "amountUsd": 57800000 }
+              ]
+            },
+            "organizationContext": {
+              "organizationId": "ORG-NORDIC-MARITIME-BROKERS",
+              "organizationName": "Nordic Maritime Brokers International AS",
+              "timezone": "Europe/Oslo",
+              "region": "EMEA"
+            },
+            "dealerNotes": "SBC signed. Total contract price USD 68.0M. Hull #HHI-ULSAN-H3042 allocated Dock 7. KEXIM drawdown facility USD 54.4M confirmed. First progress payment USD 3.4M (5%) remitted. LR plan approval process started.",
+            "leadHistory": [
+              { "version": 3, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-20T09:00:00Z", "changedBy": "BROKER-NORDIC-MARITIME", "reason": "Negotiation in progress" },
+              { "version": 4, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-03-10T10:00:00Z", "changedBy": "BROKER-NORDIC-MARITIME", "reason": "SBC executed. Hull #H3042 Dock 7 Ulsan. 5% contract payment released." }
+            ],
+            "metadata": {
+              "createdAt": "2025-11-05T08:00:00Z",
+              "updatedAt": "2026-03-10T10:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-20T09:00:00Z", "action": "STATUS_UPDATED", "changedBy": "BROKER-NORDIC-MARITIME", "newValue": "IN_NEGOTIATION" },
+                { "timestamp": "2026-03-10T10:00:00Z", "action": "ORDER_PLACED", "changedBy": "BROKER-NORDIC-MARITIME", "newValue": "ORDER" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "06 - Contract Confirmed & IMO Number Allocated",
+      "lex": {
+        "header": {
+          "messageId": "c6d7e8f9-a0b1-4c2d-3e4f-5a6b7c8d9e0f",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-03-15T12:00:00Z",
+          "senderId": "MANUFACTURER-HHI-ULSAN",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20251105-MARI-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER_CONFIRMED",
+            "source": "BROKER",
+            "leadCreatedDate": "2025-11-05T08:00:00Z",
+            "leadVersion": 5,
+            "customer": {
+              "firstName": "Andreas",
+              "lastName": "Papadopoulos",
+              "emailAddress": "a.papadopoulos@meridianshipping.gr",
+              "phoneNumber": "+302109876543",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Meridian Shipping S.A." }
+            },
+            "desiredProduct": {
+              "productType": "CARGO_VESSEL",
+              "assetClass": "MARITIME",
+              "make": "Hyundai Heavy Industries",
+              "model": "4500 TEU Container Vessel",
+              "year": 2027,
+              "condition": "NEW",
+              "typeSpecificAttributes": {
+                "imoNumber": "IMO-9987654",
+                "hullNumber": "HHI-ULSAN-H3042",
+                "mmsiProvisional": "538009987",
+                "callSign": "V7MEI1",
+                "vesselName": "MV MERIDIAN ATLAS",
+                "classificationSociety": "LR",
+                "classNotation": "100A1 Container Ship +LMC UMS IWS IGS GREEN PASSPORT ShipRight(SDA,FDA,CM)",
+                "flagState": "MH",
+                "registryPort": "Majuro",
+                "keelLayDate": "2026-09-01",
+                "targetLaunchDate": "2027-05-15",
+                "targetDeliveryDate": "2027-10-15"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-NORDIC-MARITIME-BROKERS",
+              "organizationName": "Nordic Maritime Brokers International AS",
+              "timezone": "Europe/Oslo",
+              "region": "EMEA"
+            },
+            "leadHistory": [
+              { "version": 4, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-03-10T10:00:00Z", "changedBy": "BROKER-NORDIC-MARITIME", "reason": "SBC signed" },
+              { "version": 5, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-03-15T12:00:00Z", "changedBy": "MANUFACTURER-HHI-ULSAN", "reason": "IMO number assigned: IMO-9987654. Vessel name MV MERIDIAN ATLAS. LR class notation confirmed. Keel lay scheduled Sep 2026." }
+            ],
+            "metadata": {
+              "createdAt": "2025-11-05T08:00:00Z",
+              "updatedAt": "2026-03-15T12:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-03-10T10:00:00Z", "action": "ORDER_PLACED", "changedBy": "BROKER-NORDIC-MARITIME", "newValue": "ORDER" },
+                { "timestamp": "2026-03-15T12:00:00Z", "action": "ORDER_CONFIRMED", "changedBy": "MANUFACTURER-HHI-ULSAN", "newValue": "ORDER_CONFIRMED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "07 - Keel Laid / In Delivery",
+      "lex": {
+        "header": {
+          "messageId": "d7e8f9a0-b1c2-4d3e-4f5a-6b7c8d9e0f1a",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-09-01T06:00:00Z",
+          "senderId": "MANUFACTURER-HHI-ULSAN",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20251105-MARI-001",
+            "leadType": "PRIMARY",
+            "status": "IN_DELIVERY",
+            "source": "BROKER",
+            "leadCreatedDate": "2025-11-05T08:00:00Z",
+            "leadVersion": 6,
+            "customer": {
+              "firstName": "Andreas",
+              "lastName": "Papadopoulos",
+              "emailAddress": "a.papadopoulos@meridianshipping.gr",
+              "phoneNumber": "+302109876543",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Meridian Shipping S.A." }
+            },
+            "desiredProduct": {
+              "productType": "CARGO_VESSEL",
+              "assetClass": "MARITIME",
+              "make": "Hyundai Heavy Industries",
+              "model": "4500 TEU Container Vessel",
+              "typeSpecificAttributes": {
+                "imoNumber": "IMO-9987654",
+                "hullNumber": "HHI-ULSAN-H3042",
+                "vesselName": "MV MERIDIAN ATLAS",
+                "keelLayDate": "2026-09-01",
+                "constructionProgressPct": 15,
+                "milestoneReached": "KEEL_LAID",
+                "nextMilestone": "LAUNCH",
+                "nextMilestoneTarget": "2027-05-15"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-NORDIC-MARITIME-BROKERS",
+              "organizationName": "Nordic Maritime Brokers International AS",
+              "timezone": "Europe/Oslo",
+              "region": "EMEA"
+            },
+            "dealerNotes": "Keel laid ceremony attended by Meridian CEO and LR surveyor. Second progress payment USD 3.4M (5% keel-lay instalment) remitted. KEXIM drawdown #2 processed. Construction on schedule for Oct 2027 delivery.",
+            "leadHistory": [
+              { "version": 5, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-03-15T12:00:00Z", "changedBy": "MANUFACTURER-HHI-ULSAN", "reason": "IMO issued, LR class confirmed" },
+              { "version": 6, "previousStatus": "ORDER_CONFIRMED", "newStatus": "IN_DELIVERY", "timestamp": "2026-09-01T06:00:00Z", "changedBy": "MANUFACTURER-HHI-ULSAN", "reason": "Keel laid at Ulsan Dock 7. Progress 15%. 2nd progress payment remitted." }
+            ],
+            "metadata": {
+              "createdAt": "2025-11-05T08:00:00Z",
+              "updatedAt": "2026-09-01T06:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-03-15T12:00:00Z", "action": "ORDER_CONFIRMED", "changedBy": "MANUFACTURER-HHI-ULSAN", "newValue": "ORDER_CONFIRMED" },
+                { "timestamp": "2026-09-01T06:00:00Z", "action": "STATUS_UPDATED", "changedBy": "MANUFACTURER-HHI-ULSAN", "newValue": "IN_DELIVERY" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "08 - Sea Trials Passed / Delivered",
+      "lex": {
+        "header": {
+          "messageId": "e8f9a0b1-c2d3-4e4f-5a6b-7c8d9e0f1a2b",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2027-10-15T10:00:00Z",
+          "senderId": "MANUFACTURER-HHI-ULSAN",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20251105-MARI-001",
+            "leadType": "PRIMARY",
+            "status": "DELIVERED",
+            "source": "BROKER",
+            "leadCreatedDate": "2025-11-05T08:00:00Z",
+            "leadVersion": 7,
+            "customer": {
+              "firstName": "Andreas",
+              "lastName": "Papadopoulos",
+              "emailAddress": "a.papadopoulos@meridianshipping.gr",
+              "phoneNumber": "+302109876543",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "Meridian Shipping S.A." }
+            },
+            "desiredProduct": {
+              "productType": "CARGO_VESSEL",
+              "assetClass": "MARITIME",
+              "make": "Hyundai Heavy Industries",
+              "model": "4500 TEU Container Vessel",
+              "year": 2027,
+              "condition": "NEW",
+              "typeSpecificAttributes": {
+                "imoNumber": "IMO-9987654",
+                "hullNumber": "HHI-ULSAN-H3042",
+                "vesselName": "MV MERIDIAN ATLAS",
+                "classificationSociety": "LR",
+                "classNotation": "100A1 Container Ship +LMC UMS IWS IGS GREEN PASSPORT ShipRight(SDA,FDA,CM)",
+                "flagState": "MH",
+                "registryPort": "Majuro",
+                "mmsi": "538009987",
+                "callSign": "V7MEI1",
+                "deliveryPort": "Ulsan, South Korea",
+                "deliveryDate": "2027-10-15",
+                "seaTrialDate": "2027-10-08",
+                "seaTrialResult": "PASS",
+                "achievedSpeedKnots": 21.8,
+                "cilRating": "CII-A"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-NORDIC-MARITIME-BROKERS",
+              "organizationName": "Nordic Maritime Brokers International AS",
+              "timezone": "Europe/Oslo",
+              "region": "EMEA"
+            },
+            "metrics": {
+              "interactionCount": 34,
+              "customerSatisfactionRating": 4.9
+            },
+            "leadHistory": [
+              { "version": 6, "previousStatus": "ORDER_CONFIRMED", "newStatus": "IN_DELIVERY", "timestamp": "2026-09-01T06:00:00Z", "changedBy": "MANUFACTURER-HHI-ULSAN", "reason": "Keel laid" },
+              { "version": 7, "previousStatus": "IN_DELIVERY", "newStatus": "DELIVERED", "timestamp": "2027-10-15T10:00:00Z", "changedBy": "MANUFACTURER-HHI-ULSAN", "reason": "Sea trials passed 21.8 kn. Final delivery payment USD 57.8M. Vessel transferred to Meridian flag MH at Ulsan." }
+            ],
+            "metadata": {
+              "createdAt": "2025-11-05T08:00:00Z",
+              "updatedAt": "2027-10-15T10:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-09-01T06:00:00Z", "action": "STATUS_UPDATED", "changedBy": "MANUFACTURER-HHI-ULSAN", "newValue": "IN_DELIVERY" },
+                { "timestamp": "2027-10-15T10:00:00Z", "action": "DELIVERED", "changedBy": "MANUFACTURER-HHI-ULSAN", "newValue": "DELIVERED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "09 - Lead Closure (WON)",
+      "lex": {
+        "header": {
+          "messageId": "f9a0b1c2-d3e4-4f5a-6b7c-8d9e0f1a2b3c",
+          "messageType": "LEAD_CLOSURE",
+          "version": "1.0",
+          "timestamp": "2027-10-16T08:00:00Z",
+          "senderId": "BROKER-NORDIC-MARITIME",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a"
+        },
+        "payload": {
+          "leadClosure": {
+            "originalLeadId": "LID-20251105-MARI-001",
+            "originalLeadSource": "BROKER",
+            "leadCreatedDate": "2025-11-05T08:00:00Z",
+            "leadClosureDate": "2027-10-15T10:00:00Z",
+            "leadLifecycleDays": 709,
+            "closureStatus": "WON",
+            "closureReason": "MV MERIDIAN ATLAS delivered at Ulsan on 2027-10-15. Sea trials passed. Final delivery instalment USD 57.8M settled. Vessel flagged Marshall Islands and sailing to first load port Busan.",
+            "closureDetail": {
+              "purchaseConfirmed": true,
+              "orderPlacedDate": "2026-03-10T10:00:00Z",
+              "actualDeliveryDate": "2027-10-15",
+              "dealAmount": 68000000,
+              "currency": "USD"
+            },
+            "purchasedProduct": {
+              "productType": "CARGO_VESSEL",
+              "assetClass": "MARITIME",
+              "manufacturer": "Hyundai Heavy Industries",
+              "model": "4500 TEU Container Vessel",
+              "year": 2027,
+              "typeSpecificAttributes": {
+                "imoNumber": "IMO-9987654",
+                "vesselName": "MV MERIDIAN ATLAS",
+                "hullNumber": "HHI-ULSAN-H3042",
+                "teuCapacity": 4500,
+                "classificationSociety": "LR",
+                "flagState": "MH",
+                "cilRating": "CII-A"
+              }
+            },
+            "retailerPerformance": {
+              "organizationId": "ORG-NORDIC-MARITIME-BROKERS",
+              "organizationName": "Nordic Maritime Brokers International AS",
+              "region": "EMEA"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

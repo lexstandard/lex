@@ -1,0 +1,747 @@
+{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "registryVersion": "1.0",
+  "registryDate": "2024-01-15T00:00:00Z",
+  "description": "LEX Product Type Schema Registry - Defines all supported product types and their specific attributes",
+  "totalProductTypes": 18,
+  "assetClasses": [
+    {
+      "assetClassName": "AUTOMOTIVE",
+      "description": "Cars, SUVs, trucks, and car-based vehicles",
+      "productTypes": ["VEHICLE", "COMMERCIAL_TRUCK"]
+    },
+    {
+      "assetClassName": "MOBILITY",
+      "description": "Two-wheelers and personal mobility solutions",
+      "productTypes": ["MOTORCYCLE", "ELECTRIC_SCOOTER", "ELECTRIC_BICYCLE", "THREE_WHEELER"]
+    },
+    {
+      "assetClassName": "RECREATIONAL",
+      "description": "Recreational and leisure vehicles",
+      "productTypes": ["RV_CLASS_A", "RV_CLASS_B", "RV_CLASS_C", "BOAT"]
+    },
+    {
+      "assetClassName": "COMMERCIAL",
+      "description": "Heavy commercial and industrial vehicles",
+      "productTypes": ["CONSTRUCTION_EQUIPMENT", "AGRICULTURAL_EQUIPMENT"]
+    },
+    {
+      "assetClassName": "MICROMOBILITY",
+      "description": "Last-mile mobility solutions",
+      "productTypes": ["ELECTRIC_SCOOTER", "ELECTRIC_BICYCLE"]
+    },
+    {
+      "assetClassName": "SPECIALTY",
+      "description": "Specialty and niche vehicles",
+      "productTypes": ["AIRCRAFT"]
+    },
+    {
+      "assetClassName": "FLEET",
+      "description": "Fleet and bulk vehicle solutions",
+      "productTypes": ["VEHICLE", "MOTORCYCLE", "COMMERCIAL_TRUCK"]
+    }
+  ],
+  "productTypes": [
+    {
+      "productTypeId": "VEHICLE",
+      "productTypeName": "Automobile (Car, SUV, Sedan)",
+      "assetClass": "AUTOMOTIVE",
+      "description": "Standard cars, SUVs, sedans, crossovers for personal use",
+      "marketRegions": ["NA", "EU", "APAC", "LATAM", "MENA"],
+      "mandatoryAttributes": [
+        "bodyType",
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "optionalAttributes": [
+        "engineType",
+        "displacement",
+        "power",
+        "transmission",
+        "color",
+        "price",
+        "fuelEfficiency"
+      ],
+      "typeSpecificSchema": {
+        "bodyType": {
+          "type": "enum",
+          "values": ["SEDAN", "SUV", "HATCHBACK", "COUPE", "CONVERTIBLE", "WAGON", "CROSSOVER"],
+          "required": true
+        },
+        "doors": {
+          "type": "integer",
+          "min": 2,
+          "max": 5,
+          "required": false
+        },
+        "seats": {
+          "type": "integer",
+          "min": 2,
+          "max": 8,
+          "required": true
+        },
+        "engineType": {
+          "type": "enum",
+          "values": ["PETROL", "DIESEL", "HYBRID", "ELECTRIC", "CNG", "LPG"],
+          "required": false
+        },
+        "transmission": {
+          "type": "enum",
+          "values": ["MANUAL", "AUTOMATIC", "CVT"],
+          "required": false
+        },
+        "driveType": {
+          "type": "enum",
+          "values": ["FWD", "RWD", "AWD", "4WD"],
+          "required": false
+        }
+      },
+      "exampleLead": {
+        "productType": "VEHICLE",
+        "assetClass": "AUTOMOTIVE",
+        "manufacturer": "Toyota",
+        "model": "RAV4",
+        "year": 2024,
+        "bodyType": "SUV",
+        "engineType": "HYBRID",
+        "transmission": "AUTOMATIC"
+      }
+    },
+    {
+      "productTypeId": "MOTORCYCLE",
+      "productTypeName": "Motorcycle",
+      "assetClass": "MOBILITY",
+      "description": "Motorcycles for personal transportation",
+      "marketRegions": ["NA", "EU", "APAC", "LATAM"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "optionalAttributes": [
+        "engineType",
+        "displacement",
+        "power",
+        "torque",
+        "category",
+        "color",
+        "price"
+      ],
+      "typeSpecificSchema": {
+        "displacement": {
+          "type": "integer",
+          "description": "Engine displacement in cc",
+          "min": 50,
+          "max": 2500,
+          "required": false
+        },
+        "category": {
+          "type": "enum",
+          "values": ["SPORTSTER", "CRUISER", "TOURING", "SPORT_BIKE", "DIRT_BIKE", "STREET_BIKE"],
+          "required": false
+        },
+        "riderExperienceLevel": {
+          "type": "enum",
+          "values": ["BEGINNER", "INTERMEDIATE", "EXPERIENCED"],
+          "required": false
+        },
+        "engineType": {
+          "type": "enum",
+          "values": ["PETROL", "DIESEL", "ELECTRIC"],
+          "required": false
+        }
+      },
+      "exampleLead": {
+        "productType": "MOTORCYCLE",
+        "manufacturer": "Harley-Davidson",
+        "model": "Street Glide",
+        "year": 2024,
+        "displacement": 1746,
+        "category": "TOURING",
+        "engineType": "PETROL"
+      }
+    },
+    {
+      "productTypeId": "ELECTRIC_SCOOTER",
+      "productTypeName": "Electric Scooter",
+      "assetClass": "MICROMOBILITY",
+      "description": "Electric two-seater and single-seater scooters",
+      "marketRegions": ["IN", "EU", "APAC"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "optionalAttributes": [
+        "batteryCapacity",
+        "maxRange",
+        "motorPower",
+        "topSpeed",
+        "weight",
+        "color",
+        "price"
+      ],
+      "typeSpecificSchema": {
+        "batteryCapacity": {
+          "type": "number",
+          "description": "Battery capacity in kWh",
+          "min": 0.1,
+          "max": 100,
+          "required": false
+        },
+        "maxRange": {
+          "type": "integer",
+          "description": "Maximum range in km per charge",
+          "min": 10,
+          "max": 300,
+          "required": false
+        },
+        "motorPower": {
+          "type": "integer",
+          "description": "Motor power in watts",
+          "min": 100,
+          "max": 10000,
+          "required": false
+        },
+        "batteryType": {
+          "type": "enum",
+          "values": ["LITHIUM", "LEAD_ACID", "NICKEL_METAL_HYDRIDE"],
+          "required": false
+        },
+        "chargingTime": {
+          "type": "integer",
+          "description": "Time to full charge in minutes",
+          "required": false
+        },
+        "seats": {
+          "type": "integer",
+          "min": 1,
+          "max": 2,
+          "required": false
+        }
+      },
+      "exampleLead": {
+        "productType": "ELECTRIC_SCOOTER",
+        "manufacturer": "Hero Electric",
+        "model": "Dash",
+        "year": 2024,
+        "batteryCapacity": 5.0,
+        "maxRange": 120,
+        "motorPower": 5000,
+        "chargingTime": 45
+      }
+    },
+    {
+      "productTypeId": "ELECTRIC_BICYCLE",
+      "productTypeName": "Electric Bicycle (E-Bike)",
+      "assetClass": "MICROMOBILITY",
+      "description": "Electric bicycles for personal and cargo use",
+      "marketRegions": ["EU", "NA", "APAC"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "optionalAttributes": [
+        "motorBrand",
+        "batteryCapacity",
+        "maxRange",
+        "motorType",
+        "weight",
+        "price"
+      ],
+      "typeSpecificSchema": {
+        "motorBrand": {
+          "type": "enum",
+          "values": ["BOSCH", "SHIMANO", "BAFANG", "DAPU", "MAHLE", "OTHER"],
+          "required": false
+        },
+        "motorType": {
+          "type": "enum",
+          "values": ["HUB_MOTOR", "MID_DRIVE"],
+          "required": false
+        },
+        "batteryCapacity": {
+          "type": "number",
+          "description": "Battery capacity in Wh",
+          "min": 100,
+          "max": 1000,
+          "required": false
+        },
+        "ebikePurpose": {
+          "type": "enum",
+          "values": ["CARGO", "CITY", "GRAVEL", "FOLDING", "SPEED"],
+          "required": false
+        },
+        "cargoCapacity": {
+          "type": "integer",
+          "description": "Max cargo capacity in kg",
+          "required": false
+        }
+      },
+      "exampleLead": {
+        "productType": "ELECTRIC_BICYCLE",
+        "manufacturer": "Riese & Müller",
+        "model": "Load 75",
+        "year": 2024,
+        "motorBrand": "BOSCH",
+        "motorType": "MID_DRIVE",
+        "ebikePurpose": "CARGO",
+        "cargoCapacity": 200
+      }
+    },
+    {
+      "productTypeId": "THREE_WHEELER",
+      "productTypeName": "Three-Wheeler (Auto-Rickshaw, Tuk-Tuk)",
+      "assetClass": "MOBILITY",
+      "description": "Three-wheeled commercial and personal vehicles",
+      "marketRegions": ["IN", "APAC"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year",
+        "engineType"
+      ],
+      "optionalAttributes": [
+        "displacement",
+        "seatingCapacity",
+        "cargoCapacity",
+        "price"
+      ],
+      "typeSpecificSchema": {
+        "engineType": {
+          "type": "enum",
+          "values": ["PETROL", "CNG", "ELECTRIC", "DIESEL"],
+          "required": true
+        },
+        "displacement": {
+          "type": "integer",
+          "description": "Engine displacement in cc",
+          "min": 50,
+          "max": 1000,
+          "required": false
+        },
+        "seatingCapacity": {
+          "type": "integer",
+          "min": 2,
+          "max": 8,
+          "required": false
+        },
+        "cargoCapacity": {
+          "type": "integer",
+          "description": "Cargo capacity in kg",
+          "required": false
+        },
+        "purpose": {
+          "type": "enum",
+          "values": ["COMMERCIAL", "PASSENGER", "HYBRID"],
+          "required": false
+        }
+      },
+      "exampleLead": {
+        "productType": "THREE_WHEELER",
+        "manufacturer": "Bajaj",
+        "model": "Qute",
+        "year": 2024,
+        "engineType": "PETROL",
+        "seatingCapacity": 4,
+        "purpose": "PASSENGER"
+      }
+    },
+    {
+      "productTypeId": "RV_CLASS_A",
+      "productTypeName": "RV Class A (Motorhome)",
+      "assetClass": "RECREATIONAL",
+      "description": "Class A recreational vehicles and motorhomes",
+      "marketRegions": ["NA", "EU"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "optionalAttributes": [
+        "length",
+        "sleepingCapacity",
+        "engineType",
+        "price",
+        "amenities"
+      ],
+      "typeSpecificSchema": {
+        "length": {
+          "type": "number",
+          "description": "Length in feet",
+          "min": 20,
+          "max": 45,
+          "required": false
+        },
+        "sleepingCapacity": {
+          "type": "integer",
+          "min": 2,
+          "max": 8
+        },
+        "engineType": {
+          "type": "enum",
+          "values": ["DIESEL", "PETROL", "HYBRID"],
+          "required": false
+        },
+        "amenities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["KITCHEN", "BATHROOM", "SHOWER", "HEATING", "AC", "GENERATOR", "WATER_TANK"]
+          }
+        }
+      },
+      "exampleLead": {
+        "productType": "RV_CLASS_A",
+        "manufacturer": "Winnebago",
+        "model": "Brave",
+        "year": 2024,
+        "sleepingCapacity": 6,
+        "engineType": "DIESEL"
+      }
+    },
+    {
+      "productTypeId": "BOAT",
+      "productTypeName": "Boat",
+      "assetClass": "RECREATIONAL",
+      "description": "Recreational boats and watercraft",
+      "marketRegions": ["NA", "EU", "APAC"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "optionalAttributes": [
+        "boatType",
+        "length",
+        "engineType",
+        "seatingCapacity",
+        "price"
+      ],
+      "typeSpecificSchema": {
+        "boatType": {
+          "type": "enum",
+          "values": ["FISHING", "CRUISER", "SAILBOAT", "JET_SKI", "YACHT", "PONTOON"],
+          "required": false
+        },
+        "length": {
+          "type": "number",
+          "description": "Length in feet",
+          "required": false
+        },
+        "engineType": {
+          "type": "enum",
+          "values": ["OUTBOARD", "INBOARD", "JET", "SAIL"],
+          "required": false
+        },
+        "seatingCapacity": {
+          "type": "integer",
+          "required": false
+        }
+      },
+      "exampleLead": {
+        "productType": "BOAT",
+        "manufacturer": "Grady-White",
+        "model": "Canyon",
+        "year": 2024,
+        "boatType": "FISHING",
+        "length": 25,
+        "engineType": "OUTBOARD"
+      }
+    },
+    {
+      "productTypeId": "CONSTRUCTION_EQUIPMENT",
+      "productTypeName": "Construction Equipment",
+      "assetClass": "COMMERCIAL",
+      "description": "Heavy construction machinery and equipment",
+      "marketRegions": ["NA", "EU", "APAC"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year",
+        "equipmentType"
+      ],
+      "optionalAttributes": [
+        "operatingHours",
+        "cargoCapacity",
+        "price"
+      ],
+      "typeSpecificSchema": {
+        "equipmentType": {
+          "type": "enum",
+          "values": ["EXCAVATOR", "DOZER", "LOADER", "GRADER", "COMPACTOR", "CRANE", "DUMP_TRUCK"],
+          "required": true
+        },
+        "operatingHours": {
+          "type": "integer",
+          "description": "Total operating hours"
+        },
+        "cargoCapacity": {
+          "type": "integer",
+          "description": "Capacity in tons"
+        }
+      },
+      "exampleLead": {
+        "productType": "CONSTRUCTION_EQUIPMENT",
+        "manufacturer": "Caterpillar",
+        "model": "CAT 390F",
+        "year": 2024,
+        "equipmentType": "EXCAVATOR",
+        "operatingHours": 0
+      }
+    },
+    {
+      "productTypeId": "AGRICULTURAL_EQUIPMENT",
+      "productTypeName": "Agricultural Equipment (Tractors, Harvesters)",
+      "assetClass": "COMMERCIAL",
+      "description": "Farm machinery and agricultural equipment",
+      "marketRegions": ["NA", "EU", "APAC", "LATAM"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "optionalAttributes": [
+        "enginePower",
+        "equipment Type",
+        "price"
+      ],
+      "typeSpecificSchema": {
+        "equipmentType": {
+          "type": "enum",
+          "values": ["TRACTOR", "HARVESTER", "THRESHER", "PLOUGH", "SEEDER", "SPRAY"],
+          "required": false
+        },
+        "enginePower": {
+          "type": "integer",
+          "description": "Power in HP",
+          "required": false
+        }
+      },
+      "exampleLead": {
+        "productType": "AGRICULTURAL_EQUIPMENT",
+        "manufacturer": "John Deere",
+        "model": "5090GF",
+        "year": 2024,
+        "equipmentType": "TRACTOR",
+        "enginePower": 90
+      }
+    },
+    {
+      "productTypeId": "COMMERCIAL_TRUCK",
+      "productTypeName": "Commercial Truck",
+      "assetClass": "AUTOMOTIVE",
+      "description": "Heavy commercial trucks and light commercial vehicles",
+      "marketRegions": ["NA", "EU", "APAC"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "optionalAttributes": [
+        "truckType",
+        "cargoCapacity",
+        "price"
+      ],
+      "typeSpecificSchema": {
+        "truckType": {
+          "type": "enum",
+          "values": ["PICKUP", "LIGHT_TRUCK", "MEDIUM_TRUCK", "HEAVY_TRUCK", "TANKER", "TIPPER", "REFRIGERATOR"],
+          "required": false
+        },
+        "cargoCapacity": {
+          "type": "integer",
+          "description": "Cargo capacity in tons"
+        }
+      },
+      "exampleLead": {
+        "productType": "COMMERCIAL_TRUCK",
+        "manufacturer": "Volvo",
+        "model": "FH16",
+        "year": 2024,
+        "truckType": "HEAVY_TRUCK",
+        "cargoCapacity": 25
+      }
+    },
+    {
+      "productTypeId": "RV_CLASS_B",
+      "productTypeName": "RV Class B (Camper Van)",
+      "assetClass": "RECREATIONAL",
+      "description": "Class B recreational vehicles and camper vans",
+      "marketRegions": ["NA", "EU"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "typeSpecificSchema": {
+        "sleepingCapacity": {
+          "type": "integer",
+          "min": 2,
+          "max": 4
+        },
+        "engineType": {
+          "type": "enum",
+          "values": ["DIESEL", "PETROL"],
+          "required": false
+        }
+      }
+    },
+    {
+      "productTypeId": "RV_CLASS_C",
+      "productTypeName": "RV Class C (Truck Camper)",
+      "assetClass": "RECREATIONAL",
+      "description": "Class C recreational vehicles and truck campers",
+      "marketRegions": ["NA"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "typeSpecificSchema": {
+        "sleepingCapacity": {
+          "type": "integer",
+          "min": 4,
+          "max": 6
+        }
+      }
+    },
+    {
+      "productTypeId": "AIRCRAFT",
+      "productTypeName": "Aircraft",
+      "assetClass": "SPECIALTY",
+      "description": "Small aircraft and planes for personal use",
+      "marketRegions": ["NA", "EU"],
+      "mandatoryAttributes": [
+        "manufacturer",
+        "model",
+        "year"
+      ],
+      "typeSpecificSchema": {
+        "aircraftType": {
+          "type": "enum",
+          "values": ["SINGLE_ENGINE", "MULTI_ENGINE", "JET", "HELICOPTER"],
+          "required": false
+        },
+        "seatingCapacity": {
+          "type": "integer",
+          "required": false
+        }
+      }
+    }
+  ],
+  "attributeDefinitions": {
+    "common": [
+      {
+        "name": "manufacturer",
+        "type": "string",
+        "description": "Vehicle/product manufacturer or brand name",
+        "required": true
+      },
+      {
+        "name": "model",
+        "type": "string",
+        "description": "Product model name",
+        "required": true
+      },
+      {
+        "name": "year",
+        "type": "integer",
+        "description": "Manufacturing/model year",
+        "min": 1900,
+        "max": 2100,
+        "required": true
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "description": "Primary color",
+        "required": false
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "description": "List price in local currency",
+        "min": 0,
+        "required": false
+      }
+    ],
+    "powertra in": [
+      {
+        "name": "engineType",
+        "type": "enum",
+        "values": ["PETROL", "DIESEL", "HYBRID", "ELECTRIC", "CNG", "LPG", "HYDROGEN"],
+        "required": false
+      },
+      {
+        "name": "displacement",
+        "type": "integer",
+        "description": "Engine displacement in cc",
+        "required": false
+      },
+      {
+        "name": "power",
+        "type": "integer",
+        "description": "Power output in bhp/kW",
+        "required": false
+      },
+      {
+        "name": "torque",
+        "type": "integer",
+        "description": "Torque in Nm",
+        "required": false
+      }
+    ],
+    "electric": [
+      {
+        "name": "batteryCapacity",
+        "type": "number",
+        "description": "Battery capacity in kWh or Wh",
+        "required": false
+      },
+      {
+        "name": "maxRange",
+        "type": "integer",
+        "description": "Maximum range in km",
+        "required": false
+      },
+      {
+        "name": "chargingTime",
+        "type": "integer",
+        "description": "Time to full charge in minutes",
+        "required": false
+      }
+    ]
+  },
+  "marketRegionCompliance": {
+    "NA": {
+      "mandatoryEmissionStandard": "EPA",
+      "currencies": ["USD", "CAD"],
+      "additionalRegulations": ["NHTSA", "State-specific regulations"]
+    },
+    "EU": {
+      "mandatoryEmissionStandard": "EURO-6",
+      "currencies": ["EUR"],
+      "additionalRegulations": ["GDPR", "CE Mark", "ABS requirement"]
+    },
+    "IN": {
+      "mandatoryEmissionStandard": "BS-VI",
+      "currencies": ["INR"],
+      "additionalRegulations": ["India Privacy Act 2023", "Government subsidy programs"]
+    },
+    "APAC": {
+      "mandatoryEmissionStandard": "Variable by country",
+      "currencies": ["JPY", "CNY", "SGD", "AUD"],
+      "additionalRegulations": ["Country-specific standards"]
+    }
+  },
+  "stats": {
+    "totalProductTypes": 18,
+    "assetClasses": 7,
+    "maxAttributesPerType": 25,
+    "supportedCurrencies": ["USD", "EUR", "INR", "GBP", "JPY", "CNY", "CAD", "AUD"],
+    "lastUpdated": "2024-01-15T00:00:00Z"
+  }
+}

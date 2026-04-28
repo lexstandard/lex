@@ -1,0 +1,900 @@
+{
+  "_metadata": {
+    "title": "LEX Automotive End-to-End Scenario: Premium Vehicle Purchase",
+    "scenario": "Individual consumer Sarah Johnson purchases a 2026 BMW M4 Competition CoupÃ© from BMW Nashville. Full lifecycle: online inquiry â†’ test drive â†’ negotiation â†’ order â†’ delivery â†’ post-delivery retailer-installed options cross-sell â†’ lead closure (WON).",
+    "industry": "AUTOMOTIVE",
+    "assetClass": "VEHICLE",
+    "buyerType": "INDIVIDUAL",
+    "leadId": "LID-20260115-AUTO-001",
+    "totalDealValue": 89350,
+    "currency": "USD",
+    "outcome": "WON",
+    "lifecycleDays": 38,
+    "messageCount": 10,
+    "phases": [
+      "01 - Lead Initiated (SHOPPING)",
+      "02 - Platform Acknowledgment (VALIDATED)",
+      "03 - Test Drive Requested",
+      "04 - Test Drive Completed / Expressed Interest",
+      "05 - In Negotiation",
+      "06 - Order Placed",
+      "07 - Order Confirmed",
+      "08 - Vehicle Delivered",
+      "09 - Post-Delivery Cross-Sell: Retailer-Installed Options",
+      "10 - Lead Closure (WON)"
+    ]
+  },
+  "messages": [
+    {
+      "_phase": "01 - Lead Initiated (SHOPPING)",
+      "lex": {
+        "header": {
+          "messageId": "c3a1e2f0-1b2d-4e5f-8a6b-7c8d9e0f1a2b",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-15T10:22:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "signatureAlgorithm": "HMAC-SHA256"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-AUTO-001",
+            "leadType": "PRIMARY",
+            "status": "SHOPPING",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:22:00Z",
+            "leadVersion": 1,
+            "sourceDetail": {
+              "sourceType": "RETAILER_WEBSITE",
+              "sourceURL": "https://www.bmwnashville.com/new/BMW/2026-BMW-M4",
+              "specificPage": "/configure/m4-competition",
+              "channel": "DIGITAL",
+              "marketingSource": "PAID_SEARCH",
+              "deviceType": "DESKTOP",
+              "browser": "Chrome",
+              "leadEntryMethod": "FORM_SUBMISSION",
+              "formName": "Vehicle Inquiry Form",
+              "formCompletionTime": 187,
+              "leadQualityScore": 8.5,
+              "utmSource": "google",
+              "utmMedium": "cpc",
+              "utmCampaign": "bmw-m4-launch-2026",
+              "sessionId": "sess-bwm-9ab712cd"
+            },
+            "customer": {
+              "firstName": "Sarah",
+              "lastName": "Johnson",
+              "emailAddress": "sarah.johnson@example.com",
+              "phoneNumber": "+16155559087",
+              "preferredContactMethod": "EMAIL",
+              "preferredContactTime": "EVENING",
+              "locale": "en-US",
+              "creditTier": "PRIME",
+              "address": {
+                "street": "4820 Hillsboro Pike",
+                "city": "Nashville",
+                "state": "TN",
+                "postalCode": "37215",
+                "country": "US"
+              }
+            },
+            "desiredProduct": {
+              "productType": "VEHICLE", "bodyStyle": "COUPE",
+              "assetClass": "VEHICLE",
+              "make": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "condition": "NEW",
+              "trim": "Competition xDrive",
+              "preferredColor": "Alpine White",
+              "interiorColor": "Merino Black Leather",
+              "budgetMin": 75000,
+              "budgetMax": 90000,
+              "currency": "USD",
+              "transmission": "AUTOMATIC",
+              "fuelType": "GASOLINE",
+              "features": [
+                "M Carbon Bucket Seats",
+                "M Carbon Exterior Package",
+                "Bang & Olufsen Sound System",
+                "Driving Assistance Professional Package",
+                "Adaptive M Suspension"
+              ],
+              "typeSpecificAttributes": {
+                "engineDisplacementL": 3.0,
+                "horsepower": 503,
+                "torqueLbFt": 479,
+                "drivetrainType": "AWD",
+                "doors": 2,
+                "seatingCapacity": 4,
+                "safetyRating": "5-star NHTSA",
+                "estimatedMpgCity": 16,
+                "estimatedMpgHighway": 23
+              },
+              "factoryOrderPreference": "FACTORY_ORDER_PREFERRED",
+              "installedOptions": [
+                { "name": "M Carbon Bucket Seats", "source": "FACTORY", "partNumber": "BMW-M-41-OPT-2CS", "estimatedValue": 3900 },
+                { "name": "M Carbon Exterior Package", "source": "FACTORY", "partNumber": "BMW-M-43-OPT-337", "estimatedValue": 5200 },
+                { "name": "Bang & Olufsen Sound System", "source": "FACTORY", "partNumber": "BMW-M-688-OPT-688", "estimatedValue": 1900 }
+              ]
+            },
+            "financing": {
+              "needsFinancing": true,
+              "financingType": "LOAN",
+              "downPaymentCapacity": 15000,
+              "preferredMonthlyPayment": 1200,
+              "loanTerm": 60,
+              "creditScore": "EXCELLENT",
+              "currency": "USD"
+            },
+            "tradeIn": {
+              "make": "BMW",
+              "model": "330i",
+              "year": 2021,
+              "vin": "WBA5R1C51LFH12345",
+              "mileage": 42000,
+              "condition": "GOOD",
+              "estimatedValue": 28000,
+              "currency": "USD",
+              "odometerStatus": "ACTUAL",
+              "titleStatus": "CLEAN",
+              "payoffAmount": 8400,
+              "payoffCurrency": "USD",
+              "previousOwnerCount": 1,
+              "accidentHistory": {
+                "reportedAccidentCount": 0,
+                "airbagDeployment": false,
+                "frameOrStructuralDamage": false
+              },
+              "vehicleHistoryReport": {
+                "reportType": "CARFAX",
+                "reportReferenceId": "CFX-WBA5R1C51LFH12345-20260115",
+                "pullDate": "2026-01-15"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "leadAncestry": {
+              "originType": "DIRECT_INQUIRY",
+              "originDate": "2026-01-15T10:22:00Z",
+              "originSourceId": "SESS-BMW-9AB712CD",
+              "conversionPath": [
+                { "stage": "SHOPPING", "timestamp": "2026-01-15T10:22:00Z" }
+              ]
+            },
+            "leadHistory": [
+              {
+                "version": 1,
+                "previousStatus": null,
+                "newStatus": "SHOPPING",
+                "timestamp": "2026-01-15T10:22:00Z",
+                "changedBy": "RETAILER-BMW-NASHVILLE",
+                "reason": "Initial lead submission from website"
+              }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:22:00Z",
+              "updatedAt": "2026-01-15T10:22:00Z",
+              "auditTrail": [
+                {
+                  "timestamp": "2026-01-15T10:22:00Z",
+                  "action": "LEAD_CREATED",
+                  "changedBy": "RETAILER-BMW-NASHVILLE",
+                  "newValue": "SHOPPING"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "02 - Platform Acknowledgment (VALIDATED)",
+      "lex": {
+        "header": {
+          "messageId": "d4b2f3a1-2c3e-4f5a-9b7c-8d9e0f1a2b3c",
+          "messageType": "ACKNOWLEDGMENT",
+          "version": "1.0",
+          "timestamp": "2026-01-15T10:22:04Z",
+          "senderId": "LEX-PLATFORM",
+          "receiverId": "RETAILER-BMW-NASHVILLE",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "c3a1e2f0-1b2d-4e5f-8a6b-7c8d9e0f1a2b"
+        },
+        "payload": {
+          "acknowledgment": {
+            "acknowledgmentId": "ACK-20260115-AUTO-001",
+            "correlationId": "c3a1e2f0-1b2d-4e5f-8a6b-7c8d9e0f1a2b",
+            "originalMessageId": "c3a1e2f0-1b2d-4e5f-8a6b-7c8d9e0f1a2b",
+            "originalMessageType": "LEAD",
+            "status": "PROCESSED",
+            "statusReason": "Lead validated and ingested. Assigned to BMW Nashville sales queue.",
+            "timestamp": "2026-01-15T10:22:04Z",
+            "processingTime": 4100,
+            "validationResults": {
+              "isValid": true,
+              "schemaValidation": { "passed": true, "errors": [] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "03 - Test Drive Requested",
+      "lex": {
+        "header": {
+          "messageId": "e5c3a4b2-3d4f-4a5b-0c8d-9e0f1a2b3c4d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-17T14:05:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-AUTO-001",
+            "leadType": "TEST_DRIVE",
+            "status": "TEST_DRIVE_REQUESTED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:22:00Z",
+            "leadVersion": 2,
+            "parentLeadId": "LID-20260115-AUTO-001",
+            "customer": {
+              "firstName": "Sarah",
+              "lastName": "Johnson",
+              "emailAddress": "sarah.johnson@example.com",
+              "phoneNumber": "+16155559087"
+            },
+            "desiredProduct": {
+              "productType": "VEHICLE", "bodyStyle": "COUPE",
+              "assetClass": "VEHICLE",
+              "make": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "condition": "NEW",
+              "trim": "Competition xDrive"
+            },
+            "sourceDetail": {
+              "testDriveRequestedDate": "2026-01-19T11:00:00Z",
+              "testDriveVehicleVIN": "WBS13BJ08RFL00401",
+              "leadEntryMethod": "PHONE",
+              "customFields": {
+                "scheduledTestDriveDate": "2026-01-19T11:00:00Z",
+                "salesAdvisorId": "SA-BMW-NASH-47",
+                "salesAdvisorName": "Derek Holloway"
+              }
+            },
+            "organizationContext": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "leadHistory": [
+              {
+                "version": 1,
+                "previousStatus": null,
+                "newStatus": "SHOPPING",
+                "timestamp": "2026-01-15T10:22:00Z",
+                "changedBy": "RETAILER-BMW-NASHVILLE",
+                "reason": "Initial lead submission"
+              },
+              {
+                "version": 2,
+                "previousStatus": "SHOPPING",
+                "newStatus": "TEST_DRIVE_REQUESTED",
+                "timestamp": "2026-01-17T14:05:00Z",
+                "changedBy": "SA-BMW-NASH-47",
+                "reason": "Customer called to schedule test drive for Jan 19"
+              }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:22:00Z",
+              "updatedAt": "2026-01-17T14:05:00Z",
+              "auditTrail": [
+                {
+                  "timestamp": "2026-01-15T10:22:00Z",
+                  "action": "LEAD_CREATED",
+                  "changedBy": "RETAILER-BMW-NASHVILLE",
+                  "newValue": "SHOPPING"
+                },
+                {
+                  "timestamp": "2026-01-17T14:05:00Z",
+                  "action": "STATUS_UPDATED",
+                  "changedBy": "SA-BMW-NASH-47",
+                  "newValue": "TEST_DRIVE_REQUESTED"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "04 - Test Drive Completed / Expressed Interest",
+      "lex": {
+        "header": {
+          "messageId": "f6d4b5c3-4e5a-4b6c-1d9e-0f1a2b3c4d5e",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-19T12:45:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-AUTO-001",
+            "leadType": "PRIMARY",
+            "status": "EXPRESSED_INTEREST",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:22:00Z",
+            "leadVersion": 3,
+            "customer": {
+              "firstName": "Sarah",
+              "lastName": "Johnson",
+              "emailAddress": "sarah.johnson@example.com",
+              "phoneNumber": "+16155559087"
+            },
+            "desiredProduct": {
+              "productType": "VEHICLE", "bodyStyle": "COUPE",
+              "assetClass": "VEHICLE",
+              "make": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "condition": "NEW",
+              "trim": "Competition xDrive",
+              "preferredColor": "Alpine White",
+              "stockNumber": "BMWN-26-M4-0047"
+            },
+            "sourceDetail": {
+              "testDriveRequestedDate": "2026-01-19T11:00:00Z",
+              "testDriveCompletedDate": "2026-01-19T12:15:00Z",
+              "testDriveVehicleVIN": "WBS13BJ08RFL00401",
+              "testDriveNotes": "Customer very positive about performance. Confirmed xDrive preference. Interested in Alpine White with M Carbon package.",
+              "customFields": {
+                "salesAdvisorId": "SA-BMW-NASH-47",
+                "salesAdvisorName": "Derek Holloway",
+                "showroomVisit": true,
+                "tradeInInspectionBooked": "2026-01-20T10:00:00Z"
+              }
+            },
+            "tradeIn": {
+              "make": "BMW",
+              "model": "330i",
+              "year": 2021,
+              "vin": "WBA5R1C51LFH12345",
+              "mileage": 42000,
+              "condition": "GOOD",
+              "estimatedValue": 27500,
+              "currency": "USD"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "leadHistory": [
+              {
+                "version": 1,
+                "previousStatus": null,
+                "newStatus": "SHOPPING",
+                "timestamp": "2026-01-15T10:22:00Z",
+                "changedBy": "RETAILER-BMW-NASHVILLE",
+                "reason": "Initial lead submission"
+              },
+              {
+                "version": 2,
+                "previousStatus": "SHOPPING",
+                "newStatus": "TEST_DRIVE_REQUESTED",
+                "timestamp": "2026-01-17T14:05:00Z",
+                "changedBy": "SA-BMW-NASH-47",
+                "reason": "Test drive scheduled Jan 19"
+              },
+              {
+                "version": 3,
+                "previousStatus": "TEST_DRIVE_REQUESTED",
+                "newStatus": "EXPRESSED_INTEREST",
+                "timestamp": "2026-01-19T12:45:00Z",
+                "changedBy": "SA-BMW-NASH-47",
+                "reason": "Test drive completed successfully. Customer confirmed interest in specific stock unit."
+              }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:22:00Z",
+              "updatedAt": "2026-01-19T12:45:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-15T10:22:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-BMW-NASHVILLE", "newValue": "SHOPPING" },
+                { "timestamp": "2026-01-17T14:05:00Z", "action": "STATUS_UPDATED", "changedBy": "SA-BMW-NASH-47", "newValue": "TEST_DRIVE_REQUESTED" },
+                { "timestamp": "2026-01-19T12:45:00Z", "action": "STATUS_UPDATED", "changedBy": "SA-BMW-NASH-47", "newValue": "EXPRESSED_INTEREST" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "05 - In Negotiation",
+      "lex": {
+        "header": {
+          "messageId": "a7e5c6d4-5f6b-4c7d-2e0f-1a2b3c4d5e6f",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-22T09:30:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-AUTO-001",
+            "leadType": "PRIMARY",
+            "status": "IN_NEGOTIATION",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:22:00Z",
+            "leadVersion": 4,
+            "customer": {
+              "firstName": "Sarah",
+              "lastName": "Johnson",
+              "emailAddress": "sarah.johnson@example.com",
+              "phoneNumber": "+16155559087"
+            },
+            "desiredProduct": {
+              "productType": "VEHICLE", "bodyStyle": "COUPE",
+              "assetClass": "VEHICLE",
+              "make": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "condition": "NEW",
+              "trim": "Competition xDrive",
+              "preferredColor": "Alpine White",
+              "stockNumber": "BMWN-26-M4-0047",
+              "vin": "WBS13BJ09RFL10047"
+            },
+            "financing": {
+              "needsFinancing": true,
+              "financingType": "LOAN",
+              "downPaymentCapacity": 15000,
+              "preferredMonthlyPayment": 1200,
+              "loanTerm": 60,
+              "creditScore": "EXCELLENT",
+              "currency": "USD",
+              "preApprovedAmount": 82000,
+              "lenderId": "BMW-FINANCIAL-SERVICES"
+            },
+            "tradeIn": {
+              "make": "BMW",
+              "model": "330i",
+              "year": 2021,
+              "vin": "WBA5R1C51LFH12345",
+              "mileage": 42000,
+              "condition": "GOOD",
+              "estimatedValue": 27500,
+              "currency": "USD"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "dealerNotes": "Customer pre-approved by BMW FS at 4.9% APR over 60 months. Trade-in appraised at $27,500. Asking for 2 years of complimentary maintenance added to deal. Negotiating MSRP of $84,900.",
+            "leadHistory": [
+              { "version": 1, "previousStatus": null, "newStatus": "SHOPPING", "timestamp": "2026-01-15T10:22:00Z", "changedBy": "RETAILER-BMW-NASHVILLE", "reason": "Initial submission" },
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "TEST_DRIVE_REQUESTED", "timestamp": "2026-01-17T14:05:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Test drive scheduled" },
+              { "version": 3, "previousStatus": "TEST_DRIVE_REQUESTED", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2026-01-19T12:45:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Test drive completed, interest confirmed" },
+              { "version": 4, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-22T09:30:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Finance office engaged; trade-in appraised; offer sheet presented" }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:22:00Z",
+              "updatedAt": "2026-01-22T09:30:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-15T10:22:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-BMW-NASHVILLE", "newValue": "SHOPPING" },
+                { "timestamp": "2026-01-17T14:05:00Z", "action": "STATUS_UPDATED", "changedBy": "SA-BMW-NASH-47", "newValue": "TEST_DRIVE_REQUESTED" },
+                { "timestamp": "2026-01-19T12:45:00Z", "action": "STATUS_UPDATED", "changedBy": "SA-BMW-NASH-47", "newValue": "EXPRESSED_INTEREST" },
+                { "timestamp": "2026-01-22T09:30:00Z", "action": "STATUS_UPDATED", "changedBy": "SA-BMW-NASH-47", "newValue": "IN_NEGOTIATION" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "06 - Order Placed",
+      "lex": {
+        "header": {
+          "messageId": "b8f6d7e5-6a7c-4d8e-3f1a-2b3c4d5e6f7a",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-23T16:00:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-AUTO-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:22:00Z",
+            "leadVersion": 5,
+            "customer": {
+              "firstName": "Sarah",
+              "lastName": "Johnson",
+              "emailAddress": "sarah.johnson@example.com",
+              "phoneNumber": "+16155559087"
+            },
+            "desiredProduct": {
+              "productType": "VEHICLE", "bodyStyle": "COUPE",
+              "assetClass": "VEHICLE",
+              "make": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "condition": "NEW",
+              "trim": "Competition xDrive",
+              "preferredColor": "Alpine White",
+              "stockNumber": "BMWN-26-M4-0047",
+              "vin": "WBS13BJ09RFL10047"
+            },
+            "financing": {
+              "needsFinancing": true,
+              "financingType": "LOAN",
+              "downPaymentCapacity": 15000,
+              "loanTerm": 60,
+              "currency": "USD",
+              "preApprovedAmount": 82000,
+              "lenderId": "BMW-FINANCIAL-SERVICES"
+            },
+            "tradeIn": {
+              "make": "BMW",
+              "model": "330i",
+              "year": 2021,
+              "vin": "WBA5R1C51LFH12345",
+              "mileage": 42000,
+              "condition": "GOOD",
+              "estimatedValue": 27500,
+              "currency": "USD"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "dealerNotes": "Deal closed. MSRP $84,900 + BMW Care 2yr $1,800 + fees. Trade-in $27,500 applied. Down payment $15,000. Financed $44,200 at 4.9% APR / 60 months. Monthly payment $832.",
+            "customerOutcome": {
+              "purchaseConfirmed": true,
+              "financingUsed": true,
+              "financingType": "DEALER_ARRANGED",
+              "financingAmount": 44200,
+              "downPayment": 15000,
+              "monthlyPayment": 832,
+              "loanTerm": 60,
+              "tradeInAccepted": true,
+              "tradeInValue": 27500,
+              "estimatedDeliveryDate": "2026-02-05T10:00:00Z"
+            },
+            "leadHistory": [
+              { "version": 1, "previousStatus": null, "newStatus": "SHOPPING", "timestamp": "2026-01-15T10:22:00Z", "changedBy": "RETAILER-BMW-NASHVILLE", "reason": "Initial submission" },
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "TEST_DRIVE_REQUESTED", "timestamp": "2026-01-17T14:05:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Test drive scheduled" },
+              { "version": 3, "previousStatus": "TEST_DRIVE_REQUESTED", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2026-01-19T12:45:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Test drive completed" },
+              { "version": 4, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2026-01-22T09:30:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Finance and trade-in engaged" },
+              { "version": 5, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-01-23T16:00:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Deal signed; purchase agreement executed" }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:22:00Z",
+              "updatedAt": "2026-01-23T16:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-15T10:22:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-BMW-NASHVILLE", "newValue": "SHOPPING" },
+                { "timestamp": "2026-01-17T14:05:00Z", "action": "STATUS_UPDATED", "changedBy": "SA-BMW-NASH-47", "newValue": "TEST_DRIVE_REQUESTED" },
+                { "timestamp": "2026-01-19T12:45:00Z", "action": "STATUS_UPDATED", "changedBy": "SA-BMW-NASH-47", "newValue": "EXPRESSED_INTEREST" },
+                { "timestamp": "2026-01-22T09:30:00Z", "action": "STATUS_UPDATED", "changedBy": "SA-BMW-NASH-47", "newValue": "IN_NEGOTIATION" },
+                { "timestamp": "2026-01-23T16:00:00Z", "action": "ORDER_PLACED", "changedBy": "SA-BMW-NASH-47", "newValue": "ORDER" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "07 - Order Confirmed",
+      "lex": {
+        "header": {
+          "messageId": "c9a7e8f6-7b8d-4e9f-4a2b-3c4d5e6f7a8b",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-24T08:15:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-AUTO-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER_CONFIRMED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:22:00Z",
+            "leadVersion": 6,
+            "customer": {
+              "firstName": "Sarah",
+              "lastName": "Johnson",
+              "emailAddress": "sarah.johnson@example.com",
+              "phoneNumber": "+16155559087"
+            },
+            "desiredProduct": {
+              "productType": "VEHICLE", "bodyStyle": "COUPE",
+              "assetClass": "VEHICLE",
+              "make": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "condition": "NEW",
+              "trim": "Competition xDrive",
+              "vin": "WBS13BJ09RFL10047",
+              "stockNumber": "BMWN-26-M4-0047"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "dealerNotes": "Order confirmed at BMW NA. Delivery scheduled Feb 5. Customer notified by email.",
+            "customerOutcome": {
+              "purchaseConfirmed": true,
+              "financingUsed": true,
+              "financingType": "DEALER_ARRANGED",
+              "financingAmount": 44200,
+              "downPayment": 15000,
+              "monthlyPayment": 832,
+              "loanTerm": 60,
+              "tradeInAccepted": true,
+              "tradeInValue": 27500,
+              "estimatedDeliveryDate": "2026-02-05T10:00:00Z"
+            },
+            "leadHistory": [
+              { "version": 5, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2026-01-23T16:00:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Deal signed" },
+              { "version": 6, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-01-24T08:15:00Z", "changedBy": "MANUFACTURER-BMW-NA", "reason": "Order confirmed by BMW NA; delivery scheduled" }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:22:00Z",
+              "updatedAt": "2026-01-24T08:15:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-23T16:00:00Z", "action": "ORDER_PLACED", "changedBy": "SA-BMW-NASH-47", "newValue": "ORDER" },
+                { "timestamp": "2026-01-24T08:15:00Z", "action": "ORDER_CONFIRMED", "changedBy": "MANUFACTURER-BMW-NA", "newValue": "ORDER_CONFIRMED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "08 - Vehicle Delivered",
+      "lex": {
+        "header": {
+          "messageId": "d0b8f9a7-8c9e-4f0a-5b3c-4d5e6f7a8b9c",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-02-22T13:30:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260115-AUTO-001",
+            "leadType": "PRIMARY",
+            "status": "DELIVERED",
+            "source": "RETAILER_WEBSITE",
+            "leadCreatedDate": "2026-01-15T10:22:00Z",
+            "leadVersion": 7,
+            "customer": {
+              "firstName": "Sarah",
+              "lastName": "Johnson",
+              "emailAddress": "sarah.johnson@example.com",
+              "phoneNumber": "+16155559087"
+            },
+            "desiredProduct": {
+              "productType": "VEHICLE", "bodyStyle": "COUPE",
+              "assetClass": "VEHICLE",
+              "make": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "condition": "NEW",
+              "trim": "Competition xDrive",
+              "vin": "WBS13BJ09RFL10047"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "metrics": {
+              "showroomVisits": 2,
+              "testDrivesCompleted": 1,
+              "interactionCount": 8,
+              "customerSatisfactionRating": 5.0
+            },
+            "leadHistory": [
+              { "version": 6, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2026-01-24T08:15:00Z", "changedBy": "MANUFACTURER-BMW-NA", "reason": "Order confirmed" },
+              { "version": 7, "previousStatus": "ORDER_CONFIRMED", "newStatus": "DELIVERED", "timestamp": "2026-02-22T13:30:00Z", "changedBy": "SA-BMW-NASH-47", "reason": "Vehicle delivered and customer debrief completed. CSAT 5/5." }
+            ],
+            "metadata": {
+              "createdAt": "2026-01-15T10:22:00Z",
+              "updatedAt": "2026-02-22T13:30:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-24T08:15:00Z", "action": "ORDER_CONFIRMED", "changedBy": "MANUFACTURER-BMW-NA", "newValue": "ORDER_CONFIRMED" },
+                { "timestamp": "2026-02-22T13:30:00Z", "action": "DELIVERED", "changedBy": "SA-BMW-NASH-47", "newValue": "DELIVERED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "09 - Post-Delivery Cross-Sell: Retailer-Installed Options",
+      "_comment": "Separate lead spawned after delivery for M Performance carbon wing + exhaust upgrade",
+      "lex": {
+        "header": {
+          "messageId": "e1c9a0b8-9d0f-4a1b-6c4d-5e6f7a8b9c0d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-02-24T09:00:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20260224-AUTO-002",
+            "leadType": "RETAILER_INSTALLED_OPTION",
+            "status": "SHOPPING",
+            "source": "RETAILER_SUGGESTION",
+            "leadCreatedDate": "2026-02-24T09:00:00Z",
+            "leadVersion": 1,
+            "parentOrderId": "LID-20260115-AUTO-001",
+            "customer": {
+              "firstName": "Sarah",
+              "lastName": "Johnson",
+              "emailAddress": "sarah.johnson@example.com",
+              "phoneNumber": "+16155559087"
+            },
+            "desiredProduct": {
+              "productType": "ACCESSORIES",
+              "assetClass": "SERVICE",
+              "make": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "vin": "WBS13BJ09RFL10047"
+            },
+            "relatedProducts": {
+              "retailerInstalledOptions": [
+                {
+                  "optionId": "RIO-M4-001",
+                  "optionName": "M Performance Carbon Fibre Rear Spoiler",
+                  "category": "PERFORMANCE",
+                  "manufacturer": "BMW M Performance",
+                  "installationLocation": "Rear deck lid",
+                  "installationType": "DEALER_INSTALL",
+                  "estimatedPrice": 1850,
+                  "currency": "USD",
+                  "installationTime": 3
+                },
+                {
+                  "optionId": "RIO-M4-002",
+                  "optionName": "AkrapoviÄ Slip-On Race Line Exhaust",
+                  "category": "PERFORMANCE",
+                  "manufacturer": "AkrapoviÄ",
+                  "installationLocation": "Rear exhaust",
+                  "installationType": "DEALER_INSTALL",
+                  "estimatedPrice": 2850,
+                  "currency": "USD",
+                  "installationTime": 4
+                }
+              ]
+            },
+            "organizationContext": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "timezone": "America/Chicago",
+              "region": "NA"
+            },
+            "sourceDetail": {
+              "relatedOrderId": "LID-20260115-AUTO-001",
+              "leadEntryMethod": "FORM_SUBMISSION",
+              "customFields": {
+                "salesAdvisorId": "SA-BMW-NASH-47"
+              }
+            },
+            "metadata": {
+              "createdAt": "2026-02-24T09:00:00Z",
+              "updatedAt": "2026-02-24T09:00:00Z",
+              "auditTrail": [
+                {
+                  "timestamp": "2026-02-24T09:00:00Z",
+                  "action": "LEAD_CREATED",
+                  "changedBy": "RETAILER-BMW-NASHVILLE",
+                  "newValue": "SHOPPING"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "10 - Lead Closure (WON)",
+      "lex": {
+        "header": {
+          "messageId": "f2d0b1c9-0e1a-4b2c-7d5e-6f7a8b9c0d1e",
+          "messageType": "LEAD_CLOSURE",
+          "version": "1.0",
+          "timestamp": "2026-02-24T10:00:00Z",
+          "senderId": "RETAILER-BMW-NASHVILLE",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "c3a1e2f0-1b2d-4e5f-8a6b-7c8d9e0f1a2b"
+        },
+        "payload": {
+          "leadClosure": {
+            "originalLeadId": "LID-20260115-AUTO-001",
+            "originalLeadSource": "RETAILER_WEBSITE",
+            "originalSourceURL": "https://www.bmwnashville.com/new/BMW/2026-BMW-M4",
+            "leadCreatedDate": "2026-01-15T10:22:00Z",
+            "leadClosureDate": "2026-02-22T13:30:00Z",
+            "leadLifecycleDays": 38,
+            "closureStatus": "WON",
+            "closureReason": "Vehicle purchased and delivered. Customer signed off delivery checklist on Feb 22.",
+            "closureDetail": {
+              "purchaseConfirmed": true,
+              "orderPlacedDate": "2026-01-23T16:00:00Z",
+              "actualDeliveryDate": "2026-02-22",
+              "dealAmount": 89350,
+              "currency": "USD"
+            },
+            "purchasedProduct": {
+              "productType": "VEHICLE", "bodyStyle": "COUPE",
+              "assetClass": "VEHICLE",
+              "manufacturer": "BMW",
+              "model": "M4 Competition",
+              "year": 2026,
+              "sku": "BMWN-26-M4-0047",
+              "color": "Alpine White",
+              "typeSpecificAttributes": {
+                "vin": "WBS13BJ09RFL10047",
+                "trim": "Competition xDrive",
+                "transmission": "AUTOMATIC",
+                "drivetrainType": "AWD"
+              }
+            },
+            "crossSellMetrics": {
+              "crossSellLeadsCreated": 1,
+              "crossSellLeadsConverted": 1,
+              "totalRetailerOptionsPrice": 4700,
+              "retailerOptionsCount": 2,
+              "crossSellRevenue": 4700,
+              "crossSellCurrency": "USD"
+            },
+            "retailerPerformance": {
+              "organizationId": "ORG-BMW-NASHVILLE",
+              "organizationName": "BMW of Nashville",
+              "salespersonId": "SA-BMW-NASH-47",
+              "salespersonName": "Derek Holloway",
+              "region": "NA"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

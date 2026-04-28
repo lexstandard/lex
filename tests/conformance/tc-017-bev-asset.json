@@ -1,0 +1,80 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-017",
+  "title": "ASSET Message — BEV with Full Charge Port Block",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "ASSET",
+  "description": "A well-formed ASSET message for a Battery Electric Vehicle (BEV) with a complete evSpecifications block including drivetrainType, batteryCapacityKwh, estimatedRange with standard, chargePorts, maxAcChargingKw, and maxDcChargingKw. Validator MUST return valid=true.",
+  "specRef": "LEX_CONFORMANCE §2 TC-017",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000017",
+        "messageType": "ASSET",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:16:00Z",
+        "senderId": "OEM-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "asset": {
+          "assetId": "5YJ3E1EA7PF000001",
+          "assetClass": "VEHICLE",
+          "productType": "VEHICLE_NEW",
+          "status": "AVAILABLE",
+          "condition": "NEW",
+          "manufacturer": "Tesla",
+          "model": "Model 3",
+          "year": 2027,
+          "assetSerialNumber": "5YJ3E1EA7PF000001",
+          "serialNumberFormat": "VIN",
+          "groundVehicle": {
+            "bodyStyle": "SEDAN",
+            "exteriorColor": "Pearl White",
+            "interiorColor": "Black",
+            "transmission": "SINGLE_SPEED",
+            "odometer": 0,
+            "odometerUnit": "KM"
+          },
+          "evSpecifications": {
+            "drivetrainType": "BEV",
+            "batteryCapacityKwh": 82.0,
+            "usableBatteryCapacityKwh": 75.0,
+            "batteryChemistry": "NMC",
+            "estimatedRange": {
+              "rangeKm": 576,
+              "standard": "EPA",
+              "epa": 358,
+              "wltp": 620
+            },
+            "chargePorts": [
+              {
+                "standard": "NACS",
+                "acLevel": "LEVEL_2",
+                "isPrimary": true,
+                "portLocation": "REAR"
+              }
+            ],
+            "maxAcChargingKw": 11.5,
+            "maxDcChargingKw": 250,
+            "chargingTimeTo80PctMinutes": 25,
+            "vehicleToGridCapable": false,
+            "vehicleToLoadCapable": false
+          },
+          "pricing": {
+            "basePrice": 42990,
+            "currency": "USD"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": true,
+    "httpStatus": 200,
+    "acknowledgmentStatus": "RECEIVED",
+    "errors": [],
+    "warnings": []
+  }
+}

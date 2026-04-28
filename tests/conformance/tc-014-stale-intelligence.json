@@ -1,0 +1,78 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-014",
+  "title": "Lead Intelligence — Stale ML Scores",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "LEAD_INTELLIGENCE",
+  "description": "leadIntelligence.modelMetadata.dataFreshnessDays is 14, indicating the ML scoring model was trained on data older than 7 days (the freshness threshold). Validator MUST emit an INTELLIGENCE_SCORES_STALE WARNING. The message is still valid.",
+  "specRef": "LEX_CONFORMANCE §2 TC-014",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000014",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:13:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC014-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "THIRD_PARTY_PORTAL",
+          "customer": {
+            "firstName": "James",
+            "lastName": "Park",
+            "emailAddress": "j.park@example.com",
+            "phoneNumber": "+12135550128"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "Hyundai",
+            "model": "IONIQ 6",
+            "year": 2027
+          },
+          "consentRecord": {
+            "tcpa": {
+              "expressWrittenConsent": true,
+              "consentTimestamp": "2026-04-03T10:13:00Z",
+              "consentSource": "WEB_FORM"
+            }
+          },
+          "leadIntelligence": {
+            "intentScore": 0.78,
+            "qualityTier": "GOLD",
+            "buyingWindowDays": 30,
+            "modelMetadata": {
+              "modelVersion": "v2.3.1",
+              "dataFreshnessDays": 14,
+              "scoredAt": "2026-04-03T10:13:00Z"
+            }
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:13:00Z",
+            "countryCode": "US"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": true,
+    "httpStatus": 200,
+    "acknowledgmentStatus": "RECEIVED",
+    "errors": [],
+    "warnings": [
+      {
+        "field": "leadIntelligence.modelMetadata.dataFreshnessDays",
+        "code": "INTELLIGENCE_SCORES_STALE",
+        "level": "WARNING",
+        "rejectedValue": 14,
+        "threshold": 7,
+        "suggestion": "Re-score with a model trained on data less than 7 days old for reliable intent signals"
+      }
+    ]
+  }
+}

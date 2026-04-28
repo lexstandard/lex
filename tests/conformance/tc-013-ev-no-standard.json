@@ -1,0 +1,72 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-013",
+  "title": "EV Range Without Range Standard",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "EV_EXTENSIONS",
+  "description": "desiredProduct includes evPreferences.estimatedRangeKm but does not specify the rating standard (EPA, WLTP, CLTC, etc.). Without a standard, range figures are not comparable. Validator MUST emit an EV_RANGE_STANDARD_MISSING WARNING. The message is still valid (not an error).",
+  "specRef": "LEX_CONFORMANCE §2 TC-013",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000013",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:12:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC013-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "MANUFACTURER_WEBSITE",
+          "customer": {
+            "firstName": "Eva",
+            "lastName": "Müller",
+            "emailAddress": "eva.mueller@example.com",
+            "phoneNumber": "+4915551234567"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "assetClass": "VEHICLE",
+            "make": "Volkswagen",
+            "model": "ID.4",
+            "year": 2027,
+            "fuelType": "ELECTRIC",
+            "evPreferences": {
+              "estimatedRangeKm": 400
+            }
+          },
+          "consentRecord": {
+            "gdpr": {
+              "legalBasis": "CONSENT",
+              "consentTimestamp": "2026-04-03T10:12:00Z",
+              "consentWithdrawn": false
+            }
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:12:00Z",
+            "countryCode": "DE",
+            "language": "de-DE"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": true,
+    "httpStatus": 200,
+    "acknowledgmentStatus": "RECEIVED",
+    "errors": [],
+    "warnings": [
+      {
+        "field": "evSpecifications.estimatedRangeKm",
+        "code": "EV_RANGE_STANDARD_MISSING",
+        "level": "WARNING",
+        "suggestion": "Specify rangeStandard (EPA | WLTP | CLTC | JC08 | NEDC) to allow accurate range comparison"
+      }
+    ]
+  }
+}

@@ -1,0 +1,485 @@
+{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "registryVersion": "1.0",
+  "registryDate": "2024-01-15T00:00:00Z",
+  "description": "LEX Organization Schema Registry - Central registry of all organization-specific schemas",
+  "totalRegistrations": 12,
+  "lastUpdated": "2024-01-15T10:30:00Z",
+  "organizations": [
+    {
+      "organizationId": "MFGR-TOYOTA-NA",
+      "organizationType": "MANUFACTURER",
+      "organizationName": "Toyota North America",
+      "region": "NA",
+      "registrationDate": "2024-01-10T09:00:00Z",
+      "status": "ACTIVE",
+      "schemas": [
+        {
+          "schemaId": "TOYOTA-LEAD-EXTENDED-1.0",
+          "schemaName": "Toyota Lead Extension Schema",
+          "version": "1.0",
+          "purpose": "Extended lead data for Toyota franchise",
+          "fields": [
+            {
+              "fieldName": "toyotaLeadScore",
+              "fieldType": "integer",
+              "description": "Internal Toyota lead quality score (0-100)",
+              "required": false
+            },
+            {
+              "fieldName": "toyotaDealerId",
+              "fieldType": "string",
+              "description": "Toyota internal dealer network ID",
+              "required": true,
+              "pattern": "^TOYOTA-[0-9]{5}$"
+            },
+            {
+              "fieldName": "preferredToyotaModel",
+              "fieldType": "string",
+              "description": "Primary Toyota model of interest",
+              "enum": ["CAMRY", "COROLLA", "RAV4", "HIGHLANDER", "TACOMA", "TUNDRA", "4RUNNER"]
+            },
+            {
+              "fieldName": "toyotaFinancingProgram",
+              "fieldType": "string",
+              "description": "Toyota financing program preference",
+              "enum": ["TOYOTA_FINANCIAL_SERVICES", "THIRD_PARTY", "CASH"]
+            },
+            {
+              "fieldName": "tradeInHistoryWithToyota",
+              "fieldType": "boolean",
+              "description": "Whether customer has traded in with Toyota before"
+            }
+          ]
+        },
+        {
+          "schemaId": "TOYOTA-VEHICLE-INVENTORY-1.0",
+          "schemaName": "Toyota Vehicle Inventory Extension",
+          "version": "1.0",
+          "purpose": "Additional Toyota-specific vehicle details",
+          "fields": [
+            {
+              "fieldName": "toyotaInternalSKU",
+              "fieldType": "string",
+              "description": "Toyota global SKU reference"
+            },
+            {
+              "fieldName": "factoryProductionDate",
+              "fieldType": "date",
+              "description": "Manufacturing date at Toyota plant"
+            },
+            {
+              "fieldName": "designatedMarketRegion",
+              "fieldType": "string",
+              "enum": ["NA", "EU", "APAC", "LATAM", "MENA"]
+            }
+          ]
+        }
+      ],
+      "contactEmail": "lex@toyota.com",
+      "apiKey": "****-****-****-****"
+    },
+    {
+      "organizationId": "DMS-CDKGLOBAL-PROD",
+      "organizationType": "DMS",
+      "organizationName": "CDK Global",
+      "region": "GLOBAL",
+      "registrationDate": "2024-01-11T14:30:00Z",
+      "status": "ACTIVE",
+      "schemas": [
+        {
+          "schemaId": "CDK-DEALERSHIP-CONTEXT-1.0",
+          "schemaName": "CDK Dealership Context Extension",
+          "version": "1.0",
+          "purpose": "Dealership management system context",
+          "fields": [
+            {
+              "fieldName": "cdkDealershipId",
+              "fieldType": "string",
+              "description": "CDK dealership registration number"
+            },
+            {
+              "fieldName": "cdkLeadSourceCode",
+              "fieldType": "string",
+              "description": "Internal CDK lead source system code"
+            },
+            {
+              "fieldName": "assignedSalesPersonId",
+              "fieldType": "string",
+              "description": "CDK sales representative assigned"
+            },
+            {
+              "fieldName": "followUpScheduled",
+              "fieldType": "boolean"
+            },
+            {
+              "fieldName": "followUpDateTime",
+              "fieldType": "datetime"
+            }
+          ]
+        }
+      ],
+      "contactEmail": "integrations@cdkglobal.com",
+      "apiKey": "****-****-****-****"
+    },
+    {
+      "organizationId": "RETAILER-MAIN-STREET",
+      "organizationType": "RETAILER",
+      "organizationName": "Main Street Auto Group",
+      "region": "NA",
+      "registrationDate": "2024-01-12T11:00:00Z",
+      "status": "ACTIVE",
+      "schemas": [
+        {
+          "schemaId": "MAINSTREET-LEAD-NOTES-1.0",
+          "schemaName": "Main Street Custom Lead Notes",
+          "version": "1.0",
+          "purpose": "Store custom notes and follow-up actions",
+          "fields": [
+            {
+              "fieldName": "internalNotes",
+              "fieldType": "string",
+              "description": "Internal retailer notes on lead",
+              "maxLength": 2000
+            },
+            {
+              "fieldName": "qualificationLevel",
+              "fieldType": "string",
+              "enum": ["COLD", "WARM", "HOT", "READY_TO_BUY"]
+            },
+            {
+              "fieldName": "lastFollowUpDate",
+              "fieldType": "date"
+            }
+          ]
+        }
+      ],
+      "contactEmail": "lex@mainstreetauto.com",
+      "apiKey": "****-****-****-****"
+    },
+    {
+      "organizationId": "PLATFORM-CARSALES-IN",
+      "organizationType": "PLATFORM",
+      "organizationName": "CarSales.com India",
+      "region": "IN",
+      "registrationDate": "2024-01-13T08:00:00Z",
+      "status": "ACTIVE",
+      "schemas": [
+        {
+          "schemaId": "CARSALES-INDIA-LEAD-1.0",
+          "schemaName": "CarSales India Lead Extension",
+          "version": "1.0",
+          "purpose": "India market-specific lead attributes",
+          "fields": [
+            {
+              "fieldName": "aadhaarVerified",
+              "fieldType": "boolean",
+              "description": "Whether customer Aadhaar verified"
+            },
+            {
+              "fieldName": "gstinRequired",
+              "fieldType": "boolean",
+              "description": "Whether customer is commercial/fleet"
+            },
+            {
+              "fieldName": "preferredPaymentMethod",
+              "fieldType": "string",
+              "enum": ["CASH", "BANK_LOAN", "EMI", "GOVERNMENT_SUBSIDY"]
+            },
+            {
+              "fieldName": "subsidyEligibility",
+              "fieldType": "string",
+              "description": "Government subsidy program eligibility (FAME, etc.)"
+            },
+            {
+              "fieldName": "vehicleRegistrationPreference",
+              "fieldType": "string",
+              "enum": ["OWN_NAME", "BUSINESS_NAME", "LEASE"]
+            }
+          ]
+        },
+        {
+          "schemaId": "CARSALES-SCOOTER-SPECS-1.0",
+          "schemaName": "CarSales India Scooter Specifications",
+          "version": "1.0",
+          "purpose": "India two-wheeler market specifications",
+          "fields": [
+            {
+              "fieldName": "batteryType",
+              "fieldType": "string",
+              "enum": ["LITHIUM", "LEAD_ACID", "NICKEL_METAL_HYDRIDE"]
+            },
+            {
+              "fieldName": "batterySwappable",
+              "fieldType": "boolean",
+              "description": "Whether battery is user-swappable"
+            },
+            {
+              "fieldName": "homechargingCompatible",
+              "fieldType": "boolean"
+            },
+            {
+              "fieldName": "saeChargerType",
+              "fieldType": "string",
+              "enum": ["TYPE1", "TYPE2", "GB_T", "PROPRIETARY"]
+            }
+          ]
+        }
+      ],
+      "contactEmail": "lex-support@carsales.in",
+      "apiKey": "****-****-****-****"
+    },
+    {
+      "organizationId": "NETWORK-HERO-SCOOTERS",
+      "organizationType": "NETWORK",
+      "organizationName": "Hero MotoCorp Scooter Network",
+      "region": "IN",
+      "registrationDate": "2024-01-14T10:15:00Z",
+      "status": "ACTIVE",
+      "schemas": [
+        {
+          "schemaId": "HERO-SCOOTER-LEAD-1.0",
+          "schemaName": "Hero Scooter Lead Data",
+          "version": "1.0",
+          "purpose": "Hero MotoCorp specific scooter lead attributes",
+          "fields": [
+            {
+              "fieldName": "heroLeadId",
+              "fieldType": "string",
+              "description": "Hero's internal lead tracking ID"
+            },
+            {
+              "fieldName": "preferredHeroModel",
+              "fieldType": "string",
+              "enum": ["HERO_DASH", "HERO_VINO", "HERO_MAESTRO", "HERO_PLEASURE"]
+            },
+            {
+              "fieldName": "heroFinancingPartner",
+              "fieldType": "string",
+              "description": "Hero's preferred financing partner"
+            },
+            {
+              "fieldName": "showroomVisitScheduled",
+              "fieldType": "datetime"
+            },
+            {
+              "fieldName": "heroTestDriveCompleted",
+              "fieldType": "boolean"
+            }
+          ]
+        }
+      ],
+      "contactEmail": "lex@heroelectric.com",
+      "apiKey": "****-****-****-****"
+    },
+    {
+      "organizationId": "LEAD_SOURCE-AUTOX",
+      "organizationType": "LEAD_SOURCE",
+      "organizationName": "AutoX.com Lead Portal",
+      "region": "IN",
+      "registrationDate": "2024-01-14T15:45:00Z",
+      "status": "ACTIVE",
+      "schemas": [
+        {
+          "schemaId": "AUTOX-SOURCE-TRACKING-1.0",
+          "schemaName": "AutoX Lead Source Tracking",
+          "version": "1.0",
+          "purpose": "Track lead source attribution through AutoX",
+          "fields": [
+            {
+              "fieldName": "autoxLeadId",
+              "fieldType": "string",
+              "pattern": "^LID-[0-9]{8}$"
+            },
+            {
+              "fieldName": "autoxSourceCampaign",
+              "fieldType": "string"
+            },
+            {
+              "fieldName": "autoxSourcePageUrl",
+              "fieldType": "uri"
+            },
+            {
+              "fieldName": "autoxLeadValue",
+              "fieldType": "number",
+              "description": "Estimated lead value in rupees"
+            }
+          ]
+        }
+      ],
+      "contactEmail": "api@autox.com",
+      "apiKey": "****-****-****-****"
+    },
+    {
+      "organizationId": "MFGR-HARLEY-DAVIDSON-NA",
+      "organizationType": "MANUFACTURER",
+      "organizationName": "Harley-Davidson Motor Company",
+      "region": "NA",
+      "registrationDate": "2024-01-14T16:30:00Z",
+      "status": "ACTIVE",
+      "schemas": [
+        {
+          "schemaId": "HARLEY-MOTORCYCLE-LEAD-1.0",
+          "schemaName": "Harley-Davidson Motorcycle Lead Extension",
+          "version": "1.0",
+          "purpose": "Harley-Davidson motorcycle-specific lead data",
+          "fields": [
+            {
+              "fieldName": "harleyLeadCode",
+              "fieldType": "string"
+            },
+            {
+              "fieldName": "motorcycleCategory",
+              "fieldType": "string",
+              "enum": ["SPORTSTER", "STREET_750_1200", "STREET_KING", "SUPER_GLIDE", "FAT_BOB", "STREET_GLIDE", "RK_CLASSIC", "ROAD_KING"]
+            },
+            {
+              "fieldName": "riderExperienceLevel",
+              "fieldType": "string",
+              "enum": ["BEGINNER", "INTERMEDIATE", "EXPERIENCED", "PRO"]
+            },
+            {
+              "fieldName": "tradeLoyalty",
+              "fieldType": "string",
+              "description": "Whether they have owned Harley-Davidson before"
+            }
+          ]
+        }
+      ],
+      "contactEmail": "leads@harley-davidson.com",
+      "apiKey": "****-****-****-****"
+    },
+    {
+      "organizationId": "MFGR-RIESE-MULLER-EU",
+      "organizationType": "MANUFACTURER",
+      "organizationName": "Riese & Müller (Europe)",
+      "region": "EU",
+      "registrationDate": "2024-01-15T09:00:00Z",
+      "status": "ACTIVE",
+      "schemas": [
+        {
+          "schemaId": "RIESE-EBIKE-LEAD-1.0",
+          "schemaName": "Riese & Müller E-Bike Lead Extension",
+          "version": "1.0",
+          "purpose": "E-bike specific lead attributes for European market",
+          "fields": [
+            {
+              "fieldName": "rieseLeadId",
+              "fieldType": "string"
+            },
+            {
+              "fieldName": "ebikeCategoryInterest",
+              "fieldType": "string",
+              "enum": ["CARGO", "CITY", "GRAVEL", "FOLDING", "SPEED"]
+            },
+            {
+              "fieldName": "motorBrandPreference",
+              "fieldType": "string",
+              "enum": ["BOSCH", "SHIMANO", "BAFANG", "DAPU"]
+            },
+            {
+              "fieldName": "gdprConsentGiven",
+              "fieldType": "boolean"
+            }
+          ]
+        }
+      ],
+      "contactEmail": "lex@riese-mueller.de",
+      "apiKey": "****-****-****-****"
+    }
+  ],
+  "registrationGuidelines": {
+    "description": "Guidelines for registering new organization schemas",
+    "steps": [
+      "1. Contact LEX support with organization details",
+      "2. Define schema fields with types and validation rules",
+      "3. Submit schema in JSON format for review",
+      "4. Receive API key for programmatic access",
+      "5. Test schema in sandbox environment",
+      "6. Schema approved and moved to production"
+    ],
+    "schemaRequirements": {
+      "mandatory": [
+        "schemaId (unique, format: ORG-DESCRIPTION-VERSION)",
+        "schemaName (human-readable)",
+        "version (semantic versioning)",
+        "purpose (use case description)",
+        "fields array with complete field definitions"
+      ],
+      "fieldRequirements": [
+        "fieldName (alphanumeric, snake_case)",
+        "fieldType (string, integer, boolean, date, datetime, number, uri)",
+        "description (clear usage documentation)",
+        "required (boolean, default false)",
+        "validation (patterns, enums, min/max, custom rules as needed)"
+      ]
+    },
+    "bestPractices": [
+      "Use clear, descriptive field names",
+      "Document all enum values with descriptions",
+      "Include regex patterns for text fields",
+      "Set reasonable min/max values for numeric fields",
+      "Mark fields as required only when necessary",
+      "Avoid redundancy with standard LEX fields",
+      "Test schema with sample data before production",
+      "Version schemas for backwards compatibility"
+    ]
+  },
+  "commonSchemaPatterns": {
+    "retailerContext": {
+      "description": "Context data managed by DMS systems",
+      "fields": ["dealershipId", "salesPersonId", "followUpScheduled", "assignedQueue"]
+    },
+    "manufacturerContext": {
+      "description": "Manufacturer-specific lead scoring and routing",
+      "fields": ["manufacturerLeadScore", "regionAssignment", "modelPreference", "loyaltyHistory"]
+    },
+    "marketSpecific": {
+      "description": "Market-specific compliance and preferences",
+      "examples": [
+        "India: Aadhaar verification, subsidy eligibility, payment methods",
+        "EU: GDPR consent, regional compliance",
+        "USA: State regulations, credit requirements"
+      ]
+    },
+    "productSpecific": {
+      "description": "Product-type-specific attributes",
+      "examples": [
+        "Vehicle: Engine, transmission, features",
+        "Motorcycle: Category, displacement, rider experience",
+        "E-bike: Motor brand, cargo capacity, battery type",
+        "Scooter: Range, battery type, charging compatibility"
+      ]
+    }
+  },
+  "apiEndpoints": {
+    "registerSchema": "POST /api/v1/registry/schemas",
+    "updateSchema": "PUT /api/v1/registry/schemas/{schemaId}",
+    "getSchema": "GET /api/v1/registry/schemas/{schemaId}",
+    "listSchemas": "GET /api/v1/registry/schemas?organizationId=ORG-ID",
+    "validateAgainstSchema": "POST /api/v1/registry/validate/{schemaId}",
+    "getRegistry": "GET /api/v1/registry"
+  },
+  "supportedFieldTypes": [
+    "string (max 500 chars default)",
+    "integer (32-bit)",
+    "number (floating point)",
+    "boolean",
+    "date (ISO 8601)",
+    "datetime (ISO 8601)",
+    "uri (URL format)",
+    "email",
+    "phone",
+    "enum (predefined values)",
+    "array (homogeneous)",
+    "object (nested fields)"
+  ],
+  "notes": {
+    "governance": "Each organization maintains their own schemas independently",
+    "compatibility": "Schemas must align with LEX message structure to be valid",
+    "security": "API keys are required for programmatic access",
+    "rateLimit": "Registry API is rate-limited to 1000 requests per minute per organization",
+    "versioning": "Use semantic versioning (major.minor) for schema updates",
+    "deprecation": "Deprecated schemas may be marked but are kept for backward compatibility"
+  }
+}

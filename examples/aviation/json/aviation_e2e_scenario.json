@@ -1,0 +1,751 @@
+{
+  "_metadata": {
+    "title": "LEX Aviation End-to-End Scenario: Commercial Airline Fleet Acquisition",
+    "scenario": "SkyBridge Airlines (organisational buyer) procures 6 × Airbus A320neo aircraft via US EXIM ECA-backed financing. Full lifecycle: RFP inquiry → technical evaluation → contract negotiation → order → phased delivery → lead closure (WON). Fleet value USD 612 million.",
+    "industry": "AVIATION",
+    "assetClass": "AVIATION",
+    "buyerType": "ORGANIZATION",
+    "leadId": "LID-20250601-AVIA-001",
+    "fleetQuantity": 6,
+    "totalDealValue": 612000000,
+    "currency": "USD",
+    "outcome": "WON",
+    "lifecycleDays": 289,
+    "messageCount": 9,
+    "phases": [
+      "01 - Fleet RFP Inquiry (SHOPPING)",
+      "02 - Platform Acknowledgment (VALIDATED)",
+      "03 - Technical & Financial Evaluation (EXPRESSED_INTEREST)",
+      "04 - ECA Financing Engagement (IN_NEGOTIATION)",
+      "05 - Contract Signed (ORDER)",
+      "06 - Order Confirmed at Manufacturer",
+      "07 - First Delivery Slot In-Flight (IN_DELIVERY)",
+      "08 - First Two Aircraft Delivered (DELIVERED)",
+      "09 - Lead Closure (WON)"
+    ]
+  },
+  "messages": [
+    {
+      "_phase": "01 - Fleet RFP Inquiry (SHOPPING)",
+      "lex": {
+        "header": {
+          "messageId": "10a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2025-06-01T08:00:00Z",
+          "senderId": "RETAILER-AIRBUS-ORDERDESK",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "signatureAlgorithm": "HMAC-SHA256"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20250601-AVIA-001",
+            "leadType": "PRIMARY",
+            "status": "SHOPPING",
+            "source": "MANUFACTURER_WEBSITE",
+            "leadCreatedDate": "2025-06-01T08:00:00Z",
+            "leadVersion": 1,
+            "sourceDetail": {
+              "sourceType": "MANUFACTURER_WEBSITE",
+              "sourceURL": "https://www.airbus.com/en/products-services/commercial-aircraft/a320-family/a320neo",
+              "channel": "DIGITAL",
+              "leadEntryMethod": "FORM_SUBMISSION",
+              "formName": "Aircraft Acquisition RFP",
+              "leadQualityScore": 9.8,
+              "customFields": {
+                "rfpReference": "RFP-2025-SKYBRIDGE-A320-NEO",
+                "procurementOfficer": "Marcus Reid",
+                "targetFleetEntry": "Q1 2026"
+              }
+            },
+            "customer": {
+              "firstName": "Marcus",
+              "lastName": "Reid",
+              "emailAddress": "m.reid@skybridgeair.com",
+              "phoneNumber": "+4420555501234",
+              "preferredContactMethod": "EMAIL",
+              "locale": "en-GB",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": {
+                "companyName": "SkyBridge Airlines Ltd",
+                "companyRegistrationNumber": "GB09123456",
+                "taxIdentificationNumber": "GB-VAT-123456789",
+                "industryCode": "NAICS-481111",
+                "companySize": "MID_MARKET",
+                "existingFleetSize": 22,
+                "governmentEntity": false,
+                "procurementMethodology": "RFP",
+                "existingRelationship": "RENEWAL",
+                "preferredSupplierStatus": true,
+                "budgetApprovalStatus": "APPROVED",
+                "procurementContact": {
+                  "firstName": "Marcus",
+                  "lastName": "Reid",
+                  "title": "VP Fleet Planning",
+                  "email": "m.reid@skybridgeair.com",
+                  "department": "Fleet & Technical"
+                }
+              },
+              "fleetBuyer": {
+                "isFleet": true,
+                "fleetSize": 22,
+                "unitsToOrder": 6,
+                "fleetManagerName": "Marcus Reid",
+                "fleetManagerEmail": "m.reid@skybridgeair.com"
+              }
+            },
+            "desiredProduct": {
+              "productType": "AIRCRAFT_NEW",
+              "assetClass": "AVIATION",
+              "make": "Airbus",
+              "model": "A320neo",
+              "year": 2026,
+              "condition": "NEW",
+              "budgetMin": 590000000,
+              "budgetMax": 640000000,
+              "currency": "USD",
+              "typeSpecificAttributes": {
+                "engineOption": "CFM LEAP-1A26",
+                "cabinConfiguration": "SINGLE_AISLE_174_SEATS",
+                "seatConfiguration": "3-3",
+                "cabinWidth": "NARROWBODY",
+                "rangeKm": 6300,
+                "icaoTypeDesignator": "A20N",
+                "icaoAircraftCategory": "M",
+                "maxSpeedKmh": 833,
+                "mtowKg": 79000,
+                "avionicsStandard": "Thales AVANT+",
+                "cabinLayout": "ALL_ECONOMY",
+                "lavatoryCount": 3,
+                "galleyPositions": ["F1", "R1"],
+                "wifiCapability": "HIGH_SPEED_KA_BAND"
+              },
+              "factoryOrderPreference": "FACTORY_ORDER_ONLY",
+              "installedOptions": [
+                { "name": "Sharklet Wingtip Devices", "source": "FACTORY", "partNumber": "AIRBUS-S18001-00", "estimatedValue": 850000 },
+                { "name": "Cabin WiFi — Inmarsat GX Ka-band", "source": "FACTORY", "partNumber": "AIRBUS-IFE-KA-001", "estimatedValue": 1200000 },
+                { "name": "Enhanced Avionics Package (Thales AVANT+)", "source": "OEM_ACCESSORY", "partNumber": "THALES-AVN-AVANTPLUS", "estimatedValue": 2500000 }
+              ]
+            },
+            "aviationLead": {
+              "operatorCertificate": "PART_121",
+              "intendedUse": "CHARTER",
+              "currentRegistryCountry": "GB",
+              "targetRegistryCountry": "GB"
+            },
+            "fleetOrder": {
+              "quantity": 6,
+              "unitBudgetCapUsd": 104000000,
+              "totalBudgetCap": 624000000,
+              "currency": "USD",
+              "mixedConfigAllowed": false,
+              "procurementReference": "RFP-2025-SKYBRIDGE-A320-NEO",
+              "preferredDeliveryWindow": "Q1 2026 – Q4 2026",
+              "evaluationUnits": 1,
+              "deliverySchedule": [
+                { "slotNumber": 1, "quantity": 2, "targetDate": "2026-03-15", "targetLocation": "AIRBUS-TOULOUSE-FAL" },
+                { "slotNumber": 2, "quantity": 2, "targetDate": "2026-06-30", "targetLocation": "AIRBUS-TOULOUSE-FAL" },
+                { "slotNumber": 3, "quantity": 2, "targetDate": "2026-11-15", "targetLocation": "AIRBUS-TOULOUSE-FAL" }
+              ],
+              "unitSpecifications": [
+                {
+                  "quantity": 6,
+                  "configurationCode": "A320NEO-CFM-174-SKYBRIDGE-V1",
+                  "specificOptions": [
+                    "SHARKLETS",
+                    "SINGLE_CLASS_174",
+                    "KA_BAND_WIFI",
+                    "ENHANCED_AVIONICS"
+                  ]
+                }
+              ]
+            },
+            "procurementFinancing": {
+              "procurementType": "EXPORT_CREDIT_AGENCY",
+              "leaseTerm": 144,
+              "exportCreditAgency": "US_EXIM",
+              "tenderReference": "RFP-2025-SKYBRIDGE-A320-NEO",
+              "deliveryCondition": "DDP",
+              "escrowRequired": true,
+              "downPaymentPct": 15.0,
+              "currency": "USD",
+              "progressPayments": [
+                { "milestoneDescription": "Contract signature", "paymentPct": 2.0, "dueDate": "2025-09-01" },
+                { "milestoneDescription": "First delivery (2 aircraft)", "paymentPct": 15.0, "dueDate": "2026-03-15" },
+                { "milestoneDescription": "Second delivery (2 aircraft)", "paymentPct": 15.0, "dueDate": "2026-06-30" },
+                { "milestoneDescription": "Final delivery (2 aircraft)", "paymentPct": 15.0, "dueDate": "2026-11-15" }
+              ]
+            },
+            "organizationContext": {
+              "organizationId": "ORG-AIRBUS-COMMERCIAL",
+              "organizationName": "Airbus Commercial Aircraft",
+              "timezone": "Europe/Paris",
+              "region": "EU"
+            },
+            "leadAncestry": {
+              "originType": "DIRECT_INQUIRY",
+              "originDate": "2025-06-01T08:00:00Z",
+              "originSourceId": "RFP-2025-SKYBRIDGE-A320-NEO",
+              "conversionPath": [
+                { "stage": "SHOPPING", "timestamp": "2025-06-01T08:00:00Z" }
+              ]
+            },
+            "leadHistory": [
+              {
+                "version": 1,
+                "previousStatus": null,
+                "newStatus": "SHOPPING",
+                "timestamp": "2025-06-01T08:00:00Z",
+                "changedBy": "RETAILER-AIRBUS-ORDERDESK",
+                "reason": "Formal RFP received from SkyBridge Airlines for 6× A320neo fleet replacement"
+              }
+            ],
+            "metadata": {
+              "createdAt": "2025-06-01T08:00:00Z",
+              "updatedAt": "2025-06-01T08:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-06-01T08:00:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-AIRBUS-ORDERDESK", "newValue": "SHOPPING" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "02 - Platform Acknowledgment (VALIDATED)",
+      "lex": {
+        "header": {
+          "messageId": "20b3c4d5-e6f7-4a8b-9c0d-1e2f3a4b5c6d",
+          "messageType": "ACKNOWLEDGMENT",
+          "version": "1.0",
+          "timestamp": "2025-06-01T08:00:08Z",
+          "senderId": "LEX-PLATFORM",
+          "receiverId": "RETAILER-AIRBUS-ORDERDESK",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "10a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c"
+        },
+        "payload": {
+          "acknowledgment": {
+            "acknowledgmentId": "ACK-20250601-AVIA-001",
+            "correlationId": "10a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c",
+            "originalMessageId": "10a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c",
+            "originalMessageType": "LEAD",
+            "status": "PROCESSED",
+            "statusReason": "Fleet RFP lead validated and assigned to Airbus Commercial Sales — EMEA/UK team.",
+            "timestamp": "2025-06-01T08:00:08Z",
+            "processingTime": 8200,
+            "validationResults": {
+              "isValid": true,
+              "schemaValidation": { "passed": true, "errors": [] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "03 - Technical & Financial Evaluation (EXPRESSED_INTEREST)",
+      "lex": {
+        "header": {
+          "messageId": "30c4d5e6-f7a8-4b9c-0d1e-2f3a4b5c6d7e",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2025-07-14T09:30:00Z",
+          "senderId": "RETAILER-AIRBUS-ORDERDESK",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20250601-AVIA-001",
+            "leadType": "PRIMARY",
+            "status": "EXPRESSED_INTEREST",
+            "source": "MANUFACTURER_WEBSITE",
+            "leadCreatedDate": "2025-06-01T08:00:00Z",
+            "leadVersion": 2,
+            "customer": {
+              "firstName": "Marcus",
+              "lastName": "Reid",
+              "emailAddress": "m.reid@skybridgeair.com",
+              "phoneNumber": "+4420555501234",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": {
+                "companyName": "SkyBridge Airlines Ltd",
+                "companySize": "MID_MARKET",
+                "budgetApprovalStatus": "APPROVED"
+              }
+            },
+            "desiredProduct": {
+              "productType": "AIRCRAFT_NEW",
+              "assetClass": "AVIATION",
+              "make": "Airbus",
+              "model": "A320neo",
+              "year": 2026,
+              "condition": "NEW",
+              "typeSpecificAttributes": {
+                "engineOption": "CFM LEAP-1A26",
+                "icaoTypeDesignator": "A20N",
+                "icaoAircraftCategory": "M",
+                "cabinWidth": "NARROWBODY",
+                "rangeKm": 6300,
+                "aviationsSpecification": {
+                  "tailNumberFormat": "G-SBXX",
+                  "airworthinessAuthority": "UK-CAA",
+                  "maintenanceProgram": "AIRBUS-MRBR-A320"
+                }
+              }
+            },
+            "fleetOrder": {
+              "quantity": 6,
+              "procurementReference": "RFP-2025-SKYBRIDGE-A320-NEO",
+              "preferredDeliveryWindow": "Q1 2026 – Q4 2026"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-AIRBUS-COMMERCIAL",
+              "organizationName": "Airbus Commercial Aircraft",
+              "timezone": "Europe/Paris",
+              "region": "EU"
+            },
+            "dealerNotes": "SkyBridge technical team completed factory visit at Toulouse FAL on Jul 10. Confirmed A320neo configuration. Board approved budget. US EXIM pre-qualification letter received. Moving to contract phase.",
+            "leadHistory": [
+              { "version": 1, "previousStatus": null, "newStatus": "SHOPPING", "timestamp": "2025-06-01T08:00:00Z", "changedBy": "RETAILER-AIRBUS-ORDERDESK", "reason": "RFP received" },
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2025-07-14T09:30:00Z", "changedBy": "ACCT-AIRBUS-EMEA-12", "reason": "Factory visit completed; board budget approved; US EXIM pre-qualification confirmed" }
+            ],
+            "metadata": {
+              "createdAt": "2025-06-01T08:00:00Z",
+              "updatedAt": "2025-07-14T09:30:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-06-01T08:00:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-AIRBUS-ORDERDESK", "newValue": "SHOPPING" },
+                { "timestamp": "2025-07-14T09:30:00Z", "action": "STATUS_UPDATED", "changedBy": "ACCT-AIRBUS-EMEA-12", "newValue": "EXPRESSED_INTEREST" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "04 - ECA Financing Engagement & Contract Negotiation (IN_NEGOTIATION)",
+      "lex": {
+        "header": {
+          "messageId": "40d5e6f7-a8b9-4c0d-1e2f-3a4b5c6d7e8f",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2025-08-20T14:00:00Z",
+          "senderId": "RETAILER-AIRBUS-ORDERDESK",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20250601-AVIA-001",
+            "leadType": "PRIMARY",
+            "status": "IN_NEGOTIATION",
+            "source": "MANUFACTURER_WEBSITE",
+            "leadCreatedDate": "2025-06-01T08:00:00Z",
+            "leadVersion": 3,
+            "customer": {
+              "firstName": "Marcus",
+              "lastName": "Reid",
+              "emailAddress": "m.reid@skybridgeair.com",
+              "phoneNumber": "+4420555501234",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": {
+                "companyName": "SkyBridge Airlines Ltd",
+                "companySize": "MID_MARKET",
+                "procurementMethodology": "RFP",
+                "budgetApprovalStatus": "APPROVED"
+              }
+            },
+            "desiredProduct": {
+              "productType": "AIRCRAFT_NEW",
+              "assetClass": "AVIATION",
+              "make": "Airbus",
+              "model": "A320neo",
+              "year": 2026,
+              "condition": "NEW"
+            },
+            "fleetOrder": {
+              "quantity": 6,
+              "unitBudgetCapUsd": 102000000,
+              "totalBudgetCap": 612000000,
+              "currency": "USD",
+              "procurementReference": "RFP-2025-SKYBRIDGE-A320-NEO"
+            },
+            "procurementFinancing": {
+              "procurementType": "EXPORT_CREDIT_AGENCY",
+              "exportCreditAgency": "US_EXIM",
+              "leaseTerm": 144,
+              "tenderReference": "RFP-2025-SKYBRIDGE-A320-NEO",
+              "escrowRequired": true,
+              "downPaymentPct": 15.0,
+              "currency": "USD"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-AIRBUS-COMMERCIAL",
+              "organizationName": "Airbus Commercial Aircraft",
+              "timezone": "Europe/Paris",
+              "region": "EU"
+            },
+            "dealerNotes": "US EXIM formal application filed Aug 15. Airbus Commercial Finance and SkyBridge CFO team reviewing final contract terms. Negotiating flyaway pricing, GFE credits, and performance guarantee package.",
+            "leadHistory": [
+              { "version": 1, "previousStatus": null, "newStatus": "SHOPPING", "timestamp": "2025-06-01T08:00:00Z", "changedBy": "RETAILER-AIRBUS-ORDERDESK", "reason": "RFP received" },
+              { "version": 2, "previousStatus": "SHOPPING", "newStatus": "EXPRESSED_INTEREST", "timestamp": "2025-07-14T09:30:00Z", "changedBy": "ACCT-AIRBUS-EMEA-12", "reason": "Factory visit; budget approved" },
+              { "version": 3, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2025-08-20T14:00:00Z", "changedBy": "ACCT-AIRBUS-EMEA-12", "reason": "US EXIM application filed; Airbus CF terms under review" }
+            ],
+            "metadata": {
+              "createdAt": "2025-06-01T08:00:00Z",
+              "updatedAt": "2025-08-20T14:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-06-01T08:00:00Z", "action": "LEAD_CREATED", "changedBy": "RETAILER-AIRBUS-ORDERDESK", "newValue": "SHOPPING" },
+                { "timestamp": "2025-07-14T09:30:00Z", "action": "STATUS_UPDATED", "changedBy": "ACCT-AIRBUS-EMEA-12", "newValue": "EXPRESSED_INTEREST" },
+                { "timestamp": "2025-08-20T14:00:00Z", "action": "STATUS_UPDATED", "changedBy": "ACCT-AIRBUS-EMEA-12", "newValue": "IN_NEGOTIATION" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "05 - Contract Signed (ORDER)",
+      "lex": {
+        "header": {
+          "messageId": "50e6f7a8-b9c0-4d1e-2f3a-4b5c6d7e8f9a",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2025-09-15T11:00:00Z",
+          "senderId": "RETAILER-AIRBUS-ORDERDESK",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20250601-AVIA-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER",
+            "source": "MANUFACTURER_WEBSITE",
+            "leadCreatedDate": "2025-06-01T08:00:00Z",
+            "leadVersion": 4,
+            "customer": {
+              "firstName": "Marcus",
+              "lastName": "Reid",
+              "emailAddress": "m.reid@skybridgeair.com",
+              "phoneNumber": "+4420555501234",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": {
+                "companyName": "SkyBridge Airlines Ltd",
+                "companySize": "MID_MARKET"
+              }
+            },
+            "desiredProduct": {
+              "productType": "AIRCRAFT_NEW",
+              "assetClass": "AVIATION",
+              "make": "Airbus",
+              "model": "A320neo",
+              "year": 2026,
+              "condition": "NEW"
+            },
+            "fleetOrder": {
+              "quantity": 6,
+              "totalBudgetCap": 612000000,
+              "currency": "USD",
+              "procurementReference": "RFP-2025-SKYBRIDGE-A320-NEO",
+              "frameworkContractId": "AIRBUS-SKYBRIDGE-PSC-2025-001"
+            },
+            "procurementFinancing": {
+              "procurementType": "EXPORT_CREDIT_AGENCY",
+              "exportCreditAgency": "US_EXIM",
+              "leaseTerm": 144,
+              "tenderReference": "RFP-2025-SKYBRIDGE-A320-NEO",
+              "escrowRequired": true,
+              "downPaymentPct": 15.0,
+              "currency": "USD",
+              "progressPayments": [
+                { "milestoneDescription": "Contract signature", "paymentPct": 2.0, "dueDate": "2025-09-15" },
+                { "milestoneDescription": "First delivery batch", "paymentPct": 15.0, "dueDate": "2026-03-15" }
+              ]
+            },
+            "customerOutcome": {
+              "purchaseConfirmed": true,
+              "financingUsed": true,
+              "financingType": "THIRD_PARTY",
+              "financingAmount": 520200000,
+              "downPayment": 91800000,
+              "estimatedDeliveryDate": "2026-03-15T00:00:00Z"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-AIRBUS-COMMERCIAL",
+              "organizationName": "Airbus Commercial Aircraft",
+              "timezone": "Europe/Paris",
+              "region": "EU"
+            },
+            "dealerNotes": "Purchase & Support Contract signed Sep 15 at Airbus HQ. Total consideration USD 612M (6 × USD 102M). 2% contract signature payment made. US EXIM approval confirmed. First 2 aircraft entering FAL.",
+            "leadHistory": [
+              { "version": 3, "previousStatus": "EXPRESSED_INTEREST", "newStatus": "IN_NEGOTIATION", "timestamp": "2025-08-20T14:00:00Z", "changedBy": "ACCT-AIRBUS-EMEA-12", "reason": "ECA engagement" },
+              { "version": 4, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2025-09-15T11:00:00Z", "changedBy": "ACCT-AIRBUS-EMEA-12", "reason": "Purchase & Support Contract executed. US EXIM approved." }
+            ],
+            "metadata": {
+              "createdAt": "2025-06-01T08:00:00Z",
+              "updatedAt": "2025-09-15T11:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-08-20T14:00:00Z", "action": "STATUS_UPDATED", "changedBy": "ACCT-AIRBUS-EMEA-12", "newValue": "IN_NEGOTIATION" },
+                { "timestamp": "2025-09-15T11:00:00Z", "action": "CONTRACT_SIGNED", "changedBy": "ACCT-AIRBUS-EMEA-12", "newValue": "ORDER" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "06 - Order Confirmed at Manufacturer",
+      "lex": {
+        "header": {
+          "messageId": "60f7a8b9-c0d1-4e2f-3a4b-5c6d7e8f9a0b",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2025-09-16T08:30:00Z",
+          "senderId": "MANUFACTURER-AIRBUS-FAL",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20250601-AVIA-001",
+            "leadType": "PRIMARY",
+            "status": "ORDER_CONFIRMED",
+            "source": "MANUFACTURER_WEBSITE",
+            "leadCreatedDate": "2025-06-01T08:00:00Z",
+            "leadVersion": 5,
+            "customer": {
+              "firstName": "Marcus",
+              "lastName": "Reid",
+              "emailAddress": "m.reid@skybridgeair.com",
+              "phoneNumber": "+4420555501234",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "SkyBridge Airlines Ltd" }
+            },
+            "desiredProduct": {
+              "productType": "AIRCRAFT_NEW",
+              "assetClass": "AVIATION",
+              "make": "Airbus",
+              "model": "A320neo",
+              "condition": "NEW"
+            },
+            "fleetOrder": {
+              "quantity": 6,
+              "procurementReference": "RFP-2025-SKYBRIDGE-A320-NEO",
+              "frameworkContractId": "AIRBUS-SKYBRIDGE-PSC-2025-001"
+            },
+            "organizationContext": {
+              "organizationId": "ORG-AIRBUS-COMMERCIAL",
+              "organizationName": "Airbus Commercial Aircraft",
+              "timezone": "Europe/Paris",
+              "region": "EU"
+            },
+            "dealerNotes": "FAL slot allocation confirmed. MSN 12001 & 12002 in production (slot 1, delivery Mar 2026). MSN 12003 & 12004 scheduled Jun 2026. MSN 12005 & 12006 scheduled Nov 2026.",
+            "leadHistory": [
+              { "version": 4, "previousStatus": "IN_NEGOTIATION", "newStatus": "ORDER", "timestamp": "2025-09-15T11:00:00Z", "changedBy": "ACCT-AIRBUS-EMEA-12", "reason": "Contract signed" },
+              { "version": 5, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2025-09-16T08:30:00Z", "changedBy": "MANUFACTURER-AIRBUS-FAL", "reason": "FAL slots confirmed: MSN 12001–12006" }
+            ],
+            "metadata": {
+              "createdAt": "2025-06-01T08:00:00Z",
+              "updatedAt": "2025-09-16T08:30:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-09-15T11:00:00Z", "action": "ORDER_PLACED", "changedBy": "ACCT-AIRBUS-EMEA-12", "newValue": "ORDER" },
+                { "timestamp": "2025-09-16T08:30:00Z", "action": "ORDER_CONFIRMED", "changedBy": "MANUFACTURER-AIRBUS-FAL", "newValue": "ORDER_CONFIRMED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "07 - First Delivery Batch In Production (IN_DELIVERY)",
+      "lex": {
+        "header": {
+          "messageId": "70a8b9c0-d1e2-4f3a-4b5c-6d7e8f9a0b1c",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-01-10T10:00:00Z",
+          "senderId": "MANUFACTURER-AIRBUS-FAL",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20250601-AVIA-001",
+            "leadType": "PRIMARY",
+            "status": "IN_DELIVERY",
+            "source": "MANUFACTURER_WEBSITE",
+            "leadCreatedDate": "2025-06-01T08:00:00Z",
+            "leadVersion": 6,
+            "customer": {
+              "firstName": "Marcus",
+              "lastName": "Reid",
+              "emailAddress": "m.reid@skybridgeair.com",
+              "phoneNumber": "+4420555501234",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "SkyBridge Airlines Ltd" }
+            },
+            "desiredProduct": {
+              "productType": "AIRCRAFT_NEW",
+              "assetClass": "AVIATION",
+              "make": "Airbus",
+              "model": "A320neo",
+              "condition": "NEW",
+              "typeSpecificAttributes": {
+                "msnBatch1": ["MSN-12001", "MSN-12002"],
+                "finalAssemblyLocation": "TOULOUSE-FAL-L44",
+                "paintScheme": "SKYBRIDGE-LIVERY-V3",
+                "flightTestStatus": "FIRST_FLIGHT_COMPLETED"
+              }
+            },
+            "fleetOrder": { "quantity": 6, "procurementReference": "RFP-2025-SKYBRIDGE-A320-NEO" },
+            "organizationContext": {
+              "organizationId": "ORG-AIRBUS-COMMERCIAL",
+              "organizationName": "Airbus Commercial Aircraft",
+              "timezone": "Europe/Paris",
+              "region": "EU"
+            },
+            "dealerNotes": "MSN 12001 first flight completed Jan 8. Cabin completion and customer acceptance flight scheduled Feb 28. Delivery ceremony Mar 15.",
+            "leadHistory": [
+              { "version": 5, "previousStatus": "ORDER", "newStatus": "ORDER_CONFIRMED", "timestamp": "2025-09-16T08:30:00Z", "changedBy": "MANUFACTURER-AIRBUS-FAL", "reason": "FAL slots confirmed" },
+              { "version": 6, "previousStatus": "ORDER_CONFIRMED", "newStatus": "IN_DELIVERY", "timestamp": "2026-01-10T10:00:00Z", "changedBy": "MANUFACTURER-AIRBUS-FAL", "reason": "MSN 12001 first flight completed. Batch 1 entering customer acceptance phase." }
+            ],
+            "metadata": {
+              "createdAt": "2025-06-01T08:00:00Z",
+              "updatedAt": "2026-01-10T10:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2025-09-16T08:30:00Z", "action": "ORDER_CONFIRMED", "changedBy": "MANUFACTURER-AIRBUS-FAL", "newValue": "ORDER_CONFIRMED" },
+                { "timestamp": "2026-01-10T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "MANUFACTURER-AIRBUS-FAL", "newValue": "IN_DELIVERY" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "08 - First Two Aircraft Delivered (DELIVERED)",
+      "lex": {
+        "header": {
+          "messageId": "80b9c0d1-e2f3-4a4b-5c6d-7e8f9a0b1c2d",
+          "messageType": "LEAD",
+          "version": "1.0",
+          "timestamp": "2026-03-15T16:00:00Z",
+          "senderId": "MANUFACTURER-AIRBUS-FAL",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3"
+        },
+        "payload": {
+          "lead": {
+            "leadId": "LID-20250601-AVIA-001",
+            "leadType": "PRIMARY",
+            "status": "DELIVERED",
+            "source": "MANUFACTURER_WEBSITE",
+            "leadCreatedDate": "2025-06-01T08:00:00Z",
+            "leadVersion": 7,
+            "_note": "First delivery batch (2 of 6 aircraft) complete. Remaining 4 aircraft on schedule Jun + Nov 2026. Closure logged after full fleet delivery.",
+            "customer": {
+              "firstName": "Marcus",
+              "lastName": "Reid",
+              "emailAddress": "m.reid@skybridgeair.com",
+              "phoneNumber": "+4420555501234",
+              "buyerType": "ORGANIZATION",
+              "organizationBuyer": { "companyName": "SkyBridge Airlines Ltd" }
+            },
+            "desiredProduct": {
+              "productType": "AIRCRAFT_NEW",
+              "assetClass": "AVIATION",
+              "make": "Airbus",
+              "model": "A320neo",
+              "condition": "NEW",
+              "typeSpecificAttributes": {
+                "deliveredMsns": ["MSN-12001", "MSN-12002"],
+                "tailNumbers": ["G-SBYA", "G-SBYB"],
+                "airworthinessIssuedBy": "UK-CAA",
+                "deliveryCertificates": ["ARC-G-SBYA-2026", "ARC-G-SBYB-2026"]
+              }
+            },
+            "fleetOrder": { "quantity": 6, "procurementReference": "RFP-2025-SKYBRIDGE-A320-NEO" },
+            "organizationContext": {
+              "organizationId": "ORG-AIRBUS-COMMERCIAL",
+              "organizationName": "Airbus Commercial Aircraft",
+              "timezone": "Europe/Paris",
+              "region": "EU"
+            },
+            "metrics": {
+              "showroomVisits": 2,
+              "interactionCount": 24,
+              "customerSatisfactionRating": 4.9
+            },
+            "leadHistory": [
+              { "version": 6, "previousStatus": "ORDER_CONFIRMED", "newStatus": "IN_DELIVERY", "timestamp": "2026-01-10T10:00:00Z", "changedBy": "MANUFACTURER-AIRBUS-FAL", "reason": "MSN 12001 first flight" },
+              { "version": 7, "previousStatus": "IN_DELIVERY", "newStatus": "DELIVERED", "timestamp": "2026-03-15T16:00:00Z", "changedBy": "MANUFACTURER-AIRBUS-FAL", "reason": "Batch 1 delivery ceremony completed. G-SBYA & G-SBYB handed to SkyBridge." }
+            ],
+            "metadata": {
+              "createdAt": "2025-06-01T08:00:00Z",
+              "updatedAt": "2026-03-15T16:00:00Z",
+              "auditTrail": [
+                { "timestamp": "2026-01-10T10:00:00Z", "action": "STATUS_UPDATED", "changedBy": "MANUFACTURER-AIRBUS-FAL", "newValue": "IN_DELIVERY" },
+                { "timestamp": "2026-03-15T16:00:00Z", "action": "DELIVERED", "changedBy": "MANUFACTURER-AIRBUS-FAL", "newValue": "DELIVERED" }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "_phase": "09 - Lead Closure (WON)",
+      "_comment": "Closure filed after first delivery batch. Full fleet contract irrevocably in execution.",
+      "lex": {
+        "header": {
+          "messageId": "90c0d1e2-f3a4-4b5c-6d7e-8f9a0b1c2d3e",
+          "messageType": "LEAD_CLOSURE",
+          "version": "1.0",
+          "timestamp": "2026-03-20T10:00:00Z",
+          "senderId": "RETAILER-AIRBUS-ORDERDESK",
+          "receiverId": "LEX-PLATFORM",
+          "encryptionMethod": "TLS1.3",
+          "correlationId": "10a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c"
+        },
+        "payload": {
+          "leadClosure": {
+            "originalLeadId": "LID-20250601-AVIA-001",
+            "originalLeadSource": "MANUFACTURER_WEBSITE",
+            "leadCreatedDate": "2025-06-01T08:00:00Z",
+            "leadClosureDate": "2026-03-15T16:00:00Z",
+            "leadLifecycleDays": 289,
+            "closureStatus": "WON",
+            "closureReason": "First delivery batch (2 of 6 aircraft) accepted by SkyBridge Airlines on Mar 15 2026. Full fleet contract in execution; remaining 4 aircraft delivering Q2/Q4 2026.",
+            "closureDetail": {
+              "purchaseConfirmed": true,
+              "orderPlacedDate": "2025-09-15T11:00:00Z",
+              "actualDeliveryDate": "2026-03-15",
+              "dealAmount": 612000000,
+              "currency": "USD"
+            },
+            "purchasedProduct": {
+              "productType": "AIRCRAFT_NEW",
+              "assetClass": "AVIATION",
+              "manufacturer": "Airbus",
+              "model": "A320neo",
+              "year": 2026,
+              "typeSpecificAttributes": {
+                "fleetQuantity": 6,
+                "engineOption": "CFM LEAP-1A26",
+                "contractReference": "AIRBUS-SKYBRIDGE-PSC-2025-001",
+                "ecaReference": "US-EXIM-2025-AVIATION-0847"
+              }
+            },
+            "retailerPerformance": {
+              "organizationId": "ORG-AIRBUS-COMMERCIAL",
+              "organizationName": "Airbus Commercial Aircraft",
+              "salespersonId": "ACCT-AIRBUS-EMEA-12",
+              "salespersonName": "Isabelle Fontaine",
+              "region": "EU"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

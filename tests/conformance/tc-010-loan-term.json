@@ -1,0 +1,67 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-010",
+  "title": "Financing Validation — Loan Term Out of Range",
+  "level": "L2",
+  "conformanceLevel": 2,
+  "category": "FIELD_VALIDATION",
+  "description": "financing.loanTerm is set to 96 months. The LEX schema permits a maximum of 84 months. Validator MUST return valid=false with a LOAN_TERM_OUT_OF_RANGE error.",
+  "specRef": "LEX_CONFORMANCE §2 TC-010",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000010",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:09:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC010-0001",
+          "status": "IN_NEGOTIATION",
+          "source": "RETAILER_WEBSITE",
+          "customer": {
+            "firstName": "Sarah",
+            "lastName": "Johnson",
+            "emailAddress": "s.johnson@example.com",
+            "phoneNumber": "+13125550192"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "assetClass": "VEHICLE",
+            "make": "BMW",
+            "model": "X5",
+            "year": 2027,
+            "condition": "NEW"
+          },
+          "financing": {
+            "interestedInFinancing": true,
+            "loanTerm": 96,
+            "downPaymentCapacity": 10000,
+            "creditScore": "GOOD"
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:09:00Z",
+            "countryCode": "US"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "financing.loanTerm",
+        "code": "LOAN_TERM_OUT_OF_RANGE",
+        "level": "ERROR",
+        "rejectedValue": 96,
+        "constraint": "maximum 84 months"
+      }
+    ],
+    "warnings": []
+  }
+}

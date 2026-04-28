@@ -1,0 +1,46 @@
+{
+  "lex": {
+    "header": {
+      "messageId": "ACK-e46988dd-9b07-47d3-b693-55f67787ef6b",
+      "messageType": "ACKNOWLEDGMENT",
+      "version": "1.0",
+      "timestamp": "2026-04-03T13:40:45.894Z",
+      "senderId": "SIM-RECEIVER-001",
+      "receiverId": "SIM-SENDER-001",
+      "encryptionMethod": "TLS1.3"
+    },
+    "payload": {
+      "acknowledgment": {
+        "acknowledgmentId": "ACK-e46988dd-9b07-47d3-b693-55f67787ef6b",
+        "correlationId": "c3a1e2f0-1b2d-4e5f-8a6b-7c8d9e0f1a2b",
+        "originalMessageId": "c3a1e2f0-1b2d-4e5f-8a6b-7c8d9e0f1a2b",
+        "originalMessageType": "LEAD",
+        "status": "VALIDATED",
+        "statusReason": "SHA-256 integrity verified; LEX schema validation FAILED: [ERROR] lex.header.timestamp: Timestamp is older than 24 hours",
+        "timestamp": "2026-04-03T13:40:45.894Z",
+        "_simulation": {
+          "industry": "automotive",
+          "format": "json",
+          "integrityCheck": {
+            "algorithm": "SHA-256",
+            "expectedHash": "307dc03283d31ca902e9449c99bb383a05fd82652a8e6ebe0f924e63482e73a7",
+            "computedHash": "307dc03283d31ca902e9449c99bb383a05fd82652a8e6ebe0f924e63482e73a7",
+            "match": true
+          },
+          "fieldCoverage": {
+            "captured": 10,
+            "total": 10,
+            "missingFields": []
+          },
+          "sizeBytes": 36853,
+          "lexValidation": {
+            "valid": false,
+            "errors": [
+              "[ERROR] lex.header.timestamp: Timestamp is older than 24 hours"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

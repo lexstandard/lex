@@ -1,0 +1,68 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-018",
+  "title": "ASSET Message — BEV Missing DC Charging Spec",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "EV_EXTENSIONS",
+  "description": "An ASSET message for a BEV includes chargePorts but omits evSpecifications.maxDcChargingKw. For a DC-capable BEV this field is strongly recommended. Validator MUST emit an EV_DC_SPEC_MISSING WARNING. The message is still valid.",
+  "specRef": "LEX_CONFORMANCE §2 TC-018",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000018",
+        "messageType": "ASSET",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:17:00Z",
+        "senderId": "OEM-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "asset": {
+          "assetId": "WBY1Z8C50KVB12345",
+          "assetClass": "VEHICLE",
+          "productType": "VEHICLE_NEW",
+          "status": "AVAILABLE",
+          "condition": "NEW",
+          "manufacturer": "BMW",
+          "model": "iX",
+          "year": 2027,
+          "assetSerialNumber": "WBY1Z8C50KVB12345",
+          "serialNumberFormat": "VIN",
+          "evSpecifications": {
+            "drivetrainType": "BEV",
+            "batteryCapacityKwh": 111.5,
+            "estimatedRange": {
+              "rangeKm": 630,
+              "standard": "WLTP",
+              "wltp": 630
+            },
+            "chargePorts": [
+              {
+                "standard": "CCS2",
+                "acLevel": "LEVEL_2",
+                "isPrimary": true,
+                "portLocation": "PASSENGER_SIDE"
+              }
+            ],
+            "maxAcChargingKw": 22.0
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": true,
+    "httpStatus": 200,
+    "acknowledgmentStatus": "RECEIVED",
+    "errors": [],
+    "warnings": [
+      {
+        "field": "evSpecifications.chargePort.maxDcChargingKw",
+        "code": "EV_DC_SPEC_MISSING",
+        "level": "WARNING",
+        "suggestion": "Specify evSpecifications.maxDcChargingKw for BEV assets with DC charge ports to enable accurate charging comparison"
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors",
+  "id": "TC-015",
+  "title": "Lead Intelligence — Intent Score Out of Range",
+  "level": "L3",
+  "conformanceLevel": 3,
+  "category": "LEAD_INTELLIGENCE",
+  "description": "leadIntelligence.intentScore is 1.5, which exceeds the valid range of 0.0–1.0. Validator MUST return valid=false with an INTENT_SCORE_OUT_OF_RANGE error.",
+  "specRef": "LEX_CONFORMANCE §2 TC-015",
+  "input": {
+    "lex": {
+      "header": {
+        "messageId": "a1b2c3d4-e5f6-4a7b-8c9d-000000000015",
+        "messageType": "LEAD",
+        "version": "1.0",
+        "timestamp": "2026-04-03T10:14:00Z",
+        "senderId": "PORTAL-001",
+        "receiverId": "DEALER-001"
+      },
+      "payload": {
+        "lead": {
+          "leadId": "LEAD-TC015-0001",
+          "status": "EXPRESSED_INTEREST",
+          "source": "THIRD_PARTY_PORTAL",
+          "customer": {
+            "firstName": "Lin",
+            "lastName": "Zhang",
+            "emailAddress": "lin.zhang@example.com",
+            "phoneNumber": "+8613812345678"
+          },
+          "desiredProduct": {
+            "productType": "VEHICLE_NEW",
+            "make": "BYD",
+            "model": "Seal",
+            "year": 2027,
+            "fuelType": "ELECTRIC"
+          },
+          "leadIntelligence": {
+            "intentScore": 1.5,
+            "qualityTier": "PLATINUM",
+            "buyingWindowDays": 7
+          },
+          "metadata": {
+            "createdDate": "2026-04-03T10:14:00Z",
+            "countryCode": "CN"
+          }
+        }
+      }
+    }
+  },
+  "expected": {
+    "valid": false,
+    "httpStatus": 422,
+    "errors": [
+      {
+        "field": "leadIntelligence.intentScore",
+        "code": "INTENT_SCORE_OUT_OF_RANGE",
+        "level": "ERROR",
+        "rejectedValue": 1.5,
+        "constraint": "minimum 0.0, maximum 1.0"
+      }
+    ],
+    "warnings": []
+  }
+}

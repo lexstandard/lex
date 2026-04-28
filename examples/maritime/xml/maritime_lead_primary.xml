@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LEX Maritime Lead - Primary Message (Phase 01: SHOPPING / RFQ) -->
+<!-- Industry: MARITIME | Format: LEX-XML -->
+<lex xmlns="urn:lex:schema:v1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <header>
+    <messageId>d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a</messageId>
+    <messageType>LEAD</messageType>
+    <version>1.0</version>
+    <timestamp>2025-11-05T08:00:00Z</timestamp>
+    <senderId>BROKER-NORDIC-MARITIME</senderId>
+    <receiverId>LEX-PLATFORM</receiverId>
+    <encryptionMethod>TLS1.3</encryptionMethod>
+    <signatureAlgorithm>HMAC-SHA256</signatureAlgorithm>
+  </header>
+
+  <payload>
+    <lead>
+      <leadId>LID-20251105-MARI-001</leadId>
+      <leadType>PRIMARY</leadType>
+      <status>SHOPPING</status>
+      <source>BROKER</source>
+      <leadCreatedDate>2025-11-05T08:00:00Z</leadCreatedDate>
+      <leadVersion>1</leadVersion>
+
+      <sourceDetail>
+        <sourceType>BROKER</sourceType>
+        <channel>B2B_DIRECT</channel>
+        <leadEntryMethod>BROKER_SUBMISSION</leadEntryMethod>
+        <formName>New-Build Vessel RFQ</formName>
+        <leadQualityScore>9.5</leadQualityScore>
+        <customFields>
+          <rfqReference>NMBI-RFQ-2025-MARIDIAN-001</rfqReference>
+          <targetDelivery>Q4 2027</targetDelivery>
+          <operationalRoute>ASIA-EUROPE-TRANSPACIFIC</operationalRoute>
+          <classificationRequired>LR</classificationRequired>
+        </customFields>
+      </sourceDetail>
+
+      <customer>
+        <firstName>Andreas</firstName>
+        <lastName>Papadopoulos</lastName>
+        <emailAddress>a.papadopoulos@meridianshipping.gr</emailAddress>
+        <phoneNumber>+302109876543</phoneNumber>
+        <preferredContactMethod>EMAIL</preferredContactMethod>
+        <locale>el-GR</locale>
+        <buyerType>ORGANIZATION</buyerType>
+        <organizationBuyer>
+          <companyName>Meridian Shipping S.A.</companyName>
+          <companyRegistrationNumber>GR-MAR-2003-044981</companyRegistrationNumber>
+          <taxIdentificationNumber>EL-800443219</taxIdentificationNumber>
+          <industryCode>NACE-5020</industryCode>
+          <companySize>MID_MARKET</companySize>
+          <existingFleetSize>9</existingFleetSize>
+          <governmentEntity>false</governmentEntity>
+          <procurementMethodology>RFQ</procurementMethodology>
+          <existingRelationship>NEW</existingRelationship>
+          <budgetApprovalStatus>APPROVED</budgetApprovalStatus>
+          <procurementContact>
+            <firstName>Andreas</firstName>
+            <lastName>Papadopoulos</lastName>
+            <title>Chief Operating Officer</title>
+            <email>a.papadopoulos@meridianshipping.gr</email>
+            <department>Fleet Acquisition</department>
+          </procurementContact>
+        </organizationBuyer>
+        <fleetBuyer>
+          <isFleet>true</isFleet>
+          <fleetSize>9</fleetSize>
+          <unitsToOrder>1</unitsToOrder>
+          <fleetManagerName>Andreas Papadopoulos</fleetManagerName>
+          <fleetManagerEmail>a.papadopoulos@meridianshipping.gr</fleetManagerEmail>
+        </fleetBuyer>
+      </customer>
+
+      <desiredProduct>
+        <productType>MARITIME_VESSEL</productType>
+        <assetClass>MARITIME_VESSEL</assetClass>
+        <make>Hyundai Heavy Industries</make>
+        <model>4500 TEU Container Vessel</model>
+        <year>2027</year>
+        <condition>NEW</condition>
+        <budgetMin>60000000</budgetMin>
+        <budgetMax>72000000</budgetMax>
+        <currency>USD</currency>
+        <factoryOrderPreference>FACTORY_ORDER_ONLY</factoryOrderPreference>
+        <typeSpecificAttributes>
+          <vesselType>CONTAINER</vesselType>
+          <teuCapacity>4500</teuCapacity>
+          <grossTonnage>52000</grossTonnage>
+          <deadweightTonnage>64000</deadweightTonnage>
+          <overallLengthMm>294600</overallLengthMm>
+          <beamMm>32200</beamMm>
+          <scantlingDraughtMm>13500</scantlingDraughtMm>
+          <serviceSpeedKnots>21.5</serviceSpeedKnots>
+          <mainEngineMake>MAN Energy Solutions</mainEngineMake>
+          <mainEngineModel>MAN B&amp;W 8S80ME-C10.5</mainEngineModel>
+          <engineOutputKw>31640</engineOutputKw>
+          <fuelType>VLSFO_LNG_DUAL</fuelType>
+          <classificationSociety>LR</classificationSociety>
+          <flagState>MH</flagState>
+          <iceClass>NONE</iceClass>
+          <scrubberFitted>false</scrubberFitted>
+          <dualFuelReady>true</dualFuelReady>
+          <methanolReady>false</methanolReady>
+          <digitalTwinEnabled>true</digitalTwinEnabled>
+          <aisClass>A</aisClass>
+          <referFittings>500</referFittings>
+        </typeSpecificAttributes>
+      </desiredProduct>
+
+      <fleetOrder>
+        <quantity>1</quantity>
+        <totalBudgetCap>72000000</totalBudgetCap>
+        <currency>USD</currency>
+        <procurementReference>NMBI-RFQ-2025-MARIDIAN-001</procurementReference>
+        <preferredDeliveryWindow>Q4 2027</preferredDeliveryWindow>
+        <unitSpecifications>
+          <spec>
+            <quantity>1</quantity>
+            <configurationCode>HHI-4500TEU-DUAL-LNG-LR-V1</configurationCode>
+            <specificOptions>
+              <option>MAN-B-W-8S80ME-C10-5</option>
+              <option>DUAL_FUEL_LNG_VLSFO</option>
+              <option>DIGITAL_TWIN</option>
+              <option>500_REEFER_PLUGS</option>
+              <option>LR_CLASS</option>
+            </specificOptions>
+          </spec>
+        </unitSpecifications>
+      </fleetOrder>
+
+      <maritimeLead>
+        <charterType>TIME_CHARTER</charterType>
+        <intendedTradingArea>ASIA-EUROPE-TRANSPACIFIC</intendedTradingArea>
+        <intendedCargoType>DRY_CONTAINERS</intendedCargoType>
+      </maritimeLead>
+
+      <procurementFinancing>
+        <procurementType>ECA_BACKED_LOAN</procurementType>
+        <financingInstitution>Korea EXIM Bank</financingInstitution>
+        <ecaBody>KEXIM</ecaBody>
+        <loanToValuePct>80</loanToValuePct>
+        <downPaymentPct>20</downPaymentPct>
+        <loanTermYears>12</loanTermYears>
+        <estimatedFinancingAmount>54400000</estimatedFinancingAmount>
+        <currency>USD</currency>
+        <progressPayments>
+          <payment><milestone>CONTRACT</milestone><pct>5</pct><amountUsd>3400000</amountUsd></payment>
+          <payment><milestone>KEEL_LAID</milestone><pct>5</pct><amountUsd>3400000</amountUsd></payment>
+          <payment><milestone>LAUNCH</milestone><pct>5</pct><amountUsd>3400000</amountUsd></payment>
+          <payment><milestone>DELIVERY</milestone><pct>85</pct><amountUsd>57800000</amountUsd></payment>
+        </progressPayments>
+      </procurementFinancing>
+
+      <organizationContext>
+        <organizationId>ORG-NORDIC-MARITIME-BROKERS</organizationId>
+        <organizationName>Nordic Maritime Brokers International AS</organizationName>
+        <timezone>Europe/Oslo</timezone>
+        <region>EMEA</region>
+      </organizationContext>
+
+      <metadata>
+        <createdAt>2025-11-05T08:00:00Z</createdAt>
+        <updatedAt>2025-11-05T08:00:00Z</updatedAt>
+        <auditTrail>
+          <event>
+            <timestamp>2025-11-05T08:00:00Z</timestamp>
+            <action>LEAD_CREATED</action>
+            <changedBy>BROKER-NORDIC-MARITIME</changedBy>
+            <newValue>SHOPPING</newValue>
+          </event>
+        </auditTrail>
+      </metadata>
+    </lead>
+  </payload>
+
+</lex>
