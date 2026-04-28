@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --lex-primary: #4f46e5;
+    --lex-primary-dark: #4338ca;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased text-slate-800;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Navigation */
+  .nav-link {
+    @apply text-slate-600 hover:text-lex-600 font-medium text-sm transition-colors duration-150;
+  }
+
+  .nav-link-active {
+    @apply text-lex-600 font-semibold;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-lex-600 text-white font-semibold text-sm rounded-lg
+           hover:bg-lex-700 focus:outline-none focus:ring-2 focus:ring-lex-500 focus:ring-offset-2
+           transition-colors duration-150 shadow-sm;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 border border-slate-300 text-slate-700 font-semibold text-sm
+           rounded-lg hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2
+           transition-colors duration-150;
+  }
+
+  .btn-ghost-white {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 border-2 border-white/60 text-white font-semibold text-sm
+           rounded-lg hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2
+           focus:ring-white focus:ring-offset-2 focus:ring-offset-lex-700
+           transition-all duration-150;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-2xl border border-slate-200 shadow-sm p-6 hover:shadow-md transition-shadow duration-200;
+  }
+
+  .card-dark {
+    @apply bg-slate-800 rounded-2xl border border-slate-700 p-6 hover:border-slate-600 transition-colors duration-200;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-green {
+    @apply badge bg-emerald-100 text-emerald-700;
+  }
+
+  .badge-blue {
+    @apply badge bg-lex-100 text-lex-700;
+  }
+
+  .badge-slate {
+    @apply badge bg-slate-100 text-slate-600;
+  }
+
+  /* Code blocks */
+  .code-block {
+    @apply bg-slate-950 rounded-xl overflow-x-auto font-mono text-sm leading-relaxed;
+  }
+
+  .code-block pre {
+    @apply p-5 text-slate-200;
+  }
+
+  /* Section headings */
+  .section-label {
+    @apply text-xs font-bold uppercase tracking-widest text-lex-500;
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl font-bold text-slate-900 mt-2;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-slate-500 mt-4 max-w-2xl;
+  }
+
+  /* Tab buttons */
+  .tab-btn {
+    @apply px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-150;
+  }
+
+  .tab-btn-active {
+    @apply tab-btn bg-white text-lex-600 shadow-sm;
+  }
+
+  .tab-btn-inactive {
+    @apply tab-btn text-slate-500 hover:text-slate-700;
+  }
+
+  /* Conformance level card highlights */
+  .level-card-l1 {
+    @apply border-l-4 border-l-emerald-500;
+  }
+  .level-card-l2 {
+    @apply border-l-4 border-l-lex-500;
+  }
+  .level-card-l3 {
+    @apply border-l-4 border-l-violet-500;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-lex-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(rgba(99, 102, 241, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON Schemas — LEX Lead Exchange Standard</title>
+  <meta name="description" content="JSON Schema Draft-07 definitions for all LEX message types — LEAD, ASSET, ACKNOWLEDGMENT, SUBSCRIPTION, and LEAD_CLOSURE." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+</head>
+<body class="bg-white font-sans">
+
+  <!-- ── Navigation ─────────────────────────────────────────────────────── -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="../index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+        <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg">
+          <span class="text-white font-bold text-sm">L</span>
+        </span>
+        <span class="font-bold text-slate-900 text-lg">LEX</span>
+        <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6">
+        <a href="../index.html"            class="nav-link">Home</a>
+        <a href="../spec.html"             class="nav-link">Specification</a>
+        <a href="../getting-started.html"  class="nav-link">Get Started</a>
+        <a href="../industries.html"       class="nav-link">Industries</a>
+        <a href="../examples.html"         class="nav-link">Examples</a>
+        <a href="../conformance.html"      class="nav-link">Conformance</a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-4">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+          GitHub
+        </a>
+      </div>
+
+      <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-1">
+      <a href="../index.html"           class="block py-2 text-sm text-slate-700 hover:text-lex-600">Home</a>
+      <a href="../spec.html"            class="block py-2 text-sm text-slate-700 hover:text-lex-600">Specification</a>
+      <a href="../getting-started.html" class="block py-2 text-sm text-slate-700 hover:text-lex-600">Get Started</a>
+      <a href="../industries.html"      class="block py-2 text-sm text-slate-700 hover:text-lex-600">Industries</a>
+      <a href="../examples.html"        class="block py-2 text-sm text-slate-700 hover:text-lex-600">Examples</a>
+      <a href="../conformance.html"     class="block py-2 text-sm text-slate-700 hover:text-lex-600">Conformance</a>
+    </div>
+  </header>
+
+  <!-- ── Hero ───────────────────────────────────────────────────────────── -->
+  <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-lex-900 text-white py-16 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-medium mb-6">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        JSON Schema Draft-07
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">LEX JSON Schemas</h1>
+      <p class="text-slate-300 text-lg max-w-2xl mx-auto">
+        Formal schema definitions for every LEX message type. Use these with any JSON Schema
+        validator to enforce structure, validate payloads, and generate client code.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Main ───────────────────────────────────────────────────────────── -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+
+    <!-- Schema cards -->
+    <section>
+      <h2 class="text-xl font-bold text-slate-900 mb-1">Schema Files</h2>
+      <p class="text-slate-500 text-sm mb-6">All schemas are JSON Schema Draft-07. Click a card to view the raw JSON in a new tab.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+        <!-- LEX_MESSAGE_SCHEMA -->
+        <a href="LEX_MESSAGE_SCHEMA.json" class="card hover:border-lex-300 group" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-lex-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-lex-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="min-w-0">
+              <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">Message Envelope</p>
+              <p class="text-xs text-slate-500 mt-1">Root schema for all LEX messages — wraps every message type with common identity, routing, and versioning fields.</p>
+              <p class="font-mono text-xs text-slate-400 mt-2">LEX_MESSAGE_SCHEMA.json ↗</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- LEX_LEAD_SCHEMA -->
+        <a href="LEX_LEAD_SCHEMA.json" class="card hover:border-lex-300 group" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <div class="min-w-0">
+              <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">LEAD</p>
+              <p class="text-xs text-slate-500 mt-1">Consumer intent, contact details, asset specification, financing preferences, and trade-in information.</p>
+              <p class="font-mono text-xs text-slate-400 mt-2">LEX_LEAD_SCHEMA.json ↗</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- LEX_ASSET_SCHEMA -->
+        <a href="LEX_ASSET_SCHEMA.json" class="card hover:border-lex-300 group" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </div>
+            <div class="min-w-0">
+              <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">ASSET</p>
+              <p class="text-xs text-slate-500 mt-1">Detailed asset specification for all 18 asset classes across automotive, aviation, maritime, real estate, technology, and more.</p>
+              <p class="font-mono text-xs text-slate-400 mt-2">LEX_ASSET_SCHEMA.json ↗</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- LEX_ACKNOWLEDGMENT_SCHEMA -->
+        <a href="LEX_ACKNOWLEDGMENT_SCHEMA.json" class="card hover:border-lex-300 group" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="min-w-0">
+              <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">ACKNOWLEDGMENT</p>
+              <p class="text-xs text-slate-500 mt-1">Receipt confirmation, duplicate detection result, and validation errors returned by the receiving system.</p>
+              <p class="font-mono text-xs text-slate-400 mt-2">LEX_ACKNOWLEDGMENT_SCHEMA.json ↗</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- LEX_SUBSCRIPTION_SCHEMA -->
+        <a href="LEX_SUBSCRIPTION_SCHEMA.json" class="card hover:border-lex-300 group" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+            </div>
+            <div class="min-w-0">
+              <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">SUBSCRIPTION</p>
+              <p class="text-xs text-slate-500 mt-1">Lead-routing rules, push endpoint registration, filter predicates, and capability advertisement configuration.</p>
+              <p class="font-mono text-xs text-slate-400 mt-2">LEX_SUBSCRIPTION_SCHEMA.json ↗</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- LEX_LEAD_CLOSURE_SCHEMA -->
+        <a href="LEX_LEAD_CLOSURE_SCHEMA.json" class="card hover:border-lex-300 group" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-rose-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div class="min-w-0">
+              <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">LEAD_CLOSURE</p>
+              <p class="text-xs text-slate-500 mt-1">Outcome reporting — won, lost, or expired deals with financial summary and deal lineage for network analytics.</p>
+              <p class="font-mono text-xs text-slate-400 mt-2">LEX_LEAD_CLOSURE_SCHEMA.json ↗</p>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Usage section -->
+    <section class="mt-14">
+      <h2 class="text-xl font-bold text-slate-900 mb-1">Using the Schemas</h2>
+      <p class="text-slate-500 text-sm mb-6">All schemas target JSON Schema Draft-07 and can be used with any compliant validator.</p>
+
+      <!-- Language tabs -->
+      <div class="bg-slate-100 rounded-xl p-1 flex gap-1 mb-4 overflow-x-auto" data-tab-group="schema-usage" data-lang-group role="tablist">
+        <button class="tab-btn-active flex-shrink-0"   data-tab="schema-py"   data-lang="py"   role="tab" aria-selected="true">Python</button>
+        <button class="tab-btn-inactive flex-shrink-0" data-tab="schema-js"   data-lang="js"   role="tab" aria-selected="false">Node.js</button>
+        <button class="tab-btn-inactive flex-shrink-0" data-tab="schema-java" data-lang="java" role="tab" aria-selected="false">Java</button>
+        <button class="tab-btn-inactive flex-shrink-0" data-tab="schema-cs"   data-lang="cs"   role="tab" aria-selected="false">C#</button>
+      </div>
+
+      <div data-panel-group="schema-usage">
+        <div data-panel="schema-py" class="code-block">
+          <pre class="text-sm text-slate-200"><code><span class="text-lex-300">import</span> jsonschema, json
+
+schema  = json.<span class="text-amber-300">load</span>(<span class="text-amber-300">open</span>(<span class="text-emerald-400">"schemas/LEX_LEAD_SCHEMA.json"</span>))
+message = json.<span class="text-amber-300">load</span>(<span class="text-amber-300">open</span>(<span class="text-emerald-400">"my-lead.json"</span>))
+jsonschema.<span class="text-amber-300">validate</span>(message[<span class="text-emerald-400">"lex"</span>][<span class="text-emerald-400">"payload"</span>], schema)</code></pre>
+        </div>
+        <div data-panel="schema-js" class="hidden code-block">
+          <pre class="text-sm text-slate-200"><code><span class="text-lex-300">const</span> Ajv = <span class="text-amber-300">require</span>(<span class="text-emerald-400">"ajv"</span>);
+<span class="text-lex-300">const</span> ajv = <span class="text-lex-300">new</span> <span class="text-amber-300">Ajv</span>();
+
+<span class="text-lex-300">const</span> schema  = <span class="text-amber-300">require</span>(<span class="text-emerald-400">"./schemas/LEX_LEAD_SCHEMA.json"</span>);
+<span class="text-lex-300">const</span> message = <span class="text-amber-300">require</span>(<span class="text-emerald-400">"./my-lead.json"</span>);
+<span class="text-lex-300">const</span> valid   = ajv.<span class="text-amber-300">validate</span>(schema, message.lex.payload);</code></pre>
+        </div>
+        <div data-panel="schema-java" class="hidden code-block">
+          <pre class="text-sm text-slate-200"><code>SchemaLoader loader = SchemaLoader.<span class="text-amber-300">builder</span>()
+    .<span class="text-amber-300">schemaJson</span>(<span class="text-lex-300">new</span> <span class="text-amber-300">JSONObject</span>(Files.<span class="text-amber-300">readString</span>(
+        Path.<span class="text-amber-300">of</span>(<span class="text-emerald-400">"schemas/LEX_LEAD_SCHEMA.json"</span>))))
+    .<span class="text-amber-300">build</span>();
+loader.<span class="text-amber-300">load</span>().<span class="text-amber-300">build</span>().<span class="text-amber-300">validate</span>(payload);</code></pre>
+        </div>
+        <div data-panel="schema-cs" class="hidden code-block">
+          <pre class="text-sm text-slate-200"><code><span class="text-lex-300">var</span> schema = JsonSchema.<span class="text-amber-300">FromFile</span>(
+    <span class="text-emerald-400">"schemas/LEX_LEAD_SCHEMA.json"</span>);
+<span class="text-lex-300">var</span> errors = schema.<span class="text-amber-300">Validate</span>(jsonPayload);
+<span class="text-lex-300">bool</span> valid  = !errors.<span class="text-amber-300">Any</span>();</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related links -->
+    <section class="mt-14 pt-10 border-t border-slate-200">
+      <h2 class="text-xl font-bold text-slate-900 mb-6">Related Resources</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="../api/lex-openapi.yaml" class="card hover:border-lex-300 group" target="_blank" rel="noopener noreferrer">
+          <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">OpenAPI 3.1</p>
+          <p class="text-xs text-slate-500 mt-1">REST API definition — endpoints, request/response, and error codes.</p>
+          <p class="font-mono text-xs text-slate-400 mt-2">api/lex-openapi.yaml ↗</p>
+        </a>
+        <a href="../api/lex-asyncapi.yaml" class="card hover:border-lex-300 group" target="_blank" rel="noopener noreferrer">
+          <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">AsyncAPI 3.0</p>
+          <p class="text-xs text-slate-500 mt-1">Event-driven messaging — Kafka, AMQP, WebSocket, and webhook transports.</p>
+          <p class="font-mono text-xs text-slate-400 mt-2">api/lex-asyncapi.yaml ↗</p>
+        </a>
+        <a href="../spec.html" class="card hover:border-lex-300 group">
+          <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">Specification</p>
+          <p class="text-xs text-slate-500 mt-1">Full field dictionary, message types, conformance levels, and extension model.</p>
+          <p class="font-mono text-xs text-slate-400 mt-2">spec.html →</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="bg-slate-900 text-slate-400 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+        <div class="col-span-2 md:col-span-1">
+          <a href="../index.html" class="flex items-center gap-2 mb-4">
+            <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg"><span class="text-white font-bold text-sm">L</span></span>
+            <span class="font-bold text-white text-lg">LEX</span>
+          </a>
+          <p class="text-sm leading-relaxed">The open standard for modern lead exchange. MIT-licensed. No fees. No gatekeepers.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Standard</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="../spec.html"         class="hover:text-white transition-colors">Specification</a></li>
+            <li><a href="../spec.html#extensions" class="hover:text-white transition-colors">Extension Standard</a></li>
+            <li><a href="../conformance.html"  class="hover:text-white transition-colors">Conformance Levels</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Resources</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="../getting-started.html" class="hover:text-white transition-colors">Getting Started</a></li>
+            <li><a href="../examples.html"     class="hover:text-white transition-colors">Code Examples</a></li>
+            <li><a href="../industries.html"   class="hover:text-white transition-colors">Industry Coverage</a></li>
+            <li><a href="../examples.html#api" class="hover:text-white transition-colors">OpenAPI / AsyncAPI</a></li>
+            <li><a href="index.html"           class="text-white font-medium">JSON Schemas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Project</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub Repository</a></li>
+            <li><a href="../spec.html#core-spec"             class="hover:text-white transition-colors">Anti-Capture Clause</a></li>
+            <li><a href="https://github.com/lexstandard/lex/issues" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Issues &amp; Proposals</a></li>
+            <li><a href="https://github.com/lexstandard/lex/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">MIT License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+        <p>© 2026 LEX Contributors. Released under the <a href="https://github.com/lexstandard/lex/blob/main/LICENSE" class="text-lex-400 hover:text-lex-300 transition-colors" target="_blank" rel="noopener noreferrer">MIT License</a>.</p>
+        <p class="text-slate-600">No fees. No gatekeepers. No lock-in.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

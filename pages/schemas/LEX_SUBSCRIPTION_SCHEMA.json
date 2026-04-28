@@ -1,0 +1,401 @@
+﻿{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexstandard.org/schemas/v1/LEX_SUBSCRIPTION_SCHEMA.json",
+  "title": "LEX - SUBSCRIPTION Message Schema",
+  "description": "Schema for SUBSCRIPTION message type - event subscriptions and notification preferences",
+  "type": "object",
+  "required": ["payload"],
+  "properties": {
+    "payload": {
+      "type": "object",
+      "required": ["subscription"],
+      "properties": {
+        "subscription": {
+          "type": "object",
+          "required": [
+            "subscriptionId",
+            "subscriberId",
+            "status",
+            "eventTypes"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 50,
+              "description": "Unique subscription identifier"
+            },
+            "subscriberId": {
+              "type": "string",
+              "description": "ID of entity subscribing to events"
+            },
+            "subscriberName": {
+              "type": "string"
+            },
+            "subscriberType": {
+              "type": "string",
+              "enum": [
+                "DEALER",
+                "MANUFACTURER",
+                "DMS",
+                "PLATFORM",
+                "NETWORK",
+                "LEAD_SOURCE",
+                "ANALYTICS_PROVIDER",
+                "SYSTEM"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": ["ACTIVE", "PAUSED", "INACTIVE", "CANCELLED", "PENDING_CONFIRMATION"],
+              "description": "Current subscription status"
+            },
+            "createdDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "lastModified": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "expiryDate": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When subscription auto-expires"
+            },
+            "eventTypes": {
+              "type": "array",
+              "minItems": 1,
+              "description": "Event types to subscribe to",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "LEAD_RECEIVED",
+                  "LEAD_CREATED",
+                  "LEAD_UPDATED",
+                  "LEAD_STATUS_CHANGED",
+                  "LEAD_CLOSED",
+                  "LEAD_ASSIGNED",
+                  "LEAD_REASSIGNED",
+                  "ASSET_ADDED",
+                  "ASSET_UPDATED",
+                  "ASSET_SOLD",
+                  "ASSET_REMOVED",
+                  "MESSAGE_FAILED",
+                  "MESSAGE_PROCESSED",
+                  "VALIDATION_ERROR",
+                  "QUOTA_WARNING",
+                  "QUOTA_EXCEEDED",
+                  "MAINTENANCE_WINDOW",
+                  "SYSTEM_ALERT",
+                  "ANALYTICS_REPORT",
+                  "PERFORMANCE_ALERT",
+                  "ACKNOWLEDGMENT_RECEIVED"
+                ]
+              }
+            },
+            "filters": {
+              "type": "object",
+              "description": "Filters to narrow down events",
+              "properties": {
+                "productTypes": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/ProductType"
+                  },
+                  "description": "Subscribe only to these product types"
+                },
+                "assetClasses": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/AssetClass"
+                  }
+                },
+                "leadSources": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadSource"
+                  }
+                },
+                "leadStatuses": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/LeadStatus"
+                  }
+                },
+                "retailerIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Subscribe to events from specific retailers"
+                },
+                "manufacturerIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dmsIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "geographies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Subscribe to events from specific regions/countries"
+                },
+                "minimumLeadValue": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Only notify for leads above this value"
+                },
+                "customFilters": {
+                  "type": "object",
+                  "description": "Custom filter expressions",
+                  "additionalProperties": true
+                }
+              }
+            },
+            "deliveryMethods": {
+              "type": "array",
+              "description": "How to deliver notifications",
+              "items": {
+                "type": "object",
+                "required": ["method", "destination"],
+                "properties": {
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "WEBHOOK",
+                      "EMAIL",
+                      "SMS",
+                      "API_PUSH",
+                      "MESSAGE_QUEUE",
+                      "WEBSOCKET",
+                      "PULL_API"
+                    ]
+                  },
+                  "destination": {
+                    "type": "string",
+                    "description": "Where to send (URL, email, phone, queue name)"
+                  },
+                  "isActive": {
+                    "type": "boolean"
+                  },
+                  "retryPolicy": {
+                    "type": "object",
+                    "properties": {
+                      "maxRetries": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "backoffMs": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "timeoutMs": {
+                        "type": "integer",
+                        "minimum": 100
+                      }
+                    }
+                  },
+                  "headers": {
+                    "type": "object",
+                    "description": "Custom HTTP headers for webhook",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "authentication": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": ["NONE", "API_KEY", "OAUTH2", "BASIC", "BEARER"]
+                      },
+                      "credentials": {
+                        "type": "object",
+                        "additionalProperties": true
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "rateLimit": {
+              "type": "object",
+              "description": "Rate limiting for notifications",
+              "properties": {
+                "eventsPerSecond": {
+                  "type": "number",
+                  "minimum": 0.1
+                },
+                "eventsPerHour": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "eventsPerDay": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "batchSize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Batch events together"
+                },
+                "batchTimeoutMs": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "description": "Max wait before sending batch"
+                }
+              }
+            },
+            "notificationPreferences": {
+              "type": "object",
+              "description": "Notification behavior preferences",
+              "properties": {
+                "includePayload": {
+                  "type": "boolean",
+                  "description": "Include full message payload in notification"
+                },
+                "payloadFormat": {
+                  "type": "string",
+                  "enum": ["JSON", "XML", "SUMMARY"],
+                  "description": "Format for payload delivery"
+                },
+                "includeAuditTrail": {
+                  "type": "boolean"
+                },
+                "deduplicate": {
+                  "type": "boolean",
+                  "description": "Don't send duplicates within window"
+                },
+                "deduplicationWindowMs": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "timezone": {
+                  "type": "string",
+                  "description": "Timezone for scheduled notifications"
+                }
+              }
+            },
+            "quotas": {
+              "type": "object",
+              "description": "Usage quotas for subscription",
+              "properties": {
+                "monthlyEventLimit": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "currentMonthUsage": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "monthlyResetDate": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 31
+                }
+              }
+            },
+            "testMode": {
+              "type": "boolean",
+              "description": "When true, delivers test events instead of real"
+            },
+            "systemCapabilities": {
+              "$ref": "#/definitions/SystemCapabilities",
+              "description": "Optional capability advertisement for this system. Advisory only — never a routing gate. See specs/LEX_CAPABILITY_ADVERTISEMENT.md."
+            },
+            "organizationContext": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/OrganizationContext"
+            },
+            "metadata": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Metadata"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SystemCapabilities": {
+      "type": "object",
+      "description": "Capability advertisement for a LEX participant. Advisory only (CAP-RULE-1). See specs/LEX_CAPABILITY_ADVERTISEMENT.md.",
+      "required": ["lexVersion", "conformanceLevel", "supportedMessageTypes", "lastUpdated"],
+      "properties": {
+        "lexVersion": {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "description": "Highest LEX specification version the system can process (semver)."
+        },
+        "conformanceLevel": {
+          "type": "string",
+          "enum": ["L1", "L2", "L3"],
+          "description": "L1: basic LEAD processing. L2: L1 + data governance enforcement. L3: full block support + all formats."
+        },
+        "supportedMessageTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["LEAD", "ASSET", "ACKNOWLEDGMENT", "SUBSCRIPTION", "LEAD_CLOSURE"]
+          },
+          "minItems": 1,
+          "description": "Message types this system actively processes."
+        },
+        "supportedBlocks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Named payload blocks the system actively processes."
+        },
+        "unsupportedBlocks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Named payload blocks the system cannot process. Senders MAY omit these when targeting this receiver. Passthrough Obligation still applies."
+        },
+        "supportedFormats": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["JSON_EDI", "XML_EDI", "X12", "EDIFACT"]
+          },
+          "description": "Accepted serialization formats."
+        },
+        "maxMessageSizeKb": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum accepted message size in kilobytes."
+        },
+        "supportedExtensionNamespaces": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Extension namespaces from extensions[] this receiver will actively process. Unknown namespaces still travel per P4."
+        },
+        "realtimeCapable": {
+          "type": "boolean",
+          "description": "Whether the system accepts real-time push delivery."
+        },
+        "batchOnly": {
+          "type": "boolean",
+          "description": "If true, system only accepts batch delivery."
+        },
+        "preferredBatchInterval": {
+          "type": "string",
+          "description": "ISO 8601 duration. Preferred batch delivery cadence (e.g. PT15M = 15 minutes)."
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this capability record was last updated."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

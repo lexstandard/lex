@@ -1,0 +1,612 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started — LEX Lead Exchange Standard</title>
+  <meta name="description" content="Get up and running with LEX in minutes. Install the library for your language, send your first lead message, and validate responses." />
+  <meta name="keywords" content="ADF XML compatible, Auto Lead Data Format integration, ADF XML lead format, automotive lead integration, lead exchange implementation, DMS lead integration, CRM lead format, lead message format, open lead standard" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="LEX Contributors" />
+  <link rel="canonical" href="https://lexstandard.org/getting-started.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LEX Lead Exchange Standard" />
+  <meta property="og:url" content="https://lexstandard.org/getting-started.html" />
+  <meta property="og:title" content="Getting Started — LEX Lead Exchange Standard" />
+  <meta property="og:description" content="Get up and running with LEX in minutes. Install the library, send your first lead message, validate responses — in JS, Python, Java, or C#." />
+  <meta property="og:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@lexstandard" />
+  <meta name="twitter:title" content="Getting Started — LEX Lead Exchange Standard" />
+  <meta name="twitter:description" content="Install the LEX library and send your first lead in minutes. JS, Python, Java, C# supported." />
+  <meta name="twitter:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Resource hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script src="assets/js/analytics.js"></script>
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": "https://lexstandard.org/getting-started.html",
+    "name": "Getting Started with LEX Lead Exchange Standard",
+    "description": "Get up and running with LEX in minutes. Install the library for your language, send your first lead message, and validate responses.",
+    "url": "https://lexstandard.org/getting-started.html",
+    "inLanguage": "en-US",
+    "step": [
+      { "@type": "HowToStep", "name": "Install the LEX library", "text": "Install via npm, pip, Maven, or NuGet for your language." },
+      { "@type": "HowToStep", "name": "Build your first message", "text": "Construct a LEX LEAD message using the library builders." },
+      { "@type": "HowToStep", "name": "Validate the message", "text": "Validate against LEX schemas before sending." },
+      { "@type": "HowToStep", "name": "Send the message", "text": "Transmit via REST or webhook to your endpoint." }
+    ],
+    "isPartOf": { "@id": "https://lexstandard.org/#website" }
+  }
+  </script>
+</head>
+<body class="bg-white font-sans">
+
+  <!-- ── Navigation ──────────────────────────────────────────────────────── -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+        <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg">
+          <span class="text-white font-bold text-sm">L</span>
+        </span>
+        <span class="font-bold text-slate-900 text-lg">LEX</span>
+        <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html"           class="nav-link" data-nav-href="index.html">Home</a>
+        <a href="spec.html"            class="nav-link" data-nav-href="spec.html">Specification</a>
+        <a href="getting-started.html" class="nav-link nav-link-active" data-nav-href="getting-started.html">Get Started</a>
+        <a href="industries.html"      class="nav-link" data-nav-href="industries.html">Industries</a>
+        <a href="examples.html"        class="nav-link" data-nav-href="examples.html">Examples</a>
+        <a href="conformance.html"     class="nav-link" data-nav-href="conformance.html">Conformance</a>
+        <a href="edi-reference.html"   class="nav-link" data-nav-href="edi-reference.html">EDI Reference</a>
+        <a href="faq.html"             class="nav-link" data-nav-href="faq.html">FAQ</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-4">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+          GitHub
+        </a>
+      </div>
+      <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-1">
+      <a href="index.html"           class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Home</a>
+      <a href="spec.html"            class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Specification</a>
+      <a href="getting-started.html" class="block px-3 py-2 rounded-lg text-sm font-medium text-lex-600 bg-lex-50">Get Started</a>
+      <a href="industries.html"      class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Industries</a>
+      <a href="examples.html"        class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Examples</a>
+      <a href="conformance.html"     class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Conformance</a>
+      <a href="edi-reference.html"   class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">EDI Reference</a>
+      <a href="faq.html"             class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">FAQ</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Page Header ──────────────────────────────────────────────────── -->
+    <div class="bg-slate-50 border-b border-slate-200 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="section-label">Quick Start</p>
+        <h1 class="text-4xl font-bold text-slate-900 mt-2">Getting Started with LEX</h1>
+        <p class="mt-3 text-lg text-slate-500 max-w-3xl">
+          Send your first LEX message in under 5 minutes. Choose your language, install the library, and integrate with any endpoint that speaks LEX.
+        </p>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid lg:grid-cols-4 gap-12">
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-1">
+          <div class="sticky top-24 space-y-6">
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Steps</h3>
+              <ul class="space-y-1 text-sm">
+                <li><a href="#install" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">1. Install</a></li>
+                <li><a href="#first-message" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">2. First Message</a></li>
+                <li><a href="#validate" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">3. Validation</a></li>
+                <li><a href="#send" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">4. Send &amp; Receive</a></li>
+                <li><a href="#ack" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">5. Acknowledgments</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Libraries</h3>
+              <ul class="space-y-1 text-sm">
+                <li><a href="#js" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">JavaScript / Node.js</a></li>
+                <li><a href="#python" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Python</a></li>
+                <li><a href="#java" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Java</a></li>
+                <li><a href="#csharp" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">C# / .NET</a></li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <div class="lg:col-span-3 space-y-14">
+
+          <!-- Step 1: Install -->
+          <section id="install">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-7 h-7 bg-lex-600 text-white rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <h2 class="text-2xl font-bold text-slate-900">Install the Library</h2>
+            </div>
+            <p class="text-slate-600 text-sm mb-6">Libraries are compiled from the same Haxe source, providing identical validation rules and APIs across all four languages.</p>
+
+            <!-- Language tabs -->
+            <div class="bg-slate-100 rounded-xl p-1 flex gap-1 mb-4 overflow-x-auto" data-tab-group="install" data-lang-group role="tablist">
+              <button class="tab-btn-active flex-shrink-0" data-tab="install-js"     data-lang="js"   role="tab" aria-selected="true">JavaScript</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="install-py"   data-lang="py"   role="tab" aria-selected="false">Python</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="install-java" data-lang="java" role="tab" aria-selected="false">Java</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="install-cs"   data-lang="cs"   role="tab" aria-selected="false">C#</button>
+            </div>
+
+            <div data-panel-group="install">
+              <div data-panel="install-js" class="code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-slate-500"># npm</span>
+npm install @lexstandard/lex-js
+
+<span class="text-slate-500"># or yarn</span>
+yarn add @lexstandard/lex-js
+
+<span class="text-slate-500"># or use the pre-built bundle directly</span>
+<span class="text-slate-500"># download from lexstandard.org/libraries</span></code></pre>
+              </div>
+              <div data-panel="install-py" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-slate-500"># pip</span>
+pip install lexstandard
+
+<span class="text-slate-500"># or use the pre-built module directly</span>
+<span class="text-slate-500"># download from lexstandard.org/libraries</span></code></pre>
+              </div>
+              <div data-panel="install-java" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-slate-500">&lt;!-- Maven --&gt;</span>
+&lt;dependency&gt;
+  &lt;groupId&gt;io.lexstandard&lt;/groupId&gt;
+  &lt;artifactId&gt;lex-java&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+
+<span class="text-slate-500">// Gradle</span>
+implementation 'io.lexstandard:lex-java:1.0.0'
+
+<span class="text-slate-500">// or add the jar from lexstandard.org/libraries to classpath</span></code></pre>
+              </div>
+              <div data-panel="install-cs" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-slate-500"># NuGet</span>
+dotnet add package LexStandard
+
+<span class="text-slate-500"># or add the DLL from lexstandard.org/libraries to your project</span></code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 2: First Message -->
+          <section id="first-message">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-7 h-7 bg-lex-600 text-white rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <h2 class="text-2xl font-bold text-slate-900">Build Your First Lead Message</h2>
+            </div>
+            <p class="text-slate-600 text-sm mb-6">Every LEX message has the same envelope: a <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">header</code> with routing metadata and a <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">payload</code> with message-specific content.</p>
+
+            <div class="bg-slate-100 rounded-xl p-1 flex gap-1 mb-4 overflow-x-auto" data-tab-group="build" data-lang-group role="tablist">
+              <button class="tab-btn-active flex-shrink-0" data-tab="build-js"     data-lang="js"   role="tab" aria-selected="true">JavaScript</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="build-py"   data-lang="py"   role="tab" aria-selected="false">Python</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="build-java" data-lang="java" role="tab" aria-selected="false">Java</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="build-cs"   data-lang="cs"   role="tab" aria-selected="false">C#</button>
+            </div>
+
+            <div data-panel-group="build">
+              <div data-panel="build-js" class="code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">const</span> { LexClient } = <span class="text-amber-300">require</span>(<span class="text-emerald-400">'@lexstandard/lex-js'</span>);
+
+<span class="text-lex-300">const</span> client = <span class="text-lex-300">new</span> <span class="text-amber-300">LexClient</span>({
+  senderId:   <span class="text-emerald-400">'DEALER-001'</span>,
+  receiverId: <span class="text-emerald-400">'MANUFACTURER-ABC'</span>,
+});
+
+<span class="text-lex-300">const</span> lead = client.<span class="text-amber-300">createLead</span>({
+  status: <span class="text-emerald-400">'EXPRESSED_INTEREST'</span>,
+  customer: {
+    firstName: <span class="text-emerald-400">'Jane'</span>,
+    lastName:  <span class="text-emerald-400">'Smith'</span>,
+    email:     <span class="text-emerald-400">'jane.smith@example.com'</span>,
+    phone:     <span class="text-emerald-400">'+13125559876'</span>,
+  },
+  desiredProduct: {
+    make:  <span class="text-emerald-400">'Toyota'</span>,
+    model: <span class="text-emerald-400">'Camry'</span>,
+    year:  <span class="text-cyan-400">2026</span>,
+  },
+});</code></pre>
+              </div>
+              <div data-panel="build-py" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">from</span> lex_client <span class="text-lex-300">import</span> LexClient
+
+client = <span class="text-amber-300">LexClient</span>(
+    sender_id=<span class="text-emerald-400">"DEALER-001"</span>,
+    receiver_id=<span class="text-emerald-400">"MANUFACTURER-ABC"</span>,
+)
+
+lead = client.<span class="text-amber-300">create_lead</span>(
+    status=<span class="text-emerald-400">"EXPRESSED_INTEREST"</span>,
+    customer={
+        <span class="text-emerald-400">"first_name"</span>: <span class="text-emerald-400">"Jane"</span>,
+        <span class="text-emerald-400">"last_name"</span>:  <span class="text-emerald-400">"Smith"</span>,
+        <span class="text-emerald-400">"email"</span>:      <span class="text-emerald-400">"jane.smith@example.com"</span>,
+        <span class="text-emerald-400">"phone"</span>:      <span class="text-emerald-400">"+13125559876"</span>,
+    },
+    desired_product={
+        <span class="text-emerald-400">"make"</span>:  <span class="text-emerald-400">"Toyota"</span>,
+        <span class="text-emerald-400">"model"</span>: <span class="text-emerald-400">"Camry"</span>,
+        <span class="text-emerald-400">"year"</span>:  <span class="text-cyan-400">2026</span>,
+    },
+)</code></pre>
+              </div>
+              <div data-panel="build-java" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">import</span> io.lex.LexClient;
+<span class="text-lex-300">import</span> io.lex.model.*;
+
+LexClient client = <span class="text-lex-300">new</span> <span class="text-amber-300">LexClient</span>.<span class="text-amber-300">Builder</span>()
+    .senderId(<span class="text-emerald-400">"DEALER-001"</span>)
+    .receiverId(<span class="text-emerald-400">"MANUFACTURER-ABC"</span>)
+    .<span class="text-amber-300">build</span>();
+
+LeadMessage lead = <span class="text-lex-300">new</span> <span class="text-amber-300">LeadMessage</span>.<span class="text-amber-300">Builder</span>()
+    .status(<span class="text-emerald-400">"EXPRESSED_INTEREST"</span>)
+    .customer(<span class="text-lex-300">new</span> <span class="text-amber-300">Customer</span>.<span class="text-amber-300">Builder</span>()
+        .firstName(<span class="text-emerald-400">"Jane"</span>)
+        .lastName(<span class="text-emerald-400">"Smith"</span>)
+        .email(<span class="text-emerald-400">"jane.smith@example.com"</span>)
+        .phone(<span class="text-emerald-400">"+13125559876"</span>)
+        .<span class="text-amber-300">build</span>())
+    .<span class="text-amber-300">build</span>();</code></pre>
+              </div>
+              <div data-panel="build-cs" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">using</span> LexStandard;
+<span class="text-lex-300">using</span> LexStandard.Models;
+
+<span class="text-lex-300">var</span> client = <span class="text-lex-300">new</span> <span class="text-amber-300">LexClient</span>(<span class="text-lex-300">new</span> LexClientOptions {
+    SenderId   = <span class="text-emerald-400">"DEALER-001"</span>,
+    ReceiverId = <span class="text-emerald-400">"MANUFACTURER-ABC"</span>,
+});
+
+<span class="text-lex-300">var</span> lead = <span class="text-lex-300">new</span> <span class="text-amber-300">LeadMessage</span> {
+    Status   = LeadStatus.ExpressedInterest,
+    Customer = <span class="text-lex-300">new</span> Customer {
+        FirstName = <span class="text-emerald-400">"Jane"</span>,
+        LastName  = <span class="text-emerald-400">"Smith"</span>,
+        Email     = <span class="text-emerald-400">"jane.smith@example.com"</span>,
+        Phone     = <span class="text-emerald-400">"+13125559876"</span>,
+    },
+};</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 3: Validate -->
+          <section id="validate">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-7 h-7 bg-lex-600 text-white rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <h2 class="text-2xl font-bold text-slate-900">Validate Before Sending</h2>
+            </div>
+            <p class="text-slate-600 text-sm mb-4">The validation engine runs three layers: schema validation, business rule validation, and security checks. Always validate locally before sending to any endpoint.</p>
+
+            <div class="bg-slate-100 rounded-xl p-1 flex gap-1 mb-4 overflow-x-auto" data-tab-group="validate" data-lang-group role="tablist">
+              <button class="tab-btn-active flex-shrink-0"  data-tab="validate-js"   data-lang="js"   role="tab" aria-selected="true">JavaScript</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="validate-py"   data-lang="py"   role="tab" aria-selected="false">Python</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="validate-java" data-lang="java" role="tab" aria-selected="false">Java</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="validate-cs"   data-lang="cs"   role="tab" aria-selected="false">C#</button>
+            </div>
+
+            <div data-panel-group="validate" class="mb-6">
+              <div data-panel="validate-js" class="code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">const</span> result = client.<span class="text-amber-300">validate</span>(lead);
+
+<span class="text-lex-300">if</span> (!result.valid) {
+  result.errors.<span class="text-amber-300">forEach</span>(err =&gt; {
+    console.<span class="text-amber-300">error</span>(<span class="text-emerald-400">`[${err.severity}] ${err.field}: ${err.message}`</span>);
+    <span class="text-slate-500">// e.g. [CRITICAL] lead.customer.email: INVALID_EMAIL_FORMAT</span>
+  });
+}
+
+<span class="text-slate-500">// result shape</span>
+{
+  valid: <span class="text-cyan-400">false</span>,
+  errors: [{ field: <span class="text-emerald-400">'lead.customer.email'</span>, code: <span class="text-emerald-400">'INVALID_EMAIL_FORMAT'</span>,
+             message: <span class="text-emerald-400">'Email does not match RFC 5322'</span>, severity: <span class="text-emerald-400">'CRITICAL'</span>,
+             layer: <span class="text-emerald-400">'BUSINESS_RULES'</span> }]
+}</code></pre>
+              </div>
+              <div data-panel="validate-py" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code>result = client.<span class="text-amber-300">validate</span>(lead)
+
+<span class="text-lex-300">if not</span> result.valid:
+    <span class="text-lex-300">for</span> err <span class="text-lex-300">in</span> result.errors:
+        <span class="text-amber-300">print</span>(<span class="text-emerald-400">f"[{err['severity']}] {err['field']}: {err['message']}"</span>)
+        <span class="text-slate-500"># e.g. [CRITICAL] lead.customer.email: INVALID_EMAIL_FORMAT</span>
+
+<span class="text-slate-500"># result shape</span>
+{
+  <span class="text-emerald-400">"valid"</span>: <span class="text-cyan-400">False</span>,
+  <span class="text-emerald-400">"errors"</span>: [{ <span class="text-emerald-400">"field"</span>: <span class="text-emerald-400">"lead.customer.email"</span>, <span class="text-emerald-400">"code"</span>: <span class="text-emerald-400">"INVALID_EMAIL_FORMAT"</span>,
+               <span class="text-emerald-400">"message"</span>: <span class="text-emerald-400">"Email does not match RFC 5322"</span>, <span class="text-emerald-400">"severity"</span>: <span class="text-emerald-400">"CRITICAL"</span>,
+               <span class="text-emerald-400">"layer"</span>: <span class="text-emerald-400">"BUSINESS_RULES"</span> }]
+}</code></pre>
+              </div>
+              <div data-panel="validate-java" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-amber-300">ValidationResult</span> result = client.<span class="text-amber-300">validate</span>(lead);
+
+<span class="text-lex-300">if</span> (!result.<span class="text-amber-300">isValid</span>()) {
+    <span class="text-lex-300">for</span> (<span class="text-amber-300">ValidationError</span> err : result.<span class="text-amber-300">getErrors</span>()) {
+        System.err.<span class="text-amber-300">printf</span>(<span class="text-emerald-400">"[%s] %s: %s%n"</span>,
+            err.<span class="text-amber-300">getSeverity</span>(), err.<span class="text-amber-300">getField</span>(), err.<span class="text-amber-300">getMessage</span>());
+        <span class="text-slate-500">// e.g. [CRITICAL] lead.customer.email: INVALID_EMAIL_FORMAT</span>
+    }
+}
+
+<span class="text-slate-500">// ValidationResult methods</span>
+result.<span class="text-amber-300">isValid</span>();       <span class="text-slate-500">// false</span>
+err.<span class="text-amber-300">getField</span>();        <span class="text-slate-500">// "lead.customer.email"</span>
+err.<span class="text-amber-300">getCode</span>();         <span class="text-slate-500">// "INVALID_EMAIL_FORMAT"</span>
+err.<span class="text-amber-300">getSeverity</span>();     <span class="text-slate-500">// "CRITICAL"</span>
+err.<span class="text-amber-300">getLayer</span>();        <span class="text-slate-500">// "BUSINESS_RULES"</span></code></pre>
+              </div>
+              <div data-panel="validate-cs" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">var</span> result = client.<span class="text-amber-300">Validate</span>(lead);
+
+<span class="text-lex-300">if</span> (!result.Valid) {
+    <span class="text-lex-300">foreach</span> (<span class="text-lex-300">var</span> err <span class="text-lex-300">in</span> result.Errors) {
+        Console.Error.<span class="text-amber-300">WriteLine</span>(<span class="text-emerald-400">$"[{err.Severity}] {err.Field}: {err.Message}"</span>);
+        <span class="text-slate-500">// e.g. [CRITICAL] lead.customer.email: INVALID_EMAIL_FORMAT</span>
+    }
+}
+
+<span class="text-slate-500">// ValidationResult properties</span>
+result.Valid       <span class="text-slate-500">// false</span>
+err.Field          <span class="text-slate-500">// "lead.customer.email"</span>
+err.Code           <span class="text-slate-500">// "INVALID_EMAIL_FORMAT"</span>
+err.Severity       <span class="text-slate-500">// "CRITICAL"</span>
+err.Layer          <span class="text-slate-500">// "BUSINESS_RULES"</span></code></pre>
+              </div>
+            </div>
+
+            <!-- Three-layer validation explanation -->
+            <div class="grid sm:grid-cols-3 gap-4 text-sm">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <p class="font-semibold text-slate-800 mb-1">Layer 1: Schema</p>
+                <p class="text-slate-500 text-xs">Required fields, data types, enum values, and structural constraints.</p>
+              </div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <p class="font-semibold text-slate-800 mb-1">Layer 2: Business Rules</p>
+                <p class="text-slate-500 text-xs">Email (RFC 5322), phone (E.164), status transitions, financing terms, lead ancestry.</p>
+              </div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <p class="font-semibold text-slate-800 mb-1">Layer 3: Security</p>
+                <p class="text-slate-500 text-xs">Timestamp bounds (±60s), geographic compliance, PII field protections.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 4: Send -->
+          <section id="send">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-7 h-7 bg-lex-600 text-white rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <h2 class="text-2xl font-bold text-slate-900">Send and Serialize</h2>
+            </div>
+            <p class="text-slate-600 text-sm mb-6">LEX messages can be serialized to any of the four supported formats. Deserialize incoming messages with the built-in parsers.</p>
+
+            <div class="bg-slate-100 rounded-xl p-1 flex gap-1 mb-4 overflow-x-auto" data-tab-group="send" data-lang-group role="tablist">
+              <button class="tab-btn-active flex-shrink-0"  data-tab="send-js"   data-lang="js"   role="tab" aria-selected="true">JavaScript</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="send-py"   data-lang="py"   role="tab" aria-selected="false">Python</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="send-java" data-lang="java" role="tab" aria-selected="false">Java</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="send-cs"   data-lang="cs"   role="tab" aria-selected="false">C#</button>
+            </div>
+
+            <div data-panel-group="send" class="mb-4">
+              <div data-panel="send-js" class="code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">const</span> jsonString  = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">'json'</span>);
+<span class="text-lex-300">const</span> xmlString   = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">'xml'</span>);
+<span class="text-lex-300">const</span> x12String   = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">'x12'</span>);
+<span class="text-lex-300">const</span> edifactStr  = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">'edifact'</span>);
+
+<span class="text-slate-500">// Parsing incoming messages</span>
+<span class="text-lex-300">const</span> parsed = client.<span class="text-amber-300">parse</span>(rawJson, <span class="text-emerald-400">'json'</span>);
+<span class="text-lex-300">const</span> result = client.<span class="text-amber-300">validate</span>(parsed);
+
+<span class="text-slate-500">// HTTP delivery example (any transport works)</span>
+<span class="text-lex-300">await</span> <span class="text-amber-300">fetch</span>(<span class="text-emerald-400">'https://api.manufacturer.com/lex/v1/leads'</span>, {
+  method:  <span class="text-emerald-400">'POST'</span>,
+  headers: { <span class="text-emerald-400">'Content-Type'</span>: <span class="text-emerald-400">'application/json'</span> },
+  body:    jsonString,
+});</code></pre>
+              </div>
+              <div data-panel="send-py" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code>json_str    = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">"json"</span>)
+xml_str     = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">"xml"</span>)
+x12_str     = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">"x12"</span>)
+edifact_str = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">"edifact"</span>)
+
+<span class="text-slate-500"># Parsing incoming messages</span>
+parsed = client.<span class="text-amber-300">parse</span>(raw_json, <span class="text-emerald-400">"json"</span>)
+result = client.<span class="text-amber-300">validate</span>(parsed)
+
+<span class="text-slate-500"># HTTP delivery example (any transport works)</span>
+<span class="text-lex-300">import</span> requests
+requests.<span class="text-amber-300">post</span>(
+    <span class="text-emerald-400">"https://api.manufacturer.com/lex/v1/leads"</span>,
+    headers={<span class="text-emerald-400">"Content-Type"</span>: <span class="text-emerald-400">"application/json"</span>},
+    data=json_str,
+)</code></pre>
+              </div>
+              <div data-panel="send-java" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">String</span> jsonStr    = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">"json"</span>);
+<span class="text-lex-300">String</span> xmlStr     = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">"xml"</span>);
+<span class="text-lex-300">String</span> x12Str     = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">"x12"</span>);
+<span class="text-lex-300">String</span> edifactStr = client.<span class="text-amber-300">serialize</span>(lead, <span class="text-emerald-400">"edifact"</span>);
+
+<span class="text-slate-500">// Parsing incoming messages</span>
+<span class="text-amber-300">LexMessage</span> parsed = client.<span class="text-amber-300">parse</span>(rawJson, <span class="text-emerald-400">"json"</span>);
+<span class="text-amber-300">ValidationResult</span> result = client.<span class="text-amber-300">validate</span>(parsed);
+
+<span class="text-slate-500">// HTTP delivery example (any transport works)</span>
+<span class="text-amber-300">HttpClient</span> http = HttpClient.<span class="text-amber-300">newHttpClient</span>();
+<span class="text-amber-300">HttpRequest</span> req  = HttpRequest.<span class="text-amber-300">newBuilder</span>()
+    .<span class="text-amber-300">uri</span>(URI.<span class="text-amber-300">create</span>(<span class="text-emerald-400">"https://api.manufacturer.com/lex/v1/leads"</span>))
+    .<span class="text-amber-300">header</span>(<span class="text-emerald-400">"Content-Type"</span>, <span class="text-emerald-400">"application/json"</span>)
+    .<span class="text-amber-300">POST</span>(HttpRequest.BodyPublishers.<span class="text-amber-300">ofString</span>(jsonStr))
+    .<span class="text-amber-300">build</span>();
+http.<span class="text-amber-300">send</span>(req, HttpResponse.BodyHandlers.<span class="text-amber-300">ofString</span>());</code></pre>
+              </div>
+              <div data-panel="send-cs" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">var</span> jsonStr    = client.<span class="text-amber-300">Serialize</span>(lead, <span class="text-emerald-400">"json"</span>);
+<span class="text-lex-300">var</span> xmlStr     = client.<span class="text-amber-300">Serialize</span>(lead, <span class="text-emerald-400">"xml"</span>);
+<span class="text-lex-300">var</span> x12Str     = client.<span class="text-amber-300">Serialize</span>(lead, <span class="text-emerald-400">"x12"</span>);
+<span class="text-lex-300">var</span> edifactStr = client.<span class="text-amber-300">Serialize</span>(lead, <span class="text-emerald-400">"edifact"</span>);
+
+<span class="text-slate-500">// Parsing incoming messages</span>
+<span class="text-lex-300">var</span> parsed = client.<span class="text-amber-300">Parse</span>(rawJson, <span class="text-emerald-400">"json"</span>);
+<span class="text-lex-300">var</span> result = client.<span class="text-amber-300">Validate</span>(parsed);
+
+<span class="text-slate-500">// HTTP delivery example (any transport works)</span>
+<span class="text-lex-300">using var</span> http = <span class="text-lex-300">new</span> <span class="text-amber-300">HttpClient</span>();
+<span class="text-lex-300">await</span> http.<span class="text-amber-300">PostAsync</span>(
+    <span class="text-emerald-400">"https://api.manufacturer.com/lex/v1/leads"</span>,
+    <span class="text-lex-300">new</span> <span class="text-amber-300">StringContent</span>(jsonStr, Encoding.UTF8, <span class="text-emerald-400">"application/json"</span>));</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 5: ACK -->
+          <section id="ack">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="w-7 h-7 bg-lex-600 text-white rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <h2 class="text-2xl font-bold text-slate-900">Handle Acknowledgments</h2>
+            </div>
+            <p class="text-slate-600 text-sm mb-4">Every received LEAD must be responded to with an ACKNOWLEDGMENT message. The ACK may carry a validation result, an error list, or a simple RECEIVED status (Level 1).</p>
+
+            <div class="bg-slate-100 rounded-xl p-1 flex gap-1 mb-4 overflow-x-auto" data-tab-group="ack" data-lang-group role="tablist">
+              <button class="tab-btn-active flex-shrink-0"  data-tab="ack-js"   data-lang="js"   role="tab" aria-selected="true">JavaScript</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="ack-py"   data-lang="py"   role="tab" aria-selected="false">Python</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="ack-java" data-lang="java" role="tab" aria-selected="false">Java</button>
+              <button class="tab-btn-inactive flex-shrink-0" data-tab="ack-cs"   data-lang="cs"   role="tab" aria-selected="false">C#</button>
+            </div>
+
+            <div data-panel-group="ack" class="mb-6">
+              <div data-panel="ack-js" class="code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">const</span> ack = client.<span class="text-amber-300">createAck</span>({
+  correlationId:    incomingMessage.header.messageId,
+  status:           <span class="text-emerald-400">'RECEIVED'</span>,   <span class="text-slate-500">// or ACCEPTED | REJECTED</span>
+  validationResult: result,        <span class="text-slate-500">// pass validation outcome</span>
+});
+
+<span class="text-lex-300">await</span> <span class="text-amber-300">sendTo</span>(incomingMessage.header.senderId, ack);</code></pre>
+              </div>
+              <div data-panel="ack-py" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code>ack = client.<span class="text-amber-300">create_ack</span>(
+    correlation_id=incoming_message[<span class="text-emerald-400">"header"</span>][<span class="text-emerald-400">"messageId"</span>],
+    status=<span class="text-emerald-400">"RECEIVED"</span>,           <span class="text-slate-500"># or ACCEPTED | REJECTED</span>
+    validation_result=result,    <span class="text-slate-500"># pass validation outcome</span>
+)
+
+<span class="text-lex-300">await</span> <span class="text-amber-300">send_to</span>(incoming_message[<span class="text-emerald-400">"header"</span>][<span class="text-emerald-400">"senderId"</span>], ack)</code></pre>
+              </div>
+              <div data-panel="ack-java" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-amber-300">AckMessage</span> ack = client.<span class="text-amber-300">createAck</span>(<span class="text-lex-300">new</span> <span class="text-amber-300">AckOptions</span>()
+    .<span class="text-amber-300">correlationId</span>(incomingMessage.<span class="text-amber-300">getHeader</span>().<span class="text-amber-300">getMessageId</span>())
+    .<span class="text-amber-300">status</span>(<span class="text-emerald-400">"RECEIVED"</span>)              <span class="text-slate-500">// or ACCEPTED | REJECTED</span>
+    .<span class="text-amber-300">validationResult</span>(result)    <span class="text-slate-500">// pass validation outcome</span>
+    .<span class="text-amber-300">build</span>());
+
+<span class="text-amber-300">sendTo</span>(incomingMessage.<span class="text-amber-300">getHeader</span>().<span class="text-amber-300">getSenderId</span>(), ack);</code></pre>
+              </div>
+              <div data-panel="ack-cs" class="hidden code-block">
+                <pre class="text-sm text-slate-200"><code><span class="text-lex-300">var</span> ack = client.<span class="text-amber-300">CreateAck</span>(<span class="text-lex-300">new</span> AckOptions {
+    CorrelationId    = incomingMessage.Header.MessageId,
+    Status           = <span class="text-emerald-400">"RECEIVED"</span>,   <span class="text-slate-500">// or ACCEPTED | REJECTED</span>
+    ValidationResult = result,       <span class="text-slate-500">// pass validation outcome</span>
+});
+
+<span class="text-lex-300">await</span> <span class="text-amber-300">SendToAsync</span>(incomingMessage.Header.SenderId, ack);</code></pre>
+              </div>
+            </div>
+
+            <div class="p-5 bg-amber-50 border border-amber-200 rounded-xl">
+              <div class="flex gap-3">
+                <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div>
+                  <p class="font-semibold text-amber-800 text-sm">Level 1 Conformance Requirement</p>
+                  <p class="text-amber-700 text-xs mt-1">Every LEX receiver MUST send an ACKNOWLEDGMENT for every received LEAD message. Failure to ACK puts your integration below Level 1 conformance.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Next Steps -->
+          <section>
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">Next Steps</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <a href="spec.html" class="card hover:border-lex-300">
+                <p class="font-semibold text-slate-900 text-sm">Full Specification →</p>
+                <p class="text-xs text-slate-500 mt-1">Message types, field dictionary, all supporting specs.</p>
+              </a>
+              <a href="examples.html" class="card hover:border-lex-300">
+                <p class="font-semibold text-slate-900 text-sm">Code Examples →</p>
+                <p class="text-xs text-slate-500 mt-1">Complete sample messages in all four EDI formats.</p>
+              </a>
+              <a href="conformance.html" class="card hover:border-lex-300">
+                <p class="font-semibold text-slate-900 text-sm">Conformance Levels →</p>
+                <p class="text-xs text-slate-500 mt-1">Self-validate your implementation against L1, L2, or L3.</p>
+              </a>
+              <a href="industries.html" class="card hover:border-lex-300">
+                <p class="font-semibold text-slate-900 text-sm">Industry Coverage →</p>
+                <p class="text-xs text-slate-500 mt-1">Industry-specific extensions and example messages.</p>
+              </a>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="flex items-center justify-center w-6 h-6 bg-lex-600 rounded">
+          <span class="text-white font-bold text-xs">L</span>
+        </span>
+        <span class="font-semibold text-white">LEX</span>
+        <span class="text-slate-600">— Lead Exchange Standard</span>
+      </div>
+      <p>© 2026 LEX Contributors · <a href="https://github.com/lexstandard/lex/blob/main/LICENSE" class="text-lex-400 hover:text-lex-300" target="_blank" rel="noopener noreferrer">Apache 2.0 License</a></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

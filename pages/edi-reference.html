@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDI Format Reference — LEX Lead Exchange Standard</title>
+  <meta name="description" content="Complete field mapping reference for all four LEX EDI formats: JSON-EDI, XML-EDI, ASC X12 850, and EDIFACT ORDERS. Segment-level tables for every message section." />
+  <meta name="keywords" content="ADF XML fields, ADF field reference, Auto Lead Data Format fields, X12 850 lead fields, EDIFACT ORDERS segments, EDI lead field mapping, JSON EDI fields, automotive lead field reference" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="LEX Contributors" />
+  <link rel="canonical" href="https://lexstandard.org/edi-reference.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LEX Lead Exchange Standard" />
+  <meta property="og:url" content="https://lexstandard.org/edi-reference.html" />
+  <meta property="og:title" content="EDI Format Reference — LEX Lead Exchange Standard" />
+  <meta property="og:description" content="Complete field mapping reference for JSON-EDI, XML-EDI, ASC X12 850, and EDIFACT ORDERS. Segment-level tables for every message section." />
+  <meta property="og:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@lexstandard" />
+  <meta name="twitter:title" content="EDI Format Reference — LEX Lead Exchange Standard" />
+  <meta name="twitter:description" content="Complete field mapping tables for JSON-EDI, XML-EDI, X12 850, and EDIFACT ORDERS." />
+  <meta name="twitter:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Resource hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script src="assets/js/analytics.js"></script>
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": "https://lexstandard.org/edi-reference.html",
+    "name": "EDI Format Reference — LEX Lead Exchange Standard",
+    "headline": "Complete field mapping for JSON-EDI, XML-EDI, X12 850, and EDIFACT ORDERS",
+    "description": "Complete field mapping reference for all four LEX EDI formats: JSON-EDI, XML-EDI, ASC X12 850, and EDIFACT ORDERS. Segment-level tables for every message section.",
+    "url": "https://lexstandard.org/edi-reference.html",
+    "inLanguage": "en-US",
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Organization", "name": "LEX Contributors" },
+    "isPartOf": { "@id": "https://lexstandard.org/#website" }
+  }
+  </script>
+</head>
+<body class="bg-white font-sans">
+
+  <!-- ── Navigation ─────────────────────────────────────────────────────── -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+        <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg">
+          <span class="text-white font-bold text-sm">L</span>
+        </span>
+        <span class="font-bold text-slate-900 text-lg">LEX</span>
+        <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html"           class="nav-link" data-nav-href="index.html">Home</a>
+        <a href="spec.html"            class="nav-link" data-nav-href="spec.html">Specification</a>
+        <a href="getting-started.html" class="nav-link" data-nav-href="getting-started.html">Get Started</a>
+        <a href="industries.html"      class="nav-link" data-nav-href="industries.html">Industries</a>
+        <a href="examples.html"        class="nav-link" data-nav-href="examples.html">Examples</a>
+        <a href="conformance.html"     class="nav-link" data-nav-href="conformance.html">Conformance</a>
+        <a href="edi-reference.html"   class="nav-link nav-link-active" data-nav-href="edi-reference.html">EDI Reference</a>
+        <a href="faq.html"             class="nav-link" data-nav-href="faq.html">FAQ</a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-4">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+          GitHub
+        </a>
+      </div>
+
+      <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-1">
+      <a href="index.html"           class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Home</a>
+      <a href="spec.html"            class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Specification</a>
+      <a href="getting-started.html" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Get Started</a>
+      <a href="industries.html"      class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Industries</a>
+      <a href="examples.html"        class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Examples</a>
+      <a href="conformance.html"     class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Conformance</a>
+      <a href="edi-reference.html"   class="block px-3 py-2 rounded-lg text-sm font-medium text-lex-600 bg-lex-50">EDI Reference</a>
+      <a href="faq.html"             class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">FAQ</a>
+      <div class="pt-2 border-t border-slate-100">
+        <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">GitHub ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+  <!-- ── Page Header ────────────────────────────────────────────────────── -->
+  <div class="bg-slate-900 text-white pt-20 pb-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-lex-500/20 border border-lex-500/30 text-lex-300 text-xs font-medium mb-5 whitespace-nowrap">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"/></svg>
+        4 Formats · Same Data Model
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">EDI Format Reference</h1>
+      <p class="text-slate-300 text-lg max-w-3xl">
+        Field mapping tables for all four LEX wire formats — JSON-EDI, XML-EDI, ASC X12 850, and EDIFACT ORDERS.
+        Every format carries an identical data model; only the encoding changes.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3 text-sm">
+        <a href="#overview"  class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">Overview</a>
+        <a href="#formats"   class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">Format Reference</a>
+        <a href="#field-map" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors">Cross-Format Map</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-24 space-y-20">
+
+    <!-- ── Overview ───────────────────────────────────────────────────────── -->
+    <section id="overview" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold text-slate-900 mb-2">Format Overview</h2>
+      <p class="text-slate-500 text-sm mb-6">
+        LEX is format-agnostic. All four wire formats carry an identical data model — only the encoding differs.
+        For new implementations, use <strong class="text-slate-700">JSON-EDI</strong>. X12 850 and EDIFACT ORDERS are
+        <strong class="text-slate-700">legacy bridge formats</strong>: the LEX libraries parse them automatically and
+        convert them into a native LEX message, letting existing VAN/DMS/OEM pipelines interop with LEX without
+        rewriting their EDI stack.
+      </p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card border-lex-200 bg-lex-50/40">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="badge badge-blue">Recommended</span>
+          </div>
+          <p class="font-semibold text-slate-900 text-sm">JSON-EDI</p>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">Structured JSON with the <code class="font-mono text-xs bg-slate-100 px-1 rounded">lex</code> root key. Native format for REST, webhook, and cloud-native integrations. Human-readable, direct library support.</p>
+          <p class="font-mono text-xs text-slate-400 mt-3">Content-Type: application/json</p>
+        </div>
+        <div class="card">
+          <p class="font-semibold text-slate-900 text-sm">XML-EDI</p>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">XML envelope with <code class="font-mono text-xs bg-slate-100 px-1 rounded">&lt;lex&gt;</code> root element. Use for SOAP stacks, legacy middleware, and enterprise service buses.</p>
+          <p class="font-mono text-xs text-slate-400 mt-3">Content-Type: application/xml</p>
+        </div>
+        <div class="card border-amber-200 bg-amber-50/30">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="badge bg-amber-100 text-amber-700">Legacy Bridge</span>
+          </div>
+          <p class="font-semibold text-slate-900 text-sm">ASC X12 850</p>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">Supported as an input on-ramp for existing VAN/DMS pipelines. <code class="font-mono text-xs bg-slate-100 px-1 rounded">parseX12()</code> converts it to a native LEX message automatically. Not recommended for new builds.</p>
+          <p class="font-mono text-xs text-slate-400 mt-3">Transaction Set: ST*850</p>
+        </div>
+        <div class="card border-amber-200 bg-amber-50/30">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="badge bg-amber-100 text-amber-700">Legacy Bridge</span>
+          </div>
+          <p class="font-semibold text-slate-900 text-sm">EDIFACT ORDERS</p>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">Supported as an input on-ramp for OEM/international EDI systems. <code class="font-mono text-xs bg-slate-100 px-1 rounded">parseEdifact()</code> converts it to a native LEX message automatically. Not recommended for new builds.</p>
+          <p class="font-mono text-xs text-slate-400 mt-3">Message: ALXLDE:D:96A:UN</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── JSON-EDI ──────────────────────────────────────────────────────── -->
+    <section id="formats" class="scroll-mt-24">
+      <div class="bg-slate-100 rounded-xl p-1 flex gap-1 mb-6 overflow-x-auto" data-tab-group="edi-formats" data-fmt-group role="tablist">
+        <button class="tab-btn-active flex-shrink-0" data-tab="fmt-json" data-fmt="json" role="tab" aria-selected="true">
+          JSON-EDI <span class="ml-1.5 badge badge-blue">Recommended</span>
+        </button>
+        <button class="tab-btn-inactive flex-shrink-0" data-tab="fmt-xml" data-fmt="xml" role="tab" aria-selected="false">XML-EDI</button>
+        <button class="tab-btn-inactive flex-shrink-0" data-tab="fmt-x12" data-fmt="x12" role="tab" aria-selected="false">X12 850</button>
+        <button class="tab-btn-inactive flex-shrink-0" data-tab="fmt-edi" data-fmt="edi" role="tab" aria-selected="false">EDIFACT</button>
+      </div>
+      <div data-panel-group="edi-formats">
+        <div data-panel="fmt-json">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">JSON-EDI</h2>
+          <p class="text-slate-500 text-sm mt-1">Recommended format for REST, webhook, and cloud-native integrations.</p>
+        </div>
+        <span class="badge badge-blue flex-shrink-0">Recommended</span>
+      </div>
+
+      <!-- Envelope structure -->
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Message Envelope</h3>
+      <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-48">JSON Path</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-24">Type</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-20">Required</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">Description</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">lex.version</td><td class="px-4 py-3 text-xs text-slate-600">string</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Spec version — currently <code class="font-mono bg-slate-100 px-1 rounded">1.0.0</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">lex.header.messageId</td><td class="px-4 py-3 text-xs text-slate-600">UUID v4</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Globally unique message identifier. Used for idempotency and deduplication.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">lex.header.messageType</td><td class="px-4 py-3 text-xs text-slate-600">enum</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600"><code class="font-mono bg-slate-100 px-1 rounded">LEAD</code> · <code class="font-mono bg-slate-100 px-1 rounded">ASSET</code> · <code class="font-mono bg-slate-100 px-1 rounded">ACKNOWLEDGMENT</code> · <code class="font-mono bg-slate-100 px-1 rounded">SUBSCRIPTION</code> · <code class="font-mono bg-slate-100 px-1 rounded">LEAD_CLOSURE</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">lex.header.timestamp</td><td class="px-4 py-3 text-xs text-slate-600">ISO 8601</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">UTC creation time. Must end with <code class="font-mono bg-slate-100 px-1 rounded">Z</code>. Rejected if older than 7 days.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">lex.header.senderId</td><td class="px-4 py-3 text-xs text-slate-600">string</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Alphanumeric + hyphens. Identifies the originating organization or system.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">lex.header.receiverId</td><td class="px-4 py-3 text-xs text-slate-600">string</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Target organization. Use <code class="font-mono bg-slate-100 px-1 rounded">BROADCAST</code> for all subscribers.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">lex.header.correlationId</td><td class="px-4 py-3 text-xs text-slate-600">UUID v4</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">References the <code class="font-mono bg-slate-100 px-1 rounded">messageId</code> of a prior message — typically used in ACK and CLOSURE responses.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- LEAD payload -->
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">LEAD Payload — <code class="font-mono normal-case font-normal">lex.payload.lead.*</code></h3>
+      <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-52">Field</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-24">Type</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-20">Required</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">Notes</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">leadId</td><td class="px-4 py-3 text-xs text-slate-600">string</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Max 50 chars. Recommended format: <code class="font-mono bg-slate-100 px-1 rounded">LEAD-YYYY-XXXXXX</code>. Must be unique per sender.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">status</td><td class="px-4 py-3 text-xs text-slate-600">enum</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">15 values: <code class="font-mono bg-slate-100 px-1 rounded">CART · SHOPPING · EXPLORING · TRADE_IN · EXPRESSED_INTEREST · RESERVATION · APPOINTMENT_REQUEST · TEST_DRIVE_REQUESTED · TEST_DRIVE_COMPLETED · IN_NEGOTIATION · ORDER · ORDER_CONFIRMED · IN_DELIVERY · DELIVERED · ARCHIVED</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">source</td><td class="px-4 py-3 text-xs text-slate-600">enum</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600"><code class="font-mono bg-slate-100 px-1 rounded">RETAILER_WEBSITE · RETAILER_CRM · MANUFACTURER_WEBSITE · THIRD_PARTY_PORTAL · DIRECT_CALL · SHOWROOM · SOCIAL_MEDIA · EMAIL_CAMPAIGN · REFERRAL · OTHER</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.firstName</td><td class="px-4 py-3 text-xs text-slate-600">string</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Max 50 chars. Hyphens and apostrophes allowed.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.lastName</td><td class="px-4 py-3 text-xs text-slate-600">string</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Max 50 chars.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.email</td><td class="px-4 py-3 text-xs text-slate-600">string</td><td class="px-4 py-3"><span class="badge bg-amber-50 text-amber-700">Cond.</span></td><td class="px-4 py-3 text-xs text-slate-600">RFC 5322 format. Required unless <code class="font-mono bg-slate-100 px-1 rounded">phone</code> is present.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.phone</td><td class="px-4 py-3 text-xs text-slate-600">string</td><td class="px-4 py-3"><span class="badge bg-amber-50 text-amber-700">Cond.</span></td><td class="px-4 py-3 text-xs text-slate-600">E.164 format preferred: <code class="font-mono bg-slate-100 px-1 rounded">+13125551234</code>. Required unless <code class="font-mono bg-slate-100 px-1 rounded">email</code> is present.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.address</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Sub-fields: <code class="font-mono bg-slate-100 px-1 rounded">street1</code> (req) · <code class="font-mono bg-slate-100 px-1 rounded">street2</code> · <code class="font-mono bg-slate-100 px-1 rounded">city</code> (req) · <code class="font-mono bg-slate-100 px-1 rounded">state</code> · <code class="font-mono bg-slate-100 px-1 rounded">postalCode</code> (req) · <code class="font-mono bg-slate-100 px-1 rounded">country</code> ISO 3166-1 α-2 (req)</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.dateOfBirth</td><td class="px-4 py-3 text-xs text-slate-600">date</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">ISO 8601 date: <code class="font-mono bg-slate-100 px-1 rounded">YYYY-MM-DD</code>. PII — encrypted in transit.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.preferences</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Contact prefs: <code class="font-mono bg-slate-100 px-1 rounded">preferredContactMethod</code> · <code class="font-mono bg-slate-100 px-1 rounded">preferredContactTime</code> · <code class="font-mono bg-slate-100 px-1 rounded">doNotCall</code> · <code class="font-mono bg-slate-100 px-1 rounded">doNotEmail</code> · <code class="font-mono bg-slate-100 px-1 rounded">doNotText</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">desiredProduct</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Asset of interest. See <a href="spec.html" class="text-lex-600 hover:underline">Field Dictionary</a> for asset-class-specific sub-fields.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">tradeIn</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600"><code class="font-mono bg-slate-100 px-1 rounded">year · make · model · vin · mileage · condition · estimatedValue · odometerStatus · titleStatus · payoffAmount · payoffCurrency · previousOwnerCount · accidentHistory · vehicleHistoryReport</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">financing</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600"><code class="font-mono bg-slate-100 px-1 rounded">interestedInFinancing · preferredLoanTerm · downPaymentRange · creditTierPreference</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.creditTier</td><td class="px-4 py-3 text-xs text-slate-600">enum</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Pre-qualification credit tier. Values: <code class="font-mono bg-slate-100 px-1 rounded">SUPER_PRIME · PRIME · NEAR_PRIME · SUBPRIME · DEEP_SUBPRIME · UNKNOWN</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">customer.fleetBuyer</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Fleet purchase context. Sub-fields: <code class="font-mono bg-slate-100 px-1 rounded">isFleet · fleetSize · unitsToOrder · fleetManagerName · fleetManagerEmail</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">desiredProduct.installedOptions</td><td class="px-4 py-3 text-xs text-slate-600">array</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Dealer-installed or factory options requested. Each item: <code class="font-mono bg-slate-100 px-1 rounded">name (req) · source · partNumber · estimatedValue</code>. Source enum: <code class="font-mono bg-slate-100 px-1 rounded">FACTORY · DEALER_INSTALLED · AFTERMARKET · OEM_ACCESSORY</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">desiredProduct.factoryOrderPreference</td><td class="px-4 py-3 text-xs text-slate-600">enum</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Whether buyer prefers in-stock or factory-ordered unit. Values: <code class="font-mono bg-slate-100 px-1 rounded">IN_STOCK_ONLY · FACTORY_ORDER_PREFERRED · FACTORY_ORDER_ONLY · OEM_FACTORY · DEALER_STOCK_PREFERRED · EITHER</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">aviationLead</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Aviation-specific lead context. Sub-fields: <code class="font-mono bg-slate-100 px-1 rounded">operatorCertificate · intendedUse · currentRegistryCountry · targetRegistryCountry</code>. <code class="font-mono bg-slate-100 px-1 rounded">operatorCertificate</code> enum: PART_91 · PART_121 · PART_135 · EASA_AOC · PRIVATE.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">maritimeLead</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Maritime-specific lead context. Sub-fields: <code class="font-mono bg-slate-100 px-1 rounded">charterType · intendedTradingArea · intendedCargoType</code>. <code class="font-mono bg-slate-100 px-1 rounded">charterType</code> enum: BARE_BOAT · TIME_CHARTER · VOYAGE_CHARTER · DEMISE · NONE.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">heavyEquipmentLead</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Heavy equipment-specific lead context. Sub-fields: <code class="font-mono bg-slate-100 px-1 rounded">attachmentCouplerStandard · jobSiteAltitude · exportLicenseRequired · exportDestinationCountry</code>. Altitude in metres ASL — used for engine de-rating.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">realEstateLead</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Real estate-specific lead context. 26 sub-fields including: <code class="font-mono bg-slate-100 px-1 rounded">buyerRepresentationAgreementStatus · exchangeType · preApprovalAmount · contingencies[] · sellerConcessionsRequested · homeWarrantyCoveredBy · occupancyStatus · saleType · firstTimeBuyer · targetClosingDate · buyerAgentLicenseNumber</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">technologyLead</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Technology device/solution-specific lead context. Sub-fields: <code class="font-mono bg-slate-100 px-1 rounded">securityCertificationRequirements[] · evergreenRefreshTrigger · evergreenRefreshThresholdMonths · sustainabilityRequirements[] · conflictMineralsComplianceRequired</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">metadata.expirationDate</td><td class="px-4 py-3 text-xs text-slate-600">ISO 8601</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">UTC datetime. After this date the lead is auto-transitioned to <code class="font-mono bg-slate-100 px-1 rounded">ARCHIVED</code>.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">metadata.priority</td><td class="px-4 py-3 text-xs text-slate-600">enum</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600"><code class="font-mono bg-slate-100 px-1 rounded">LOW · NORMAL · HIGH · URGENT</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">metadata.customFields</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Freeform key-value map for implementation-specific data (e.g., <code class="font-mono bg-slate-100 px-1 rounded">salesRepId</code>, <code class="font-mono bg-slate-100 px-1 rounded">campaignCode</code>).</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">metadata.compliance</td><td class="px-4 py-3 text-xs text-slate-600">object</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Global privacy consent records (GDPR, UK GDPR, CCPA, DPDPA, PIPL, LGPD, POPIA, APPI, PDPA-SG, PIPEDA, PIPA-K, PDPL, PDPA-TH, nFADP): <code class="font-mono bg-slate-100 px-1 rounded">consentRecord · gdpr · ukGdpr · ccpa · dpdp · pipl · lgpd · popia · pipeda · pdpaSg · appi · nfadp · pipaKr · pdplSa · pdpaTh</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Example -->
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Minimal Valid Example</h3>
+      <div class="code-block">
+        <div class="flex items-center gap-2 px-5 pt-4 pb-2 border-b border-slate-800">
+          <span class="text-xs text-slate-500 font-mono">json-edi-lead.json (minimal)</span>
+          <span class="badge badge-blue ml-auto">Recommended</span>
+        </div>
+        <pre class="text-sm text-slate-200 overflow-x-auto"><code>{
+  <span class="text-cyan-400">"lex"</span>: {
+    <span class="text-cyan-400">"version"</span>: <span class="text-emerald-400">"1.0.0"</span>,
+    <span class="text-cyan-400">"header"</span>: {
+      <span class="text-cyan-400">"messageId"</span>:   <span class="text-emerald-400">"550e8400-e29b-41d4-a716-446655440000"</span>,
+      <span class="text-cyan-400">"messageType"</span>: <span class="text-emerald-400">"LEAD"</span>,
+      <span class="text-cyan-400">"timestamp"</span>:   <span class="text-emerald-400">"2026-03-23T14:30:00Z"</span>,
+      <span class="text-cyan-400">"senderId"</span>:    <span class="text-emerald-400">"DEALER-001"</span>,
+      <span class="text-cyan-400">"receiverId"</span>:  <span class="text-emerald-400">"MANUFACTURER-ABC"</span>
+    },
+    <span class="text-cyan-400">"payload"</span>: {
+      <span class="text-cyan-400">"lead"</span>: {
+        <span class="text-cyan-400">"leadId"</span>: <span class="text-emerald-400">"LEAD-2026-001234"</span>,
+        <span class="text-cyan-400">"status"</span>: <span class="text-emerald-400">"EXPRESSED_INTEREST"</span>,
+        <span class="text-cyan-400">"source"</span>: <span class="text-emerald-400">"RETAILER_WEBSITE"</span>,
+        <span class="text-cyan-400">"customer"</span>: {
+          <span class="text-cyan-400">"firstName"</span>: <span class="text-emerald-400">"Jane"</span>,
+          <span class="text-cyan-400">"lastName"</span>:  <span class="text-emerald-400">"Smith"</span>,
+          <span class="text-cyan-400">"email"</span>:     <span class="text-emerald-400">"jane.smith@example.com"</span>,
+          <span class="text-cyan-400">"address"</span>: {
+            <span class="text-cyan-400">"street1"</span>:    <span class="text-emerald-400">"123 Main Street"</span>,
+            <span class="text-cyan-400">"city"</span>:       <span class="text-emerald-400">"Springfield"</span>,
+            <span class="text-cyan-400">"postalCode"</span>: <span class="text-emerald-400">"62701"</span>,
+            <span class="text-cyan-400">"country"</span>:    <span class="text-emerald-400">"US"</span>
+          }
+        },
+        <span class="text-cyan-400">"desiredProduct"</span>: {
+          <span class="text-cyan-400">"make"</span>:  <span class="text-emerald-400">"Toyota"</span>,
+          <span class="text-cyan-400">"model"</span>: <span class="text-emerald-400">"Camry"</span>,
+          <span class="text-cyan-400">"year"</span>:  <span class="text-amber-300">2026</span>
+        }
+      }
+    }
+  }
+}</code></pre>
+      </div>
+        </div>
+
+        <!-- XML-EDI panel -->
+        <div data-panel="fmt-xml" class="hidden">
+      <h2 class="text-2xl font-bold text-slate-900 mb-2">XML-EDI</h2>
+      <p class="text-slate-500 text-sm mb-6">Compatible with SOAP stacks, enterprise service buses, and legacy middleware. Element names mirror JSON field names in PascalCase.</p>
+
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Element Mapping</h3>
+      <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-52">XML Element</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-52">JSON Equivalent</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-20">Required</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">Notes</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;lex version="1.0.0"&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">lex.version</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Root element. Version is an XML attribute.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Header&gt;&lt;MessageId&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.messageId</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">UUID v4 as text content.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Header&gt;&lt;MessageType&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.messageType</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Enum value as text content.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Header&gt;&lt;Timestamp&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.timestamp</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">ISO 8601 UTC — <code class="font-mono bg-slate-100 px-1 rounded">2026-03-23T14:30:00Z</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Header&gt;&lt;SenderId&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.senderId</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600"></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Header&gt;&lt;ReceiverId&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.receiverId</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600"></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Payload&gt;&lt;Lead&gt;&lt;LeadId&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">payload.lead.leadId</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600"></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Lead&gt;&lt;Status&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">payload.lead.status</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Same enum values as JSON.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Customer&gt;&lt;FirstName&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer.firstName</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600"></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;Customer&gt;&lt;Email&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer.email</td><td class="px-4 py-3"><span class="badge bg-amber-50 text-amber-700">Cond.</span></td><td class="px-4 py-3 text-xs text-slate-600">Required unless <code class="font-mono bg-slate-100 px-1 rounded">&lt;Phone&gt;</code> present. Empty element <code class="font-mono bg-slate-100 px-1 rounded">&lt;Email/&gt;</code> treated as absent.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;DesiredVehicle&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">desiredProduct</td><td class="px-4 py-3"><span class="badge bg-rose-50 text-rose-700">Yes</span></td><td class="px-4 py-3 text-xs text-slate-600">Automotive variant. Use <code class="font-mono bg-slate-100 px-1 rounded">&lt;DesiredAsset&gt;</code> for non-vehicle asset classes.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">&lt;CustomFields&gt;&lt;Field name="…"&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-500">metadata.customFields</td><td class="px-4 py-3"><span class="badge bg-slate-100 text-slate-600">No</span></td><td class="px-4 py-3 text-xs text-slate-600">Key is the <code class="font-mono bg-slate-100 px-1 rounded">name</code> attribute; value is element text content.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Minimal Valid Example</h3>
+      <div class="code-block">
+        <div class="flex items-center px-5 pt-4 pb-2 border-b border-slate-800">
+          <span class="text-xs text-slate-500 font-mono">xml-edi-lead.xml (minimal)</span>
+        </div>
+        <pre class="text-sm text-slate-200 overflow-x-auto"><code><span class="text-slate-400">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="text-cyan-400">&lt;lex</span> <span class="text-amber-400">version</span>=<span class="text-emerald-400">"1.0.0"</span> <span class="text-amber-400">xmlns</span>=<span class="text-emerald-400">"https://lexstandard.org/schema/1.0"</span><span class="text-cyan-400">&gt;</span>
+  <span class="text-cyan-400">&lt;Header&gt;</span>
+    <span class="text-cyan-400">&lt;MessageId&gt;</span>550e8400-e29b-41d4-a716-446655440000<span class="text-cyan-400">&lt;/MessageId&gt;</span>
+    <span class="text-cyan-400">&lt;MessageType&gt;</span><span class="text-emerald-400">LEAD</span><span class="text-cyan-400">&lt;/MessageType&gt;</span>
+    <span class="text-cyan-400">&lt;Timestamp&gt;</span>2026-03-23T14:30:00Z<span class="text-cyan-400">&lt;/Timestamp&gt;</span>
+    <span class="text-cyan-400">&lt;SenderId&gt;</span>DEALER-001<span class="text-cyan-400">&lt;/SenderId&gt;</span>
+    <span class="text-cyan-400">&lt;ReceiverId&gt;</span>MANUFACTURER-ABC<span class="text-cyan-400">&lt;/ReceiverId&gt;</span>
+  <span class="text-cyan-400">&lt;/Header&gt;</span>
+  <span class="text-cyan-400">&lt;Payload&gt;</span>
+    <span class="text-cyan-400">&lt;Lead&gt;</span>
+      <span class="text-cyan-400">&lt;LeadId&gt;</span>LEAD-2026-001234<span class="text-cyan-400">&lt;/LeadId&gt;</span>
+      <span class="text-cyan-400">&lt;Status&gt;</span><span class="text-emerald-400">EXPRESSED_INTEREST</span><span class="text-cyan-400">&lt;/Status&gt;</span>
+      <span class="text-cyan-400">&lt;Source&gt;</span><span class="text-emerald-400">RETAILER_WEBSITE</span><span class="text-cyan-400">&lt;/Source&gt;</span>
+      <span class="text-cyan-400">&lt;Customer&gt;</span>
+        <span class="text-cyan-400">&lt;FirstName&gt;</span>Jane<span class="text-cyan-400">&lt;/FirstName&gt;</span>
+        <span class="text-cyan-400">&lt;LastName&gt;</span>Smith<span class="text-cyan-400">&lt;/LastName&gt;</span>
+        <span class="text-cyan-400">&lt;Email&gt;</span>jane.smith@example.com<span class="text-cyan-400">&lt;/Email&gt;</span>
+        <span class="text-cyan-400">&lt;Address&gt;</span>
+          <span class="text-cyan-400">&lt;Street1&gt;</span>123 Main Street<span class="text-cyan-400">&lt;/Street1&gt;</span>
+          <span class="text-cyan-400">&lt;City&gt;</span>Springfield<span class="text-cyan-400">&lt;/City&gt;</span>
+          <span class="text-cyan-400">&lt;PostalCode&gt;</span>62701<span class="text-cyan-400">&lt;/PostalCode&gt;</span>
+          <span class="text-cyan-400">&lt;Country&gt;</span>US<span class="text-cyan-400">&lt;/Country&gt;</span>
+        <span class="text-cyan-400">&lt;/Address&gt;</span>
+      <span class="text-cyan-400">&lt;/Customer&gt;</span>
+      <span class="text-cyan-400">&lt;DesiredVehicle&gt;</span>
+        <span class="text-cyan-400">&lt;Make&gt;</span>Toyota<span class="text-cyan-400">&lt;/Make&gt;</span>
+        <span class="text-cyan-400">&lt;Model&gt;</span>Camry<span class="text-cyan-400">&lt;/Model&gt;</span>
+        <span class="text-cyan-400">&lt;Year&gt;</span>2026<span class="text-cyan-400">&lt;/Year&gt;</span>
+      <span class="text-cyan-400">&lt;/DesiredVehicle&gt;</span>
+    <span class="text-cyan-400">&lt;/Lead&gt;</span>
+  <span class="text-cyan-400">&lt;/Payload&gt;</span>
+<span class="text-cyan-400">&lt;/lex&gt;</span></code></pre>
+      </div>
+        </div>
+
+    <!-- ── X12 850 ────────────────────────────────────────────────────────── -->
+        <div data-panel="fmt-x12" class="hidden">
+      <h2 class="text-2xl font-bold text-slate-900 mb-2">ASC X12 850 — Purchase Order</h2>
+      <p class="text-slate-500 text-sm mb-6">X12 transaction set 850 repurposed for lead exchange. Required for VAN-based EDI pipelines, legacy DMS integrations, and US-market automotive supply chains.</p>
+
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Interchange &amp; Group Envelope</h3>
+      <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-28">Segment</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-28">Element</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-52">LEX Field</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">Notes</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">ISA</td><td class="px-4 py-3 font-mono text-xs text-slate-600">ISA06</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.senderId</td><td class="px-4 py-3 text-xs text-slate-600">Left-padded to 15 chars with spaces.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">ISA</td><td class="px-4 py-3 font-mono text-xs text-slate-600">ISA08</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.receiverId</td><td class="px-4 py-3 text-xs text-slate-600">Left-padded to 15 chars with spaces.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">ISA</td><td class="px-4 py-3 font-mono text-xs text-slate-600">ISA09 / ISA10</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.timestamp</td><td class="px-4 py-3 text-xs text-slate-600">Date: <code class="font-mono bg-slate-100 px-1 rounded">YYMMDD</code> · Time: <code class="font-mono bg-slate-100 px-1 rounded">HHMM</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">GS</td><td class="px-4 py-3 font-mono text-xs text-slate-600">GS01</td><td class="px-4 py-3 font-mono text-xs text-slate-500">— (fixed)</td><td class="px-4 py-3 text-xs text-slate-600">Functional ID code: <code class="font-mono bg-slate-100 px-1 rounded">ALX</code> for LEX messages.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">ST</td><td class="px-4 py-3 font-mono text-xs text-slate-600">ST01</td><td class="px-4 py-3 font-mono text-xs text-slate-500">— (fixed)</td><td class="px-4 py-3 text-xs text-slate-600">Transaction set: <code class="font-mono bg-slate-100 px-1 rounded">850</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">ST</td><td class="px-4 py-3 font-mono text-xs text-slate-600">ST03</td><td class="px-4 py-3 font-mono text-xs text-slate-500">— (fixed)</td><td class="px-4 py-3 text-xs text-slate-600">Implementation convention: <code class="font-mono bg-slate-100 px-1 rounded">ALX001</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Transaction Body Segments</h3>
+      <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-28">Segment</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-40">Qualifier / Element</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-52">LEX Field</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">Notes</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">BEG</td><td class="px-4 py-3 font-mono text-xs text-slate-600">BEG03</td><td class="px-4 py-3 font-mono text-xs text-slate-500">lead.leadId</td><td class="px-4 py-3 text-xs text-slate-600">Purchase order number carries the lead ID.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">BEG</td><td class="px-4 py-3 font-mono text-xs text-slate-600">BEG02 = <code class="bg-slate-100 px-1 rounded">LE</code></td><td class="px-4 py-3 font-mono text-xs text-slate-500">messageType = LEAD</td><td class="px-4 py-3 text-xs text-slate-600">Order type code <code class="font-mono bg-slate-100 px-1 rounded">LE</code> designates a LEX LEAD message.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">DTM*137</td><td class="px-4 py-3 font-mono text-xs text-slate-600">DTM02 / DTM03</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.timestamp</td><td class="px-4 py-3 text-xs text-slate-600">Date qualifier 137 = Creation date. Format 107 = CCYYMMDD:HHMMSS.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">DTM*039</td><td class="px-4 py-3 font-mono text-xs text-slate-600">DTM02 / DTM03</td><td class="px-4 py-3 font-mono text-xs text-slate-500">metadata.expirationDate</td><td class="px-4 py-3 text-xs text-slate-600">Date qualifier 039 = Expiration date.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">N1*01</td><td class="px-4 py-3 font-mono text-xs text-slate-600">N102</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.senderId</td><td class="px-4 py-3 text-xs text-slate-600">Entity code 01 = Sender.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">N1*SH</td><td class="px-4 py-3 font-mono text-xs text-slate-600">N102</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.receiverId</td><td class="px-4 py-3 text-xs text-slate-600">Entity code SH = Ship-from (receiver in LEX context).</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">NM1*IL</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NM103 / NM104</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer.lastName / firstName</td><td class="px-4 py-3 text-xs text-slate-600">Entity code IL = Individual. NM108=EM for email; NM109=email value.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">NM1*IL</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NM108=TE / NM109</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer.phone</td><td class="px-4 py-3 text-xs text-slate-600">Communication qualifier TE = Telephone.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">N3</td><td class="px-4 py-3 font-mono text-xs text-slate-600">N301 / N302</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer.address.street1 / street2</td><td class="px-4 py-3 text-xs text-slate-600">Caret <code class="font-mono bg-slate-100 px-1 rounded">^</code> separates street1 and street2 within N301.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">N4</td><td class="px-4 py-3 font-mono text-xs text-slate-600">N401–N404</td><td class="px-4 py-3 font-mono text-xs text-slate-500">city / state / postalCode / country</td><td class="px-4 py-3 text-xs text-slate-600">In order: city, state (2-letter), ZIP, country ISO code.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">IT1*VC</td><td class="px-4 py-3 font-mono text-xs text-slate-600">IT106=VC, IT107=year, IT108=model, IT109=trim</td><td class="px-4 py-3 font-mono text-xs text-slate-500">desiredProduct (vehicle)</td><td class="px-4 py-3 text-xs text-slate-600">Product/service qualifier VC = Vehicle. Multiple IT1 lines for multiple trims.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">IT1*VT</td><td class="px-4 py-3 font-mono text-xs text-slate-600">IT106=VT, IT107=year, IT108=model</td><td class="px-4 py-3 font-mono text-xs text-slate-500">tradeIn vehicle</td><td class="px-4 py-3 text-xs text-slate-600">Product qualifier VT = Vehicle Trade-in.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">PID</td><td class="px-4 py-3 font-mono text-xs text-slate-600">PID05</td><td class="px-4 py-3 font-mono text-xs text-slate-500">desiredProduct features</td><td class="px-4 py-3 text-xs text-slate-600">Free-form product description per feature. One PID per feature.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">PRI*01</td><td class="px-4 py-3 font-mono text-xs text-slate-600">PRI02</td><td class="px-4 py-3 font-mono text-xs text-slate-500">financing.downPaymentRange.minUSD</td><td class="px-4 py-3 text-xs text-slate-600">Price qualifier 01 = Minimum price.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">PRI*02</td><td class="px-4 py-3 font-mono text-xs text-slate-600">PRI02</td><td class="px-4 py-3 font-mono text-xs text-slate-500">financing.downPaymentRange.maxUSD</td><td class="px-4 py-3 text-xs text-slate-600">Price qualifier 02 = Maximum price.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">REF*LR</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF02</td><td class="px-4 py-3 font-mono text-xs text-slate-500">lead.status</td><td class="px-4 py-3 text-xs text-slate-600">Reference qualifier LR = Lead Reference. Value is the status enum.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">REF*LS</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF02</td><td class="px-4 py-3 font-mono text-xs text-slate-500">lead.source</td><td class="px-4 py-3 text-xs text-slate-600">Reference qualifier LS = Lead Source.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">REF*SR</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF02</td><td class="px-4 py-3 font-mono text-xs text-slate-500">metadata.customFields.salesRepId</td><td class="px-4 py-3 text-xs text-slate-600">Reference qualifier SR = Sales Representative ID.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">REF*PK</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF02</td><td class="px-4 py-3 font-mono text-xs text-slate-500">metadata.customFields.campaignCode</td><td class="px-4 py-3 text-xs text-slate-600">Reference qualifier PK = Promotion / campaign code.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">MEA*OT*LB</td><td class="px-4 py-3 font-mono text-xs text-slate-600">MEA03</td><td class="px-4 py-3 font-mono text-xs text-slate-500">tradeIn.mileage</td><td class="px-4 py-3 text-xs text-slate-600">Measurement qualifier OT = Other, LB = trade-in mileage in this context.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">SAC*C</td><td class="px-4 py-3 font-mono text-xs text-slate-600">SAC05</td><td class="px-4 py-3 font-mono text-xs text-slate-500">financing incentives</td><td class="px-4 py-3 text-xs text-slate-600">Service/accessory code C = Credit. SAC15 carries description (e.g., <code class="font-mono bg-slate-100 px-1 rounded">HYBRID VEHICLE INCENTIVE</code>).</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">CTT</td><td class="px-4 py-3 font-mono text-xs text-slate-600">CTT01</td><td class="px-4 py-3 font-mono text-xs text-slate-500">— (control)</td><td class="px-4 py-3 text-xs text-slate-600">Line item count. Must match number of IT1 segments.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Example Transmission</h3>
+      <div class="code-block">
+        <div class="flex items-center px-5 pt-4 pb-2 border-b border-slate-800">
+          <span class="text-xs text-slate-500 font-mono">x12-lead.txt</span>
+        </div>
+        <pre class="text-sm text-slate-200 overflow-x-auto"><code>ISA*00*          *00*          *01*DEALER      *01*MANUFACTURER*260323*143000*^*00001*000000001*0*P*:
+GS*ALX*DEALER*MANUFACTURER*20260323*143000*1*X*001
+ST*850*0001*ALX001
+BEG*00*LE*LEAD-2026-001234**20260323
+DTM*137*20260323*143000*107
+DTM*039*20260423*143000*107
+N1*01*DEALER-001
+N1*SH*MANUFACTURER-ABC
+NM1*IL*1*DOE*JOHN***JOHN.DOE@EXAMPLE.COM*TE*13125551234
+N3*123 MAIN STREET^SUITE 100
+N4*SPRINGFIELD*IL*62701*US
+IT1**1*EA*0***VC*2026*CAMRY*LE
+PID*F****HYBRID
+PID*F****LEATHER INTERIOR
+PRI*01*25000
+PRI*02*35000
+REF*LR*EXPRESSED_INTEREST
+REF*LS*RETAILER_WEBSITE
+REF*SR*SR-456
+CTT*1
+SE*19*0001
+GE*1*1
+IEA*1*000000001</code></pre>
+      </div>
+        </div>
+
+    <!-- ── EDIFACT ────────────────────────────────────────────────────────── -->
+        <div data-panel="fmt-edi" class="hidden">
+      <h2 class="text-2xl font-bold text-slate-900 mb-2">EDIFACT ORDERS (ALXLDE)</h2>
+      <p class="text-slate-500 text-sm mb-6">UN/EDIFACT D:96A ORDERS message adapted for LEX. Required for EU integrations, IATA aviation supply chains, and maritime logistics.</p>
+
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Segment Reference</h3>
+      <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-36">Segment</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-36">Composite / Element</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-52">LEX Field</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">Notes</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">UNB</td><td class="px-4 py-3 font-mono text-xs text-slate-600">S002 / S003</td><td class="px-4 py-3 font-mono text-xs text-slate-500">senderId / receiverId</td><td class="px-4 py-3 text-xs text-slate-600">Interchange header. Sender in S002.1, receiver in S003.1.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">UNB</td><td class="px-4 py-3 font-mono text-xs text-slate-600">S004</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.timestamp</td><td class="px-4 py-3 text-xs text-slate-600">Date <code class="font-mono bg-slate-100 px-1 rounded">YYMMDD</code> in S004.1, time <code class="font-mono bg-slate-100 px-1 rounded">HHMM</code> in S004.2.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">UNH</td><td class="px-4 py-3 font-mono text-xs text-slate-600">0062</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.messageId</td><td class="px-4 py-3 text-xs text-slate-600">Message reference number — use UUID v4.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">UNH</td><td class="px-4 py-3 font-mono text-xs text-slate-600">S009</td><td class="px-4 py-3 font-mono text-xs text-slate-500">— (fixed)</td><td class="px-4 py-3 text-xs text-slate-600">Message identifier: <code class="font-mono bg-slate-100 px-1 rounded">ALXLDE:D:96A:UN</code></td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">BGM</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C002.1 / 1004</td><td class="px-4 py-3 font-mono text-xs text-slate-500">messageType / leadId</td><td class="px-4 py-3 text-xs text-slate-600">Document/message name 350 = LEX LEAD. Document number carries leadId.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">DTM+137</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C507.2 / C507.3</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.timestamp</td><td class="px-4 py-3 text-xs text-slate-600">Date/time qualifier 137 = Document/message date/time. Format 102 = CCYYMMDD.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">DTM+039</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C507.2</td><td class="px-4 py-3 font-mono text-xs text-slate-500">metadata.expirationDate</td><td class="px-4 py-3 text-xs text-slate-600">Date/time qualifier 039 = Expiry date.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">NAD+BY</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C082.1</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.senderId</td><td class="px-4 py-3 text-xs text-slate-600">Party qualifier BY = Buyer (sender in LEX context).</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">NAD+SH</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C082.1</td><td class="px-4 py-3 font-mono text-xs text-slate-500">header.receiverId</td><td class="px-4 py-3 text-xs text-slate-600">Party qualifier SH = Ship-from (receiver in LEX context).</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">NAD+DP</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C080 / C059 / 3164 / 3229 / 3251 / 3207</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer name + address</td><td class="px-4 py-3 text-xs text-slate-600">Party qualifier DP = Delivery party. Name in C080; street in C059; city in 3164; state in 3229; postal in 3251; country in 3207.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">CTA+OC</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C056.3056</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer contact name</td><td class="px-4 py-3 text-xs text-slate-600">Contact function qualifier OC = Order contact.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">COM+EM</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C076.3148</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer.email</td><td class="px-4 py-3 text-xs text-slate-600">Communication channel qualifier EM = Electronic mail.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">COM+TE</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C076.3148</td><td class="px-4 py-3 font-mono text-xs text-slate-500">customer.phone</td><td class="px-4 py-3 text-xs text-slate-600">Communication channel qualifier TE = Telephone.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">RFF+ST</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C506.1154</td><td class="px-4 py-3 font-mono text-xs text-slate-500">lead.status</td><td class="px-4 py-3 text-xs text-slate-600">Reference qualifier ST = Lead Status (LEX extension). Value is status enum.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">RFF+LS</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C506.1154</td><td class="px-4 py-3 font-mono text-xs text-slate-500">lead.source</td><td class="px-4 py-3 text-xs text-slate-600">Reference qualifier LS = Lead Source (LEX extension).</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">LIN</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C212 qualifier VC</td><td class="px-4 py-3 font-mono text-xs text-slate-500">desiredProduct (vehicle)</td><td class="px-4 py-3 text-xs text-slate-600">Line item. Qualifier VC = Vehicle, elements: year:make:model:trim.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">LIN</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C212 qualifier VT</td><td class="px-4 py-3 font-mono text-xs text-slate-500">tradeIn vehicle</td><td class="px-4 py-3 text-xs text-slate-600">Qualifier VT = Vehicle Trade-in.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">IMD+F+***</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C273.7008</td><td class="px-4 py-3 font-mono text-xs text-slate-500">desiredProduct features</td><td class="px-4 py-3 text-xs text-slate-600">Item description. Qualifier F = Free form text. Append <code class="font-mono bg-slate-100 px-1 rounded">:NEG</code> to denote excluded feature.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">PRI+INV</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C509.5118</td><td class="px-4 py-3 font-mono text-xs text-slate-500">priceRange.minUSD</td><td class="px-4 py-3 text-xs text-slate-600">Price qualifier INV = Invoice (minimum price). PRI+MAX for maximum price.</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 font-mono text-xs text-lex-700">MEA+OT+94</td><td class="px-4 py-3 font-mono text-xs text-slate-600">C174.6314</td><td class="px-4 py-3 font-mono text-xs text-slate-500">tradeIn.mileage</td><td class="px-4 py-3 text-xs text-slate-600">Measurement qualifier OT = Other, value qualifier 94 = Kilometres (KT) or miles.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">Example Transmission</h3>
+      <div class="code-block">
+        <div class="flex items-center px-5 pt-4 pb-2 border-b border-slate-800">
+          <span class="text-xs text-slate-500 font-mono">edifact-lead.txt</span>
+        </div>
+        <pre class="text-sm text-slate-200 overflow-x-auto"><code>UNA:*+,? '
+UNB+IATB:1+DEALER-001+MANUFACTURER-ABC+260323:143000+000000001'
+UNH+550e8400-e29b-41d4-a716-446655440000+ALXLDE:D:96A:UN'
+BGM+350+LEAD-2026-001234+9'
+DTM+137:20260323:102'
+DTM+039:20260423:102'
+NAD+BY+DEALER-001++DEALER 001'
+NAD+SH+MANUFACTURER-ABC++MANUFACTURER ABC'
+NAD+DP+JANE SMITH+123 MAIN STREET,SUITE 100+SPRINGFIELD+IL+62701+US'
+CTA+OC+JANE SMITH'
+COM+JANE.SMITH@EXAMPLE.COM:EM'
+COM++13125559876:TE'
+RFF+ST:EXPRESSED_INTEREST'
+RFF+LS:RETAILER_WEBSITE'
+LIN+1++VC:2026:CAMRY:LE'
+IMD+F+***HYBRID'
+IMD+F+***LEATHER INTERIOR'
+PRI+INV+25000'
+PRI+MAX+35000'
+UNT+17+550e8400-e29b-41d4-a716-446655440000'
+UNZ+1+000000001'</code></pre>
+      </div>
+        </div>
+      </div><!-- /panel-group -->
+    </section><!-- /formats -->
+
+    <!-- ── Cross-Format Field Map ─────────────────────────────────────────── -->
+    <section id="field-map" class="scroll-mt-24">
+      <h2 class="text-2xl font-bold text-slate-900 mb-2">Cross-Format Field Map</h2>
+      <p class="text-slate-500 text-sm mb-6">Quick-reference for mapping the same conceptual field across all four wire formats.</p>
+
+      <div class="overflow-x-auto rounded-xl border border-slate-200">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700 w-40">LEX Field</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">JSON-EDI</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">XML-EDI</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">X12 850</th>
+              <th class="text-left px-4 py-3 font-semibold text-slate-700">EDIFACT</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50 bg-slate-50/50">
+              <td colspan="5" class="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Envelope</td>
+            </tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Message ID</td><td class="px-4 py-3 font-mono text-xs text-slate-600">header.messageId</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;MessageId&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">ISA13 (control #)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">UNH 0062</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Timestamp</td><td class="px-4 py-3 font-mono text-xs text-slate-600">header.timestamp</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Timestamp&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">DTM*137</td><td class="px-4 py-3 font-mono text-xs text-slate-600">DTM+137</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Sender</td><td class="px-4 py-3 font-mono text-xs text-slate-600">header.senderId</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;SenderId&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">ISA06 / N1*01</td><td class="px-4 py-3 font-mono text-xs text-slate-600">UNB S002 / NAD+BY</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Receiver</td><td class="px-4 py-3 font-mono text-xs text-slate-600">header.receiverId</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;ReceiverId&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">ISA08 / N1*SH</td><td class="px-4 py-3 font-mono text-xs text-slate-600">UNB S003 / NAD+SH</td></tr>
+            <tr class="hover:bg-slate-50 bg-slate-50/50">
+              <td colspan="5" class="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Lead Identity</td>
+            </tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Lead ID</td><td class="px-4 py-3 font-mono text-xs text-slate-600">payload.lead.leadId</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;LeadId&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">BEG03</td><td class="px-4 py-3 font-mono text-xs text-slate-600">BGM 1004</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Status</td><td class="px-4 py-3 font-mono text-xs text-slate-600">payload.lead.status</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Status&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*LR</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+ST</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Source</td><td class="px-4 py-3 font-mono text-xs text-slate-600">payload.lead.source</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Source&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*LS</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+LS</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Expiry</td><td class="px-4 py-3 font-mono text-xs text-slate-600">metadata.expirationDate</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;ExpirationDate&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">DTM*039</td><td class="px-4 py-3 font-mono text-xs text-slate-600">DTM+039</td></tr>
+            <tr class="hover:bg-slate-50 bg-slate-50/50">
+              <td colspan="5" class="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Customer</td>
+            </tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">First Name</td><td class="px-4 py-3 font-mono text-xs text-slate-600">customer.firstName</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;FirstName&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NM1*IL NM104</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NAD+DP C080</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Email</td><td class="px-4 py-3 font-mono text-xs text-slate-600">customer.email</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Email&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NM1 NM108=EM</td><td class="px-4 py-3 font-mono text-xs text-slate-600">COM+EM</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Phone</td><td class="px-4 py-3 font-mono text-xs text-slate-600">customer.phone</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Phone&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NM1 NM108=TE</td><td class="px-4 py-3 font-mono text-xs text-slate-600">COM+TE</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Street</td><td class="px-4 py-3 font-mono text-xs text-slate-600">customer.address.street1</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Street1&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">N3 N301</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NAD+DP C059</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">City</td><td class="px-4 py-3 font-mono text-xs text-slate-600">customer.address.city</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;City&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">N4 N401</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NAD+DP 3164</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Postal Code</td><td class="px-4 py-3 font-mono text-xs text-slate-600">customer.address.postalCode</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;PostalCode&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">N4 N403</td><td class="px-4 py-3 font-mono text-xs text-slate-600">NAD+DP 3251</td></tr>
+            <tr class="hover:bg-slate-50 bg-slate-50/50">
+              <td colspan="5" class="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Asset of Interest</td>
+            </tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Make / Brand</td><td class="px-4 py-3 font-mono text-xs text-slate-600">desiredProduct.make</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Make&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">IT1 IT107 (after VC)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">LIN C212 element 2</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Model</td><td class="px-4 py-3 font-mono text-xs text-slate-600">desiredProduct.model</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Model&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">IT1 IT108</td><td class="px-4 py-3 font-mono text-xs text-slate-600">LIN C212 element 3</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Year</td><td class="px-4 py-3 font-mono text-xs text-slate-600">desiredProduct.year</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Year&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">IT1 IT106</td><td class="px-4 py-3 font-mono text-xs text-slate-600">LIN C212 element 1</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Features</td><td class="px-4 py-3 font-mono text-xs text-slate-600">desiredProduct.desiredFeatures[]</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Feature&gt; (repeating)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">PID*F (one per feature)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">IMD+F+*** (one per feature)</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Installed Options</td><td class="px-4 py-3 font-mono text-xs text-slate-600">desiredProduct.installedOptions[]</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;InstalledOption&gt; (repeating)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">PID*F qualifier OI (one per option)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">IMD+F+OI (one per option)</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Factory Order Pref.</td><td class="px-4 py-3 font-mono text-xs text-slate-600">desiredProduct.factoryOrderPreference</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;FactoryOrderPreference&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*FO</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+FO</td></tr>
+            <tr class="hover:bg-slate-50 bg-slate-50/50">
+              <td colspan="5" class="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Customer Extended</td>
+            </tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Credit Tier</td><td class="px-4 py-3 font-mono text-xs text-slate-600">customer.creditTier</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;CreditTier&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*CT</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+CT</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Fleet Buyer</td><td class="px-4 py-3 font-mono text-xs text-slate-600">customer.fleetBuyer</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;FleetBuyer&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*FB / QTY*001 (fleet size)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+FB / QTY+1 (fleet size)</td></tr>
+            <tr class="hover:bg-slate-50 bg-slate-50/50">
+              <td colspan="5" class="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Trade-In Extended</td>
+            </tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Odometer Status</td><td class="px-4 py-3 font-mono text-xs text-slate-600">tradeIn.odometerStatus</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;OdometerStatus&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*OS</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+OS</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Title Status</td><td class="px-4 py-3 font-mono text-xs text-slate-600">tradeIn.titleStatus</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;TitleStatus&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*TS</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+TS</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Payoff Amount</td><td class="px-4 py-3 font-mono text-xs text-slate-600">tradeIn.payoffAmount</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;PayoffAmount&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">PRI*PA</td><td class="px-4 py-3 font-mono text-xs text-slate-600">PRI+PA</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Accident History</td><td class="px-4 py-3 font-mono text-xs text-slate-600">tradeIn.accidentHistory</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;AccidentHistory&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*AH (count) + REF*AD (airbag)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+AH (count) + RFF+AD (airbag)</td></tr>
+            <tr class="hover:bg-slate-50 bg-slate-50/50">
+              <td colspan="5" class="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Industry Context (JSON-EDI native; X12 &amp; EDIFACT use REF/RFF segments with LEX-defined qualifiers)</td>
+            </tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Aviation Context</td><td class="px-4 py-3 font-mono text-xs text-slate-600">aviationLead</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;AviationLead&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*AV (operatorCert) + REF*IU (intendedUse)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+AV · RFF+IU</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Maritime Context</td><td class="px-4 py-3 font-mono text-xs text-slate-600">maritimeLead</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;MaritimeLead&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*MC (charterType) + REF*TA (tradingArea)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+MC · RFF+TA</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Heavy Equip. Context</td><td class="px-4 py-3 font-mono text-xs text-slate-600">heavyEquipmentLead</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;HeavyEquipmentLead&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*AC (couplerStd) + MEA*OT*ALT (altitude)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+AC · MEA+OT+ALT</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Real Estate Context</td><td class="px-4 py-3 font-mono text-xs text-slate-600">realEstateLead</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;RealEstateLead&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*RA (repAgreement) + REF*EX (exchangeType) + REF*PA (preApproval)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+RA · RFF+EX · RFF+PA</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Technology Context</td><td class="px-4 py-3 font-mono text-xs text-slate-600">technologyLead</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;TechnologyLead&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*SC (secCert) + REF*ER (evergreenTrigger)</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+SC · RFF+ER</td></tr>
+            <tr class="hover:bg-slate-50 bg-slate-50/50">
+              <td colspan="5" class="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Custom Fields</td>
+            </tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Campaign Code</td><td class="px-4 py-3 font-mono text-xs text-slate-600">metadata.customFields.campaignCode</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Field name="campaignCode"&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*PK</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+CP</td></tr>
+            <tr class="hover:bg-slate-50"><td class="px-4 py-3 text-xs font-medium text-slate-800">Sales Rep ID</td><td class="px-4 py-3 font-mono text-xs text-slate-600">metadata.customFields.salesRepId</td><td class="px-4 py-3 font-mono text-xs text-slate-600">&lt;Field name="salesRepId"&gt;</td><td class="px-4 py-3 font-mono text-xs text-slate-600">REF*SR</td><td class="px-4 py-3 font-mono text-xs text-slate-600">RFF+SR</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── Related Resources ──────────────────────────────────────────────── -->
+    <section class="pt-10 border-t border-slate-200 pb-2">
+      <h2 class="text-xl font-bold text-slate-900 mb-6">Related Resources</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="examples.html" class="card hover:border-lex-300 group">
+          <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">Industry Examples</p>
+          <p class="text-xs text-slate-500 mt-1">Full end-to-end examples across automotive, aviation, maritime, heavy equipment, real estate, and technology.</p>
+          <p class="font-mono text-xs text-slate-400 mt-2">examples.html →</p>
+        </a>
+        <a href="getting-started.html" class="card hover:border-lex-300 group">
+          <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">Getting Started</p>
+          <p class="text-xs text-slate-500 mt-1">Library installation, first message, validation, and sending — with code in JS, Python, Java, and C#.</p>
+          <p class="font-mono text-xs text-slate-400 mt-2">getting-started.html →</p>
+        </a>
+        <a href="api/lex-openapi.yaml" target="_blank" rel="noopener noreferrer" class="card hover:border-lex-300 group">
+          <p class="font-semibold text-slate-900 text-sm group-hover:text-lex-700">OpenAPI 3.1</p>
+          <p class="text-xs text-slate-500 mt-1">Machine-readable REST API definition — import into Postman, Swagger UI, or any OpenAPI tool.</p>
+          <p class="font-mono text-xs text-slate-400 mt-2">api/lex-openapi.yaml ↗</p>
+        </a>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="bg-slate-950 text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <!-- Brand -->
+        <div class="lg:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="flex items-center justify-center w-7 h-7 bg-lex-600 rounded-md">
+              <span class="text-white font-bold text-xs">L</span>
+            </span>
+            <span class="font-bold text-white text-base">LEX</span>
+          </div>
+          <p class="text-sm leading-relaxed">The open standard for modern sales lead exchange. Apache 2.0. No fees. No gatekeepers.</p>
+          <p class="mt-4 text-xs">v1.0 · March 2026</p>
+        </div>
+
+        <!-- Specification -->
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Specification</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="spec.html" class="hover:text-white transition-colors">Core Specification</a></li>
+            <li><a href="spec.html#message-types" class="hover:text-white transition-colors">Message Types</a></li>
+            <li><a href="spec.html#field-dictionary" class="hover:text-white transition-colors">Field Dictionary</a></li>
+            <li><a href="spec.html#extensions" class="hover:text-white transition-colors">Extension Standard</a></li>
+            <li><a href="conformance.html" class="hover:text-white transition-colors">Conformance Levels</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Resources</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="getting-started.html" class="hover:text-white transition-colors">Getting Started</a></li>
+            <li><a href="examples.html" class="hover:text-white transition-colors">Code Examples</a></li>
+            <li><a href="industries.html" class="hover:text-white transition-colors">Industry Coverage</a></li>
+            <li><a href="examples.html#api" class="hover:text-white transition-colors">OpenAPI / AsyncAPI</a></li>
+            <li><a href="edi-reference.html" class="text-white font-medium">EDI Reference</a></li>
+          </ul>
+        </div>
+
+        <!-- Project -->
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4">Project</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub Repository</a></li>
+            <li><a href="spec.html#core-spec" class="hover:text-white transition-colors">Anti-Capture Clause</a></li>
+            <li><a href="https://github.com/lexstandard/lex/issues" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Issues &amp; Proposals</a></li>
+            <li><a href="https://github.com/lexstandard/lex/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Apache 2.0 License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+        <p>© 2026 LEX Contributors. Released under the <a href="https://github.com/lexstandard/lex/blob/main/LICENSE" class="text-lex-400 hover:text-lex-300 transition-colors" target="_blank" rel="noopener noreferrer">Apache 2.0 License</a>.</p>
+        <p class="text-slate-600">No fees. No gatekeepers. No lock-in.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

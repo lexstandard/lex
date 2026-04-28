@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conformance — LEX Lead Exchange Standard</title>
+  <meta name="description" content="LEX conformance levels L1, L2, and L3 — self-declared against public test vectors. No mandatory certification body, no fees." />
+  <meta name="keywords" content="ADF compatibility, ADF XML compliance, lead standard conformance, EDI conformance, lead format compliance, automotive lead standard compliance, STAR Standard conformance, open lead standard certification" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="LEX Contributors" />
+  <link rel="canonical" href="https://lexstandard.org/conformance.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LEX Lead Exchange Standard" />
+  <meta property="og:url" content="https://lexstandard.org/conformance.html" />
+  <meta property="og:title" content="Conformance — LEX Lead Exchange Standard" />
+  <meta property="og:description" content="LEX conformance levels L1, L2, and L3 — self-declared against public test vectors. No mandatory certification body, no fees." />
+  <meta property="og:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@lexstandard" />
+  <meta name="twitter:title" content="Conformance — LEX Lead Exchange Standard" />
+  <meta name="twitter:description" content="L1, L2, L3 conformance tiers. Self-declared, no fees, no certification body required." />
+  <meta name="twitter:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Resource hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script src="assets/js/analytics.js"></script>
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": "https://lexstandard.org/conformance.html",
+    "name": "LEX Conformance Levels",
+    "headline": "Conformance — LEX Lead Exchange Standard",
+    "description": "LEX conformance levels L1, L2, and L3 — self-declared against public test vectors. No mandatory certification body, no fees.",
+    "url": "https://lexstandard.org/conformance.html",
+    "inLanguage": "en-US",
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Organization", "name": "LEX Contributors" },
+    "isPartOf": { "@id": "https://lexstandard.org/#website" }
+  }
+  </script>
+</head>
+<body class="bg-white font-sans">
+
+  <!-- ── Navigation ──────────────────────────────────────────────────────── -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+        <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg">
+          <span class="text-white font-bold text-sm">L</span>
+        </span>
+        <span class="font-bold text-slate-900 text-lg">LEX</span>
+        <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html"           class="nav-link" data-nav-href="index.html">Home</a>
+        <a href="spec.html"            class="nav-link" data-nav-href="spec.html">Specification</a>
+        <a href="getting-started.html" class="nav-link" data-nav-href="getting-started.html">Get Started</a>
+        <a href="industries.html"      class="nav-link" data-nav-href="industries.html">Industries</a>
+        <a href="examples.html"        class="nav-link" data-nav-href="examples.html">Examples</a>
+        <a href="conformance.html"     class="nav-link nav-link-active" data-nav-href="conformance.html">Conformance</a>
+        <a href="edi-reference.html"   class="nav-link" data-nav-href="edi-reference.html">EDI Reference</a>
+        <a href="faq.html"             class="nav-link" data-nav-href="faq.html">FAQ</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-4">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+          GitHub
+        </a>
+      </div>
+      <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-1">
+      <a href="index.html"           class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Home</a>
+      <a href="spec.html"            class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Specification</a>
+      <a href="getting-started.html" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Get Started</a>
+      <a href="industries.html"      class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Industries</a>
+      <a href="examples.html"        class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Examples</a>
+      <a href="conformance.html"     class="block px-3 py-2 rounded-lg text-sm font-medium text-lex-600 bg-lex-50">Conformance</a>
+      <a href="edi-reference.html"   class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">EDI Reference</a>
+      <a href="faq.html"             class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">FAQ</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Page Header ──────────────────────────────────────────────────── -->
+    <div class="bg-slate-50 border-b border-slate-200 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="section-label">Implementation Quality</p>
+        <h1 class="text-4xl font-bold text-slate-900 mt-2">Conformance Levels</h1>
+        <p class="mt-3 text-lg text-slate-500 max-w-3xl">
+          LEX defines three tiered conformance levels. They are self-declared against published test vectors. There is no mandatory certification body, no fees, and no approval delays.
+        </p>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+
+      <!-- Open Governance callout -->
+      <div class="p-6 bg-emerald-50 border border-emerald-200 rounded-2xl">
+        <div class="flex gap-4">
+          <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div>
+            <h2 class="font-semibold text-emerald-900 text-base">Open Conformance Model</h2>
+            <p class="text-emerald-800 text-sm mt-1 leading-relaxed">
+              Conformance levels are self-declared. Run the public test case library against your implementation and declare the level you pass. Any third-party may offer certification services, but no certification body is mandatory. An implementation is not blocked from the LEX ecosystem because it has not paid for certification.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Three levels -->
+      <section>
+        <h2 class="text-2xl font-bold text-slate-900 mb-8">Conformance Levels</h2>
+
+        <div class="space-y-6">
+
+          <!-- L1 -->
+          <div class="card level-card-l1">
+            <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+              <div class="flex items-center gap-3">
+                <span class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl font-extrabold text-base flex items-center justify-center">L1</span>
+                <div>
+                  <h3 class="font-bold text-slate-900">Basic</h3>
+                  <p class="text-sm text-slate-500">Minimum for any production integration</p>
+                </div>
+              </div>
+              <span class="badge badge-green">Required for production</span>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-50">
+                  <tr>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">Requirement</th>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden sm:table-cell">Description</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Valid message envelope</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Produce and parse <code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">lex.header</code> + <code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">lex.payload</code></td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Required field compliance</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">All required fields present in every message</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">MessageID uniqueness</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">No duplicate messageIds sent within a session</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Timestamp validity</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Timestamps within ±60 seconds of clock time</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">ACKNOWLEDGMENT response</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Send ACK for every received LEAD message</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- L2 -->
+          <div class="card level-card-l2">
+            <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+              <div class="flex items-center gap-3">
+                <span class="w-10 h-10 bg-lex-100 text-lex-700 rounded-xl font-extrabold text-base flex items-center justify-center">L2</span>
+                <div>
+                  <h3 class="font-bold text-slate-900">Standard</h3>
+                  <p class="text-sm text-slate-500">Required for DMS integration partners</p>
+                </div>
+              </div>
+              <span class="badge badge-blue">DMS integration</span>
+            </div>
+            <p class="text-sm text-slate-500 mb-4">All Level 1 requirements, plus:</p>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-50">
+                  <tr>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">Requirement</th>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden sm:table-cell">Description</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Full lifecycle support</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Send and receive all 15 lead status values</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Status transition validation</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Reject invalid status transitions with correct error code</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Business rule validation</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Email (RFC 5322), phone (E.164), VIN, financing fields</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Lead Closure support</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Send and receive LEAD_CLOSURE messages</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Bidirectional flow</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Can both initiate and respond to lead messages</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- L3 -->
+          <div class="card level-card-l3">
+            <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+              <div class="flex items-center gap-3">
+                <span class="w-10 h-10 bg-violet-100 text-violet-700 rounded-xl font-extrabold text-base flex items-center justify-center">L3</span>
+                <div>
+                  <h3 class="font-bold text-slate-900">Full</h3>
+                  <p class="text-sm text-slate-500">Required for OEM and platform certification</p>
+                </div>
+              </div>
+              <span class="badge bg-violet-100 text-violet-700">OEM &amp; platform</span>
+            </div>
+            <p class="text-sm text-slate-500 mb-4">All Level 2 requirements, plus:</p>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-50">
+                  <tr>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">Requirement</th>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden sm:table-cell">Description</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Consent record compliance</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell"><code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">consentRecord</code> present and valid for all PII-bearing messages</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Deduplication support</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Sends <code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">customerFingerprint</code>, handles <code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">DUPLICATE</code> closure</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">EV extensions</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Can parse and produce the <code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">evSpecifications</code> block</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Lead intelligence passthrough</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Preserves <code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">leadIntelligence</code> without modification</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Retry and DLQ headers</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Produces <code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">retryContext</code> on retry; routes to DLQ on permanent failure</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Multi-format support</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Can parse JSON-EDI and XML-EDI</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Subscription management</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Full SUBSCRIPTION message send/receive</td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-slate-800">Organization context</td><td class="px-4 py-3 text-slate-500 hidden sm:table-cell"><code class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">organizationContext</code> correctly populated</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Test Case Library -->
+      <section>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Test Case Library</h2>
+        <p class="text-slate-500 text-sm mb-8">Run your implementation against the canonical test vectors to determine your conformance level. All test cases are open and publicly available.</p>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge badge-green">L1</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-001</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">Valid Primary Lead</p>
+            <p class="text-xs text-slate-500 mt-1">Input: well-formed LEAD with all required fields. Expected: <code class="font-mono">valid: true</code>, ACK with RECEIVED</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge badge-green">L1</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-002</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">Missing Required Field</p>
+            <p class="text-xs text-slate-500 mt-1">Input: LEAD missing <code class="font-mono">customer.firstName</code>. Expected: <code class="font-mono">REQUIRED_FIELD_MISSING</code></p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge badge-green">L1</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-003</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">Invalid MessageType</p>
+            <p class="text-xs text-slate-500 mt-1">Input: <code class="font-mono">messageType: "INQUIRY"</code>. Expected: CRITICAL error on header</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge badge-green">L1</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-004</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">Duplicate MessageID</p>
+            <p class="text-xs text-slate-500 mt-1">Two LEAD messages with identical ID ≤60s. Expected: 200 OK, no duplicate processing</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge badge-green">L1</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-005</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">Future Timestamp</p>
+            <p class="text-xs text-slate-500 mt-1">Timestamp 5 minutes in the future. Expected: <code class="font-mono">TIMESTAMP_IN_FUTURE</code></p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge badge-blue">L2</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-006</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">Invalid Email Format</p>
+            <p class="text-xs text-slate-500 mt-1"><code class="font-mono">email: "not-an-email"</code>. Expected: <code class="font-mono">INVALID_EMAIL_FORMAT</code></p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge badge-blue">L2</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-007</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">Invalid Status Transition</p>
+            <p class="text-xs text-slate-500 mt-1">Transition from DELIVERED → SHOPPING. Expected: <code class="font-mono">INVALID_STATUS_TRANSITION</code></p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge bg-violet-100 text-violet-700">L3</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-010</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">Consent Record Present</p>
+            <p class="text-xs text-slate-500 mt-1">PII-bearing LEAD must carry valid <code class="font-mono">consentRecord</code> block</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge bg-violet-100 text-violet-700">L3</span>
+              <span class="font-mono text-xs font-semibold text-slate-700">TC-011</span>
+            </div>
+            <p class="text-sm font-medium text-slate-800">EV Spec Block</p>
+            <p class="text-xs text-slate-500 mt-1">LEAD with EV product must produce and parse <code class="font-mono">evSpecifications</code></p>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <a href="conformance.html#test-cases" class="btn-primary">
+            View Full Test Case Library
+          </a>
+        </div>
+      </section>
+
+      <!-- Validation Rules -->
+      <section>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Key Validation Rules</h2>
+        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+          <div class="p-4 bg-slate-900 rounded-xl font-mono">
+            <p class="text-slate-400 text-xs mb-2"># Email — RFC 5322</p>
+            <code class="text-emerald-400 text-xs">^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</code>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl font-mono">
+            <p class="text-slate-400 text-xs mb-2"># Phone — E.164</p>
+            <code class="text-emerald-400 text-xs">^\+?[1-9]\d{1,14}$</code>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl font-mono">
+            <p class="text-slate-400 text-xs mb-2"># Timestamp bounds</p>
+            <code class="text-cyan-400 text-xs">future: &lt; +60s · past: &lt; 24h</code>
+          </div>
+          <div class="p-4 bg-slate-900 rounded-xl font-mono">
+            <p class="text-slate-400 text-xs mb-2"># Financing — loan term</p>
+            <code class="text-cyan-400 text-xs">loanTerm: 12–84 months · monthlyPayment &gt; 0</code>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="flex items-center justify-center w-6 h-6 bg-lex-600 rounded">
+          <span class="text-white font-bold text-xs">L</span>
+        </span>
+        <span class="font-semibold text-white">LEX</span>
+        <span class="text-slate-600">— Lead Exchange Standard</span>
+      </div>
+      <p>© 2026 LEX Contributors · <a href="https://github.com/lexstandard/lex/blob/main/LICENSE" class="text-lex-400 hover:text-lex-300" target="_blank" rel="noopener noreferrer">Apache 2.0 License</a></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+﻿{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexstandard.org/schemas/v1/LEX_ACKNOWLEDGMENT_SCHEMA.json",
+  "title": "LEX - ACKNOWLEDGMENT Message Schema",
+  "description": "Schema for ACKNOWLEDGMENT message type - receipt and processing confirmation",
+  "type": "object",
+  "required": ["payload"],
+  "properties": {
+    "payload": {
+      "type": "object",
+      "required": ["acknowledgment"],
+      "properties": {
+        "acknowledgment": {
+          "type": "object",
+          "required": [
+            "acknowledgmentId",
+            "correlationId",
+            "status",
+            "timestamp"
+          ],
+          "properties": {
+            "acknowledgmentId": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 50,
+              "description": "Unique acknowledgment message identifier"
+            },
+            "correlationId": {
+              "type": "string",
+              "description": "Reference to original message being acknowledged"
+            },
+            "originalMessageId": {
+              "type": "string",
+              "description": "Full ID of original message"
+            },
+            "originalMessageType": {
+              "type": "string",
+              "enum": ["LEAD", "ASSET", "SUBSCRIPTION", "LEAD_CLOSURE"],
+              "description": "Type of message being acknowledged"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "RECEIVED",
+                "PROCESSING",
+                "VALIDATED",
+                "STORED",
+                "PROCESSED",
+                "REJECTED",
+                "FAILED",
+                "DUPLICATE"
+              ],
+              "description": "Acknowledgment status"
+            },
+            "statusReason": {
+              "type": "string",
+              "description": "Detailed reason for status"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When acknowledgment was generated"
+            },
+            "processingTime": {
+              "type": "number",
+              "description": "Time taken to process in milliseconds"
+            },
+            "validationResults": {
+              "type": "object",
+              "description": "Message validation results",
+              "properties": {
+                "isValid": {
+                  "type": "boolean"
+                },
+                "schemaValidation": {
+                  "type": "object",
+                  "properties": {
+                    "passed": {
+                      "type": "boolean"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "error": {
+                            "type": "string"
+                          },
+                          "suggestion": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "businessRuleValidation": {
+                  "type": "object",
+                  "properties": {
+                    "passed": {
+                      "type": "boolean"
+                    },
+                    "violations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rule": {
+                            "type": "string"
+                          },
+                          "violation": {
+                            "type": "string"
+                          },
+                          "severity": {
+                            "type": "string",
+                            "enum": ["INFO", "WARNING", "ERROR"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "securityValidation": {
+                  "type": "object",
+                  "properties": {
+                    "signatureVerified": {
+                      "type": "boolean"
+                    },
+                    "encryptionValid": {
+                      "type": "boolean"
+                    },
+                    "senderAuthenticated": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "actionsTaken": {
+              "type": "array",
+              "description": "Actions performed on message",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "STORED_IN_DATABASE",
+                      "ROUTED_TO_DEALER",
+                      "ROUTED_TO_MANUFACTURER",
+                      "QUEUED_FOR_PROCESSING",
+                      "TRIGGERED_NOTIFICATION",
+                      "CREATED_TASK",
+                      "ARCHIVED",
+                      "QUARANTINED"
+                    ]
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "details": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "nextSteps": {
+              "type": "array",
+              "description": "Recommended or required next actions",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "deadline": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+                  },
+                  "assignedTo": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "recipientDetails": {
+              "type": "object",
+              "description": "Who is this acknowledgment addressed to",
+              "properties": {
+                "senderId": {
+                  "type": "string"
+                },
+                "senderName": {
+                  "type": "string"
+                },
+                "senderType": {
+                  "type": "string",
+                  "enum": [
+                    "DEALER",
+                    "MANUFACTURER",
+                    "DMS",
+                    "PLATFORM",
+                    "NETWORK",
+                    "LEAD_SOURCE",
+                    "SYSTEM"
+                  ]
+                },
+                "receiverId": {
+                  "type": "string"
+                },
+                "receiverName": {
+                  "type": "string"
+                }
+              }
+            },
+            "retryInformation": {
+              "type": "object",
+              "description": "Retry guidance for failed messages",
+              "properties": {
+                "isRetryable": {
+                  "type": "boolean"
+                },
+                "retryCount": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "nextRetryTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "maxRetries": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "backoffStrategy": {
+                  "type": "string",
+                  "enum": ["LINEAR", "EXPONENTIAL", "FIXED"]
+                }
+              }
+            },
+            "organizationContext": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/OrganizationContext"
+            },
+            "metadata": {
+              "$ref": "LEX_MESSAGE_SCHEMA.json#/definitions/Metadata"
+            }
+          }
+        }
+      }
+    }
+  }
+}

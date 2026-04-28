@@ -1,0 +1,447 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Specification — LEX Lead Exchange Standard</title>
+  <meta name="description" content="Full reference for the LEX Lead Exchange Standard specification — message structure, field dictionary, extension model, and all supporting documents." />
+  <meta name="keywords" content="ADF XML specification, Auto Lead Data Format fields, ADF XML field mapping, lead message schema, EDI specification, X12 850 leads, EDIFACT ORDERS lead, JSON EDI lead format, open lead standard spec, lead exchange standard, automotive EDI spec" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="LEX Contributors" />
+  <link rel="canonical" href="https://lexstandard.org/spec.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LEX Lead Exchange Standard" />
+  <meta property="og:url" content="https://lexstandard.org/spec.html" />
+  <meta property="og:title" content="Specification — LEX Lead Exchange Standard" />
+  <meta property="og:description" content="Full specification reference — message structure, field dictionary, extension model, conformance, and all supporting LEX documents." />
+  <meta property="og:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@lexstandard" />
+  <meta name="twitter:title" content="Specification — LEX Lead Exchange Standard" />
+  <meta name="twitter:description" content="Full LEX specification — message structure, field dictionary, extension model, and conformance." />
+  <meta name="twitter:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Resource hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script src="assets/js/analytics.js"></script>
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": "https://lexstandard.org/spec.html",
+    "name": "LEX Specification",
+    "headline": "LEX Lead Exchange Standard — Core Specification",
+    "description": "Full reference for the LEX Lead Exchange Standard specification — message structure, field dictionary, extension model, and all supporting documents.",
+    "url": "https://lexstandard.org/spec.html",
+    "inLanguage": "en-US",
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Organization", "name": "LEX Contributors", "url": "https://github.com/lexstandard" },
+    "publisher": { "@type": "Organization", "name": "LEX Contributors" },
+    "isPartOf": { "@id": "https://lexstandard.org/#website" },
+    "dateModified": "2026-04-03",
+    "keywords": "ADF XML specification, Auto Lead Data Format fields, ADF XML field mapping, lead message schema, EDI specification standard, X12 850 lead format, EDIFACT ORDERS, JSON EDI lead, open lead standard, automotive EDI, STAR Standard"
+  }
+  </script>
+</head>
+<body class="bg-white font-sans">
+
+  <!-- ── Navigation ──────────────────────────────────────────────────────── -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+        <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg">
+          <span class="text-white font-bold text-sm">L</span>
+        </span>
+        <span class="font-bold text-slate-900 text-lg">LEX</span>
+        <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html"           class="nav-link" data-nav-href="index.html">Home</a>
+        <a href="spec.html"            class="nav-link nav-link-active" data-nav-href="spec.html">Specification</a>
+        <a href="getting-started.html" class="nav-link" data-nav-href="getting-started.html">Get Started</a>
+        <a href="industries.html"      class="nav-link" data-nav-href="industries.html">Industries</a>
+        <a href="examples.html"        class="nav-link" data-nav-href="examples.html">Examples</a>
+        <a href="conformance.html"     class="nav-link" data-nav-href="conformance.html">Conformance</a>
+        <a href="edi-reference.html"   class="nav-link" data-nav-href="edi-reference.html">EDI Reference</a>
+        <a href="faq.html"             class="nav-link" data-nav-href="faq.html">FAQ</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-4">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+          GitHub
+        </a>
+      </div>
+      <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-1">
+      <a href="index.html"           class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Home</a>
+      <a href="spec.html"            class="block px-3 py-2 rounded-lg text-sm font-medium text-lex-600 bg-lex-50">Specification</a>
+      <a href="getting-started.html" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Get Started</a>
+      <a href="industries.html"      class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Industries</a>
+      <a href="examples.html"        class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Examples</a>
+      <a href="conformance.html"     class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Conformance</a>
+      <a href="edi-reference.html"   class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">EDI Reference</a>
+      <a href="faq.html"             class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">FAQ</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Page Header ──────────────────────────────────────────────────── -->
+    <div class="bg-slate-50 border-b border-slate-200 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="section-label">Documentation</p>
+        <h1 class="text-4xl font-bold text-slate-900 mt-2">Specification</h1>
+        <p class="mt-3 text-lg text-slate-500 max-w-3xl">
+          The complete LEX standard reference — covering message structure, field definitions, extensions, conformance, and all supporting specifications.
+        </p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="badge badge-blue">v1.0 Draft</span>
+          <span class="badge badge-green">Apache 2.0</span>
+          <span class="badge badge-slate">April 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Content Layout ─────────────────────────────────────────────────── -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid lg:grid-cols-4 gap-12">
+
+        <!-- Sidebar TOC -->
+        <aside class="lg:col-span-1">
+          <div class="sticky top-24 space-y-6">
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Core Standard</h3>
+              <ul class="space-y-1 text-sm">
+                <li><a href="#core-spec" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Core Specification</a></li>
+                <li><a href="#message-types" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Message Types</a></li>
+                <li><a href="#field-dictionary" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Field Dictionary</a></li>
+                <li><a href="#product-model" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Product Model</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Extensions</h3>
+              <ul class="space-y-1 text-sm">
+                <li><a href="#extensions" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Extension Standard</a></li>
+                <li><a href="#multi-industry" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Multi-Industry</a></li>
+                <li><a href="#ev-extensions" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">EV Extensions</a></li>
+                <li><a href="#org-extensions" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Org Extensions</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Compliance</h3>
+              <ul class="space-y-1 text-sm">
+                <li><a href="#consent" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Consent Model</a></li>
+                <li><a href="#data-governance" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Data Governance</a></li>
+                <li><a href="#deduplication" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Deduplication</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Financial</h3>
+              <ul class="space-y-1 text-sm">
+                <li><a href="#financial" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Financial Summary</a></li>
+                <li><a href="#captive-finance" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Captive Finance</a></li>
+                <li><a href="#lead-closure" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Lead Closure</a></li>
+                <li><a href="#deal-lineage" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Deal Lineage</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Transport</h3>
+              <ul class="space-y-1 text-sm">
+                <li><a href="#transport" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Transport Resilience</a></li>
+                <li><a href="#lead-intelligence" class="block py-1 text-slate-600 hover:text-lex-600 transition-colors">Lead Intelligence</a></li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <div class="lg:col-span-3 space-y-16">
+
+          <!-- Core Spec -->
+          <section id="core-spec">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-9 h-9 bg-lex-100 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-lex-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <h2 class="text-2xl font-bold text-slate-900">Core Standard</h2>
+            </div>
+
+            <div class="space-y-4">
+              <!-- Spec card -->
+              <a href="#core-spec"
+                 class="flex items-start gap-4 p-5 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group">
+                <div class="flex-shrink-0 w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center group-hover:bg-lex-100 transition-colors">
+                  <svg class="w-5 h-5 text-slate-500 group-hover:text-lex-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-slate-900 group-hover:text-lex-700">LEX Core Specification</p>
+                  <p class="text-sm text-slate-500 mt-1">Core standard — message structure, versioning, transport, governance, anti-capture clause, simplicity budget. The primary reference document.</p>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <!-- Message Types -->
+          <section id="message-types">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Message Types</h2>
+            <p class="text-slate-500 text-sm mb-6">LEX defines five primary message types. Each has a specific purpose, direction, and response expectation.</p>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-50">
+                  <tr>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">Message Type</th>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700">Direction</th>
+                    <th class="text-left px-4 py-3 font-semibold text-slate-700 hidden sm:table-cell">Purpose</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3"><code class="font-mono text-xs font-semibold text-lex-700 bg-lex-50 px-2 py-0.5 rounded">LEAD</code></td>
+                    <td class="px-4 py-3 text-slate-600">Bidirectional</td>
+                    <td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Create, update, and query lead information across the ecosystem</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3"><code class="font-mono text-xs font-semibold text-lex-700 bg-lex-50 px-2 py-0.5 rounded">ASSET</code></td>
+                    <td class="px-4 py-3 text-slate-600">Outbound</td>
+                    <td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Vehicle / product inventory updates pushed to downstream systems</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3"><code class="font-mono text-xs font-semibold text-lex-700 bg-lex-50 px-2 py-0.5 rounded">ACKNOWLEDGMENT</code></td>
+                    <td class="px-4 py-3 text-slate-600">Response</td>
+                    <td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Receipt confirmation, validation result, and error reporting</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3"><code class="font-mono text-xs font-semibold text-lex-700 bg-lex-50 px-2 py-0.5 rounded">SUBSCRIPTION</code></td>
+                    <td class="px-4 py-3 text-slate-600">Bidirectional</td>
+                    <td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Subscribe or unsubscribe to lead event streams and notifications</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3"><code class="font-mono text-xs font-semibold text-lex-700 bg-lex-50 px-2 py-0.5 rounded">LEAD_CLOSURE</code></td>
+                    <td class="px-4 py-3 text-slate-600">Bidirectional</td>
+                    <td class="px-4 py-3 text-slate-500 hidden sm:table-cell">Record deal outcome — won, lost, duplicate, or abandoned with reason codes</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-4">
+              <a href="#message-types" class="text-sm text-lex-600 hover:text-lex-700 font-medium inline-flex items-center gap-1">
+                Full message types reference ↑
+              </a>
+            </div>
+          </section>
+
+          <!-- Field Dictionary -->
+          <section id="field-dictionary">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Field Dictionary</h2>
+            <p class="text-slate-500 text-sm mb-6">Every field in the LEX schema — type, constraints, required/optional, and examples.</p>
+            <div class="bg-slate-900 rounded-xl p-6 text-sm font-mono text-slate-300">
+              <p class="text-slate-500 text-xs mb-4"># Selected key fields (see full reference for all fields)</p>
+              <div class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                  <span class="text-cyan-400">lex.header.messageId</span>
+                  <span class="text-amber-300">UUID v4</span>
+                  <span class="text-slate-400">Required — unique per message</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                  <span class="text-cyan-400">lex.header.messageType</span>
+                  <span class="text-amber-300">Enum</span>
+                  <span class="text-slate-400">Required — LEAD | ASSET | ACK …</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                  <span class="text-cyan-400">lex.header.timestamp</span>
+                  <span class="text-amber-300">ISO 8601</span>
+                  <span class="text-slate-400">Required — within ±60s</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                  <span class="text-cyan-400">lead.customer.email</span>
+                  <span class="text-amber-300">string</span>
+                  <span class="text-slate-400">Required — RFC 5322 validated</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                  <span class="text-cyan-400">lead.customer.phone</span>
+                  <span class="text-amber-300">string</span>
+                  <span class="text-slate-400">Optional — E.164 format</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                  <span class="text-cyan-400">lead.status</span>
+                  <span class="text-amber-300">Enum</span>
+                  <span class="text-slate-400">Required — 15 valid values</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                  <span class="text-cyan-400">lead.desiredProduct.assetClass</span>
+                  <span class="text-amber-300">Enum</span>
+                  <span class="text-slate-400">Optional — VEHICLE | AVIATION …</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <a href="#field-dictionary" class="text-sm text-lex-600 hover:text-lex-700 font-medium inline-flex items-center gap-1">
+                Full field dictionary ↑
+              </a>
+            </div>
+          </section>
+
+          <!-- Product Model -->
+          <section id="product-model">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Product Model</h2>
+            <p class="text-slate-500 text-sm mb-4">LEX uses a product-agnostic model. The <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">desiredProduct</code> block accepts any asset class using a universal structure, with optional industry-specific spec blocks.</p>
+            <a href="#product-model"
+               class="flex items-start gap-4 p-5 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group">
+              <div class="flex-1">
+                <p class="font-semibold text-slate-900 group-hover:text-lex-700">Product Model</p>
+                <p class="text-sm text-slate-500 mt-1">Product-agnostic model covering 50+ product types across all industry verticals, fleet/multi-unit orders, and B2B procurement structures.</p>
+              </div>
+            </a>
+          </section>
+
+          <!-- Extensions -->
+          <section id="extensions">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Extension Standard</h2>
+            <p class="text-slate-500 text-sm mb-6">LEX is designed to be extended without breaking core compatibility. Extensions use namespaced fields added to the <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">extensions</code> object.</p>
+
+            <div class="code-block mb-4">
+              <pre class="text-sm text-slate-200"><code>{
+  <span class="text-cyan-400">"lex"</span>: { <span class="text-slate-500">/* standard fields */</span> },
+  <span class="text-cyan-400">"extensions"</span>: {
+    <span class="text-cyan-400">"toyota.fleet.costCentre"</span>: <span class="text-emerald-400">"FLEET-NE-42"</span>,
+    <span class="text-cyan-400">"cdk.crm.opportunityId"</span>: <span class="text-emerald-400">"OPP-987654"</span>,
+    <span class="text-cyan-400">"acme.insurance.bundleRef"</span>: <span class="text-emerald-400">"INS-2026-XYZ"</span>
+  }
+}</code></pre>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 text-sm">
+              <a href="#extensions"
+                 class="flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group">
+                <span class="font-medium text-slate-800 group-hover:text-lex-700">Extension Standard</span>
+              </a>
+              <a href="https://lexstandard.org/registry" target="_blank" rel="noopener noreferrer"
+                 class="flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group">
+                <span class="font-medium text-slate-800 group-hover:text-lex-700">Extension Registry ↗</span>
+              </a>
+            </div>
+          </section>
+
+          <!-- Additional Specs Grid -->
+          <section id="multi-industry">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">Supporting Specifications</h2>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+              <a href="#multi-industry"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Multi-Industry Extensions</p>
+                <p class="text-xs text-slate-500 mt-1">Industry-specific extensions for heavy equipment, aviation, maritime, real estate, and technology</p>
+              </a>
+              <a href="#ev-extensions"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="ev-extensions">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">EV Extensions</p>
+                <p class="text-xs text-slate-500 mt-1">Electric vehicle spec block — battery, range, charging standard, and subscription data</p>
+              </a>
+              <a href="#org-extensions"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="org-extensions">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Organisation Extensions</p>
+                <p class="text-xs text-slate-500 mt-1">Organisation context — fleet buyers, government procurement, NGOs</p>
+              </a>
+              <a href="#consent"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="consent">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Consent Model</p>
+                <p class="text-xs text-slate-500 mt-1">GDPR, UK GDPR, CCPA, DPDPA, PIPL, LGPD, POPIA, APPI, PDPA-SG, PIPEDA, PIPA-K, PDPL, PDPA-TH and nFADP consent records embedded in each lead</p>
+              </a>
+              <a href="#data-governance"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="data-governance">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Data Governance</p>
+                <p class="text-xs text-slate-500 mt-1">Data retention, jurisdiction, and PII handling policies</p>
+              </a>
+              <a href="#deduplication"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="deduplication">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Deduplication</p>
+                <p class="text-xs text-slate-500 mt-1">Customer fingerprinting and duplicate detection across systems</p>
+              </a>
+              <a href="#financial"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="financial">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Financial Summary</p>
+                <p class="text-xs text-slate-500 mt-1">Deal financials — pricing, incentives, taxes, and net deal value</p>
+              </a>
+              <a href="#captive-finance"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="captive-finance">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Captive Finance</p>
+                <p class="text-xs text-slate-500 mt-1">OEM captive financing, lease structures, and balloon payment terms</p>
+              </a>
+              <a href="#lead-closure"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="lead-closure">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Lead Closure</p>
+                <p class="text-xs text-slate-500 mt-1">Deal outcome recording — won, lost, duplicate, merged with reason codes</p>
+              </a>
+              <a href="#deal-lineage"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="deal-lineage">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Deal Lineage</p>
+                <p class="text-xs text-slate-500 mt-1">Full audit trail — lead ancestry, conversion path, and attribution chain</p>
+              </a>
+              <a href="#transport"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="transport">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Transport Resilience</p>
+                <p class="text-xs text-slate-500 mt-1">Retry context, dead-letter queue headers, and idempotency guarantees</p>
+              </a>
+              <a href="#lead-intelligence"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group" id="lead-intelligence">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">Lead Intelligence</p>
+                <p class="text-xs text-slate-500 mt-1">Behavioural signals, intent scores, and predictive lead attributes</p>
+              </a>
+              <a href="api/lex-openapi.yaml" target="_blank" rel="noopener noreferrer"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-green-300 hover:bg-green-50/50 transition-all group">
+                <p class="font-semibold text-slate-800 group-hover:text-green-700 text-sm">OpenAPI 3.1 — REST API</p>
+                <p class="text-xs text-slate-500 mt-1">Machine-readable REST endpoint definitions — import directly into Swagger UI, Postman, or any OpenAPI-compatible toolchain</p>
+              </a>
+              <a href="api/lex-asyncapi.yaml" target="_blank" rel="noopener noreferrer"
+                 class="p-4 rounded-xl border border-slate-200 hover:border-lex-300 hover:bg-lex-50/50 transition-all group">
+                <p class="font-semibold text-slate-800 group-hover:text-lex-700 text-sm">AsyncAPI 3.0 — Event-Driven</p>
+                <p class="text-xs text-slate-500 mt-1">Channel and message definitions for Kafka, AMQP, WebSocket, and webhook transports — includes CloudEvents alignment</p>
+              </a>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="flex items-center justify-center w-6 h-6 bg-lex-600 rounded">
+          <span class="text-white font-bold text-xs">L</span>
+        </span>
+        <span class="font-semibold text-white">LEX</span>
+        <span class="text-slate-600">— Lead Exchange Standard</span>
+      </div>
+      <p>© 2026 LEX Contributors · <a href="https://github.com/lexstandard/lex/blob/main/LICENSE" class="text-lex-400 hover:text-lex-300" target="_blank" rel="noopener noreferrer">Apache 2.0 License</a></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

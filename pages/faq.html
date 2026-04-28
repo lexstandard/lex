@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — LEX Lead Exchange Standard</title>
+  <meta name="description" content="Frequently asked questions about LEX — why lead exchange needs an open standard, how LEX handles deduplication, consent, lifecycle, multi-format support, conformance, and governance." />
+  <meta name="keywords" content="lead exchange standard FAQ, open lead standard questions, sales lead EDI questions, automotive lead format FAQ, lead deduplication, lead consent compliance, lead lifecycle management, DMS integration FAQ, open EDI standard" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="LEX Contributors" />
+  <link rel="canonical" href="https://lexstandard.org/faq.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LEX Lead Exchange Standard" />
+  <meta property="og:url" content="https://lexstandard.org/faq.html" />
+  <meta property="og:title" content="FAQ — LEX Lead Exchange Standard" />
+  <meta property="og:description" content="Why lead exchange needs an open standard, how LEX handles deduplication, consent, lifecycle, multi-format support, conformance, and governance." />
+  <meta property="og:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@lexstandard" />
+  <meta name="twitter:title" content="FAQ — LEX Lead Exchange Standard" />
+  <meta name="twitter:description" content="Why lead exchange needs an open standard and how LEX solves the core problems of the industry." />
+  <meta name="twitter:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Resource hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script src="assets/js/analytics.js"></script>
+  <!-- Structured Data — FAQPage for Google Rich Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": "https://lexstandard.org/faq.html",
+    "name": "LEX Lead Exchange Standard — Frequently Asked Questions",
+    "description": "Frequently asked questions about LEX — why lead exchange needs an open standard, how LEX handles deduplication, consent, lifecycle, multi-format support, conformance, and governance.",
+    "url": "https://lexstandard.org/faq.html",
+    "inLanguage": "en-US",
+    "isPartOf": { "@id": "https://lexstandard.org/#website" },
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why does sales lead exchange need an open standard?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Without a shared format, every system that sends or receives leads must build a custom integration for every counterpart. A manufacturer working with twelve dealer groups needs twelve separate integration builds. Every time a dealer changes their CRM, the integration must be rebuilt from scratch. The complexity compounds: N senders times M receivers equals N×M unique integrations across an ecosystem. An open standard collapses that to a single implementation per party — build once to LEX, connect to any LEX-compatible system." }
+      },
+      {
+        "@type": "Question",
+        "name": "What actually breaks when there is no agreed lead format?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The most common failure is silent data loss. A field that exists in the sending system simply does not exist in the receiving format, so it is dropped without error. Consent records, lead source attribution, vehicle interest details, finance pre-qualification signals — all of these routinely disappear at integration boundaries. The receiving system often gets only a name, email, and phone number. The richer context that drove the customer's inquiry is gone. This directly degrades conversion rates and makes pipeline analytics unreliable." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does lead duplication become a systemic problem without a standard?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Without a standard deduplication mechanism, the same customer submitting a quote request through three different channels — an OEM website, a lead aggregator, and a dealer's own site — arrives as three unrelated records in the dealer's CRM. There is no shared mechanism to recognize they represent the same person. Dealers call the same prospect multiple times, damaging the customer relationship. Lead volume figures are inflated. Conversion rates appear lower than they are. LEX addresses this by including a deterministic customer fingerprint — a SHA-256 hash of normalized identity fields — in every message, so any receiver can detect and collapse duplicates at the point of ingest." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens to consent records when a lead changes hands?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Under GDPR, CCPA, and comparable regulations, the legal basis for processing a customer's data must be demonstrable: when they consented, through what channel, for what stated purpose. Today, that evidence lives in the originating platform's database and is almost never transmitted with the lead payload. When the lead reaches a third-party CRM, a dealer group, or a manufacturer's system, the receiving party has no evidence of consent and must either re-consent the customer or operate on legally uncertain ground. LEX solves this by embedding a structured consentRecord object directly in every LEAD message — so consent evidence travels atomically with the data it authorizes." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do leads lose lifecycle visibility once they are sent?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Most lead transmission systems are fire-and-forget. The sender has no structured mechanism to learn whether the lead was received, whether a consultant contacted the customer, or whether a deal closed. This means originators cannot measure follow-up rates, lead sources cannot optimize traffic quality, and no party can close the attribution loop on a campaign. LEX defines a full 15-status lead lifecycle with bidirectional acknowledgment and lead closure messages, so every party in the pipeline can track a lead from first intent signal through final disposition." }
+      },
+      {
+        "@type": "Question",
+        "name": "What exactly is LEX?",
+        "acceptedAnswer": { "@type": "Answer", "text": "LEX is an open specification for the structure, content, and transport semantics of sales lead messages. It defines the message envelope, required and optional fields, allowed status values, consent record format, deduplication fingerprint, extension mechanism, and conformance requirements. It is not software, not a platform, and not a hosted service. Any system can implement LEX by reading the specification and emitting or consuming conformant messages. There is no SDK you are required to use and no vendor you are required to work with." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the scope of LEX, and what is deliberately out of scope?",
+        "acceptedAnswer": { "@type": "Answer", "text": "LEX is focused specifically on the sales lead exchange use case: the structured transmission of customer intent, asset interest, consent evidence, and lifecycle status between parties in a sales pipeline. It deliberately does not define procurement workflows, invoice formats, general-purpose supply chain messages, or commerce transactions beyond the lead lifecycle. This focus is intentional. Narrower scope means the standard is smaller, easier to implement correctly, and harder to corrupt through scope creep. Broader commerce workflows are well-served by existing general-purpose EDI standards; the lead exchange problem in depth is not." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why did LEX focus specifically on leads rather than trying to cover all commerce?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The lead space is where a disproportionate share of integration pain concentrates. Every industry that sells high-consideration assets — vehicles, aircraft, vessels, heavy machinery, commercial real estate, enterprise software — has the same lead exchange problem: a structured buyer intent signal that must travel accurately, with its context and consent intact, through multiple parties and systems over weeks or months. General-purpose commerce standards address purchase orders and invoices well. They were not designed for buyer intent signals, consent records, lead routing, or deal closure attribution. LEX addresses that specific, unserved space in depth." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does LEX work for industries outside automotive?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. LEX defines a core message structure that applies to any industry selling through a lead-based pipeline. An extension namespace system allows industry-specific fields to be added alongside the core without modifying shared definitions. Aviation, maritime, heavy equipment, real estate, and technology are all supported today with published extension namespaces. The extension registry is open — any organization can publish a namespace extension for their domain." }
+      },
+      {
+        "@type": "Question",
+        "name": "What wire formats does LEX support?",
+        "acceptedAnswer": { "@type": "Answer", "text": "LEX supports four wire formats: JSON-EDI (the recommended format for all new integrations), XML-EDI (for systems requiring XML), ASC X12 850 mapping (for legacy EDI network infrastructure), and EDIFACT ORDERS mapping (for international EDI infrastructure). All four carry semantically equivalent content. A JSON-EDI message and an X12 850 message built from the same lead data represent the same lead; no information is lost in translation." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does LEX handle duplicate lead detection?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Each LEAD message may include a deduplication.customerFingerprint field containing a SHA-256 hash computed from a normalized representation of the customer's email address, phone number, and last name. The normalization rules are fully specified so that any two compliant systems produce the same fingerprint for the same customer, regardless of formatting differences in the source data. A receiver stores fingerprints at ingest and can immediately detect when an incoming lead represents a customer already in their pipeline." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I add fields my industry or organization needs without breaking the standard?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. LEX defines an explicit extension mechanism: any field prefixed with lex.ext.[namespace] is a recognized extension. Namespaces are registered in the public extension registry. A receiver that does not understand an extension field ignores it safely; the core message remains valid. Extensions are strictly additive — they can never change the semantics of a core field or make a previously optional field required. This ensures extensions cannot break interoperability between parties that are unaware of each other's namespaces." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does a full lead lifecycle look like in LEX?",
+        "acceptedAnswer": { "@type": "Answer", "text": "LEX defines 15 lead status values: SUBMITTED, RECEIVED, ACKNOWLEDGED, ASSIGNED, CONTACTED, QUALIFIED, PROPOSAL_SENT, NEGOTIATING, CLOSED_WON, CLOSED_LOST, DUPLICATE, EXPIRED, WITHDRAWN, ON_HOLD, and REVISIT. Allowed transitions between statuses are governed by a state machine defined in the specification. Every party in the pipeline — the originator, the dealer, the OEM, the lead aggregator — uses the same vocabulary to describe where a lead currently stands. There is no ambiguity about terminal states or valid progressions." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does bidirectional communication work in LEX?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A LEAD message flows from originator to receiver. The receiver is required to send an ACKNOWLEDGMENT back, confirming receipt and validation status. As the lead progresses through the sales pipeline, the receiver emits status updates and eventually a LEAD_CLOSURE message back to the originator. This creates a closed-loop pipeline where the lead source tracks outcomes without relying on manual reporting, proprietary dashboards, or separate API integrations. Every transition is a structured, validated LEX message." }
+      },
+      {
+        "@type": "Question",
+        "name": "Who controls the LEX specification? Can a company capture it?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The LEX specification is published under the Apache License, Version 2.0. Any party can implement it freely and permanently — that right cannot be revoked. Apache 2.0 includes an explicit patent retaliation clause: if any contributor brings a patent lawsuit claiming that LEX or a conformant implementation infringes their patents, their license terminates. The specification also includes an explicit anti-capture clause: if any single entity or coordinated group gains majority control of the governing body, the specification automatically forks under independent governance." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a fee to implement LEX or declare conformance?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Implementing LEX requires no payment, registration, or approval of any kind. Conformance levels are self-declared against public test vectors. No certification body is mandatory. Third parties may offer certification services as a value-add, but their involvement is entirely optional and does not gate access to the standard, the ecosystem, or any LEX-compatible platform." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I declare LEX conformance for my product?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Run the public test case library against your implementation. Pass all Level 1 test cases and you may claim L1 conformance in your product documentation. Pass Level 2 and claim L2. Pass Level 3 and claim L3. The test case library is published in the GitHub repository and versioned alongside the specification. There is no registry to submit to, no approval to wait for, and no annual fee to maintain the declaration." }
+      },
+      {
+        "@type": "Question",
+        "name": "How will LEX evolve? What happens when requirements change?",
+        "acceptedAnswer": { "@type": "Answer", "text": "LEX uses semantic versioning. Backward-compatible additions — new optional fields, new status values, new extension namespaces — increment the minor version. Breaking changes increment the major version and require a defined deprecation period with advance notice. A core design constraint is that a receiver implementing LEX v1.x must be able to process any v1.y message without failure, for any y greater than x. Optional fields remain optional. The standard grows through public proposals on GitHub, open comment periods, and community consensus." }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I propose a change or new feature for LEX?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Open an issue or pull request on the GitHub repository at github.com/lexstandard/lex. All proposals are public from the moment they are submitted. The governance process requires a written rationale, an open comment period, and no sustained objection from a qualified majority of active maintainers. There is no private fast-track for commercial contributors. An organization that has deployed LEX widely has exactly the same voice in the process as an individual implementer." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-white font-sans">
+
+  <!-- ── Navigation ──────────────────────────────────────────────────────── -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+        <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg">
+          <span class="text-white font-bold text-sm">L</span>
+        </span>
+        <span class="font-bold text-slate-900 text-lg">LEX</span>
+        <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
+      </a>
+      <div class="hidden md:flex items-center gap-5">
+        <a href="index.html"           class="nav-link" data-nav-href="index.html">Home</a>
+        <a href="spec.html"            class="nav-link" data-nav-href="spec.html">Specification</a>
+        <a href="getting-started.html" class="nav-link" data-nav-href="getting-started.html">Get Started</a>
+        <a href="industries.html"      class="nav-link" data-nav-href="industries.html">Industries</a>
+        <a href="examples.html"        class="nav-link" data-nav-href="examples.html">Examples</a>
+        <a href="conformance.html"     class="nav-link" data-nav-href="conformance.html">Conformance</a>
+        <a href="edi-reference.html"   class="nav-link" data-nav-href="edi-reference.html">EDI Reference</a>
+        <a href="faq.html"             class="nav-link nav-link-active" data-nav-href="faq.html">FAQ</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-4">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+          GitHub
+        </a>
+      </div>
+      <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-1">
+      <a href="index.html"           class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Home</a>
+      <a href="spec.html"            class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Specification</a>
+      <a href="getting-started.html" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Get Started</a>
+      <a href="industries.html"      class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Industries</a>
+      <a href="examples.html"        class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Examples</a>
+      <a href="conformance.html"     class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Conformance</a>
+      <a href="edi-reference.html"   class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">EDI Reference</a>
+      <a href="faq.html"             class="block px-3 py-2 rounded-lg text-sm font-medium text-lex-600 bg-lex-50">FAQ</a>
+      <div class="pt-2 border-t border-slate-100">
+        <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">GitHub ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Page Header ──────────────────────────────────────────────────── -->
+    <div class="bg-slate-50 border-b border-slate-200 pt-20 pb-16">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="section-label">Knowledge Base</p>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 mt-3 leading-tight">Frequently Asked Questions</h1>
+        <p class="mt-5 text-lg text-slate-500 leading-relaxed">
+          Lead exchange seems simple until you have to do it at scale, across organizations, with regulators watching. This page explains the problems LEX was built to solve — and exactly how it solves them.
+        </p>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+
+      <!-- ── Section 1: The Problem ──────────────────────────────────────── -->
+      <section id="the-problem">
+        <div class="mb-8">
+          <p class="section-label">The Problem</p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-1">Why Lead Exchange Is Broken</h2>
+          <p class="mt-2 text-slate-500 text-sm leading-relaxed">Every sales industry that operates through a distributed dealer or partner network shares the same structural problem. Understanding it is the starting point for understanding LEX.</p>
+        </div>
+
+        <div class="divide-y divide-slate-200 border-y border-slate-200">
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">Why does sales lead exchange need an open standard?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Without a shared format, every system that sends or receives leads must build a custom integration for every counterpart. A manufacturer working with twelve dealer groups needs twelve separate integration builds. Every time a dealer changes their CRM, that integration must be rebuilt from scratch.</p>
+              <p>The complexity compounds: N senders times M receivers equals N&times;M unique integrations across an ecosystem. An open standard collapses that to a single implementation per party — build once to LEX, connect to any LEX-compatible system. The integration cost shifts from a recurring operational tax to a one-time engineering investment.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">What actually breaks when there is no agreed lead format?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>The most common failure is <strong>silent data loss</strong>. A field that exists in the sending system simply does not exist in the receiving format, so it gets dropped without notice or error. Consent records, lead source attribution, asset interest details, pre-qualification signals — all of these routinely disappear at integration boundaries.</p>
+              <p>The receiving system often ends up with only a name, email, and phone number. The richer context that drove the customer's inquiry is gone. This degraded signal directly impacts conversion rates, makes follow-up calling feel cold and uninformed, and renders pipeline analytics unreliable.</p>
+              <p>Data loss also creates legal exposure: when consent evidence doesn't travel with the lead, the receiving party cannot demonstrate the legal basis for contacting the customer.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">How does lead duplication become a systemic problem?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>A customer researching a high-consideration purchase typically submits inquiry forms through multiple channels — a manufacturer's website, a third-party aggregator, and perhaps the dealer's own site. Without a standard deduplication mechanism, each of those submissions arrives in the dealer's CRM as a separate, unrelated record. The dealer's team calls the same prospect two or three times in the same afternoon.</p>
+              <p>The customer experience is immediately damaged. The dealer's apparent conversion rate is artificially deflated. Lead volume figures are inflated. And no party has a clear picture of how many real, unique buyers are actually in the pipeline.</p>
+              <p>LEX addresses this with a deterministic <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">deduplication.customerFingerprint</code> — a SHA-256 hash computed from normalized customer identity fields — present in every LEAD message. Any receiver can detect and collapse duplicate leads at the point of ingest, before they pollute the CRM.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">What happens to consent records when a lead changes hands?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Under GDPR, CCPA, DPDPA, and comparable privacy regulations, the legal basis for processing a customer's personal data must be demonstrable at every step: when they consented, through what channel, for what stated purpose, and under which regulatory jurisdiction.</p>
+              <p>Today, that evidence lives in the originating platform's internal database. It is almost never transmitted as part of the lead payload. When the lead reaches a third-party CRM, a dealer group, or a manufacturer's system, the receiving party has no documented evidence of consent. They must either re-obtain consent — an awful customer experience — or operate on legally uncertain ground.</p>
+              <p>LEX solves this by embedding a structured <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">consentRecord</code> object directly in every LEAD message. Consent evidence travels atomically with the data it authorizes, across every system it passes through.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">Why do leads lose lifecycle visibility once they are sent?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Most lead transmission systems are fire-and-forget. The sender transmits a payload and then has no structured mechanism to learn whether the lead was received, whether someone contacted the customer, how the conversation progressed, or whether a deal closed.</p>
+              <p>This means originators cannot measure follow-up rates, lead aggregators cannot optimize traffic quality, and no party can close the attribution loop on a marketing campaign. The longer the sales cycle, the more severe this blind spot becomes.</p>
+              <p>LEX defines a full 15-status lead lifecycle with bidirectional acknowledgment and lead closure messages, giving every party in the pipeline a shared, structured vocabulary for describing where a lead currently stands — and a mechanism to communicate that state back to the originator in real time.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <!-- ── Section 2: What LEX Is ──────────────────────────────────────── -->
+      <section id="what-lex-is">
+        <div class="mb-8">
+          <p class="section-label">What LEX Is</p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-1">Scope, Philosophy, and Design Choices</h2>
+          <p class="mt-2 text-slate-500 text-sm leading-relaxed">LEX is deliberately focused. Understanding what it is — and what it is not — is essential for setting the right implementation expectations.</p>
+        </div>
+
+        <div class="divide-y divide-slate-200 border-y border-slate-200">
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">What exactly is LEX?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>LEX is an open specification for the structure, content, and transport semantics of sales lead messages. It defines the message envelope, required and optional fields, allowed status values, consent record schema, deduplication fingerprint, extension mechanism, and conformance requirements.</p>
+              <p>It is not software, not a platform, and not a hosted service. Any system can implement LEX by reading the specification and emitting or consuming conformant messages. There is no SDK you are required to use, no vendor you are required to work with, and no membership required to participate.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">What is the scope of LEX — and what is deliberately out of scope?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>LEX is focused specifically on the sales lead exchange use case: the structured transmission of customer intent, asset interest, consent evidence, and lifecycle status between parties in a sales pipeline.</p>
+              <p>It deliberately does not define <strong>procurement workflows</strong>, invoice formats, general-purpose supply chain messages, inventory management, or commerce transactions beyond the lead lifecycle. This focus is intentional: a tighter scope means a simpler standard, easier to implement correctly, and harder to corrupt through scope creep.</p>
+              <p>Broader commerce workflows are well-served by existing general-purpose EDI standards. The specific problem of lead exchange — buyer intent, consent, routing, deduplication, and lifecycle closure — is not.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">Why did LEX focus on leads specifically, rather than covering all commerce?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>The lead space is where a disproportionate share of integration pain concentrates. Every industry that sells high-consideration assets through a distributed dealer or partner network — vehicles, aircraft, vessels, heavy machinery, commercial real estate, enterprise software — shares the same core problem: a structured buyer intent signal that must travel accurately, with its full context and consent evidence intact, through multiple parties and systems over weeks or months.</p>
+              <p>This problem is under-served by general-purpose commerce standards. Purchase order and invoice formats were not designed for buyer intent signals, for routing logic, for consent records, or for deal closure attribution. LEX addresses that specific, unserved layer with the depth it deserves.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">Does LEX work for industries outside automotive?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Yes. LEX defines a core message structure that applies to any industry selling through a lead-based pipeline. An extension namespace system allows industry-specific fields to be added alongside the core without modifying shared definitions.</p>
+              <p>Aviation, maritime, heavy equipment, real estate, and technology are all supported today with published extension namespaces in the public registry. The extension registry is open — any organization can publish a namespace extension for their specific domain, and the core standard is unaffected.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <!-- ── Section 3: How It Works ─────────────────────────────────────── -->
+      <section id="how-it-works">
+        <div class="mb-8">
+          <p class="section-label">How It Works</p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-1">Technical Architecture</h2>
+          <p class="mt-2 text-slate-500 text-sm leading-relaxed">The design decisions behind LEX's wire formats, deduplication model, extension system, and lifecycle state machine.</p>
+        </div>
+
+        <div class="divide-y divide-slate-200 border-y border-slate-200">
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">What wire formats does LEX support?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>LEX supports four wire formats:</p>
+              <ul class="space-y-2 pl-4">
+                <li><strong>JSON-EDI</strong> — the recommended format for all new integrations. Human-readable, REST-friendly, and easy to validate with standard JSON tooling.</li>
+                <li><strong>XML-EDI</strong> — for systems that require XML, including legacy integrations and environments with XML-based validation pipelines.</li>
+                <li><strong>ASC X12 850 mapping</strong> — for connection to established EDI networks using legacy X12 infrastructure.</li>
+                <li><strong>EDIFACT ORDERS mapping</strong> — for international EDI infrastructure where EDIFACT is the norm.</li>
+              </ul>
+              <p>All four carry semantically equivalent content. A JSON-EDI message and an X12 850 message built from the same lead data represent the same lead — no information is lost in translation between formats.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">How does LEX handle duplicate lead detection?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Each LEAD message may include a <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">deduplication.customerFingerprint</code> field containing a SHA-256 hash computed from a normalized representation of the customer's email address, phone number, and last name.</p>
+              <p>The normalization rules — lowercasing, whitespace stripping, international phone normalization — are fully specified so that any two compliant implementations produce the same fingerprint for the same customer, regardless of how the source data was formatted. A receiver stores fingerprints at ingest, and can immediately detect when an incoming lead represents a customer already in their pipeline. The duplicate can be silently merged or flagged for review, before it reaches the CRM.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">Can I add fields my organization needs without breaking interoperability?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Yes. LEX defines an explicit extension mechanism: any field prefixed with <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">lex.ext.[namespace]</code> is a recognized extension. Namespaces are registered in the public extension registry, preventing collisions between organizations.</p>
+              <p>A receiver that does not understand an extension field ignores it safely — the core message remains schema-valid. Extensions are strictly additive: they cannot change the semantics of a core field, make a previously optional field required, or remove existing values from enumerations. This guarantee means extension adoption by one party cannot silently break integrations with parties unaware of that extension.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">What does the full lead lifecycle look like in LEX?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>LEX defines 15 lead status values covering the full sales pipeline:</p>
+              <div class="flex flex-wrap gap-1.5 my-2">
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">SUBMITTED</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">RECEIVED</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">ACKNOWLEDGED</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">ASSIGNED</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">CONTACTED</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">QUALIFIED</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">PROPOSAL_SENT</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">NEGOTIATING</span>
+                <span class="font-mono text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded">CLOSED_WON</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">CLOSED_LOST</span>
+                <span class="font-mono text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded">DUPLICATE</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">EXPIRED</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">WITHDRAWN</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">ON_HOLD</span>
+                <span class="font-mono text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">REVISIT</span>
+              </div>
+              <p>Allowed transitions are defined by a state machine in the specification. Every party in the pipeline uses this shared vocabulary, eliminating ambiguity about where a lead stands and which terminal states are valid.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">How does bidirectional communication work? Can a receiver send updates back?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Yes. A LEAD message flows from originator to receiver. The receiver is required to send an ACKNOWLEDGMENT back, confirming receipt and validation status. As the lead progresses, the receiver emits structured status updates and eventually a LEAD_CLOSURE message back to the originator.</p>
+              <p>This creates a fully closed-loop pipeline: the lead source knows a lead was received, knows when a customer was contacted, and knows when a deal closed — all through machine-readable LEX messages, without manual reporting or proprietary dashboard integrations. Every transition is a validated, structured message.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <!-- ── Section 4: Governance ───────────────────────────────────────── -->
+      <section id="governance">
+        <div class="mb-8">
+          <p class="section-label">Governance &amp; Adoption</p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-1">Open by Design</h2>
+          <p class="mt-2 text-slate-500 text-sm leading-relaxed">How LEX is governed, what it costs, and how conformance works.</p>
+        </div>
+
+        <div class="divide-y divide-slate-200 border-y border-slate-200">
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">Who controls the LEX specification? Can a company capture it?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>The LEX specification is published under the <strong>Apache License, Version 2.0</strong>. Any party can implement it freely and permanently — that right cannot be revoked by any future governance decision.</p>
+              <p>Apache 2.0 was chosen over MIT specifically because it includes a <strong>patent retaliation clause</strong>: if any contributor or implementer brings a patent lawsuit claiming that the LEX specification or a conformant implementation infringes their patents, their license to the specification terminates. MIT has no such protection. This clause protects every adopter in the ecosystem from patent ambush by contributors, making Apache 2.0 the stronger choice for a technical standard.</p>
+              <p>The specification also includes an explicit anti-capture clause: if any single entity or coordinated group gains majority control of the governing body, the specification automatically forks under independent governance. LEX is designed to remain ungovernable by any single commercial interest, including its own most active contributors.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">Is there a fee to implement LEX or declare conformance?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>No. Implementing LEX requires no payment, registration, or approval of any kind. Conformance levels are self-declared against public test vectors published on GitHub. No certification body is mandatory.</p>
+              <p>Third parties may offer certification services as a commercial value-add, but their involvement is entirely optional and does not gate access to the standard, the ecosystem, or any LEX-compatible platform.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">How do I declare LEX conformance for my product?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Run the public test case library against your implementation. Pass all Level 1 test cases and you may claim L1 conformance in your product documentation. Pass Level 2 test cases and claim L2. Pass all Level 3 test cases and claim L3.</p>
+              <p>The test case library is published in the GitHub repository and versioned alongside the specification. There is no registry to submit to, no approval to wait for, and no annual fee to maintain your declaration. See the <a href="conformance.html" class="text-lex-600 hover:underline font-medium">Conformance</a> page for the full test vector index.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <!-- ── Section 5: Evolution ────────────────────────────────────────── -->
+      <section id="evolution">
+        <div class="mb-8">
+          <p class="section-label">Roadmap &amp; Evolution</p>
+          <h2 class="text-2xl font-bold text-slate-900 mt-1">A Standard That Grows</h2>
+          <p class="mt-2 text-slate-500 text-sm leading-relaxed">How LEX evolves without breaking existing integrations, and how the community shapes its direction.</p>
+        </div>
+
+        <div class="divide-y divide-slate-200 border-y border-slate-200">
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">How will LEX evolve? What happens when requirements change?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>LEX uses semantic versioning. Backward-compatible additions — new optional fields, new status values, new extension namespaces — increment the minor version. Breaking changes increment the major version and require a defined deprecation period with advance notice and migration guidance.</p>
+              <p>A core design constraint is that a receiver implementing LEX v1.x must be able to process any v1.y message without failure, for any y &gt; x. Optional fields remain optional. Enum values are never removed without a full major version cycle. The standard grows through public proposals on GitHub, open comment periods, and community consensus — not through private decisions by a single sponsor.</p>
+            </div>
+          </details>
+
+          <details class="group py-1">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none gap-4">
+              <span class="font-semibold text-slate-900 group-open:text-lex-600 transition-colors text-base">How can I propose a change or new capability for LEX?</span>
+              <svg class="w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="pb-5 text-slate-600 leading-relaxed text-sm space-y-3">
+              <p>Open an issue or pull request on the GitHub repository at <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="text-lex-600 hover:underline font-medium">github.com/lexstandard/lex</a>. All proposals are public from the moment they are submitted — there is no private track.</p>
+              <p>The governance process requires a written rationale explaining the problem being addressed, an open comment period during which any stakeholder may respond, and no sustained objection from a qualified majority of active maintainers. An organization that has deployed LEX widely has exactly the same voice in this process as an individual implementer.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <!-- ── Still have questions ────────────────────────────────────────── -->
+      <div class="p-8 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+        <h3 class="text-lg font-bold text-slate-900">Still have a question?</h3>
+        <p class="mt-2 text-sm text-slate-500 max-w-md mx-auto">Open a discussion on GitHub. Questions asked in issues often become the next FAQ entry.</p>
+        <div class="mt-5 flex flex-wrap justify-center gap-3">
+          <a href="https://github.com/lexstandard/lex/discussions" target="_blank" rel="noopener noreferrer" class="btn-primary text-sm px-5 py-2.5">Ask on GitHub</a>
+          <a href="spec.html" class="btn-secondary text-sm px-5 py-2.5">Read the Specification</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="flex items-center justify-center w-6 h-6 bg-lex-600 rounded">
+          <span class="text-white font-bold text-xs">L</span>
+        </span>
+        <span class="font-semibold text-white">LEX</span>
+        <span class="text-slate-600">— Lead Exchange Standard</span>
+      </div>
+      <p>© 2026 LEX Contributors · <a href="https://github.com/lexstandard/lex/blob/main/LICENSE" class="text-lex-400 hover:text-lex-300" target="_blank" rel="noopener noreferrer">Apache 2.0 License</a></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

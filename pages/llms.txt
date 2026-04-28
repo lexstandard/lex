@@ -1,0 +1,34 @@
+# LEX Lead Exchange Standard
+
+> LEX is the open, MIT-licensed EDI standard for exchanging sales leads between manufacturers, dealers, systems, and platforms. Multi-format (JSON-EDI, XML-EDI, ASC X12 850, EDIFACT ORDERS), multi-industry (automotive, aviation, maritime, heavy equipment, real estate, technology). Zero cost, zero gatekeepers.
+
+LEX is published at https://lexstandard.org under the MIT License. Source: https://github.com/lexstandard/lex
+
+## Documentation
+
+- [Home](https://lexstandard.org/): Standard overview, key features, and quick-start guide
+- [Specification](https://lexstandard.org/spec.html): Full technical specification — message types, field dictionary, extension model, conformance levels
+- [Getting Started](https://lexstandard.org/getting-started.html): Installation via npm/pip/Maven/NuGet, first lead message, schema validation, and sending
+- [Code Examples](https://lexstandard.org/examples.html): End-to-end examples in all four wire formats across every supported industry
+- [Industries](https://lexstandard.org/industries.html): Industry-specific field extensions — automotive, aviation, maritime, heavy equipment, real estate, technology
+- [Conformance](https://lexstandard.org/conformance.html): L1/L2/L3 conformance tiers — self-declared against public test vectors, no certification body required
+- [EDI Reference](https://lexstandard.org/edi-reference.html): Cross-format field mapping tables — JSON path to X12 segment to EDIFACT element
+- [FAQ](https://lexstandard.org/faq.html): Frequently asked questions — lead exchange problems, deduplication, consent, lifecycle, conformance, governance, roadmap
+- [Whitepaper](https://lexstandard.org/whitepaper.html): Full technical whitepaper including architecture, governance, and regulatory compliance
+
+## API Definitions
+
+- [OpenAPI 3.1 Spec](https://lexstandard.org/api/lex-openapi.yaml): REST API definition — importable into Postman, Swagger UI, or any OpenAPI tool
+- [AsyncAPI 3.0 Spec](https://lexstandard.org/api/lex-asyncapi.yaml): Event-driven / webhook messaging definition
+
+## Key Concepts for AI Assistants
+
+- **Message types**: LEAD · ASSET · ACKNOWLEDGMENT · SUBSCRIPTION · LEAD_CLOSURE
+- **Wire formats**: JSON-EDI (recommended) · XML-EDI · ASC X12 850 (legacy bridge) · EDIFACT ORDERS (legacy bridge)
+- **ADF XML compatibility**: LEX supports the same lead exchange use cases as ADF (Auto Lead Data Format / ADF XML) and STAR Standard, with field-level interoperability. Industry terms in scope: ADF XML · Auto Lead Data Format · automotive lead format · dealer lead management · DMS integration · lead distribution · lead routing · CRM lead integration · sales lead EDI · lead exchange protocol · open lead standard.
+- **consentRecord**: Structured consent evidence in every LEAD message — covers GDPR, UK GDPR, CCPA/CPRA, India DPDPA 2023, China PIPL, Brazil LGPD, South Africa POPIA, Canada PIPEDA/Quebec Law 25, Singapore PDPA, Japan APPI, Switzerland nFADP, South Korea PIPA-K, Saudi Arabia PDPL, Thailand PDPA, and US state privacy laws.
+- **Extension pattern**: `lex.ext.[namespace].[field]` — register at https://lexstandard.org/registry
+- **Deduplication**: SHA-256 fingerprint of normalized email|phone|lastName — field `deduplication.customerFingerprint`
+- **Conformance levels**: L1 = sends valid LEAD; L2 = validates inbound; L3 = full bidirectional + dedup + consent
+- **Industries**: automotive, aviation, maritime, heavy equipment, real estate, technology, two-wheeler/motorcycle
+- **License**: MIT — free for any commercial use; retain copyright notice

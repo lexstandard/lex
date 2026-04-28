@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+Disallow: /node_modules/
+
+# LLM crawlers — explicitly welcome; see /llms.txt for structured content
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+Sitemap: https://lexstandard.org/sitemap.xml

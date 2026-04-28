@@ -1,0 +1,1139 @@
+﻿asyncapi: 3.0.0
+
+info:
+  title: LEX — Lead Exchange Standard
+  version: 1.0.0
+  description: |
+    AsyncAPI contract for the LEX (Lead Exchange Standard) messaging protocol.
+    
+    LEX is a platform-agnostic specification for universal sales lead data exchange
+    across industries including automotive, aviation, maritime, real estate,
+    heavy equipment, and technology.
+    It supports bidirectional messaging, full lifecycle management, and
+    multi-format EDI (JSON-EDI, XML-EDI, X12, EDIFACT).
+    
+    ## Transport Options
+    - **REST/Webhook**: HTTP POST to registered endpoints (primary)
+    - **AMQP**: RabbitMQ / Azure Service Bus
+    - **Kafka**: Topic-based delivery for high-volume platforms
+    - **SFTP**: File-drop EDI for legacy systems
+    
+  contact:
+    name: LEX Standard Working Group
+    url: https://lexstandard.org
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+defaultContentType: application/json
+
+servers:
+  production:
+    host: api.lexstandard.org
+    protocol: https
+    description: LEX production gateway
+    security:
+      - $ref: '#/components/securitySchemes/oauth2'
+  sandbox:
+    host: sandbox.lexstandard.org
+    protocol: https
+    description: LEX sandbox for integration testing and conformance validation
+    security:
+      - $ref: '#/components/securitySchemes/apiKey'
+
+channels:
+  lex/leads/inbound:
+    address: lex/leads/inbound
+    description: |
+      Inbound channel for receiving LEAD messages from dealers, platforms, and DMS providers.
+      Messages are validated against the LEX schema before routing.
+    messages:
+      leadMessage:
+        $ref: '#/components/messages/LeadMessage'
+
+  lex/leads/outbound:
+    address: lex/leads/outbound
+    description: |
+      Outbound channel for publishing LEAD status updates from OEM/manufacturer systems
+      back to dealers, DMS providers, and originating platforms.
+    messages:
+      leadMessage:
+        $ref: '#/components/messages/LeadMessage'
+
+  lex/assets/inbound:
+    address: lex/assets/inbound
+    description: |
+      Inbound channel for ASSET inventory messages — product availability,
+      specifications, and pricing updates.
+    messages:
+      assetMessage:
+        $ref: '#/components/messages/AssetMessage'
+
+  lex/acknowledgments:
+    address: lex/acknowledgments
+    description: |
+      Acknowledgment channel. Every received LEAD or ASSET message MUST trigger
+      an acknowledgment on this channel. ACKs provide receipt confirmation and
+      validation failure reporting.
+    messages:
+      acknowledgmentMessage:
+        $ref: '#/components/messages/AcknowledgmentMessage'
+
+  lex/subscriptions:
+    address: lex/subscriptions
+    description: |
+      Subscription management channel. Systems register their interest in
+      receiving specific message types, filtered by lead status, product type,
+      or geographic region.
+    messages:
+      subscriptionMessage:
+        $ref: '#/components/messages/SubscriptionMessage'
+
+  lex/closures:
+    address: lex/closures
+    description: |
+      Lead closure channel. Dealers push LEAD_CLOSURE messages back to the
+      originating platform to close the feedback loop on won/lost deals.
+    messages:
+      leadClosureMessage:
+        $ref: '#/components/messages/LeadClosureMessage'
+
+  lex/dlq:
+    address: lex/dlq
+    description: |
+      Dead letter queue channel. Messages that failed all delivery retries
+      or are permanently undeliverable are routed here.
+    messages:
+      dlqMessage:
+        $ref: '#/components/messages/DlqMessage'
+
+operations:
+  receiveLead:
+    action: receive
+    channel:
+      $ref: '#/channels/lex~1leads~1inbound'
+    summary: Receive an inbound LEAD message
+    description: |
+      Process an incoming LEAD message. The receiver MUST:
+      1. Validate the message against the LEX schema
+      2. Apply business rule validation
+      3. Return an ACKNOWLEDGMENT message on the lex/acknowledgments channel
+      4. Be idempotent — duplicate messageIds must not create duplicate leads
+    messages:
+      - $ref: '#/channels/lex~1leads~1inbound/messages/leadMessage'
+
+  sendLeadUpdate:
+    action: send
+    channel:
+      $ref: '#/channels/lex~1leads~1outbound'
+    summary: Publish a LEAD status update
+    description: |
+      Publish a lead status update (e.g., from EXPRESSED_INTEREST to ORDER_CONFIRMED)
+      back to the originating system. Used by OEM and DMS systems.
+    messages:
+      - $ref: '#/channels/lex~1leads~1outbound/messages/leadMessage'
+
+  sendAcknowledgment:
+    action: send
+    channel:
+      $ref: '#/channels/lex~1acknowledgments'
+    summary: Send message acknowledgment
+    description: |
+      Send an ACKNOWLEDGMENT message in response to any received LEAD,
+      VEHICLE, or LEAD_CLOSURE message. Always sent by the receiving party.
+    messages:
+      - $ref: '#/channels/lex~1acknowledgments/messages/acknowledgmentMessage'
+
+  receiveAsset:
+    action: receive
+    channel:
+      $ref: '#/channels/lex~1assets~1inbound'
+    summary: Receive an ASSET inventory message
+    messages:
+      - $ref: '#/channels/lex~1assets~1inbound/messages/assetMessage'
+
+  manageSubscription:
+    action: send
+    channel:
+      $ref: '#/channels/lex~1subscriptions'
+    summary: Register or update a message subscription
+    messages:
+      - $ref: '#/channels/lex~1subscriptions/messages/subscriptionMessage'
+
+  sendLeadClosure:
+    action: send
+    channel:
+      $ref: '#/channels/lex~1closures'
+    summary: Send lead closure outcome
+    description: |
+      Dealer sends LEAD_CLOSURE to report the final outcome of a lead (WON, LOST,
+      ABANDONED, REASSIGNED, DUPLICATE). Closes the feedback loop with the
+      originating platform or manufacturer.
+    messages:
+      - $ref: '#/channels/lex~1closures/messages/leadClosureMessage'
+
+components:
+  messages:
+    LeadMessage:
+      name: LEXLead
+      title: LEX LEAD Message
+      summary: Customer lead / inquiry message
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          lex-message-type:
+            type: string
+            const: LEAD
+          lex-version:
+            type: string
+            example: "1.0"
+          lex-encryption:
+            type: string
+            enum: [NONE, TLS1.2, TLS1.3, END_TO_END]
+      payload:
+        $ref: '#/components/schemas/LexLeadPayload'
+      examples:
+        - name: PrimaryVehicleLead
+          summary: Customer expressing interest in a Toyota RAV4 Hybrid
+          payload:
+            lex:
+              header:
+                messageId: "MSG-2026-LEAD-001234"
+                messageType: LEAD
+                version: "1.0"
+                timestamp: "2026-03-25T09:00:00Z"
+                senderId: "PLATFORM-TOYOTA-US"
+                receiverId: "RETAILER-TOYOTA-FREMONT-001"
+              payload:
+                lead:
+                  leadId: "LEAD-2026-003321"
+                  status: EXPRESSED_INTEREST
+                  source: MANUFACTURER_WEBSITE
+                  customer:
+                    firstName: Marcus
+                    lastName: Okafor
+                    email: marcus.okafor@email.com
+                    phone: "+14085559023"
+                  desiredProduct:
+                    productType: VEHICLE
+                    manufacturers: [Toyota]
+                    preferredModels: ["RAV4 Hybrid"]
+                  metadata:
+                    createdAt: "2026-03-25T09:00:00Z"
+                    version: "1.0"
+
+    AssetMessage:
+      name: LEXAsset
+      title: LEX ASSET Message
+      summary: Asset inventory and specification message
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/LexAssetPayload'
+
+    AcknowledgmentMessage:
+      name: LEXAcknowledgment
+      title: LEX ACKNOWLEDGMENT Message
+      summary: Message receipt and processing confirmation
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/LexAcknowledgmentPayload'
+
+    SubscriptionMessage:
+      name: LEXSubscription
+      title: LEX SUBSCRIPTION Message
+      summary: Subscribe to lead or asset event notifications
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/LexSubscriptionPayload'
+
+    LeadClosureMessage:
+      name: LEXLeadClosure
+      title: LEX LEAD_CLOSURE Message
+      summary: Final outcome report for a completed or lost lead
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/LexLeadClosurePayload'
+
+    DlqMessage:
+      name: LEXDeadLetter
+      title: LEX Dead Letter Queue Message
+      summary: Failed message after all delivery retries exhausted
+      contentType: application/json
+      payload:
+        type: object
+        required: [dlq]
+        properties:
+          dlq:
+            type: object
+            required: [dlqId, originalMessageId, failureCategory, enqueuedAt]
+            properties:
+              dlqId:
+                type: string
+              originalMessageId:
+                type: string
+              originalMessageType:
+                type: string
+              failureCategory:
+                type: string
+                enum:
+                  - TRANSIENT_EXHAUSTED
+                  - PERMANENT_SCHEMA_ERROR
+                  - PERMANENT_AUTH_ERROR
+                  - TTL_EXPIRED
+                  - POISON_MESSAGE
+                  - MANUAL_DLQ
+              failureReason:
+                type: string
+              enqueuedAt:
+                type: string
+                format: date-time
+              attemptCount:
+                type: integer
+              originalMessage:
+                type: object
+                description: The complete original LEX message that failed delivery
+
+  schemas:
+    LexMessageHeader:
+      type: object
+      required: [messageId, messageType, version, timestamp, senderId, receiverId]
+      properties:
+        messageId:
+          type: string
+          description: Unique message identifier
+          example: "MSG-2026-LEAD-001234"
+        messageType:
+          type: string
+          enum: [LEAD, ASSET, ACKNOWLEDGMENT, SUBSCRIPTION, LEAD_CLOSURE]
+        version:
+          type: string
+          pattern: '^\d+\.\d+$'
+          example: "1.0"
+        timestamp:
+          type: string
+          format: date-time
+          description: UTC timestamp when message was created
+        senderId:
+          type: string
+          minLength: 3
+          maxLength: 50
+        receiverId:
+          type: string
+          minLength: 3
+          maxLength: 50
+        encryptionMethod:
+          type: string
+          enum: [NONE, TLS1.2, TLS1.3, END_TO_END]
+          default: TLS1.3
+        correlationId:
+          type: string
+          description: Links related messages (e.g., response to a request)
+        ttl:
+          type: object
+          properties:
+            maxAgeSeconds:
+              type: integer
+              default: 3600
+            expiresAt:
+              type: string
+              format: date-time
+            onExpiry:
+              type: string
+              enum: [DLQ, DISCARD, RETURN]
+              default: DLQ
+        retryContext:
+          type: object
+          description: Populated by infrastructure on retransmission
+          properties:
+            originalTimestamp:
+              type: string
+              format: date-time
+            attemptNumber:
+              type: integer
+              minimum: 1
+            maxAttempts:
+              type: integer
+            lastFailureReason:
+              type: string
+            lastAttemptTimestamp:
+              type: string
+              format: date-time
+
+    LexLeadPayload:
+      type: object
+      required: [lex]
+      properties:
+        lex:
+          type: object
+          required: [header, payload]
+          properties:
+            header:
+              $ref: '#/components/schemas/LexMessageHeader'
+            payload:
+              type: object
+              required: [lead]
+              properties:
+                lead:
+                  $ref: '#/components/schemas/Lead'
+
+    LexAssetPayload:
+      type: object
+      required: [lex]
+      properties:
+        lex:
+          type: object
+          required: [header, payload]
+          properties:
+            header:
+              $ref: '#/components/schemas/LexMessageHeader'
+            payload:
+              type: object
+              required: [asset]
+              properties:
+                asset:
+                  type: object
+                  description: Asset inventory item — see LEX_ASSET_SCHEMA.json. Applies to all asset classes (VEHICLE, MOTORCYCLE, AIRCRAFT_NEW, CARGO_VESSEL, LOCOMOTIVE, SMARTPHONE, etc.).
+
+    LexAcknowledgmentPayload:
+      type: object
+      required: [lex]
+      properties:
+        lex:
+          type: object
+          required: [header, payload]
+          properties:
+            header:
+              $ref: '#/components/schemas/LexMessageHeader'
+            payload:
+              type: object
+              required: [acknowledgment]
+              properties:
+                acknowledgment:
+                  type: object
+                  required: [originalMessageId, status]
+                  properties:
+                    originalMessageId:
+                      type: string
+                    status:
+                      type: string
+                      enum: [RECEIVED, PROCESSED, REJECTED, ERROR]
+                    validationErrors:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          level:
+                            type: string
+                            enum: [CRITICAL, ERROR, WARNING]
+                          field:
+                            type: string
+                          message:
+                            type: string
+                          code:
+                            type: string
+
+    LexSubscriptionPayload:
+      type: object
+      required: [lex]
+      properties:
+        lex:
+          type: object
+          required: [header, payload]
+          properties:
+            header:
+              $ref: '#/components/schemas/LexMessageHeader'
+            payload:
+              type: object
+              required: [subscription]
+              properties:
+                subscription:
+                  type: object
+
+    LexLeadClosurePayload:
+      type: object
+      required: [lex]
+      properties:
+        lex:
+          type: object
+          required: [header, payload]
+          properties:
+            header:
+              $ref: '#/components/schemas/LexMessageHeader'
+            payload:
+              type: object
+              required: [leadClosure]
+              properties:
+                leadClosure:
+                  type: object
+                  required: [originalLeadId, closureStatus, closureDate]
+                  properties:
+                    originalLeadId:
+                      type: string
+                    closureStatus:
+                      type: string
+                      enum: [WON, LOST, ABANDONED, REASSIGNED, CANCELLED, DUPLICATE]
+                    closureDate:
+                      type: string
+                      format: date-time
+                    closureReason:
+                      type: string
+                    dealAmount:
+                      type: number
+                    currency:
+                      type: string
+                      pattern: '^[A-Z]{3}$'
+
+    Lead:
+      type: object
+      required: [leadId, status, source, customer, desiredProduct, metadata]
+      properties:
+        leadId:
+          type: string
+          minLength: 10
+          maxLength: 50
+        status:
+          type: string
+          enum:
+            - CART
+            - SHOPPING
+            - EXPLORING
+            - TEST_DRIVE_REQUESTED
+            - TEST_DRIVE_COMPLETED
+            - TRADE_IN
+            - EXPRESSED_INTEREST
+            - RESERVATION
+            - APPOINTMENT_REQUEST
+            - IN_NEGOTIATION
+            - ORDER
+            - ORDER_CONFIRMED
+            - IN_DELIVERY
+            - DELIVERED
+            - ARCHIVED
+        leadType:
+          type: string
+          enum:
+            - PRIMARY
+            - CART
+            - TEST_DRIVE
+            - TRADE_IN_EVALUATION
+            - POST_ORDER
+            - CROSS_SELL
+            - ACCESSORY
+            - PROTECTION_PLAN
+            - SUBSCRIPTION
+            - RETAILER_INSTALLED_OPTION
+            - SERVICE_UPGRADE
+        source:
+          type: string
+          enum:
+            - CART
+            - TEST_DRIVE_REQUEST
+            - ECOMMERCE_SHOPPING_CART
+            - RETAILER_WEBSITE
+            - RETAILER_CRM
+            - MANUFACTURER_WEBSITE
+            - THIRD_PARTY_PORTAL
+            - DIRECT_CALL
+            - SHOWROOM_WALK_IN
+            - SHOWROOM
+            - TRADE_IN_EVALUATION
+            - SERVICE_DEPARTMENT
+            - SOCIAL_MEDIA
+            - EMAIL_CAMPAIGN
+            - REFERRAL
+            - MOBILE_APP
+            - SOCIAL_LEAD_FORM
+            - PHONE_IVR
+            - SHOWROOM_KIOSK
+            - POST_ORDER_SUGGESTION
+            - POST_DELIVERY_OFFER
+            - RETAILER_SUGGESTION
+            - NURTURE_CAMPAIGN
+            - ECOMMERCE_PLATFORM
+            - CARS_PLATFORM
+            - OTHER
+        parentOrderId:
+          type: string
+          description: Required for POST_ORDER lead types
+        parentLeadId:
+          type: string
+        customer:
+          $ref: '#/components/schemas/Customer'
+        desiredProduct:
+          $ref: '#/components/schemas/DesiredProduct'
+        consentRecord:
+          $ref: '#/components/schemas/ConsentRecord'
+        deduplication:
+          $ref: '#/components/schemas/DeduplicationBlock'
+        leadIntelligence:
+          $ref: '#/components/schemas/LeadIntelligence'
+        metadata:
+          type: object
+
+    Customer:
+      type: object
+      required: [firstName, lastName]
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          pattern: '^\+?[1-9]\d{1,14}$'
+        preferredContactMethod:
+          type: string
+          enum: [EMAIL, PHONE, SMS, WHATSAPP]
+        address:
+          type: object
+
+    DesiredProduct:
+      type: object
+      required: [productType]
+      properties:
+        productType:
+          type: string
+        manufacturers:
+          type: array
+          items:
+            type: string
+        preferredModels:
+          type: array
+          items:
+            type: string
+        evSpecifications:
+          $ref: '#/components/schemas/EVSpecifications'
+
+    EVSpecifications:
+      type: object
+      description: Electric vehicle specific fields — applies to both desired product and vehicle inventory
+      properties:
+        isElectric:
+          type: boolean
+        drivetrainType:
+          type: string
+          enum: [BEV, PHEV, HEV, FCEV, MHEV, EREV]
+        batteryCapacityKwh:
+          type: number
+          minimum: 0
+        estimatedRangeKm:
+          type: object
+          properties:
+            epa:
+              type: number
+            wltp:
+              type: number
+            cltc:
+              type: number
+            rangeStandard:
+              type: string
+              enum: [EPA, WLTP, CLTC, JC08]
+        chargePort:
+          type: object
+          properties:
+            standard:
+              type: string
+              enum: [NACS, CCS_COMBO1, CCS_COMBO2, CHAdeMO, GB_T, TYPE_2, TYPE_1, WIRELESS_SAE_J2954]
+            acLevel:
+              type: string
+              enum: [LEVEL_1, LEVEL_2]
+            dcFast:
+              type: string
+            maxAcChargingKw:
+              type: number
+            maxDcChargingKw:
+              type: number
+        batteryWarranty:
+          type: object
+          properties:
+            years:
+              type: integer
+            km:
+              type: integer
+            minimumRetainedCapacityPct:
+              type: integer
+              minimum: 0
+              maximum: 100
+        homeChargingInterest:
+          type: object
+          properties:
+            hasHomeCharger:
+              type: boolean
+            interestedInInstallation:
+              type: boolean
+            parkingType:
+              type: string
+              enum: [GARAGE, DRIVEWAY, STREET, APARTMENT_PARKING, LOT]
+        taxCreditEligibility:
+          type: object
+          properties:
+            region:
+              type: string
+            federalCreditUSD:
+              type: number
+            stateCreditUSD:
+              type: number
+            eligibilityNotes:
+              type: string
+            programCode:
+              type: string
+            asOf:
+              type: string
+              format: date
+
+    ConsentRecord:
+      type: object
+      description: Regulatory consent record — required when message contains customer PII
+      properties:
+        tcpa:
+          type: object
+          description: US Telephone Consumer Protection Act consent
+          required: [granted, timestamp, channels, ipAddress, consentVersion]
+          properties:
+            granted:
+              type: boolean
+            timestamp:
+              type: string
+              format: date-time
+            channels:
+              type: array
+              items:
+                type: string
+                enum: [SMS, CALL, AUTODIALER, PRERECORDED]
+            ipAddress:
+              type: string
+            userAgent:
+              type: string
+            consentVersion:
+              type: string
+            expiryDate:
+              type: string
+              format: date-time
+              nullable: true
+        gdpr:
+          type: object
+          description: EU GDPR consent
+          properties:
+            legalBasis:
+              type: string
+              enum: [CONSENT, LEGITIMATE_INTEREST, CONTRACT, LEGAL_OBLIGATION, VITAL_INTEREST, PUBLIC_TASK]
+            purposeCodes:
+              type: array
+              items:
+                type: string
+            dataController:
+              type: string
+            processorList:
+              type: array
+              items:
+                type: string
+            retentionPeriodDays:
+              type: integer
+              minimum: 1
+            consentWithdrawnAt:
+              type: string
+              format: date-time
+              nullable: true
+        ccpa:
+          type: object
+          description: California Consumer Privacy Act
+          properties:
+            doNotSell:
+              type: boolean
+            doNotShare:
+              type: boolean
+            optOutTimestamp:
+              type: string
+              format: date-time
+              nullable: true
+            gpcSignalHonored:
+              type: boolean
+        dpdp:
+          type: object
+          description: India Digital Personal Data Protection Act 2023 (DPDPA)
+          properties:
+            consentGranted:
+              type: boolean
+            purposeId:
+              type: string
+            consentTimestamp:
+              type: string
+              format: date-time
+            nomineeDefined:
+              type: boolean
+        ukGdpr:
+          type: object
+          description: UK GDPR / Data Protection Act 2018 consent (applies to GB customers)
+          properties:
+            legalBasis:
+              type: string
+              enum: [CONSENT, LEGITIMATE_INTEREST, CONTRACT, VITAL_INTEREST, PUBLIC_TASK, LEGAL_OBLIGATION]
+            purposeCodes:
+              type: array
+              items:
+                type: string
+            dataController:
+              type: string
+            retentionPeriodDays:
+              type: integer
+              minimum: 1
+            icoRegistrationNumber:
+              type: string
+            consentWithdrawnAt:
+              type: string
+              format: date-time
+              nullable: true
+        usStatePrivacy:
+          type: object
+          description: US State Privacy Laws (Virginia CDPA, Colorado CPA, Connecticut CTDPA, Texas TDPSA, Montana MCDPA, Oregon OCPA, and others)
+          properties:
+            statesOptedOut:
+              type: array
+              items:
+                type: string
+                pattern: '^[A-Z]{2}$'
+            universalOptOut:
+              type: boolean
+            gpcHonored:
+              type: boolean
+        pipl:
+          type: object
+          description: China Personal Information Protection Law (Nov 2021) consent
+          required: [consentGranted, processingPurpose, sensitiveDataIncluded, crossBorderTransferApproved]
+          properties:
+            consentGranted:
+              type: boolean
+            processingPurpose:
+              type: string
+            sensitiveDataIncluded:
+              type: boolean
+            crossBorderTransferApproved:
+              type: boolean
+            consentTimestamp:
+              type: string
+              format: date-time
+        lgpd:
+          type: object
+          description: Brazil LGPD (Lei Geral de Proteção de Dados) consent
+          properties:
+            legalBasis:
+              type: string
+              enum: [CONSENT, LEGITIMATE_INTEREST, CONTRACT, LEGAL_OBLIGATION, VITAL_INTEREST, RESEARCH, CREDIT_PROTECTION, JUDICIAL, HEALTH, REGULATORY]
+            consentGranted:
+              type: boolean
+            purposeDescription:
+              type: string
+            dataControllerCnpj:
+              type: string
+            retentionPeriodDays:
+              type: integer
+              minimum: 1
+            consentTimestamp:
+              type: string
+              format: date-time
+        popia:
+          type: object
+          description: South Africa POPIA (Protection of Personal Information Act, Jul 2021) consent
+          properties:
+            consentGranted:
+              type: boolean
+            purposeDescription:
+              type: string
+            responsiblePartyName:
+              type: string
+            consentTimestamp:
+              type: string
+              format: date-time
+            dataSubjectRightsNotified:
+              type: boolean
+        pipeda:
+          type: object
+          description: Canada PIPEDA / Quebec Law 25 consent
+          properties:
+            consentGranted:
+              type: boolean
+            purposeDescription:
+              type: string
+            impliedConsent:
+              type: boolean
+            quebecLaw25Applicable:
+              type: boolean
+            consentTimestamp:
+              type: string
+              format: date-time
+        pdpaSg:
+          type: object
+          description: Singapore PDPA (Personal Data Protection Act 2012, amended 2020) consent
+          properties:
+            consentGranted:
+              type: boolean
+            purposeDescription:
+              type: string
+            doNotCallRegistryChecked:
+              type: boolean
+            consentTimestamp:
+              type: string
+              format: date-time
+        appi:
+          type: object
+          description: Japan APPI (Act on Protection of Personal Information, 2022 amendment) consent
+          properties:
+            consentGranted:
+              type: boolean
+            purposeDescription:
+              type: string
+            thirdPartyProvisionConsent:
+              type: boolean
+            crossBorderTransferConsent:
+              type: boolean
+            consentTimestamp:
+              type: string
+              format: date-time
+        nfadp:
+          type: object
+          description: Switzerland nFADP (revised Federal Act on Data Protection, Sep 2023) consent
+          properties:
+            legalBasis:
+              type: string
+              enum: [CONSENT, LEGITIMATE_INTEREST, CONTRACT, LEGAL_OBLIGATION]
+            purposeDescription:
+              type: string
+            dataControllerName:
+              type: string
+            retentionPeriodDays:
+              type: integer
+              minimum: 1
+            consentTimestamp:
+              type: string
+              format: date-time
+        pipaKr:
+          type: object
+          description: South Korea PIPA-K (Personal Information Protection Act, 2023 amendment) consent
+          properties:
+            consentGranted:
+              type: boolean
+            purposeDescription:
+              type: string
+            sensitiveDataIncluded:
+              type: boolean
+            thirdPartyProvisionConsent:
+              type: boolean
+            consentTimestamp:
+              type: string
+              format: date-time
+        pdplSa:
+          type: object
+          description: Saudi Arabia PDPL (Personal Data Protection Law, effective Mar 2024) consent
+          properties:
+            consentGranted:
+              type: boolean
+            processingPurpose:
+              type: string
+            sensitiveDataIncluded:
+              type: boolean
+            crossBorderTransferApproved:
+              type: boolean
+            consentTimestamp:
+              type: string
+              format: date-time
+        pdpaTh:
+          type: object
+          description: Thailand PDPA (Personal Data Protection Act, Jun 2022) consent
+          properties:
+            legalBasis:
+              type: string
+              enum: [CONSENT, CONTRACT, LEGAL_OBLIGATION, VITAL_INTEREST, PUBLIC_TASK, LEGITIMATE_INTEREST]
+            consentGranted:
+              type: boolean
+            purposeDescription:
+              type: string
+            dataControllerName:
+              type: string
+            retentionPeriodDays:
+              type: integer
+              minimum: 1
+            consentTimestamp:
+              type: string
+              format: date-time
+        marketingConsent:
+          type: object
+          properties:
+            email:
+              type: boolean
+            sms:
+              type: boolean
+            pushNotification:
+              type: boolean
+            whatsapp:
+              type: boolean
+            postalMail:
+              type: boolean
+            thirdPartySharing:
+              type: boolean
+            profilingAllowed:
+              type: boolean
+        consentCollectionMethod:
+          type: string
+          enum: [WEB_FORM, MOBILE_APP, PAPER_FORM, VERBAL_RECORDED, PRE_EXISTING_RELATIONSHIP, IMPORTED]
+        consentFormVersion:
+          type: string
+        collectedAt:
+          type: string
+          format: date-time
+
+    DeduplicationBlock:
+      type: object
+      description: Cross-platform lead deduplication signals
+      properties:
+        customerFingerprint:
+          type: string
+          pattern: '^[a-f0-9]{64}$'
+          description: SHA-256 hash of normalized email+phone+lastName — never raw PII
+        fingerprintVersion:
+          type: string
+          enum: [SHA256_V1]
+          default: SHA256_V1
+        deduplicationWindowHours:
+          type: integer
+          minimum: 1
+          maximum: 720
+          default: 72
+        senderLeadId:
+          type: string
+        duplicateOfLeadId:
+          type: string
+          description: Set by receiver when duplicate is detected
+        crossPlatformIds:
+          type: array
+          items:
+            type: object
+            required: [platform, leadId]
+            properties:
+              platform:
+                type: string
+              leadId:
+                type: string
+              leadTimestamp:
+                type: string
+                format: date-time
+        deduplicationStatus:
+          type: string
+          enum: [PENDING, UNIQUE, DUPLICATE, MERGED]
+
+    LeadIntelligence:
+      type: object
+      description: ML-generated lead scoring signals — advisory only, produced by platforms/engines
+      properties:
+        intentScore:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+          description: Purchase intent probability (0 = no intent, 1 = near-certain buyer)
+        buyingWindowDays:
+          type: integer
+          minimum: 1
+          description: Predicted days until purchase decision
+        confidenceLevel:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, VERY_HIGH]
+        behavioralSignals:
+          type: array
+          items:
+            type: string
+          description: Standardized observed customer action codes
+        predictedProduct:
+          type: object
+          properties:
+            make:
+              type: string
+            model:
+              type: string
+            trim:
+              type: string
+            confidence:
+              type: number
+              minimum: 0.0
+              maximum: 1.0
+        churnRisk:
+          type: string
+          enum: [LOW, MEDIUM, HIGH]
+        leadQualityTier:
+          type: string
+          enum: [PLATINUM, GOLD, SILVER, BRONZE, COLD]
+        priceRangeFit:
+          type: string
+          enum: [BELOW_RANGE, LOWER_RANGE, EXACT, UPPER_RANGE, ABOVE_RANGE]
+        financingLikelihood:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        tradeInLikelihood:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        evInterestScore:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        recommendedResponseSla:
+          type: string
+          description: ISO 8601 Duration (e.g., PT2H, PT30M)
+          example: PT2H
+        optimalContactTime:
+          type: object
+          properties:
+            dayOfWeek:
+              type: array
+              items:
+                type: string
+                enum: [MON, TUE, WED, THU, FRI, SAT, SUN]
+            timeRange:
+              type: string
+              example: "10:00-14:00"
+            timezone:
+              type: string
+              description: IANA timezone identifier
+        modelMetadata:
+          type: object
+          required: [source, modelId, scoredAt]
+          properties:
+            source:
+              type: string
+              enum: [PLATFORM_ML_ENGINE, DMS_SCORING, OEM_CRM, THIRD_PARTY_ENRICHMENT]
+            modelId:
+              type: string
+            modelVersion:
+              type: string
+            scoredAt:
+              type: string
+              format: date-time
+            dataFreshnessDays:
+              type: integer
+              minimum: 0
+
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: |
+        OAuth 2.0 Client Credentials flow for machine-to-machine authentication.
+        LEX defines this as the required auth pattern — your platform supplies
+        the token endpoint. Replace the tokenUrl below with your auth server.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{your-auth-server}/oauth/token
+          scopes:
+            lex:leads:read: Read LEAD messages
+            lex:leads:write: Send LEAD messages
+            lex:assets:read: Read ASSET messages
+            lex:assets:write: Send ASSET messages
+            lex:closures:write: Send LEAD_CLOSURE messages
+            lex:subscriptions:manage: Manage subscriptions
+    apiKey:
+      type: httpApiKey
+      description: API key for sandbox access
+      name: X-LEX-API-Key
+      in: header

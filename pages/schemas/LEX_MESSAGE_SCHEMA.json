@@ -1,0 +1,615 @@
+﻿{
+  "$spdx": "SPDX-License-Identifier: Apache-2.0 | Copyright (c) 2026 LEX Lead Exchange Standard Contributors | Canonical: https://lexstandard.org",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lexstandard.org/schemas/v1/LEX_MESSAGE_SCHEMA.json",
+  "title": "LEX - Lead Exchange Standard - Message Envelope",
+  "description": "Root schema for all LEX messages (LEAD, ASSET, ACKNOWLEDGMENT, SUBSCRIPTION, LEAD_CLOSURE)",
+  "type": "object",
+  "required": ["lex"],
+  "properties": {
+    "lex": {
+      "type": "object",
+      "required": ["header", "payload"],
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/MessageHeader"
+        },
+        "payload": {
+          "oneOf": [
+            { "$ref": "LEX_LEAD_SCHEMA.json" },
+            { "$ref": "LEX_ASSET_SCHEMA.json" },
+            { "$ref": "LEX_ACKNOWLEDGMENT_SCHEMA.json" },
+            { "$ref": "LEX_SUBSCRIPTION_SCHEMA.json" },
+            { "$ref": "LEX_LEAD_CLOSURE_SCHEMA.json" }
+          ]
+        },
+        "extensions": {
+          "$ref": "#/definitions/ExtensionsArray"
+        },
+        "dataGovernance": {
+          "$ref": "#/definitions/DataGovernance",
+          "description": "Optional organizational data governance declaration. Controls forwarding policy, analytics use, and retention. See specs/LEX_DATA_GOVERNANCE.md."
+        },
+        "signature": {
+          "$ref": "#/definitions/MessageSignature"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "MessageHeader": {
+      "type": "object",
+      "description": "Standard header for all LEX messages",
+      "required": ["messageId", "messageType", "version", "timestamp", "senderId", "receiverId"],
+      "properties": {
+        "messageId": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$",
+          "description": "Unique message identifier (RFC 4122 UUID v4)"
+        },
+        "messageType": {
+          "type": "string",
+          "enum": ["LEAD", "ASSET", "ACKNOWLEDGMENT", "SUBSCRIPTION", "LEAD_CLOSURE"],
+          "description": "Type of message being sent"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+$",
+          "description": "LEX specification version (MAJOR.MINOR, e.g., 1.0)"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when message was created"
+        },
+        "senderId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 50,
+          "description": "Identifier of system sending this message"
+        },
+        "receiverId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 50,
+          "description": "Identifier of system receiving this message (or BROADCAST)"
+        },
+        "encryptionMethod": {
+          "type": "string",
+          "enum": ["NONE", "TLS1.2", "TLS1.3", "END_TO_END"],
+          "description": "Encryption method used for message transmission"
+        },
+        "correlationId": {
+          "type": "string",
+          "description": "Optional ID to correlate related messages (response ↔ request)"
+        },
+        "replyTo": {
+          "type": "string",
+          "description": "Optional identifier to send response to (if different from senderId)"
+        },
+        "signature": {
+          "type": "string",
+          "description": "Base64-encoded message signature (see LexSecurity). Spec: LEX_SPECIFICATION §5"
+        },
+        "signatureAlgorithm": {
+          "type": "string",
+          "enum": ["NONE", "HMAC-SHA256", "RSA-SHA256"],
+          "description": "Algorithm used to produce header.signature"
+        },
+        "ttl": {
+          "$ref": "#/definitions/MessageTTL"
+        },
+        "retryContext": {
+          "$ref": "#/definitions/RetryContext"
+        }
+      }
+    },
+    "ExtensionsArray": {
+      "type": "array",
+      "description": "Typed, namespaced, versioned custom data envelopes. See specs/LEX_EXTENSION_STANDARD.md. Passthrough Obligation: unknown entries MUST be forwarded intact.",
+      "items": {
+        "type": "object",
+        "required": ["namespace", "version", "producer", "producedAt", "data"],
+        "properties": {
+          "namespace": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Dot-separated namespace. Format: {org}.{division}.{purpose}. lex.core.* is reserved for the LEX working group."
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+            "description": "Semantic version of the extension schema (MAJOR.MINOR.PATCH)"
+          },
+          "producer": {
+            "type": "string",
+            "minLength": 3,
+            "description": "LEX organization ID of the system that produced this extension entry"
+          },
+          "producedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when this extension entry was produced"
+          },
+          "schemaUri": {
+            "type": "string",
+            "description": "Optional URI to a JSON Schema for the data object. Resolving it is optional. Message is valid if absent or unreachable."
+          },
+          "data": {
+            "description": "Extension payload — any valid JSON value (object, array, number, string, boolean)"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "DataGovernance": {
+      "type": "object",
+      "description": "Organizational data governance declaration. See specs/LEX_DATA_GOVERNANCE.md. DG-RULE-1: dataOwner is the organization with direct contractual relationship to the data subject. DG-RULE-2: dataCustodian != dataOwner (DMS is a custodian, not an owner). DG-RULE-3: analyticsAllowed/trainingDataAllowed are explicit opt-in/opt-out signals. DG-RULE-4: Zero Trust forwarding — RESTRICTED policy must be checked before routing.",
+      "required": ["dataOwner", "forwardingPolicy", "analyticsAllowed", "trainingDataAllowed", "declaredAt", "declaredBy"],
+      "properties": {
+        "dataOwner": {
+          "type": "string",
+          "description": "LEX org ID of the organization that owns this data. Usually the originating dealer or platform."
+        },
+        "dataCustodian": {
+          "type": "string",
+          "description": "Optional. LEX org ID of the system currently holding the data (e.g. DMS). Different from dataOwner when the holder is not the owner."
+        },
+        "forwardingPolicy": {
+          "type": "string",
+          "enum": ["OPEN", "RESTRICTED", "LOCKED"],
+          "description": "OPEN: any LEX participant may forward. RESTRICTED: only allowedRecipients may receive. LOCKED: no forwarding beyond direct receiver."
+        },
+        "allowedRecipients": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Required when forwardingPolicy is RESTRICTED. LEX org IDs that may receive this message."
+        },
+        "blockedRecipients": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Explicit deny list. Applies even when forwardingPolicy is OPEN."
+        },
+        "analyticsAllowed": {
+          "type": "boolean",
+          "description": "Whether this data may be used in aggregated analytics products. false = opt-out."
+        },
+        "trainingDataAllowed": {
+          "type": "boolean",
+          "description": "Whether this data may be used to train ML or AI models. false = opt-out."
+        },
+        "retentionPolicy": {
+          "type": "object",
+          "properties": {
+            "maxRetentionDays": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum days the receiving system may retain this data after declaredAt."
+            },
+            "deleteOnClosure": {
+              "type": "boolean",
+              "description": "If true, data must be deleted when the related lead is closed."
+            },
+            "archiveOnClosure": {
+              "type": "boolean",
+              "description": "If true, data must be archived (not deleted) when the related lead is closed."
+            }
+          },
+          "additionalProperties": false
+        },
+        "auditRequired": {
+          "type": "boolean",
+          "description": "When true, systems that forward this message SHOULD log the forwarding event."
+        },
+        "governanceVersion": {
+          "type": "string",
+          "description": "Version of this governance declaration (for audit trail purposes)."
+        },
+        "declaredAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when this governance declaration was made."
+        },
+        "declaredBy": {
+          "type": "string",
+          "description": "LEX org ID of the system/organization that declared this governance record. SHOULD match dataOwner."
+        },
+        "aiGovernance": {
+          "type": "object",
+          "description": "AI-specific governance sub-block. Present when message contains leadIntelligence or aiInsights. Spec: LEX_DATA_GOVERNANCE §6",
+          "required": ["aiGeneratedContentPresent", "humanReviewRequired", "aiDecisionScope"],
+          "properties": {
+            "aiGeneratedContentPresent": { "type": "boolean", "description": "true if any field in this message was produced by AI or ML" },
+            "humanReviewRequired": { "type": "boolean", "description": "true if operators MUST apply human review before acting on AI content" },
+            "explainabilityAvailable": { "type": "boolean", "description": "true if the model can provide an explainability report on request" },
+            "aiDecisionScope": { "type": "string", "enum": ["ROUTING_ADVISORY", "PRIORITIZATION_ONLY", "CUSTOMER_FACING", "NONE"], "description": "Permitted scope of AI output usage by downstream systems" },
+            "purposeLimitation": { "type": "string", "description": "Human-readable description of permitted AI processing purpose" },
+            "retentionLimitDays": { "type": "integer", "minimum": 1, "description": "Maximum days AI-generated artefacts may be retained by downstream systems" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "MessageSignature": {
+      "type": "object",
+      "description": "Digital signature for message authentication",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": ["NONE", "RSA-2048", "RSA-4096", "ECDSA-256", "ECDSA-384"]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "signedBy": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "description": "Base64-encoded signature"
+        },
+        "certificateId": {
+          "type": "string",
+          "description": "Reference to certificate used for signing"
+        }
+      }
+    },
+    "ISO639Language": {
+      "type": "string",
+      "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+      "description": "ISO 639-1 language code (e.g., en-US, hi-IN, de-DE)"
+    },
+    "ISO3166Country": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$",
+      "description": "ISO 3166-1 alpha-2 country code"
+    },
+    "Currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code (e.g., USD, INR, EUR)"
+    },
+    "LeadStatus": {
+      "type": "string",
+      "enum": [
+        "CART",
+        "TEST_DRIVE_REQUESTED",
+        "TEST_DRIVE_COMPLETED",
+        "SHOPPING",
+        "EXPLORING",
+        "TRADE_IN",
+        "EXPRESSED_INTEREST",
+        "RESERVATION",
+        "APPOINTMENT_REQUEST",
+        "IN_NEGOTIATION",
+        "ORDER",
+        "ORDER_CONFIRMED",
+        "IN_DELIVERY",
+        "DELIVERED",
+        "ARCHIVED"
+      ],
+      "description": "Current status of lead in lifecycle - supports non-linear progression"
+    },
+    "LeadType": {
+      "type": "string",
+      "enum": [
+        "PRIMARY",
+        "CART",
+        "TEST_DRIVE",
+        "TRADE_IN_EVALUATION",
+        "POST_ORDER",
+        "CROSS_SELL",
+        "ACCESSORY",
+        "PROTECTION_PLAN",
+        "SUBSCRIPTION",
+        "RETAILER_INSTALLED_OPTION",
+        "SERVICE_UPGRADE"
+      ],
+      "description": "Type of lead - helps track origination context and relationships"
+    },
+    "LeadSource": {
+      "type": "string",
+      "enum": [
+        "CART",
+        "TEST_DRIVE_REQUEST",
+        "ECOMMERCE_SHOPPING_CART",
+        "RETAILER_WEBSITE",
+        "RETAILER_CRM",
+        "MANUFACTURER_WEBSITE",
+        "THIRD_PARTY_PORTAL",
+        "DIRECT_CALL",
+        "SHOWROOM_WALK_IN",
+        "SHOWROOM",
+        "TRADE_IN_EVALUATION",
+        "SERVICE_DEPARTMENT",
+        "SOCIAL_MEDIA",
+        "EMAIL_CAMPAIGN",
+        "REFERRAL",
+        "MOBILE_APP",
+        "SOCIAL_LEAD_FORM",
+        "PHONE_IVR",
+        "SHOWROOM_KIOSK",
+        "POST_ORDER_SUGGESTION",
+        "POST_DELIVERY_OFFER",
+        "RETAILER_SUGGESTION",
+        "NURTURE_CAMPAIGN",
+        "ECOMMERCE_PLATFORM",
+        "CARS_PLATFORM",
+        "OTHER"
+      ],
+      "description": "Where the lead originated. All values match LeadSource enum in MessageHeader.hx"
+    },
+    "ProductType": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{1,59}$",
+      "description": "Canonical product type string — must be registered in ProductRegistry. UPPER_SNAKE_CASE, 2–60 chars. Examples: VEHICLE_NEW, VEHICLE_USED, MOTORCYCLE, SCOOTER, AIRCRAFT_NEW, LOCOMOTIVE, PASSENGER_TRAIN, TRAM_LRV, CARGO_VESSEL, SMARTPHONE, WIND_TURBINE, MEDICAL_DEVICE, MILITARY_VEHICLE, FLEET_ORDER. Full list: haxe/src/lex/registry/ProductRegistry.hx#seedStandardTypes"
+    },
+    "AssetClass": {
+      "type": "string",
+      "enum": [
+        "VEHICLE",
+        "MOTORCYCLE",
+        "RECREATIONAL",
+        "COMMERCIAL",
+        "FINANCIAL",
+        "SERVICE",
+        "AVIATION",
+        "RAIL",
+        "MARITIME",
+        "HEAVY_EQUIPMENT",
+        "MICROMOBILITY",
+        "SPACE",
+        "TECHNOLOGY",
+        "TELECOM",
+        "HEALTHCARE",
+        "ENERGY",
+        "DEFENSE",
+        "GENERAL_GOODS"
+      ],
+      "description": "Broad asset class. All values match AssetClass enum in ProductRegistry.hx"
+    },
+    "MessageTTL": {
+      "type": "object",
+      "description": "Time-to-live for message delivery. Spec: LEX_TRANSPORT_RESILIENCE §2",
+      "properties": {
+        "maxAgeSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Delivery window in seconds. Defaults: LEAD=3600, ACK=300, ASSET/SUB=86400"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Absolute expiry (timestamp + maxAgeSeconds)"
+        },
+        "onExpiry": {
+          "type": "string",
+          "enum": ["DLQ", "DISCARD", "RETURN"],
+          "description": "Action when TTL expires: DLQ (dead-letter queue), DISCARD (drop), RETURN (return to sender)"
+        }
+      }
+    },
+    "RetryContext": {
+      "type": "object",
+      "description": "Added by transport layer on re-delivery. Absent means first delivery. Spec: LEX_TRANSPORT_RESILIENCE §3",
+      "properties": {
+        "originalTimestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When message was first created/sent"
+        },
+        "attemptNumber": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "description": "Current delivery attempt (1 = first delivery)"
+        },
+        "maxAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 6,
+          "description": "Maximum attempts before routing to DLQ"
+        },
+        "lastFailureReason": {
+          "type": "string",
+          "description": "e.g. HTTP_503_SERVICE_UNAVAILABLE, NETWORK_UNREACHABLE, PARSE_ERROR"
+        },
+        "lastAttemptTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "nextAttemptTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ClosureStatus": {
+      "type": "string",
+      "enum": [
+        "WON",
+        "LOST",
+        "ABANDONED",
+        "REASSIGNED",
+        "CANCELLED",
+        "DUPLICATE"
+      ],
+      "description": "Final status of closed lead"
+    },
+    "Address": {
+      "type": "object",
+      "description": "Physical address",
+      "required": ["city"],
+      "properties": {
+        "addressType": {
+          "type": "string",
+          "enum": ["RESIDENTIAL", "COMMERCIAL", "OTHER"]
+        },
+        "street1": {
+          "type": "string"
+        },
+        "street2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "countryCode": {
+          "$ref": "#/definitions/ISO3166Country"
+        },
+        "coordinates": {
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        }
+      }
+    },
+    "ContactInfo": {
+      "type": "object",
+      "description": "Contact information",
+      "properties": {
+        "emailAddress": {
+          "type": "string",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "pattern": "^\\+?[1-9]\\d{1,14}$"
+        },
+        "phoneCountryCode": {
+          "type": "string",
+          "pattern": "^\\+?[1-9]\\d{0,3}$"
+        },
+        "preferredContactMethod": {
+          "type": "string",
+          "enum": ["EMAIL", "PHONE", "SMS", "WHATSAPP", "TELEGRAM"]
+        },
+        "websiteUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "OrganizationContext": {
+      "type": "object",
+      "description": "Optional organization-specific metadata",
+      "properties": {
+        "manufacturerData": {
+          "type": "object",
+          "description": "Manufacturer-specific identifiers and data"
+        },
+        "managementSystemData": {
+          "type": "object",
+          "description": "Management system (ERP/DMS) provider-specific identifiers and data"
+        },
+        "retailerData": {
+          "type": "object",
+          "description": "Retailer/Dealer/Broker-specific identifiers and data"
+        },
+        "retailerNetworkData": {
+          "type": "object",
+          "description": "Retailer network/franchise-specific data"
+        },
+        "platformData": {
+          "type": "object",
+          "description": "Third-party platform-specific data"
+        },
+        "hierarchyData": {
+          "type": "object",
+          "description": "Multi-party hierarchy data"
+        }
+      },
+      "additionalProperties": true
+    },
+    "Metadata": {
+      "type": "object",
+      "description": "Message metadata and audit trail",
+      "properties": {
+        "createdDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdBySystem": {
+          "type": "string"
+        },
+        "countryCode": {
+          "$ref": "#/definitions/ISO3166Country"
+        },
+        "currencyCode": {
+          "$ref": "#/definitions/Currency"
+        },
+        "language": {
+          "$ref": "#/definitions/ISO639Language"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "IANA timezone (e.g., America/New_York, Asia/Kolkata)"
+        },
+        "ownershipChain": {
+          "type": "array",
+          "description": "Complete audit trail of message ownership",
+          "items": {
+            "type": "object",
+            "properties": {
+              "owner": {
+                "type": "string"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "action": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "complianceFlags": {
+          "type": "object",
+          "properties": {
+            "gdprCompliant": {
+              "type": "boolean"
+            },
+            "ccpaCompliant": {
+              "type": "boolean"
+            },
+            "hipaaCompliant": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
+}

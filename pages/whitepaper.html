@@ -1,0 +1,2919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LEX: Lead Exchange Standard</title>
+  <meta name="author"   content="V.G.P LexStandard" />
+  <meta name="subject"  content="LEX Lead Exchange Standard — 1.0 (Draft) — April 2026" />
+  <meta name="keywords" content="LEX, Lead Exchange Standard, EDI, automotive, API, open standard" />
+  <meta name="creator"  content="lex_pdf.py — lexstandard.org" />
+  <style>
+/* ── Named page types ───────────────────────────────────────────────────── */
+
+/* Cover: no footer, no page numbers */
+@page cover_page {
+    size: A4;
+    margin: 22mm 20mm 22mm 20mm;
+}
+
+/* ToC: no footer, no page numbers */
+@page toc_page {
+    size: A4;
+    margin: 22mm 20mm 22mm 20mm;
+}
+
+/* All content pages: footer with domain + page number */
+@page body_page {
+    size: A4;
+    margin: 22mm 20mm 28mm 20mm;
+    @frame footer_frame {
+        -pdf-frame-content: page_footer;
+        bottom: 6mm;
+        left: 20mm;
+        width: 170mm;
+        height: 8mm;
+    }
+}
+
+/* Fallback */
+@page {
+    size: A4;
+    margin: 22mm 20mm 28mm 20mm;
+    @frame footer_frame {
+        -pdf-frame-content: page_footer;
+        bottom: 6mm;
+        left: 20mm;
+        width: 170mm;
+        height: 8mm;
+    }
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+
+#page_footer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 7.5pt;
+    color: #b8c0d8;
+    letter-spacing: 1pt;
+    border-top: 0.5pt solid #dde2f0;
+    padding-top: 2pt;
+}
+#page_footer .footer-left  { float: left; }
+#page_footer .footer-right { float: right; }
+#page_footer .footer-center {
+    text-align: center;
+    margin: 0 60pt;
+}
+
+/* ── Body ───────────────────────────────────────────────────────────────── */
+
+body {
+    font-family: Arial, 'Segoe UI', Helvetica, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.65;
+    color: #1a1a2e;
+    max-width: 100%;
+}
+
+/* ── Cover page ─────────────────────────────────────────────────────────── */
+
+.cover {
+    page: cover_page;
+    text-align: center;
+    padding-top: 60mm;
+}
+.cover h1 {
+    font-size: 28pt;
+    font-weight: 700;
+    margin-bottom: 6pt;
+    color: #0d1b4b;
+    border: none;
+}
+.cover .subtitle {
+    font-size: 14pt;
+    color: #555;
+    margin-bottom: 20pt;
+}
+.cover .meta {
+    font-size: 10pt;
+    color: #777;
+    line-height: 2;
+}
+.cover .status-badge {
+    display: inline-block;
+    background: #e8f0fe;
+    color: #1a56c4;
+    border-radius: 4pt;
+    padding: 3pt 10pt;
+    font-size: 10pt;
+    font-weight: 600;
+    margin-top: 12pt;
+}
+.cover hr {
+    border: none;
+    border-top: 2pt solid #0d1b4b;
+    width: 60mm;
+    margin: 20pt auto;
+}
+
+/* ── ToC page ───────────────────────────────────────────────────────────── */
+
+.toc-page {
+    page: toc_page;
+}
+
+/* ── Chapter pages ──────────────────────────────────────────────────────── */
+
+.chapter {
+    page: body_page;
+}
+
+/* ── Headings ───────────────────────────────────────────────────────────── */
+
+h1 {
+    font-size: 20pt;
+    font-weight: 700;
+    color: #0d1b4b;
+    border-bottom: 1.5pt solid #0d1b4b;
+    padding-bottom: 4pt;
+    margin-top: 28pt;
+    margin-bottom: 12pt;
+    page-break-after: avoid;
+}
+h2 {
+    font-size: 13pt;
+    font-weight: 600;
+    color: #0d1b4b;
+    margin-top: 20pt;
+    margin-bottom: 8pt;
+    page-break-after: avoid;
+}
+h3 {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #2c3e7a;
+    margin-top: 14pt;
+    margin-bottom: 6pt;
+    page-break-after: avoid;
+}
+
+/* ── Paragraphs ─────────────────────────────────────────────────────────── */
+
+p {
+    margin: 0 0 9pt 0;
+    orphans: 3;
+    widows: 3;
+}
+
+/* ── Tables ─────────────────────────────────────────────────────────────── */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12pt 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+}
+th {
+    background: #0d1b4b;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    padding: 5pt 8pt;
+}
+td {
+    padding: 4pt 8pt;
+    border-bottom: 0.5pt solid #dde2f0;
+    vertical-align: top;
+}
+tr:nth-child(even) td { background: #f4f6fb; }
+
+/* ── Code blocks ────────────────────────────────────────────────────────── */
+
+code {
+    font-family: 'Courier New', monospace;
+    font-size: 8.5pt;
+    background: #f0f2f8;
+    padding: 1pt 3pt;
+}
+pre {
+    background: #f4f6fb;
+    color: #1e2235;
+    font-family: 'Courier New', monospace;
+    font-size: 8pt;
+    line-height: 1.5;
+    padding: 10pt 12pt;
+    margin: 10pt 0;
+    page-break-inside: avoid;
+    border-left: 3pt solid #0d1b4b;
+    white-space: pre;
+}
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    white-space: pre;
+}
+
+/* ── Syntax highlighting (Pygments tokens, toned for print) ─────────────── */
+
+.highlight .k  { color: #00508b; font-weight: bold; }
+.highlight .kn { color: #00508b; font-weight: bold; }
+.highlight .kr { color: #00508b; font-weight: bold; }
+.highlight .kd { color: #00508b; font-weight: bold; }
+.highlight .s  { color: #2e7d32; }
+.highlight .s1 { color: #2e7d32; }
+.highlight .s2 { color: #2e7d32; }
+.highlight .mi { color: #1565c0; }
+.highlight .mf { color: #1565c0; }
+.highlight .c1 { color: #888; font-style: italic; }
+.highlight .cm { color: #888; font-style: italic; }
+.highlight .cs { color: #888; font-style: italic; }
+.highlight .na { color: #6a1b9a; }
+.highlight .nb { color: #00508b; }
+.highlight .nc { color: #283593; font-weight: bold; }
+.highlight .nf { color: #283593; }
+.highlight .nt { color: #00508b; font-weight: bold; }
+.highlight .o  { color: #555; }
+.highlight .p  { color: #333; }
+.highlight pre {
+    background: #f4f6fb;
+    border-left: 3pt solid #0d1b4b;
+    padding: 10pt 12pt;
+    margin: 10pt 0;
+    font-size: 8pt;
+    line-height: 1.5;
+    white-space: pre;
+}
+
+/* ── Blockquotes ────────────────────────────────────────────────────────── */
+
+blockquote {
+    border-left: 3pt solid #1a56c4;
+    background: #eef3ff;
+    margin: 10pt 0;
+    padding: 6pt 12pt;
+    border-radius: 0 4pt 4pt 0;
+    font-size: 9.5pt;
+    color: #2c3e7a;
+}
+
+/* ── Lists ──────────────────────────────────────────────────────────────── */
+
+ul, ol {
+    margin: 6pt 0 9pt 18pt;
+    padding: 0;
+}
+li { margin-bottom: 3pt; }
+
+/* ── Links ──────────────────────────────────────────────────────────────── */
+
+a { color: #1a56c4; text-decoration: none; }
+
+/* ── Page breaks ────────────────────────────────────────────────────────── */
+
+.chapter-break { page-break-before: always; }
+
+/* ── Horizontal rule ────────────────────────────────────────────────────── */
+
+hr {
+    border: none;
+    border-top: 0.5pt solid #c0c8e0;
+    margin: 18pt 0;
+}
+</style>
+</head>
+<body>
+<div id="page_footer">
+  <span class="footer-left">lexstandard.org</span>
+  <span class="footer-center">LEX Lead Exchange Standard &mdash; v1.0 Draft</span>
+  <span class="footer-right">Page <pdf:pagenumber> of <pdf:pagecount></span>
+</div>
+
+<div class="cover">
+  <h1>LEX: Lead Exchange Standard</h1>
+  <p class="subtitle">The Open Standard for Sales Lead Interchange — An Adopter's Guide</p>
+  <hr>
+  <p class="meta">
+    Version: 1.0 (Draft)<br>
+    Date: April 2026<br>Author: V.G.P LexStandard<br>
+    License: MIT &mdash; free to implement, free to extend
+  </p>
+  <div class="status-badge">Published</div>
+</div>
+
+
+<div class="chapter-break toc-page">
+  <h2 style="font-size:16pt; color:#0d1b4b; border-bottom:1.5pt solid #0d1b4b; padding-bottom:4pt; margin-bottom:16pt;">Table of Contents</h2>
+  <ul style="font-size:11pt; line-height:2.4; margin-left:20pt; list-style:none; padding:0;">
+    <li><a href="#lex-lead-exchange-standard" style="color:#1a1a2e; text-decoration:none;">LEX: Lead Exchange Standard</a></li>
+    <li><a href="#1-why-lex-was-built" style="color:#1a1a2e; text-decoration:none;">1. Why LEX Was Built</a></li>
+    <li><a href="#2-what-lex-is" style="color:#1a1a2e; text-decoration:none;">2. What LEX Is</a></li>
+    <li><a href="#3-lex-across-industries" style="color:#1a1a2e; text-decoration:none;">3. LEX Across Industries</a></li>
+    <li><a href="#4-getting-started" style="color:#1a1a2e; text-decoration:none;">4. Getting Started</a></li>
+    <li><a href="#5-the-lead-lifecycle" style="color:#1a1a2e; text-decoration:none;">5. The Lead Lifecycle</a></li>
+    <li><a href="#6-what-a-lex-message-looks-like" style="color:#1a1a2e; text-decoration:none;">6. What a LEX Message Looks Like</a></li>
+    <li><a href="#7-extending-lex-for-your-industry" style="color:#1a1a2e; text-decoration:none;">7. Extending LEX for Your Industry</a></li>
+    <li><a href="#8-conformance-what-level-do-you-need" style="color:#1a1a2e; text-decoration:none;">8. Conformance — What Level Do You Need?</a></li>
+    <li><a href="#9-governance-and-license" style="color:#1a1a2e; text-decoration:none;">9. Governance and License</a></li>
+    <li><a href="#10-quick-reference" style="color:#1a1a2e; text-decoration:none;">10. Quick Reference</a></li>
+    <li><a href="#11-api-definitions" style="color:#1a1a2e; text-decoration:none;">11. API Definitions</a></li>
+    <li><a href="#12-next-steps" style="color:#1a1a2e; text-decoration:none;">12. Next Steps</a></li>
+    <li><a href="#bibliography" style="color:#1a1a2e; text-decoration:none;">Bibliography</a></li>
+  </ul>
+</div>
+
+<div class="chapter-break chapter"><h1><a id="lex-lead-exchange-standard"></a>LEX: Lead Exchange Standard</h1>
+<p><strong>Version:</strong> 1.0 (Draft)<br />
+<strong>Status:</strong> Published<br />
+<strong>Date:</strong> April 2026<br />
+<strong>Author:</strong> V.G.P LexStandard<br />
+<strong>License:</strong> Apache 2.0 — free to implement, free to extend, no membership required</p>
+<hr />
+<h2>Abstract</h2>
+<p>LEX (Lead Exchange Standard) is an open data standard for sales lead messages. It defines
+what a lead contains, the states it can move through, and how systems exchange it — without
+locking you into a specific platform, transport, or vendor.</p>
+<p>This whitepaper is written for adopters: the teams building integrations, the developers
+choosing a library, and the decision-makers asking whether LEX is right for their industry.
+It covers what LEX is, the value it delivers by vertical, and how to get an integration
+running using one of the four available client libraries.</p>
+<p>This document is the complete adopter-facing standard. It is self-contained — no external files
+or repository access are required to implement LEX from this whitepaper.</p>
+<hr />
+<p><em>The online specification, JSON Schemas, field dictionary, client libraries, and industry
+examples are published at </em><em>https://lexstandard.org</em><em>.</em></p></div>
+<div class="chapter-break chapter"><h1><a id="1-why-lex-was-built"></a>1. Why LEX Was Built</h1>
+<h2>1.1 The Problem Every Industry Has</h2>
+<p>Every business that sells high-value assets — vehicles, aircraft, construction equipment,
+real estate, enterprise software — faces the same invisible friction: the moment a buyer
+expresses interest in one system, the data has to travel through several others before it
+reaches the person who can close the sale.</p>
+<p>A buyer fills in a web form. That enquiry goes to a lead aggregator. The aggregator sends
+it to a dealer. The dealer's DMS receives it and creates a CRM record. If the manufacturer
+is involved, a copy goes there too. And if the buyer doesn't hear back, or hears back three
+times from three different people, or the lead arrives two days late — the sale is simply lost.</p>
+<p>The technical cause is almost always the same: every system in that chain uses a slightly
+different data format, and the integrations between them are bespoke, fragile, and expensive
+to maintain.</p>
+<h2>1.2 The Integration Challenge</h2>
+<p>Where shared data standards exist for sales lead exchange, they are technically rigid. They
+define a fixed set of fields — so anything beyond that set requires proprietary extensions.
+Those extensions diverge across platform implementations until interoperability that existed
+in theory disappears in practice.</p>
+<p>The governance challenge is equally significant. When dominant platform vendors gain control
+over a shared standard — through proprietary variants, integration brokerage fees, or
+dues-weighted governance bodies — the standard becomes a revenue mechanism rather than
+shared infrastructure. Participants end up paying for integrations that should be free.</p>
+<p>Every other industry — heavy equipment, marine, aviation, real estate — has no shared standard
+at all. Lead exchange in those verticals is done by email, spreadsheet, or phone call.</p>
+<h2>1.3 What LEX Changes</h2>
+<p>LEX is an open standard for lead exchange that any system can implement, in any language,
+at no cost. It solves these structural problems:</p>
+<ul>
+<li><strong>A complete lifecycle model</strong> — from first browsing session through to sale or closure,
+  with defined states your whole supply chain can act on</li>
+<li><strong>Four wire formats</strong> — JSON, XML, X12, EDIFACT — so you connect to what your counterparty
+  already runs, without forcing anyone to rebuild their infrastructure</li>
+<li><strong>An extension mechanism</strong> — your custom fields live in a named namespace; they travel
+  safely through systems that don't understand them yet</li>
+<li><strong>Cross-industry by design</strong> — automotive, heavy equipment, maritime, aviation, real estate,
+  and technology all use the same message structure with industry-specific extension blocks</li>
+<li><strong>Apache 2.0 licensed, no gatekeeping</strong> — no membership fee, no certification body, no vendor
+  that controls access to the ecosystem</li>
+</ul>
+<h2>1.4 Who This Whitepaper Is For</h2>
+<p>This document is for teams and organisations that want to <strong>adopt</strong> LEX — to send or receive
+leads using the standard, integrate with counterparties who use it, or build products on top
+of it.</p>
+<p>If you are a:</p>
+<ul>
+<li><strong>Dealer or retailer</strong> receiving leads from portals and manufacturers</li>
+<li><strong>Manufacturer or OEM</strong> routing leads to dealer networks</li>
+<li><strong>DMS or CRM vendor</strong> adding LEX support to your integration layer</li>
+<li><strong>Lead aggregator or portal</strong> sending leads to multiple downstream systems</li>
+<li><strong>Technology team</strong> in any industry that sells high-value assets</li>
+</ul>
+<p>— this whitepaper explains what LEX is, what it means for your industry, and exactly how
+to start using it.</p></div>
+<div class="chapter-break chapter"><h1><a id="2-what-lex-is"></a>2. What LEX Is</h1>
+<h2>2.1 The Short Version</h2>
+<p>LEX is an open data standard for sales lead messages. It defines what a lead message contains,
+what states it can be in, and how it moves between systems. You implement it once; every
+counterparty that also implements it becomes a zero-friction connection.</p>
+<p>Libraries are available for Python, JavaScript/Node.js, Java, and C#. Copy one file
+into your project and you are producing and consuming LEX messages.</p>
+<h2>2.2 Five Message Types</h2>
+<p>LEX defines five message types that cover the full lead exchange lifecycle:</p>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>What it carries</th>
+<th>When you use it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LEAD</strong></td>
+<td>A buyer's enquiry, status, contact details, product interest</td>
+<td>Every time a lead is created or updated</td>
+</tr>
+<tr>
+<td><strong>ASSET</strong></td>
+<td>Product specification and availability data</td>
+<td>When pushing inventory data to a partner system</td>
+</tr>
+<tr>
+<td><strong>ACKNOWLEDGMENT</strong></td>
+<td>Receipt confirmation, validation result, rejection reason</td>
+<td>Sent back after receiving any message</td>
+</tr>
+<tr>
+<td><strong>SUBSCRIPTION</strong></td>
+<td>A request to receive future messages matching a filter</td>
+<td>Setting up a lead routing rule</td>
+</tr>
+<tr>
+<td><strong>LEAD_CLOSURE</strong></td>
+<td>The final outcome — sold, lost, duplicate, expired</td>
+<td>When a lead reaches a terminal state</td>
+</tr>
+</tbody>
+</table>
+<p>For most integrations you will work primarily with LEAD and LEAD_CLOSURE. The others are
+available when you need them.</p>
+<h2>2.3 Four Wire Formats — One Data Model</h2>
+<p>LEX does not force a wire format. The same lead data can be serialised as:</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>JSON-EDI</strong></td>
+<td>REST APIs, cloud integrations, any modern system</td>
+</tr>
+<tr>
+<td><strong>XML-EDI</strong></td>
+<td>Enterprise middleware, legacy DMS, ESB pipelines</td>
+</tr>
+<tr>
+<td><strong>X12</strong></td>
+<td>EDI VANs, automotive retail networks, contractual X12 requirements</td>
+</tr>
+<tr>
+<td><strong>EDIFACT</strong></td>
+<td>European markets, maritime trade, existing EDIFACT infrastructure</td>
+</tr>
+</tbody>
+</table>
+<p>The LEX libraries handle all four. You work with the same Python/Java/JS/C# objects
+regardless of which format your partner requires.</p>
+<h2>2.4 What You Do Not Need to Change</h2>
+<p>LEX is designed to sit alongside existing infrastructure:</p>
+<ul>
+<li><strong>No new transport layer.</strong> HTTPS, message queues, SFTP batch — all work.</li>
+<li><strong>No new database.</strong> LEX messages are data records; store them however you store things now.</li>
+<li><strong>No certification.</strong> You declare your own conformance level against public test criteria.</li>
+<li><strong>No membership.</strong> The specification and libraries are Apache 2.0 licensed. Free to use, forever.</li>
+</ul>
+<h2>2.5 What Happens in a Typical Integration</h2>
+<p>A buyer submits an enquiry on a portal. The portal creates a LEX LEAD message and sends it
+to your endpoint. Your system receives it, validates it using the LEX library, creates a
+record in your CRM, and sends back an ACKNOWLEDGMENT. When the deal closes — whether won
+or lost — a LEAD_CLOSURE message is sent back to the portal so their records are complete.</p>
+<p>That exchange works the same way whether you are a car dealer, a yacht broker, a mining
+equipment distributor, or a commercial real estate firm. The data model is the same;
+only the product fields differ.</p>
+<h2>2.6 Versioning and Stability</h2>
+<p>LEX uses semantic versioning. Optional fields and new message types are additive (minor
+version). Changes that break existing messages require a major version bump with a
+documented migration path. The current version is <code>1.0.0</code>.</p>
+<h2>2.7 Namespacing for Extensions</h2>
+<p>Your industry-specific fields live in a named extension block:</p>
+<div class="highlight"><pre><code>{org-identifier}.{division}.{purpose}
+</code></pre></div>
+<p>Example: <code>acme.fleet.preferredDeliveryPort</code></p>
+<p>Register your namespace at https://lexstandard.org/registry. Registration is free
+and confers no special rights over the core specification.</p></div>
+<div class="chapter-break chapter"><h1><a id="3-lex-across-industries"></a>3. LEX Across Industries</h1>
+<p>The data model is the same for every industry. What changes is the product being enquired about
+and, where needed, a small block of industry-specific fields added as an extension. The core
+integration — receiving a lead, acknowledging it, updating its status, closing it — is identical.</p>
+<hr />
+<h2>3.1 Automotive Retail</h2>
+<p><strong>Who participates:</strong> OEM platforms, national dealer networks, DMS providers, independent
+dealers, used-vehicle portals.</p>
+<p><strong>The problem LEX solves here:</strong> Lead integrations in the automotive sector are bespoke,
+fragile, and expensive to maintain. A dealer with five lead sources typically runs five
+different integrations, each maintained separately, with integration costs borne by the
+dealer rather than the platform.</p>
+<p><strong>What LEX changes:</strong> One integration handles all sources. The lead lifecycle (SHOPPING through
+ORDER) maps directly to a modern automotive sales funnel. Trade-in data, finance preferences,
+and EV specifications are all carried as standard extension blocks.</p>
+<p><strong>Industry-specific fields:</strong>
+- <code>desiredProduct.vin</code> — specific vehicle requested
+- <code>lex.ev</code> extension — battery capacity, charging standard, range requirements
+- <code>lex.financial</code> extension — trade-in valuation, monthly payment target, deposit
+- <code>lex.captive</code> extension — manufacturer finance offer data</p>
+<p><strong>Example scenario:</strong>
+A buyer configures a vehicle on an OEM portal. A LEAD with status <code>EXPLORING</code> is sent to the
+headquarters platform and simultaneously routed to the nearest dealer's DMS. When the buyer
+books a test drive, the dealer updates the lead to <code>APPOINTMENT_REQUEST</code>. The outcome —
+sale or lost — comes back via LEAD_CLOSURE to the OEM portal, completing the loop.</p>
+<hr />
+<h2>3.2 Heavy Equipment</h2>
+<p><strong>Who participates:</strong> Manufacturers (construction, mining, agricultural), regional distributors,
+fleet procurement teams, rental companies.</p>
+<p><strong>The problem LEX solves here:</strong> Fleet buyers purchasing 20 excavators have no standard way to
+submit a structured procurement enquiry. Enquiries arrive by email, get manually re-keyed into
+the distributor's CRM, and the manufacturer never knows the outcome.</p>
+<p><strong>What LEX changes:</strong> A procurement team sends a single structured LEAD with <code>assetClass:
+HEAVY_EQUIPMENT</code> and a <code>fleetSize</code> of 20. The distributor's system receives it, routes to the
+right regional team, and closure data flows back to the manufacturer for forecasting.</p>
+<p><strong>Industry-specific fields:</strong>
+- <code>desiredProduct.assetClass: HEAVY_EQUIPMENT</code>
+- <code>desiredProduct.genericSerialNumber</code> — specific unit identifier
+- <code>lex.financial.tenderReference</code> — procurement tender number
+- <code>organisationBuyer.buyerType: FLEET</code> — company, government, or NGO buyer</p>
+<hr />
+<h2>3.3 Maritime</h2>
+<p><strong>Who participates:</strong> Shipyards, yacht brokers, vessel distributors, leasing companies,
+port procurement offices.</p>
+<p><strong>The problem LEX solves here:</strong> Vessel procurement is largely relationship-driven with no
+digital standard. Large orders (ferries, cargo ships) involve lengthy negotiation with no
+tracked lifecycle visible to the manufacturer.</p>
+<p><strong>What LEX changes:</strong> Enquiries from brokers and fleet operators arrive as structured LEAD
+messages. The full negotiation lifecycle — EXPLORING, RESERVATION, IN_NEGOTIATION, ORDER —
+is tracked. The manufacturer's platform can push ASSET messages with updated vessel
+specifications back to the broker's system.</p>
+<p><strong>Industry-specific fields:</strong>
+- <code>desiredProduct.assetClass: MARITIME</code>
+- <code>desiredProduct.maritimeSpecs.vesselType</code> — cargo, ferry, patrol, yacht, etc.
+- <code>desiredProduct.maritimeSpecs.grossTonnage</code>
+- <code>desiredProduct.maritimeSpecs.flagState</code></p>
+<hr />
+<h2>3.4 Aviation</h2>
+<p><strong>Who participates:</strong> Aircraft manufacturers, MRO organisations, charter operators,
+government procurement offices, leasing companies.</p>
+<p><strong>The problem LEX solves here:</strong> Aircraft acquisition involves long lead times, multiple
+stakeholders, and complex financing. There is no shared digital format for the initial
+enquiry-to-order flow between operator and manufacturer.</p>
+<p><strong>What LEX changes:</strong> Operators submit structured enquiries with full specification
+requirements. The lifecycle tracks from initial interest through to delivery reservation.
+Government procurement rules (tender references, ECA financing) are carried in standard
+extension fields.</p>
+<p><strong>Industry-specific fields:</strong>
+- <code>desiredProduct.assetClass: AVIATION</code>
+- <code>desiredProduct.aviationSpecs.aircraftType</code> — fixed-wing, rotary, UAV
+- <code>desiredProduct.aviationSpecs.seatingCapacity</code>
+- <code>desiredProduct.aviationSpecs.rangeNm</code>
+- <code>lex.financial.ecaFinancing</code> — export credit agency financing flag</p>
+<hr />
+<h2>3.5 Real Estate</h2>
+<p><strong>Who participates:</strong> Developers, agencies, property portals, commercial brokers,
+property management platforms.</p>
+<p><strong>The problem LEX solves here:</strong> Property portals generate leads in their own format.
+Agency CRMs receive them in another. The developer's sales team works in a third.
+None of these systems close the loop — the portal never learns whether its lead converted.</p>
+<p><strong>What LEX changes:</strong> Portals send structured LEX LEADs with property identifiers and
+buyer requirements. Agencies update status as the process progresses. LEAD_CLOSURE
+returns the outcome — enabling the portal to measure true conversion, not just lead volume.</p>
+<p><strong>Industry-specific fields:</strong>
+- <code>desiredProduct.assetClass: REAL_ESTATE</code>
+- <code>desiredProduct.realEstateSpecs.propertyType</code> — residential, commercial, industrial
+- <code>desiredProduct.realEstateSpecs.tenure</code> — freehold, leasehold
+- <code>desiredProduct.realEstateSpecs.floorAreaSqm</code></p>
+<hr />
+<h2>3.6 Enterprise Technology</h2>
+<p><strong>Who participates:</strong> Software vendors, hardware OEMs, managed service providers,
+channel partners, enterprise procurement teams.</p>
+<p><strong>The problem LEX solves here:</strong> Partner channels generate leads that sales operations
+teams manually process. There is no standard for a reseller to programmatically submit
+a qualified enterprise opportunity to a vendor's platform.</p>
+<p><strong>What LEX changes:</strong> Channel partners submit structured leads with qualification data.
+Vendor platforms acknowledge, route, and update status back to the partner. Deal
+registration and protection is evidence-based rather than email-based.</p>
+<p><strong>Industry-specific fields:</strong>
+- <code>desiredProduct.assetClass: TECHNOLOGY</code>
+- <code>desiredProduct.technologySpecs.productCategory</code> — software, hardware, services
+- <code>desiredProduct.technologySpecs.deploymentModel</code> — cloud, on-premise, hybrid
+- <code>organisationBuyer.companySize</code> — employee count band
+- <code>lex.financial.annualContractValue</code></p></div>
+<div class="chapter-break chapter"><h1><a id="4-getting-started"></a>4. Getting Started</h1>
+<p>You need two things to start using LEX: the library for your language, and an understanding
+of what a message looks like. This chapter covers both.</p>
+<hr />
+<h2>4.1 Install the Library</h2>
+<p>Install the LEX library from your language's standard package registry. All four
+libraries are compiled from the same Haxe source and behave identically.</p>
+<h3>Python</h3>
+<div class="highlight"><pre><code>pip<span class="w"> </span>install<span class="w"> </span>lexstandard
+</code></pre></div>
+<h3>JavaScript / Node.js</h3>
+<div class="highlight"><pre><code><span class="c1"># npm</span>
+npm<span class="w"> </span>install<span class="w"> </span>@lexstandard/lex-js
+
+<span class="c1"># or yarn</span>
+yarn<span class="w"> </span>add<span class="w"> </span>@lexstandard/lex-js
+</code></pre></div>
+<h3>Java</h3>
+<div class="highlight"><pre><code><span class="cm">&lt;!-- Maven --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+<span class="w">  </span><span class="nt">&lt;groupId&gt;</span>io.lexstandard<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">  </span><span class="nt">&lt;artifactId&gt;</span>lex-java<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">  </span><span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div>
+<div class="highlight"><pre><code><span class="c1">// Gradle</span>
+<span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;io.lexstandard:lex-java:1.0.0&#39;</span>
+</code></pre></div>
+<h3>C# (.NET)</h3>
+<div class="highlight"><pre><code><span class="c1"># NuGet</span>
+dotnet<span class="w"> </span>add<span class="w"> </span>package<span class="w"> </span>LexStandard
+</code></pre></div>
+<p>Pre-built binaries for all four platforms are also available at
+<code>https://lexstandard.org/libraries</code>.</p>
+<hr />
+<h2>4.2 Receive Your First Lead</h2>
+<p>The most common first integration: your system receives an inbound lead from a portal
+or aggregator, validates it, and acknowledges receipt.</p>
+<h3>Python</h3>
+<div class="highlight"><pre><code><span class="kn">from</span><span class="w"> </span><span class="nn">lex_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LexClient</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">LexClient</span><span class="p">()</span>
+
+<span class="c1"># Receive and validate</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">parse_json</span><span class="p">(</span><span class="n">raw_json_string</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;valid&#39;</span><span class="p">]:</span>
+    <span class="n">lead</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;lex&#39;</span><span class="p">][</span><span class="s1">&#39;payload&#39;</span><span class="p">][</span><span class="s1">&#39;lead&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New lead: </span><span class="si">{</span><span class="n">lead</span><span class="p">[</span><span class="s1">&#39;leadId&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">lead</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Customer: </span><span class="si">{</span><span class="n">lead</span><span class="p">[</span><span class="s1">&#39;customer&#39;</span><span class="p">][</span><span class="s1">&#39;firstName&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">lead</span><span class="p">[</span><span class="s1">&#39;customer&#39;</span><span class="p">][</span><span class="s1">&#39;lastName&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Product:  </span><span class="si">{</span><span class="n">lead</span><span class="p">[</span><span class="s1">&#39;desiredProduct&#39;</span><span class="p">][</span><span class="s1">&#39;assetClass&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">lead</span><span class="p">[</span><span class="s1">&#39;desiredProduct&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;make&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;errors&#39;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation error: </span><span class="si">{</span><span class="n">error</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3>JavaScript</h3>
+<div class="highlight"><pre><code><span class="kd">const</span><span class="w"> </span><span class="nx">LexClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./LexClient&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LexClient</span><span class="p">();</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">parseJson</span><span class="p">(</span><span class="nx">rawJsonString</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">valid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">lead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">lex</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">lead</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`New lead: </span><span class="si">${</span><span class="nx">lead</span><span class="p">.</span><span class="nx">leadId</span><span class="si">}</span><span class="sb"> | </span><span class="si">${</span><span class="nx">lead</span><span class="p">.</span><span class="nx">status</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Customer: </span><span class="si">${</span><span class="nx">lead</span><span class="p">.</span><span class="nx">customer</span><span class="p">.</span><span class="nx">firstName</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">lead</span><span class="p">.</span><span class="nx">customer</span><span class="p">.</span><span class="nx">lastName</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">result</span><span class="p">.</span><span class="nx">errors</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Validation error:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<h3>Java</h3>
+<div class="highlight"><pre><code><span class="n">LexClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LexClient</span><span class="p">();</span>
+<span class="n">LexClient</span><span class="p">.</span><span class="na">ParseResult</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">parseJson</span><span class="p">(</span><span class="n">rawJsonString</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">isValid</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">JsonObject</span><span class="w"> </span><span class="n">lead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getMessage</span><span class="p">()</span>
+<span class="w">        </span><span class="p">.</span><span class="na">getAsJsonObject</span><span class="p">(</span><span class="s">&quot;lex&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">getAsJsonObject</span><span class="p">(</span><span class="s">&quot;payload&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="na">getAsJsonObject</span><span class="p">(</span><span class="s">&quot;lead&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;New lead: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lead</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;leadId&quot;</span><span class="p">).</span><span class="na">getAsString</span><span class="p">());</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">result</span><span class="p">.</span><span class="na">getErrors</span><span class="p">().</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">err</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3>C# (.NET)</h3>
+<div class="highlight"><pre><code><span class="kt">var</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LexClient</span><span class="p">();</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">ParseJson</span><span class="p">(</span><span class="n">rawJsonString</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">lead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">Message</span><span class="p">[</span><span class="s">&quot;lex&quot;</span><span class="p">][</span><span class="s">&quot;payload&quot;</span><span class="p">][</span><span class="s">&quot;lead&quot;</span><span class="p">];</span>
+<span class="w">    </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&quot;New lead: {lead[&quot;</span><span class="n">leadId</span><span class="s">&quot;]} | {lead[&quot;</span><span class="n">status</span><span class="s">&quot;]}&quot;</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">Errors</span><span class="p">)</span>
+<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">Error</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&quot;Validation error: {error}&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2>4.3 Send a Lead</h2>
+<p>Creating and sending a new lead — for example, from a portal to a dealer's system.</p>
+<h3>Python</h3>
+<div class="highlight"><pre><code><span class="kn">from</span><span class="w"> </span><span class="nn">lex_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LexClient</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">LexClient</span><span class="p">()</span>
+
+<span class="n">lead_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;leadId&quot;</span><span class="p">:</span>  <span class="s2">&quot;LEAD-2026-001234&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;status&quot;</span><span class="p">:</span>  <span class="s2">&quot;EXPRESSED_INTEREST&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;customer&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;firstName&quot;</span><span class="p">:</span> <span class="s2">&quot;Alex&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lastName&quot;</span><span class="p">:</span>  <span class="s2">&quot;Rivera&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;email&quot;</span><span class="p">:</span>     <span class="s2">&quot;alex.rivera@example.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;phone&quot;</span><span class="p">:</span>     <span class="s2">&quot;+1-555-0100&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;desiredProduct&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;assetClass&quot;</span><span class="p">:</span> <span class="s2">&quot;VEHICLE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;make&quot;</span><span class="p">:</span>  <span class="s2">&quot;Example&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Crossover&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;year&quot;</span><span class="p">:</span>  <span class="mi">2026</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;channel&quot;</span><span class="p">:</span> <span class="s2">&quot;WEB&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;originatingSystem&quot;</span><span class="p">:</span> <span class="s2">&quot;portal-west&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">message</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_message</span><span class="p">(</span><span class="n">lead_data</span><span class="p">,</span> <span class="s2">&quot;LEAD&quot;</span><span class="p">,</span> <span class="s2">&quot;portal-west&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">serialize_json</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">prettify</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</code></pre></div>
+<h3>JavaScript</h3>
+<div class="highlight"><pre><code><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">createMessage</span><span class="p">(</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">leadId</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;LEAD-2026-001234&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;EXPRESSED_INTEREST&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">customer</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">firstName</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Alex&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">lastName</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Rivera&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;alex@example.com&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">desiredProduct</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">assetClass</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;VEHICLE&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">make</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Example&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Crossover&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">year</span><span class="o">:</span><span class="w"> </span><span class="mf">2026</span><span class="w"> </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">source</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">channel</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;WEB&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">originatingSystem</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;portal-west&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">&quot;LEAD&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;portal-west&quot;</span>
+<span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">serializeJson</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="c1">// POST json to your partner&#39;s endpoint</span>
+</code></pre></div>
+<hr />
+<h2>4.4 Update a Lead's Status</h2>
+<p>As the buyer moves through the sales process, send updated LEAD messages with the new status.
+Each update carries the same <code>leadId</code> so all parties can correlate the history.</p>
+<div class="highlight"><pre><code><span class="c1"># Buyer booked a test drive</span>
+<span class="n">update_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;leadId&quot;</span><span class="p">:</span> <span class="s2">&quot;LEAD-2026-001234&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;APPOINTMENT_REQUEST&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;appointmentDetails&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;requestedDate&quot;</span><span class="p">:</span> <span class="s2">&quot;2026-04-05&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;requestedTime&quot;</span><span class="p">:</span> <span class="s2">&quot;10:00&quot;</span>
+    <span class="p">}</span>
+    <span class="c1"># customer and desiredProduct carried forward unchanged</span>
+<span class="p">}</span>
+
+<span class="n">update_message</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_message</span><span class="p">(</span><span class="n">update_data</span><span class="p">,</span> <span class="s2">&quot;LEAD&quot;</span><span class="p">,</span> <span class="s2">&quot;dms-dealer-42&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2>4.5 Close a Lead</h2>
+<p>When a lead reaches its final state, send a LEAD_CLOSURE. This completes the loop for
+all upstream systems — portal, aggregator, manufacturer — that originated or forwarded the lead.</p>
+<div class="highlight"><pre><code><span class="n">closure_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;leadId&quot;</span><span class="p">:</span>      <span class="s2">&quot;LEAD-2026-001234&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;closureType&quot;</span><span class="p">:</span> <span class="s2">&quot;SALE_COMPLETED&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;closedAt&quot;</span><span class="p">:</span>    <span class="s2">&quot;2026-04-08T14:30:00Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;notes&quot;</span><span class="p">:</span>       <span class="s2">&quot;Vehicle delivered. Customer satisfied.&quot;</span>
+<span class="p">}</span>
+
+<span class="n">closure</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_message</span><span class="p">(</span><span class="n">closure_data</span><span class="p">,</span> <span class="s2">&quot;LEAD_CLOSURE&quot;</span><span class="p">,</span> <span class="s2">&quot;dms-dealer-42&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>See the complete closure type reference in <strong>section 10.3</strong>.</p></div>
+<div class="chapter-break chapter"><h1><a id="5-the-lead-lifecycle"></a>5. The Lead Lifecycle</h1>
+<p>Understanding the lifecycle is the most important part of any LEX integration. It determines
+what status values you send, how your counterparties react, and when a lead is considered done.</p>
+<h2>5.1 The Fifteen Stages</h2>
+<p>A lead moves through defined stages. Each stage represents a real milestone in the
+buyer's journey that downstream systems — DMS, CRM, manufacturer platform — can act on.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What it means for your business</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CART</code></td>
+<td>Buyer has started a configurator or added a product to a cart. Earliest trackable intent signal.</td>
+</tr>
+<tr>
+<td><code>SHOPPING</code></td>
+<td>Buyer is actively browsing. Useful for analytics; no action required yet.</td>
+</tr>
+<tr>
+<td><code>EXPLORING</code></td>
+<td>Buyer has identified a product and is actively comparing options. Assign to a sales rep.</td>
+</tr>
+<tr>
+<td><code>TEST_DRIVE_REQUESTED</code></td>
+<td>Buyer has submitted a test drive booking. Schedule and confirm.</td>
+</tr>
+<tr>
+<td><code>TEST_DRIVE_COMPLETED</code></td>
+<td>Test drive has taken place. Follow up for feedback and next steps.</td>
+</tr>
+<tr>
+<td><code>TRADE_IN</code></td>
+<td>Buyer has submitted a trade-in for valuation. Trigger an appraisal workflow.</td>
+</tr>
+<tr>
+<td><code>EXPRESSED_INTEREST</code></td>
+<td>Formal enquiry. This is the classic "lead" — full contact details are expected here.</td>
+</tr>
+<tr>
+<td><code>RESERVATION</code></td>
+<td>Buyer has placed a provisional hold. Reserve the specific unit in inventory.</td>
+</tr>
+<tr>
+<td><code>APPOINTMENT_REQUEST</code></td>
+<td>Buyer wants to visit or speak to someone. Schedule the appointment.</td>
+</tr>
+<tr>
+<td><code>IN_NEGOTIATION</code></td>
+<td>Active deal in progress. Assign to a senior closer or finance team.</td>
+</tr>
+<tr>
+<td><code>ORDER</code></td>
+<td>Purchase order placed. Trigger fulfilment, handover, and finance workflows.</td>
+</tr>
+<tr>
+<td><code>ORDER_CONFIRMED</code></td>
+<td>Order accepted and confirmed by the selling party.</td>
+</tr>
+<tr>
+<td><code>IN_DELIVERY</code></td>
+<td>Asset is in transit to the customer.</td>
+</tr>
+<tr>
+<td><code>DELIVERED</code></td>
+<td>Asset delivered to the customer. Post-delivery follow-up may apply.</td>
+</tr>
+<tr>
+<td><code>ARCHIVED</code></td>
+<td>Lead closed. A LEAD_CLOSURE message records the outcome.</td>
+</tr>
+</tbody>
+</table>
+<h2>5.2 Which Stages Do You Need?</h2>
+<p>You do not need to use all fifteen stages. The minimum for an L1 integration is:</p>
+<ul>
+<li>Start leads at <code>EXPRESSED_INTEREST</code> (or wherever you first have contact details); use <code>CART</code> if you capture intent earlier</li>
+<li>Move to <code>ORDER</code> then <code>ORDER_CONFIRMED</code> → <code>IN_DELIVERY</code> → <code>DELIVERED</code> for a completed sale</li>
+<li>Send <code>LEAD_CLOSURE</code> with the final outcome</li>
+</ul>
+<p>The intermediate stages are available when your business process supports them and you
+want to give counterparties richer signal. An OEM platform that receives <code>TEST_DRIVE_COMPLETED</code>
+or <code>APPOINTMENT_REQUEST</code> knows the dealer is engaged; one that only receives <code>EXPRESSED_INTEREST</code>
+followed by <code>LEAD_CLOSURE: SALE_COMPLETED</code> learns less.</p>
+<h2>5.3 Stage Progression Rules</h2>
+<p>Leads move forward, not backward. Valid progressions:</p>
+<div class="highlight"><pre><code>CART                 -&gt;  SHOPPING, EXPLORING, EXPRESSED_INTEREST, ARCHIVED
+SHOPPING             -&gt;  EXPLORING, TEST_DRIVE_REQUESTED, EXPRESSED_INTEREST, ARCHIVED
+EXPLORING            -&gt;  TEST_DRIVE_REQUESTED, TRADE_IN, EXPRESSED_INTEREST, RESERVATION, ARCHIVED
+TEST_DRIVE_REQUESTED -&gt;  TEST_DRIVE_COMPLETED, ARCHIVED
+TEST_DRIVE_COMPLETED -&gt;  EXPRESSED_INTEREST, RESERVATION, APPOINTMENT_REQUEST, IN_NEGOTIATION, ARCHIVED
+TRADE_IN             -&gt;  EXPRESSED_INTEREST, RESERVATION, IN_NEGOTIATION, ARCHIVED
+EXPRESSED_INTEREST   -&gt;  RESERVATION, APPOINTMENT_REQUEST, IN_NEGOTIATION, ARCHIVED
+RESERVATION          -&gt;  APPOINTMENT_REQUEST, IN_NEGOTIATION, ORDER, ARCHIVED
+APPOINTMENT_REQUEST  -&gt;  IN_NEGOTIATION, ARCHIVED
+IN_NEGOTIATION       -&gt;  ORDER, ARCHIVED
+ORDER                -&gt;  ORDER_CONFIRMED, ARCHIVED  (cancellation only)
+ORDER_CONFIRMED      -&gt;  IN_DELIVERY, ARCHIVED
+IN_DELIVERY          -&gt;  DELIVERED
+DELIVERED            -&gt;  ARCHIVED
+ARCHIVED             -&gt;  (terminal)
+</code></pre></div>
+<p>If your system receives a transition that is not in this list, reject it with an
+ACKNOWLEDGMENT and include the reason <code>INVALID_STATUS_TRANSITION</code>. Sending back a clear
+error — rather than silently accepting bad data — is what makes the network reliable.</p>
+<h2>5.4 The Ownership Chain</h2>
+<p>Every system that handles a lead appends to the <code>ownershipChain</code> array:</p>
+<div class="highlight"><pre><code><span class="nt">&quot;ownershipChain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;systemId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;portal-west&quot;</span><span class="p">,</span><span class="w">   </span><span class="nt">&quot;receivedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-04-01T10:00:00Z&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CREATED&quot;</span><span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;systemId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dms-dealer-42&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;receivedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-04-01T10:00:05Z&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RECEIVED&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;systemId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oem-platform&quot;</span><span class="p">,</span><span class="w">  </span><span class="nt">&quot;receivedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-04-01T10:00:09Z&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ROUTED&quot;</span><span class="w">   </span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<p>You get a full audit trail of every hand-off, including timestamps, without building any
+centralised tracking service. If a lead goes missing or arrives with corrupted data, the
+ownership chain tells you exactly which system was last responsible for it.</p>
+<h2>5.5 Duplicate Detection</h2>
+<p>If your system receives a lead that is already in your CRM — same buyer, same product,
+different source — send a LEAD_CLOSURE with <code>closureType: DUPLICATE</code> rather than creating
+a second record. Include the <code>leadId</code> of the original in the closure message.</p>
+<p>The upstream system that sent the duplicate receives the closure, knows what happened,
+and does not chase you for an update that will never come.</p></div>
+<div class="chapter-break chapter"><h1><a id="6-what-a-lex-message-looks-like"></a>6. What a LEX Message Looks Like</h1>
+<p>You do not need to read the full specification to build your first integration. This
+chapter shows you the minimum message structure and explains each field in plain English.</p>
+<h2>6.1 The Minimum Viable Lead</h2>
+<p>Six fields are required for an L1-conformant LEAD message:</p>
+<div class="highlight"><pre><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;lex&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;messageId&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;550e8400-e29b-41d4-a716-446655440000&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;messageType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LEAD&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lexVersion&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;2026-04-01T10:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;senderId&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;my-portal&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;receiverId&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;dealer-dms-42&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;lead&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;leadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LEAD-2026-001234&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EXPRESSED_INTEREST&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;customer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;firstName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alex&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;lastName&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;Rivera&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;alex.rivera@example.com&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;phone&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;+1-555-0100&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;desiredProduct&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;assetClass&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VEHICLE&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;make&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;Example&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Crossover&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;year&quot;</span><span class="p">:</span><span class="w">  </span><span class="mi">2026</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;channel&quot;</span><span class="p">:</span><span class="w">           </span><span class="s2">&quot;WEB&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;originatingSystem&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-portal&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>6.2 What Each Field Does</h2>
+<p><strong>Header</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Plain English</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>messageId</code></td>
+<td>A unique ID for this specific message. Use a UUID (any UUID generator works).</td>
+</tr>
+<tr>
+<td><code>messageType</code></td>
+<td>Always <code>"LEAD"</code> for a lead message.</td>
+</tr>
+<tr>
+<td><code>lexVersion</code></td>
+<td>The version of the LEX spec you used. Start with <code>"1.0.0"</code>.</td>
+</tr>
+<tr>
+<td><code>timestamp</code></td>
+<td>When you created this message. UTC, ISO 8601.</td>
+</tr>
+<tr>
+<td><code>senderId</code></td>
+<td>A stable identifier for your system. You choose this; tell your partner what to expect.</td>
+</tr>
+<tr>
+<td><code>receiverId</code></td>
+<td>The identifier of the system you are sending to. Your partner tells you this.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lead payload</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Plain English</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>leadId</code></td>
+<td>A stable ID for this lead. Stays the same across all status updates.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>Where the buyer is in the sales process. See Chapter 5 for the full list.</td>
+</tr>
+<tr>
+<td><code>customer</code></td>
+<td>Buyer contact details. <code>email</code> or <code>phone</code> — at least one is required.</td>
+</tr>
+<tr>
+<td><code>desiredProduct</code></td>
+<td>What the buyer wants. <code>assetClass</code> tells the receiver what type of product.</td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td>Where this lead came from. Helps the receiver route it correctly.</td>
+</tr>
+</tbody>
+</table>
+<h2>6.3 Asset Classes</h2>
+<p>The <code>assetClass</code> field tells the receiver what industry vertical the lead belongs to:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Industry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VEHICLE</code></td>
+<td>Automotive (cars, trucks, motorcycles)</td>
+</tr>
+<tr>
+<td><code>HEAVY_EQUIPMENT</code></td>
+<td>Construction, mining, agriculture machinery</td>
+</tr>
+<tr>
+<td><code>MARITIME</code></td>
+<td>Vessels, yachts, commercial shipping</td>
+</tr>
+<tr>
+<td><code>AVIATION</code></td>
+<td>Aircraft, rotary, UAV</td>
+</tr>
+<tr>
+<td><code>REAL_ESTATE</code></td>
+<td>Residential, commercial, industrial property</td>
+</tr>
+<tr>
+<td><code>TECHNOLOGY</code></td>
+<td>Software, hardware, enterprise services</td>
+</tr>
+</tbody>
+</table>
+<h2>6.4 Adding an Acknowledgment</h2>
+<p>When you receive a lead, send an ACKNOWLEDGMENT back. This tells the sender their
+message arrived and passed validation:</p>
+<div class="highlight"><pre><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;lex&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;messageId&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;660e9500-f30c-52e5-b827-557766551111&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;messageType&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;ACKNOWLEDGMENT&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lexVersion&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;2026-04-01T10:00:05Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;senderId&quot;</span><span class="p">:</span><span class="w">      </span><span class="s2">&quot;dealer-dms-42&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;receiverId&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;my-portal&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;correlationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;550e8400-e29b-41d4-a716-446655440000&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;acknowledgment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w">        </span><span class="s2">&quot;ACCEPTED&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;referenceId&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;LEAD-2026-001234&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;processedAt&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;2026-04-01T10:00:05Z&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>correlationId</code> in the header links this acknowledgment to the original lead's
+<code>messageId</code>. The sender can confirm receipt and stop any retry logic.</p>
+<h2>6.5 A Closure Message</h2>
+<p>When the lead ends, send a LEAD_CLOSURE:</p>
+<div class="highlight"><pre><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;lex&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;header&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;messageId&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;770fa600-g41d-63f6-c938-668877662222&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;messageType&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;LEAD_CLOSURE&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lexVersion&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;2026-04-08T14:30:00Z&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;senderId&quot;</span><span class="p">:</span><span class="w">      </span><span class="s2">&quot;dealer-dms-42&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;receiverId&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;my-portal&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;correlationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LEAD-2026-001234&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;leadClosure&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;leadId&quot;</span><span class="p">:</span><span class="w">      </span><span class="s2">&quot;LEAD-2026-001234&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;closureType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SALE_COMPLETED&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;closedAt&quot;</span><span class="p">:</span><span class="w">    </span><span class="s2">&quot;2026-04-08T14:30:00Z&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>An L1 implementation can be built in a day</li>
+<li>Core fields never change (no forced migration)</li>
+<li>Every participant can understand any message without industry-specific knowledge</li>
+</ul>
+<p>Business requirements that go beyond the core are handled through the extension mechanism.</p>
+<h2>6.2 Extension Namespaces</h2>
+<p>An extension namespace is a dot-delimited prefix that uniquely identifies the organisation
+and purpose of a set of custom fields:</p>
+<div class="highlight"><pre><code>{organisation-id}.{division}.{purpose}
+</code></pre></div>
+<p>Examples:</p>
+<table>
+<thead>
+<tr>
+<th>Namespace</th>
+<th>Owner</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lex.ev</code></td>
+<td>LEX working group</td>
+<td>Electric vehicle specifications</td>
+</tr>
+<tr>
+<td><code>lex.captive</code></td>
+<td>LEX working group</td>
+<td>Captive finance products</td>
+</tr>
+<tr>
+<td><code>acme.fleet</code></td>
+<td>ACME dealer group</td>
+<td>Fleet procurement fields</td>
+</tr>
+<tr>
+<td><code>portx.maritime</code></td>
+<td>PortX platform</td>
+<td>Maritime vessel procurement</td>
+</tr>
+</tbody>
+</table>
+<p>Namespaces prefixed with <code>lex.*</code> are reserved for the LEX working group.
+All other namespaces are open and self-assigned.</p>
+<h2>6.3 Registering a Namespace</h2>
+<p>Namespace registration is submitted through the online registry at
+https://lexstandard.org/registry:</p>
+<div class="highlight"><pre><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;namespace&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;acme.fleet&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;owner&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ACME Dealer Group&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;contact&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;techstandards@acme.example&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fleet procurement extension fields&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;registeredAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-01&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;specUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://acme.example/lex-fleet-extension&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Registration is approved if: (a) the namespace follows the format; (b) it does not conflict
+with an existing registration; (c) it does not impersonate another organisation. No fee,
+no editorial review of the extension content itself.</p>
+<h2>6.4 Using Extensions in Messages</h2>
+<p>Extensions are placed in the <code>extensions</code> block of the payload, keyed by namespace:</p>
+<div class="highlight"><pre><code><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;lead&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;acme.fleet&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;fleetSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;preferredDeliveryPort&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PORT-FELIXSTOWE&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;tenderReference&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TENDER-2026-0042&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;lex.ev&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;batteryCapacityKwh&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">77</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;chargingStandardPreference&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CCS2&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>6.5 Passthrough Obligation</h2>
+<p>A participant that does not recognise an extension namespace MUST:</p>
+<ul>
+<li>Preserve all unrecognised extension blocks when forwarding the message</li>
+<li>NOT reject the message because of an unrecognised extension</li>
+<li>NOT modify or truncate extension block contents</li>
+</ul>
+<p>A participant that recognises an extension MUST validate it against the extension's own
+schema if one is published.</p>
+<h2>6.6 Standard Extensions</h2>
+<p>The LEX working group maintains a set of standard extensions that are part of the LEX
+specification but are not part of the L1 conformance requirement:</p>
+<table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>Category</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lex.ev</code></td>
+<td>Automotive</td>
+<td>Electric vehicle battery capacity, charging standard, range, and subscription data</td>
+</tr>
+<tr>
+<td><code>lex.captive</code></td>
+<td>Finance</td>
+<td>Manufacturer captive finance offer — rate, term, balloon payment, and residual value</td>
+</tr>
+<tr>
+<td><code>lex.financial</code></td>
+<td>Finance</td>
+<td>Trade-in valuation, deal pricing, incentives, taxes, and net deal value</td>
+</tr>
+<tr>
+<td><code>lex.lineage</code></td>
+<td>Audit</td>
+<td>Historical deal terms, negotiation audit trail, and attribution chain</td>
+</tr>
+<tr>
+<td><code>lex.governance</code></td>
+<td>Compliance</td>
+<td>Data residency, retention period, and processing jurisdiction rules</td>
+</tr>
+<tr>
+<td><code>lex.consent</code></td>
+<td>Compliance</td>
+<td>GDPR, UK GDPR, CCPA, India DPDPA, China PIPL, Brazil LGPD, South Africa POPIA, Canada PIPEDA, Singapore PDPA, Japan APPI, Switzerland nFADP, South Korea PIPA-K, Saudi Arabia PDPL, Thailand PDPA, and US state privacy law consent evidence and buyer preferences</td>
+</tr>
+<tr>
+<td><code>lex.intelligence</code></td>
+<td>Analytics</td>
+<td>Lead scoring, intent signals, behavioural attributes, and predictive data</td>
+</tr>
+</tbody>
+</table>
+<p>Full extension field definitions are published at https://lexstandard.org/spec.</p></div>
+<div class="chapter-break chapter"><h1><a id="7-extending-lex-for-your-industry"></a>7. Extending LEX for Your Industry</h1>
+<p>The LEX core is intentionally small. Industry-specific fields are added as named
+extension blocks rather than growing the core. This chapter shows you how.</p>
+<h2>7.1 The Extension Principle</h2>
+<p>Core fields cover what every industry needs. Extension blocks add what your specific
+business requires. Any receiver that does not understand your extension must pass it
+through unchanged — it cannot reject your message because of it.</p>
+<p>This means you can start using extensions immediately without waiting for every
+counterparty to upgrade.</p>
+<h2>7.2 Registering Your Namespace</h2>
+<p>Before sending extension data, register a namespace at
+https://lexstandard.org/registry:</p>
+<div class="highlight"><pre><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;namespace&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;acme&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;owner&quot;</span><span class="p">:</span><span class="w">     </span><span class="s2">&quot;ACME Corporation&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;contact&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;lex-admin@acme.example.com&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;industries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;HEAVY_EQUIPMENT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MARITIME&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ACME fleet and procurement extension fields&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Registration is free. It namespaces your fields so they never conflict with another
+organisation's extensions.</p>
+<h2>7.3 Adding Extension Fields</h2>
+<p>Extension data is added in the <code>extensions</code> block at the payload level:</p>
+<div class="highlight"><pre><code><span class="nt">&quot;extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;acme&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;fleet&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;preferredDeliveryPort&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PORT-HOUSTON-TX&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;maintenanceContractType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FULL_SERVICE&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In code (Python):</p>
+<div class="highlight"><pre><code><span class="n">lead_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;leadId&quot;</span><span class="p">:</span> <span class="s2">&quot;LEAD-2026-001234&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;EXPRESSED_INTEREST&quot;</span><span class="p">,</span>
+    <span class="c1"># ... core fields ...</span>
+    <span class="s2">&quot;extensions&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;acme&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;fleet&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;preferredDeliveryPort&quot;</span><span class="p">:</span>     <span class="s2">&quot;PORT-HOUSTON-TX&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;maintenanceContractType&quot;</span><span class="p">:</span>   <span class="s2">&quot;FULL_SERVICE&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;fleetSize&quot;</span><span class="p">:</span>                 <span class="mi">12</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2>7.4 Industry Extension Blocks</h2>
+<p>Full extension field definitions for each supported industry are in Chapter 6 of this
+document and published at https://lexstandard.org/spec.</p>
+<table>
+<thead>
+<tr>
+<th>Industry</th>
+<th>Extension namespace</th>
+<th>Key extension fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Automotive — EV</td>
+<td><code>lex.ev</code></td>
+<td>Battery capacity, charging standard, range requirements, MSRP</td>
+</tr>
+<tr>
+<td>Automotive — Finance</td>
+<td><code>lex.financial</code></td>
+<td>Finance type, LTV ratio, trade-in valuation, monthly payment target</td>
+</tr>
+<tr>
+<td>Captive Finance</td>
+<td><code>lex.captive</code></td>
+<td>Manufacturer finance offer, interest rate, balloon payment, residual</td>
+</tr>
+<tr>
+<td>Heavy Equipment</td>
+<td><code>lex.financial</code> + custom</td>
+<td>Fleet size, tender reference, delivery port, maintenance contract type</td>
+</tr>
+<tr>
+<td>Maritime</td>
+<td>custom</td>
+<td>Vessel type, gross tonnage, flag state, charter type, delivery port</td>
+</tr>
+<tr>
+<td>Aviation</td>
+<td><code>lex.financial</code> + custom</td>
+<td>Aircraft type, seating capacity, range (nm), ECA financing flag</td>
+</tr>
+<tr>
+<td>Real Estate</td>
+<td>custom</td>
+<td>Property type, tenure (freehold/leasehold), floor area (sqm), zone</td>
+</tr>
+<tr>
+<td>Technology</td>
+<td><code>lex.financial</code> + custom</td>
+<td>Product category, deployment model, ACV, company size band</td>
+</tr>
+</tbody>
+</table>
+<h2>7.5 Consuming Extensions You Did Not Write</h2>
+<p>When you receive a message with an extension block your system does not recognise:</p>
+<ol>
+<li><strong>Do not reject</strong> the message.</li>
+<li><strong>Do not modify</strong> the extension block.</li>
+<li>If forwarding the message, <strong>preserve</strong> the extension block unchanged.</li>
+<li>Optionally log unknown namespaces for monitoring.</li>
+</ol>
+<div class="highlight"><pre><code><span class="n">message</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">parse_json</span><span class="p">(</span><span class="n">raw_json</span><span class="p">)</span>
+
+<span class="c1"># Core fields you process</span>
+<span class="n">lead</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="s1">&#39;lex&#39;</span><span class="p">][</span><span class="s1">&#39;payload&#39;</span><span class="p">][</span><span class="s1">&#39;lead&#39;</span><span class="p">]</span>
+
+<span class="c1"># Unknown extensions — store and pass through</span>
+<span class="n">extensions</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="s1">&#39;lex&#39;</span><span class="p">][</span><span class="s1">&#39;payload&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extensions&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+<span class="c1"># When forwarding</span>
+<span class="n">outbound</span><span class="p">[</span><span class="s1">&#39;lex&#39;</span><span class="p">][</span><span class="s1">&#39;payload&#39;</span><span class="p">][</span><span class="s1">&#39;extensions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extensions</span>
+</code></pre></div>
+<h2>7.6 Transport and Delivery</h2>
+<p>LEX does not require a specific transport mechanism. Common patterns:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTPS POST (REST)</td>
+<td>Most integrations. Simple, debuggable, firewall-friendly.</td>
+</tr>
+<tr>
+<td>Message queue (AMQP, SQS)</td>
+<td>High-volume feeds, async delivery guarantees.</td>
+</tr>
+<tr>
+<td>SFTP batch</td>
+<td>Legacy DMS, batch-mode EDI workflows.</td>
+</tr>
+<tr>
+<td>Webhook fan-out</td>
+<td>Distributing one lead to multiple dealer endpoints.</td>
+</tr>
+</tbody>
+</table>
+<p>For burst handling, add a <code>ttl</code> block to the message header specifying how long the
+message should be considered valid. Receivers that cannot process within the TTL should
+return a <code>REJECTED</code> acknowledgment with reason <code>MESSAGE_EXPIRED</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Transport</th>
+<th>Suitable for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTPS (REST)</td>
+<td>Real-time point-to-point integration</td>
+</tr>
+<tr>
+<td>AMQP / RabbitMQ</td>
+<td>Internal enterprise message bus</td>
+</tr>
+<tr>
+<td>Apache Kafka</td>
+<td>High-throughput streaming integrations</td>
+</tr>
+<tr>
+<td>AS2</td>
+<td>EDI VAN connections (X12, EDIFACT)</td>
+</tr>
+<tr>
+<td>SFTP batch</td>
+<td>Scheduled batch lead file delivery</td>
+</tr>
+</tbody>
+</table>
+<p>The LEX message envelope is the same regardless of transport. A message sent over Kafka
+and a message sent over HTTPS REST carry the same <code>header</code> + <code>payload</code> structure.</p>
+<h2>7.2 Message TTL</h2>
+<p>Every LEX message may carry a <code>ttl</code> block in the header that specifies how long it should
+be held for delivery before being considered expired.</p>
+<div class="highlight"><pre><code><span class="nt">&quot;ttl&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;maxAgeSeconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;expiresAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-01T11:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;onExpiry&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DLQ&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Default TTL values by message type:</p>
+<table>
+<thead>
+<tr>
+<th>Message Type</th>
+<th>Default TTL</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LEAD</code></td>
+<td>3600 s (1 h)</td>
+<td>Stale leads damage buyer experience</td>
+</tr>
+<tr>
+<td><code>LEAD_CLOSURE</code></td>
+<td>86400 s (24 h)</td>
+<td>Closure data is less time-critical</td>
+</tr>
+<tr>
+<td><code>ACKNOWLEDGMENT</code></td>
+<td>300 s (5 min)</td>
+<td>Real-time signal</td>
+</tr>
+<tr>
+<td><code>SUBSCRIPTION</code></td>
+<td>2592000 s (30 d)</td>
+<td>Long-lived registration</td>
+</tr>
+<tr>
+<td><code>ASSET</code></td>
+<td>43200 s (12 h)</td>
+<td>Product data has a natural refresh cadence</td>
+</tr>
+</tbody>
+</table>
+<h2>7.3 Retry Strategy</h2>
+<p>Transient failures (network timeout, HTTP 5xx) should be retried with exponential backoff.
+The <code>retryContext</code> header block signals to the receiver that a message is a retry attempt:</p>
+<div class="highlight"><pre><code><span class="nt">&quot;retryContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;attemptNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;firstAttemptAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-01T10:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;lastAttemptAt&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;2026-03-01T10:05:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;retryReason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTTP_503&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Recommended backoff schedule:</p>
+<table>
+<thead>
+<tr>
+<th>Attempt</th>
+<th>Delay</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 (initial)</td>
+<td>Immediate</td>
+</tr>
+<tr>
+<td>2</td>
+<td>30 s</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2 min</td>
+</tr>
+<tr>
+<td>4</td>
+<td>10 min</td>
+</tr>
+<tr>
+<td>5</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>6+</td>
+<td>Dead-letter queue</td>
+</tr>
+</tbody>
+</table>
+<h2>7.4 Dead-Letter Queue</h2>
+<p>A message that cannot be delivered after exhausting the retry schedule MUST be moved to
+a dead-letter queue (DLQ) rather than silently discarded. The DLQ entry must include:</p>
+<ul>
+<li>The original message verbatim</li>
+<li>The final delivery error</li>
+<li>All retry attempt timestamps</li>
+<li>The <code>ttl.onExpiry</code> value from the original message</li>
+</ul>
+<p>DLQ contents must be inspectable by operations staff and must not be purged automatically
+within the message's <code>maxAgeSeconds</code> window.</p>
+<h2>7.5 Failure Categories</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transient failure (network, 5xx)</td>
+<td>Retry with backoff</td>
+</tr>
+<tr>
+<td>Permanent failure (parse error, invalid schema)</td>
+<td>Route to DLQ immediately — no retry</td>
+</tr>
+<tr>
+<td>Business rejection (validation fail, unknown receiver)</td>
+<td>Send <code>ACKNOWLEDGMENT</code> with <code>REJECTED</code></td>
+</tr>
+<tr>
+<td>TTL expiry</td>
+<td>Route to DLQ with <code>reason: TTL_EXPIRED</code></td>
+</tr>
+<tr>
+<td>Duplicate detected</td>
+<td>Send <code>LEAD_CLOSURE</code> with <code>DUPLICATE</code> — do not discard original</td>
+</tr>
+</tbody>
+</table>
+<h2>7.6 Idempotency</h2>
+<p>All message receivers MUST be idempotent with respect to <code>messageId</code>. If a message with
+a previously seen <code>messageId</code> is received, the receiver MUST return the same
+ACKNOWLEDGMENT it returned the first time and MUST NOT create a duplicate record.</p>
+<p>This allows senders to retry any message without risk of data duplication.</p></div>
+<div class="chapter-break chapter"><h1><a id="8-conformance-what-level-do-you-need"></a>8. Conformance — What Level Do You Need?</h1>
+<p>LEX defines three conformance levels. You choose the level that matches what your
+business does, then self-declare. There is no external certification body. The
+published test vectors let you verify your own implementation.</p>
+<h2>8.1 The Three Levels</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Who it is for</th>
+<th>What you implement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L1 — Basic</strong></td>
+<td>Portals, simple lead senders and receivers</td>
+<td>Core message structure, LEAD + ACKNOWLEDGMENT, JSON-EDI only</td>
+</tr>
+<tr>
+<td><strong>L2 — Standard</strong></td>
+<td>DMS vendors, CRM platforms, aggregators</td>
+<td>All L1 + lifecycle transitions, LEAD_CLOSURE, deduplication</td>
+</tr>
+<tr>
+<td><strong>L3 — Full</strong></td>
+<td>OEM platforms, enterprise lead networks</td>
+<td>All L2 + ASSET, SUBSCRIPTION, extensions, multi-format</td>
+</tr>
+</tbody>
+</table>
+<h2>8.2 Which Level Is Right for You?</h2>
+<p><strong>You are a property portal that sends leads to estate agencies.</strong>
+You create leads and want an acknowledgment back. Aim for <strong>L1</strong>.</p>
+<p><strong>You are a DMS vendor receiving leads from multiple portals.</strong>
+You need to validate, route, deduplicate, and close leads. Aim for <strong>L2</strong>.</p>
+<p><strong>You are an OEM platform routing leads to hundreds of dealers and receiving outcome data.</strong>
+You need subscriptions, asset messaging, full lifecycle tracking, and multi-format support.
+Aim for <strong>L3</strong>.</p>
+<p><strong>You are connecting two internal systems.</strong>
+Start with L1. Add what you need as your integration matures.</p>
+<h2>8.3 L1 Checklist</h2>
+<ul>
+<li>[ ] Accept and validate inbound LEAD messages (JSON-EDI)</li>
+<li>[ ] Send ACKNOWLEDGMENT on receipt (ACCEPTED or REJECTED)</li>
+<li>[ ] Create outbound LEAD messages with at least: <code>leadId</code>, <code>status</code>, <code>customer</code>, <code>desiredProduct</code>, <code>source</code></li>
+<li>[ ] Reject unknown status values gracefully</li>
+<li>[ ] Set <code>senderId</code> and <code>receiverId</code> in every message header</li>
+</ul>
+<h2>8.4 L2 Additions</h2>
+<ul>
+<li>[ ] Enforce status transition rules (see Chapter 5.3)</li>
+<li>[ ] Send LEAD_CLOSURE when a lead is terminated</li>
+<li>[ ] Detect and reject duplicate leads using <code>customerFingerprint</code></li>
+<li>[ ] Maintain the <code>ownershipChain</code> array</li>
+<li>[ ] Pass through unknown extension blocks unchanged</li>
+</ul>
+<h2>8.5 L3 Additions</h2>
+<ul>
+<li>[ ] Send and receive ASSET messages</li>
+<li>[ ] Implement SUBSCRIPTION filtering</li>
+<li>[ ] Support at least one non-JSON format (X12, EDIFACT, or XML-EDI)</li>
+<li>[ ] Implement the <code>consentRecord</code> block for GDPR/CCPA compliance</li>
+<li>[ ] Handle message TTL and retry logic</li>
+</ul>
+<h2>8.6 Security Practices</h2>
+<p>LEX messages carry buyer personal data. Apply standard data-handling rules:</p>
+<ul>
+<li>Transport messages over HTTPS/TLS 1.2+ or equivalent encrypted channel.</li>
+<li>Validate <code>senderId</code> against an allow-list on receipt. Do not process messages from
+  unknown senders.</li>
+<li>Store only the personal data fields you need to process the lead. The <code>consentRecord</code>
+  block records the buyer's data processing consent — preserve it.</li>
+<li>For GDPR / CCPA: the buyer's right to erasure applies to the <code>customer</code> block. If you
+  store LEX messages and receive a deletion request, clear <code>customer</code> fields while
+  preserving the lead record skeleton for audit purposes.</li>
+</ul>
+<h2>8.7 Declaring Conformance</h2>
+<p>Once your implementation passes your own testing against the published test vectors,
+update your capability advertisement:</p>
+<div class="highlight"><pre><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;systemId&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;dealer-dms-42&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;lexVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;conformance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;L2&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;formats&quot;</span><span class="p">:</span><span class="w">    </span><span class="p">[</span><span class="s2">&quot;JSON-EDI&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML-EDI&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;messageTypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;LEAD&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ACKNOWLEDGMENT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LEAD_CLOSURE&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Share this with your integration partners so they know the capabilities of your endpoint.</p>
+<p>environment, and the trust relationship between participants.</p>
+<p>The security model covers four concerns:</p>
+<ol>
+<li><strong>Transit security</strong> — protecting messages in motion</li>
+<li><strong>Message integrity</strong> — detecting tampering</li>
+<li><strong>Consent</strong> — evidence that the buyer agreed to data sharing</li>
+<li><strong>Data governance</strong> — rules about where data can go and how long it can be kept</li>
+</ol>
+<h2>8.2 Transit Security</h2>
+<p><strong>Minimum requirement (L1):</strong> TLS 1.2 or higher on all connections.<br />
+<strong>Recommended:</strong> TLS 1.3 with certificate pinning for production integrations.</p>
+<p>For batch file transfer (SFTP, AS2), files must be encrypted at rest using AES-256 or
+equivalent before transmission.</p>
+<h2>8.3 Message Integrity</h2>
+<p>The optional <code>securityMetadata</code> header block allows a sender to sign a message and
+a receiver to verify it has not been tampered with in transit:</p>
+<div class="highlight"><pre><code><span class="nt">&quot;securityMetadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;encryptionAlgorithm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AES-256-GCM&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;signatureAlgorithm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RS256&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;signature&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;base64-encoded-signature&gt;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;keyId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sender-key-2026-03&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;encryptedFields&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;customer.email&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;customer.phone&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Field-level encryption (<code>encryptedFields</code>) allows PII to be encrypted while the
+envelope (routing fields, messageId, status) remains readable by intermediaries.</p>
+<h2>8.4 Consent Model</h2>
+<p>Any LEX message that carries personally identifiable information (PII) should include
+a <code>consentRecord</code> in the extensions block:</p>
+<div class="highlight"><pre><code><span class="nt">&quot;extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;lex.consent&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;consentId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CONSENT-2026-0042&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;consentedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-02-28T09:15:00Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;consentExpiresAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2027-02-28T09:15:00Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;purposes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;LEAD_PROCESSING&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MARKETING&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;jurisdiction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EU&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;withdrawalUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://portal.example/consent/withdraw/CONSENT-2026-0042&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>L3 conformance requires <code>consentRecord</code> on all PII-bearing messages. L1 and L2
+implementations are encouraged to include it but are not required to.</p>
+<h2>8.5 Data Governance</h2>
+<p>The <code>lex.governance</code> extension allows the sender to specify constraints on how data
+may be processed by downstream participants:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dataResidency</code></td>
+<td>Country or region where data must remain (e.g. <code>EU</code>, <code>US-CA</code>)</td>
+</tr>
+<tr>
+<td><code>retentionDays</code></td>
+<td>Maximum period receiver may hold the record</td>
+</tr>
+<tr>
+<td><code>allowRemarketing</code></td>
+<td>Whether PII may be used for marketing purposes</td>
+</tr>
+<tr>
+<td><code>allowThirdPartySharing</code></td>
+<td>Whether data may be forwarded to unlisted parties</td>
+</tr>
+<tr>
+<td><code>anonymiseAfterDays</code></td>
+<td>Receiver must anonymise PII after this period</td>
+</tr>
+</tbody>
+</table>
+<p>Receivers that cannot honour a <code>dataResidency</code> constraint MUST reject the message with
+<code>ACKNOWLEDGMENT status: REJECTED</code> and <code>reason: DATA_RESIDENCY_VIOLATION</code> rather than
+silently accepting data they cannot lawfully process.</p>
+<h2>8.6 Audit Trail</h2>
+<p>The <code>ownershipChain</code> field (see Section 4.4) serves as the primary audit trail.
+For regulated industries or high-value transactions, the <code>dealLineage</code> extension
+(<code>lex.lineage</code>) provides a structured record of every change to deal terms,
+with timestamps and actor identifiers.</p>
+<h2>8.7 Regulatory Mapping</h2>
+<table>
+<thead>
+<tr>
+<th>Regulation</th>
+<th>LEX Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GDPR (EU)</td>
+<td><code>lex.consent</code>, <code>lex.governance</code> data residency and retention fields</td>
+</tr>
+<tr>
+<td>CCPA (California)</td>
+<td><code>lex.consent</code> opt-out and purpose fields</td>
+</tr>
+<tr>
+<td>Consumer Duty (UK)</td>
+<td><code>ownershipChain</code> for accountability; closure reason codes</td>
+</tr>
+<tr>
+<td>FCA (UK finance)</td>
+<td><code>lex.captive</code> and <code>lex.financial</code> audit fields</td>
+</tr>
+</tbody>
+</table>
+<p>LEX provides the data structures. Compliance with a specific regulation requires
+that all participants in a message chain correctly populate and honour the relevant
+fields — the standard cannot enforce compliance, only make it possible.</p></div>
+<div class="chapter-break chapter"><h1><a id="9-governance-and-license"></a>9. Governance and License</h1>
+<h2>9.1 License</h2>
+<p>LEX is published under the <strong>Apache License, Version 2.0</strong> (<code>SPDX-License-Identifier: Apache-2.0</code>).</p>
+<p>You can use it commercially. You can embed it in products. You can build proprietary
+services on top of it. You do not need to pay anyone. You do not need to ask permission.
+Required conditions: preserve the copyright notice in any distribution; if you contribute
+and then sue anyone for patent infringement relating to your contribution, your license
+terminates.</p>
+<p>Apache 2.0 was chosen over MIT because it includes a <strong>patent retaliation clause</strong> —
+the protection that matters for a technical standard with an open contribution chain.</p>
+<h2>9.2 Why Open?</h2>
+<p>Data standards only work if all participants are willing to adopt them. A standard
+that charges licensing fees, grants special rights to founding members, or can be
+withheld from competitors will never achieve the network coverage needed to be useful.</p>
+<p>LEX is designed to be adopted by a fragmented ecosystem. For that to happen, every
+nervous legal team at every potential adopter needs to be able to confirm: no cost,
+no lock-in, no control risk.</p>
+<h2>9.3 No Standards Body Required</h2>
+<p>You do not join a body to use LEX. You do not pay membership fees. You do not attend
+working groups unless you want to influence the next version.</p>
+<p>If you want to propose a change or a new extension, the process is:</p>
+<ol>
+<li>Open an issue in the LEX repository describing the need.</li>
+<li>Propose a solutions in a pull request, referencing the issue.</li>
+<li>Changes go through a public review period before merging.</li>
+</ol>
+<p>All changes are public before they are accepted.</p>
+<h2>9.4 Anti-Capture</h2>
+<p>The specification explicitly protects against capture by a single dominant actor:</p>
+<ul>
+<li>No contributor earns special rights over existing content.</li>
+<li>Extension namespaces are registered, not granted — every sender has equal access.</li>
+<li>The registry files (<code>LEX_EXTENSION_REGISTRY.json</code>, <code>LEX_ORGANIZATION_REGISTRY.json</code>)
+  are part of the repository, not a private service operated by any single entity.</li>
+</ul>
+<h2>9.5 Versioning Policy</h2>
+<p>LEX follows semantic versioning. The promise to adopters:</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>What we guarantee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New optional fields (MINOR)</td>
+<td>Your existing code continues to work without changes.</td>
+</tr>
+<tr>
+<td>New required fields (MAJOR)</td>
+<td>Migration guide published. Deprecation period of 12 months minimum before old version is non-normative.</td>
+</tr>
+<tr>
+<td>Breaking removal (MAJOR)</td>
+<td>Same as above. No silent breaking changes.</td>
+</tr>
+</tbody>
+</table>
+<h2>9.6 Reporting Issues</h2>
+<p>Problems with the specification — ambiguities, contradictions, missing cases — are
+reported through the repository issue tracker. This creates a public record of known
+issues so every adopter benefits from the same corrections.</p>
+<h2>9.2 Level 1 — Basic</h2>
+<p>The minimum for any production system that sends or receives LEX messages.</p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Valid envelope</td>
+<td>Can produce and parse <code>lex.header</code> + <code>lex.payload</code></td>
+</tr>
+<tr>
+<td>Required fields</td>
+<td>All required fields present in every message</td>
+</tr>
+<tr>
+<td>MessageID uniqueness</td>
+<td>No duplicate <code>messageId</code> values within a session</td>
+</tr>
+<tr>
+<td>Timestamp validity</td>
+<td>Timestamps within ±60 s of wall clock</td>
+</tr>
+<tr>
+<td>ACKNOWLEDGMENT response</td>
+<td>Sends ACK for every received LEAD message</td>
+</tr>
+<tr>
+<td>Error response</td>
+<td>Returns structured error for malformed input</td>
+</tr>
+<tr>
+<td>Idempotency</td>
+<td>Duplicate <code>messageId</code> returns same ACK, no duplicate record</td>
+</tr>
+<tr>
+<td>TLS 1.2+</td>
+<td>All connections encrypted</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Target implementers:</strong> Any DMS, CRM, portal, or aggregator that wants to send or
+receive LEX leads.</p>
+<h2>9.3 Level 2 — Standard</h2>
+<p>Required for DMS-to-manufacturer and DMS-to-aggregator integrations.</p>
+<p>All L1 requirements, plus:</p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full lifecycle</td>
+<td>Can send/receive all 15 lead status values</td>
+</tr>
+<tr>
+<td>Transition validation</td>
+<td>Rejects invalid status transitions with correct error code</td>
+</tr>
+<tr>
+<td>Business rule validation</td>
+<td>Email, phone, VIN, financing field rules — see Section 9.2 above</td>
+</tr>
+<tr>
+<td>Lead Closure</td>
+<td>Can send/receive <code>LEAD_CLOSURE</code> messages</td>
+</tr>
+<tr>
+<td>Bidirectional flow</td>
+<td>Can both initiate and respond to lead messages</td>
+</tr>
+<tr>
+<td>Deduplication</td>
+<td>Sends <code>customerFingerprint</code>; handles <code>DUPLICATE</code> closure</td>
+</tr>
+<tr>
+<td>TTL handling</td>
+<td>Honours <code>ttl.expiresAt</code>; routes expired messages to DLQ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Target implementers:</strong> DMS vendors, manufacturer platforms, large dealer groups.</p>
+<h2>9.4 Level 3 — Full</h2>
+<p>Required for OEM platform certification and multi-industry deployments.</p>
+<p>All L2 requirements, plus:</p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consent records</td>
+<td><code>lex.consent</code> present and valid on all PII-bearing messages</td>
+</tr>
+<tr>
+<td>EV extensions</td>
+<td>Can parse and produce <code>lex.ev</code> block</td>
+</tr>
+<tr>
+<td>Lead intelligence passthrough</td>
+<td>Preserves <code>lex.intelligence</code> unmodified when forwarding</td>
+</tr>
+<tr>
+<td>Retry context headers</td>
+<td>Populates <code>retryContext</code> on retried messages</td>
+</tr>
+<tr>
+<td>DLQ routing</td>
+<td>Routes permanently failed messages to DLQ; DLQ is inspectable</td>
+</tr>
+<tr>
+<td>Multi-format support</td>
+<td>Can parse both JSON-EDI and XML-EDI</td>
+</tr>
+<tr>
+<td>Subscription management</td>
+<td>Full <code>SUBSCRIPTION</code> message send/receive</td>
+</tr>
+<tr>
+<td>Organisation context</td>
+<td><code>organizationContext</code> correctly populated</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Target implementers:</strong> OEM platforms, national aggregators, super-DMS providers.</p>
+<h2>9.5 Test Vectors</h2>
+<p>The full test case library is maintained at lexstandard.org/conformance. Each test
+case specifies:</p>
+<ul>
+<li>Input message (or input state)</li>
+<li>Expected output / response</li>
+<li>The conformance level it tests</li>
+<li>Whether it is a MUST (failure = non-conformant) or SHOULD (failure = advisory)</li>
+</ul>
+<p>A conformance test runner is included in the reference implementation
+(<code>src/LEX_VALIDATION_ENGINE.ts</code>) that accepts a message and returns a conformance
+report against any of the three levels.</p>
+<h2>9.6 Capability Advertisement</h2>
+<p>An L3-conformant system can publish a capability advertisement message — a
+structured declaration of which optional extensions and features it supports.
+Counterparties use this to determine which fields they can safely include in
+messages sent to that system.</p>
+<p>See the online specification at lexstandard.org/spec.</p></div>
+<div class="chapter-break chapter"><h1><a id="10-quick-reference"></a>10. Quick Reference</h1>
+<h2>10.1 Library Methods by Language</h2>
+<p>Methods follow each language's idiomatic casing. JavaScript and Java share identical
+method names.</p>
+<table>
+<thead>
+<tr>
+<th>Convention</th>
+<th>Languages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>snake_case</code></td>
+<td>Python</td>
+</tr>
+<tr>
+<td><code>camelCase</code></td>
+<td>JavaScript, Java</td>
+</tr>
+<tr>
+<td><code>PascalCase</code></td>
+<td>C# (.NET)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Python</th>
+<th>JavaScript / Java</th>
+<th>C# (.NET)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create client</td>
+<td><code>LexClient()</code></td>
+<td><code>new LexClient()</code></td>
+<td><code>new LexClient()</code></td>
+</tr>
+<tr>
+<td>Parse JSON</td>
+<td><code>parse_json(s)</code></td>
+<td><code>parseJson(s)</code></td>
+<td><code>ParseJson(s)</code></td>
+</tr>
+<tr>
+<td>Build message</td>
+<td><code>create_message(data, type, sender)</code></td>
+<td><code>createMessage(data, type, sender)</code></td>
+<td><code>CreateMessage(data, type, sender)</code></td>
+</tr>
+<tr>
+<td>Validate</td>
+<td><code>validate(msg)</code></td>
+<td><code>validate(msg)</code></td>
+<td><code>Validate(msg)</code></td>
+</tr>
+<tr>
+<td>Serialise to JSON</td>
+<td><code>serialize_json(msg, prettify)</code></td>
+<td><code>serializeJson(msg, pretty)</code></td>
+<td><code>SerializeJson(msg, pretty)</code></td>
+</tr>
+<tr>
+<td>Save to file</td>
+<td><code>save_to_file(msg, path, fmt)</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2>10.2 Lead Status Codes</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Stage in the buyer journey</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CART</code></td>
+<td>Configurator started or product added to cart</td>
+</tr>
+<tr>
+<td><code>SHOPPING</code></td>
+<td>Browsing; no explicit product selected</td>
+</tr>
+<tr>
+<td><code>EXPLORING</code></td>
+<td>Product identified; actively comparing</td>
+</tr>
+<tr>
+<td><code>TEST_DRIVE_REQUESTED</code></td>
+<td>Test drive booking submitted</td>
+</tr>
+<tr>
+<td><code>TEST_DRIVE_COMPLETED</code></td>
+<td>Test drive has taken place</td>
+</tr>
+<tr>
+<td><code>TRADE_IN</code></td>
+<td>Trade-in asset submitted for valuation</td>
+</tr>
+<tr>
+<td><code>EXPRESSED_INTEREST</code></td>
+<td>Formal enquiry — full contact details present</td>
+</tr>
+<tr>
+<td><code>RESERVATION</code></td>
+<td>Provisional hold on a specific unit</td>
+</tr>
+<tr>
+<td><code>APPOINTMENT_REQUEST</code></td>
+<td>Buyer requested a visit or call</td>
+</tr>
+<tr>
+<td><code>IN_NEGOTIATION</code></td>
+<td>Active deal in progress</td>
+</tr>
+<tr>
+<td><code>ORDER</code></td>
+<td>Purchase order placed</td>
+</tr>
+<tr>
+<td><code>ORDER_CONFIRMED</code></td>
+<td>Order accepted and confirmed</td>
+</tr>
+<tr>
+<td><code>IN_DELIVERY</code></td>
+<td>Asset in transit to customer</td>
+</tr>
+<tr>
+<td><code>DELIVERED</code></td>
+<td>Asset delivered to customer</td>
+</tr>
+<tr>
+<td><code>ARCHIVED</code></td>
+<td>Lead closed (see closure types below)</td>
+</tr>
+</tbody>
+</table>
+<h2>10.3 Closure Types</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SALE_COMPLETED</code></td>
+<td>Successfully sold</td>
+</tr>
+<tr>
+<td><code>LOST_TO_COMPETITOR</code></td>
+<td>Buyer purchased elsewhere</td>
+</tr>
+<tr>
+<td><code>UNCONTACTABLE</code></td>
+<td>No response after multiple attempts</td>
+</tr>
+<tr>
+<td><code>BUDGET_INSUFFICIENT</code></td>
+<td>Financing or budget did not qualify</td>
+</tr>
+<tr>
+<td><code>PRODUCT_UNAVAILABLE</code></td>
+<td>Product could not be sourced</td>
+</tr>
+<tr>
+<td><code>DUPLICATE</code></td>
+<td>Already processed under another lead ID</td>
+</tr>
+<tr>
+<td><code>BUYER_WITHDREW</code></td>
+<td>Buyer explicitly cancelled</td>
+</tr>
+<tr>
+<td><code>EXPIRED</code></td>
+<td>Exceeded maximum age without activity</td>
+</tr>
+<tr>
+<td><code>OTHER</code></td>
+<td>None of the above; <code>notes</code> field required</td>
+</tr>
+</tbody>
+</table>
+<h2>10.4 Acknowledgment Statuses</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ACCEPTED</code></td>
+<td>Message received and valid</td>
+</tr>
+<tr>
+<td><code>REJECTED</code></td>
+<td>Message received but validation failed</td>
+</tr>
+<tr>
+<td><code>DEFERRED</code></td>
+<td>Message received; processing will happen asynchronously</td>
+</tr>
+</tbody>
+</table>
+<h2>10.5 Asset Classes</h2>
+<p><code>VEHICLE</code>, <code>HEAVY_EQUIPMENT</code>, <code>MARITIME</code>, <code>AVIATION</code>, <code>REAL_ESTATE</code>, <code>TECHNOLOGY</code></p>
+<h2>10.6 Required Header Fields</h2>
+<p><code>messageId</code>, <code>messageType</code>, <code>lexVersion</code>, <code>timestamp</code>, <code>senderId</code>, <code>receiverId</code></p>
+<h2>10.7 Required Lead Fields</h2>
+<p><code>leadId</code>, <code>status</code>, <code>customer</code> (at least email or phone), <code>desiredProduct</code> (at least <code>assetClass</code>), <code>source</code></p>
+<h2>10.8 Rejection Reason Codes</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Triggered when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MISSING_REQUIRED_FIELD</code></td>
+<td>A required field is absent</td>
+</tr>
+<tr>
+<td><code>INVALID_STATUS_TRANSITION</code></td>
+<td>Status jump is not in the allowed transitions table</td>
+</tr>
+<tr>
+<td><code>UNKNOWN_SENDER</code></td>
+<td><code>senderId</code> not in the receiver's allow-list</td>
+</tr>
+<tr>
+<td><code>MESSAGE_EXPIRED</code></td>
+<td>Message received after its <code>ttl</code> deadline</td>
+</tr>
+<tr>
+<td><code>DUPLICATE_MESSAGE</code></td>
+<td><code>messageId</code> already processed</td>
+</tr>
+<tr>
+<td><code>SCHEMA_VALIDATION_FAILED</code></td>
+<td>Message does not match the JSON Schema</td>
+</tr>
+</tbody>
+</table>
+<h2>10.9 Wire Format MIME Types</h2>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Content-Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON-EDI</td>
+<td><code>application/lex+json</code></td>
+</tr>
+<tr>
+<td>XML-EDI</td>
+<td><code>application/lex+xml</code></td>
+</tr>
+<tr>
+<td>X12</td>
+<td><code>application/edi-x12</code></td>
+</tr>
+<tr>
+<td>EDIFACT</td>
+<td><code>application/edifact</code></td>
+</tr>
+</tbody>
+</table>
+<h2>10.10 Reference Implementation</h2>
+<p>The reference implementation is the authoritative source for resolving ambiguities
+in validation behaviour. It is authored in Haxe and compiled to four target platforms:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Artifact</th>
+<th>Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JavaScript / Node.js</td>
+<td><code>lex.js</code></td>
+<td>https://lexstandard.org/libraries</td>
+</tr>
+<tr>
+<td>Python 3</td>
+<td><code>lex.py</code></td>
+<td>https://lexstandard.org/libraries</td>
+</tr>
+<tr>
+<td>Java (JVM 11+)</td>
+<td><code>Lex.jar</code></td>
+<td>https://lexstandard.org/libraries</td>
+</tr>
+<tr>
+<td>C# (.NET 6+)</td>
+<td><code>Lex.dll</code></td>
+<td>https://lexstandard.org/libraries</td>
+</tr>
+</tbody>
+</table>
+<p>All four are compiled from the same Haxe source, ensuring identical
+behaviour across platforms.</p>
+<h2>10.11 What the Reference Implementation Provides</h2>
+<h3>Parsers</h3>
+<p>Four format parsers — JSON-EDI, XML-EDI, X12, EDIFACT — that produce the canonical
+in-memory LEX data model from any of the four wire formats.</p>
+<h3>Validators</h3>
+<p>A validation engine (<code>ValidationEngine.hx</code>) that checks:</p>
+<ul>
+<li>Schema conformance: required fields, type constraints, enum values</li>
+<li>Business rules: valid status transitions, email/phone format, VIN format</li>
+<li>Lifecycle rules: ownership chain continuity, closure type appropriateness</li>
+<li>Extension schemas: validation of known <code>lex.*</code> extensions</li>
+</ul>
+<h3>Data Models</h3>
+<p>Strongly-typed data models for all five message types and all extension blocks,
+available in all four target languages.</p>
+<h3>Registries</h3>
+<ul>
+<li><code>OrganizationRegistry.hx</code> — organisation type definitions and extension namespaces</li>
+<li><code>ProductRegistry.hx</code> — asset classes and product type seed data</li>
+<li><code>LexSecurity.hx</code> — security metadata construction and verification helpers</li>
+</ul>
+<h2>10.12 Building the Libraries</h2>
+<p><strong>Prerequisites:</strong> Haxe 4.3+, Java 11+ (for Java target), .NET 6+ (for C# target)</p>
+<div class="highlight"><pre><code># Interactive build menu (Windows)
+lex.bat
+
+# Build all targets non-interactively
+lex.bat -Build all
+
+# Build a specific target
+lex.bat -Build js
+lex.bat -Build python
+lex.bat -Build java
+lex.bat -Build csharp
+
+# Package compiled artifacts into libraries/
+lex.bat -Package
+</code></pre></div>
+<h2>10.13 Language Wrapper Usage</h2>
+<p>Each compiled library ships with a thin idiomatic wrapper that exposes the LEX
+API in the conventions of the target language.</p>
+<h3>Python</h3>
+<div class="highlight"><pre><code><span class="kn">from</span><span class="w"> </span><span class="nn">lex</span><span class="w"> </span><span class="kn">import</span> <span class="n">LexParser</span><span class="p">,</span> <span class="n">LexValidator</span>
+
+<span class="n">message</span> <span class="o">=</span> <span class="n">LexParser</span><span class="o">.</span><span class="n">parse_json</span><span class="p">(</span><span class="n">raw_json</span><span class="p">)</span>
+<span class="n">result</span>  <span class="o">=</span> <span class="n">LexValidator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">valid</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lead </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">lead</span><span class="o">.</span><span class="n">leadId</span><span class="si">}</span><span class="s2"> — </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">lead</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  [</span><span class="si">{</span><span class="n">error</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">error</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3>JavaScript / Node.js</h3>
+<div class="highlight"><pre><code><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">LexParser</span><span class="p">,</span><span class="w"> </span><span class="nx">LexValidator</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./lex&#39;</span><span class="p">);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">LexParser</span><span class="p">.</span><span class="nx">parseJson</span><span class="p">(</span><span class="nx">rawJson</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">LexValidator</span><span class="p">.</span><span class="nx">validate</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">valid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Lead </span><span class="si">${</span><span class="nx">message</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">lead</span><span class="p">.</span><span class="nx">leadId</span><span class="si">}</span><span class="sb"> — </span><span class="si">${</span><span class="nx">message</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">lead</span><span class="p">.</span><span class="nx">status</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Full wrapper documentation is in <code>haxe/wrappers/README.md</code>.</p>
+<h2>10.14 Validation Engine</h2>
+<p>The TypeScript validation engine (<code>src/LEX_VALIDATION_ENGINE.ts</code>) provides conformance
+testing against all three conformance levels and is usable independently of the compiled
+Haxe libraries:</p>
+<div class="highlight"><pre><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">LexValidationEngine</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./LEX_VALIDATION_ENGINE&#39;</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">engine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LexValidationEngine</span><span class="p">();</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">engine</span><span class="p">.</span><span class="nx">validateConformance</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;L2&#39;</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Conformance L2: </span><span class="si">${</span><span class="nx">report</span><span class="p">.</span><span class="nx">conformant</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="nx">report</span><span class="p">.</span><span class="nx">failures</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">f</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`  FAIL: </span><span class="si">${</span><span class="nx">f</span><span class="p">.</span><span class="nx">rule</span><span class="si">}</span><span class="sb"> — </span><span class="si">${</span><span class="nx">f</span><span class="p">.</span><span class="nx">detail</span><span class="si">}</span><span class="sb">`</span><span class="p">));</span>
+</code></pre></div></div>
+<div class="chapter-break chapter"><h1><a id="11-api-definitions"></a>11. API Definitions</h1>
+<p>LEX publishes two machine-readable API definitions alongside the specification.
+They allow you to generate clients, drive API explorers, run contract tests, and
+integrate with event infrastructure without building anything by hand.</p>
+<hr />
+<h2>11.1 OpenAPI 3.1 — REST API</h2>
+<p><strong>File:</strong> <code>api/lex-openapi.yaml</code><br />
+<strong>URL:</strong> https://lexstandard.org/api/lex-openapi.yaml</p>
+<p>The OpenAPI definition covers the LEX REST transport layer — the primary
+integration method for web-connected systems. It is the right choice if your
+counterparty uses HTTP, webhooks, or a REST-based API gateway.</p>
+<h3>Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><code>/messages</code></td>
+<td>Submit any LEX message (LEAD, ASSET, ACK, SUBSCRIPTION, LEAD_CLOSURE)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/messages/{messageId}</code></td>
+<td>Retrieve a previously submitted message</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/messages/{messageId}/acknowledgment</code></td>
+<td>Retrieve the acknowledgment for a message</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/messages/batch</code></td>
+<td>Submit up to 100 messages in one call</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/leads</code></td>
+<td>LEAD-specific shorthand endpoint</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/leads/{leadId}/closure</code></td>
+<td>Submit a LEAD_CLOSURE for a lead</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/assets</code></td>
+<td>Submit an ASSET inventory message</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/subscriptions</code></td>
+<td>Register a webhook subscription</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/subscriptions</code></td>
+<td>List subscriptions for the authenticated organisation</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/subscriptions/{subscriptionId}</code></td>
+<td>Cancel a subscription</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/conformance/run</code></td>
+<td>Run the LEX conformance test suite</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/schema/{messageType}</code></td>
+<td>Retrieve the JSON Schema for a message type</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/health</code></td>
+<td>Health check (no auth required)</td>
+</tr>
+</tbody>
+</table>
+<h3>Authentication</h3>
+<p>LEX requires OAuth 2.0 Client Credentials (machine-to-machine) for all
+endpoints. Your platform implements the token endpoint — LEX defines the
+pattern but does not host an auth service. Set your token URL in the
+<code>securitySchemes.oauth2.flows.clientCredentials.tokenUrl</code> field of the
+OpenAPI file before importing it into your toolchain.</p>
+<p>Available scopes: <code>lex:leads:read</code>, <code>lex:leads:write</code>, <code>lex:assets:read</code>,
+<code>lex:assets:write</code>, <code>lex:closures:write</code>, <code>lex:subscriptions:manage</code>,
+<code>lex:conformance</code>.</p>
+<h3>Idempotency</h3>
+<p>Every <code>POST</code> endpoint is idempotent on <code>messageId</code>. Retry the same request
+safely — duplicate <code>messageId</code> submissions return <code>200 OK</code> without reprocessing.
+Use the optional <code>Idempotency-Key</code> request header to detect duplicates at the
+HTTP layer before message parsing.</p>
+<h3>Using the OpenAPI File</h3>
+<div class="highlight"><pre><code><span class="c1"># Try with Swagger UI (Docker)</span>
+docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:8080<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">SWAGGER_JSON_URL</span><span class="o">=</span>https://lexstandard.org/api/lex-openapi.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>swaggerapi/swagger-ui
+
+<span class="c1"># Import into Postman</span>
+<span class="c1"># File &gt; Import &gt; Link &gt; https://lexstandard.org/api/lex-openapi.yaml</span>
+
+<span class="c1"># Generate a client (openapi-generator)</span>
+openapi-generator-cli<span class="w"> </span>generate<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-i<span class="w"> </span>https://lexstandard.org/api/lex-openapi.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-g<span class="w"> </span>python<span class="w"> </span>-o<span class="w"> </span>lex-client-python
+</code></pre></div>
+<hr />
+<h2>11.2 AsyncAPI 3.0 — Event-Driven Messaging</h2>
+<p><strong>File:</strong> <code>api/lex-asyncapi.yaml</code><br />
+<strong>URL:</strong> https://lexstandard.org/api/lex-asyncapi.yaml</p>
+<p>The AsyncAPI definition covers the LEX event-driven transport layer. Use this
+when your infrastructure is message-broker-based: Kafka, RabbitMQ, Azure Service
+Bus, or webhook fan-out.</p>
+<h3>Channels and Message Types</h3>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Direction</th>
+<th>Message</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lex/leads/inbound</code></td>
+<td>receive</td>
+<td><code>LEAD</code></td>
+<td>Leads arriving from portals, OEMs, DMS platforms</td>
+</tr>
+<tr>
+<td><code>lex/leads/outbound</code></td>
+<td>send</td>
+<td><code>LEAD</code></td>
+<td>Status updates from OEM/manufacturer back to dealer</td>
+</tr>
+<tr>
+<td><code>lex/assets/inbound</code></td>
+<td>receive</td>
+<td><code>ASSET</code></td>
+<td>Inventory updates across all supported asset classes</td>
+</tr>
+<tr>
+<td><code>lex/acknowledgments</code></td>
+<td>send</td>
+<td><code>ACKNOWLEDGMENT</code></td>
+<td>Receipt confirmation — MUST be sent for every received LEAD or ASSET</td>
+</tr>
+<tr>
+<td><code>lex/subscriptions</code></td>
+<td>send</td>
+<td><code>SUBSCRIPTION</code></td>
+<td>Register filters for which events your system wants to receive</td>
+</tr>
+<tr>
+<td><code>lex/closures</code></td>
+<td>send</td>
+<td><code>LEAD_CLOSURE</code></td>
+<td>Final deal outcome (WON, LOST, ABANDONED …) reported by the dealer</td>
+</tr>
+<tr>
+<td><code>lex/dlq</code></td>
+<td>receive</td>
+<td>DLQ</td>
+<td>Messages that failed all delivery retries</td>
+</tr>
+</tbody>
+</table>
+<h3>Supported Transport Bindings</h3>
+<table>
+<thead>
+<tr>
+<th>Transport</th>
+<th>Protocol</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REST/Webhook</td>
+<td>HTTPS POST</td>
+<td>Web portals and SaaS platforms</td>
+</tr>
+<tr>
+<td>AMQP</td>
+<td>RabbitMQ / Azure Service Bus</td>
+<td>Enterprise middleware and on-premise DMS</td>
+</tr>
+<tr>
+<td>Kafka</td>
+<td>Topic-per-channel</td>
+<td>High-volume OEM platforms</td>
+</tr>
+<tr>
+<td>SFTP</td>
+<td>File-drop EDI</td>
+<td>Legacy batch systems</td>
+</tr>
+</tbody>
+</table>
+<h3>Using the AsyncAPI File</h3>
+<div class="highlight"><pre><code><span class="c1"># Explore with AsyncAPI Studio (browser)</span>
+<span class="c1"># Open https://studio.asyncapi.com and paste the URL</span>
+
+<span class="c1"># Generate a client</span>
+asyncapi<span class="w"> </span>generate<span class="w"> </span>fromTemplate<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://lexstandard.org/api/lex-asyncapi.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>@asyncapi/nodejs-template<span class="w"> </span>-o<span class="w"> </span>lex-async-client
+
+<span class="c1"># Mock broker for contract testing (Microcks)</span>
+<span class="c1"># Import via Microcks &gt; Importers &gt; AsyncAPI URL</span>
+</code></pre></div>
+<hr />
+<h2>11.3 CloudEvents Alignment</h2>
+<p><strong>File:</strong> <code>api/lex-cloudevents-mapping.md</code><br />
+<strong>URL:</strong> https://lexstandard.org/api/lex-cloudevents-mapping</p>
+<p>LEX message headers map to the <a href="https://cloudevents.io/">CNCF CloudEvents v1.0.2</a>
+envelope. This means LEX events can flow through AWS EventBridge, Azure Event Grid,
+Google Eventarc, and Kafka Schema Registry without a translation layer.</p>
+<p>Event type naming convention:</p>
+<div class="highlight"><pre><code>org.lexstandard.{messageType}.{action}
+
+org.lexstandard.lead.submitted
+org.lexstandard.lead.status.updated
+org.lexstandard.lead.closed
+org.lexstandard.asset.submitted
+org.lexstandard.message.acknowledged
+</code></pre></div>
+<p>The CloudEvents mapping document includes structured content mode examples, binary
+mode HTTP headers, EventBridge rule patterns, Azure Event Grid filters, Kafka
+producer configuration, and JavaScript conversion functions.</p>
+<hr />
+<h2>11.4 JSON Schemas</h2>
+<p>All five LEX message types have JSON Schemas (Draft-07) in the <code>schemas/</code>
+directory and at <code>https://lexstandard.org/schemas</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Schema file</th>
+<th>Message type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LEX_MESSAGE_SCHEMA.json</code></td>
+<td>Message envelope (root)</td>
+</tr>
+<tr>
+<td><code>LEX_LEAD_SCHEMA.json</code></td>
+<td>LEAD</td>
+</tr>
+<tr>
+<td><code>LEX_ASSET_SCHEMA.json</code></td>
+<td>ASSET (all 18 asset classes)</td>
+</tr>
+<tr>
+<td><code>LEX_ACKNOWLEDGMENT_SCHEMA.json</code></td>
+<td>ACKNOWLEDGMENT</td>
+</tr>
+<tr>
+<td><code>LEX_SUBSCRIPTION_SCHEMA.json</code></td>
+<td>SUBSCRIPTION</td>
+</tr>
+<tr>
+<td><code>LEX_LEAD_CLOSURE_SCHEMA.json</code></td>
+<td>LEAD_CLOSURE</td>
+</tr>
+</tbody>
+</table>
+<p>The OpenAPI and AsyncAPI files reference these schemas. You can use them
+independently with any JSON Schema validator:</p>
+<div class="highlight"><pre><code><span class="kn">import</span><span class="w"> </span><span class="nn">jsonschema</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;schemas/LEX_LEAD_SCHEMA.json&quot;</span><span class="p">))</span>
+<span class="n">message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;my-lead.json&quot;</span><span class="p">))</span>
+<span class="n">jsonschema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s2">&quot;lex&quot;</span><span class="p">][</span><span class="s2">&quot;payload&quot;</span><span class="p">],</span> <span class="n">schema</span><span class="p">)</span>
+</code></pre></div></div>
+<div class="chapter-break chapter"><h1><a id="12-next-steps"></a>12. Next Steps</h1>
+<h2>12.1 Start Your Integration</h2>
+<ol>
+<li>
+<p><strong>Choose a library.</strong> Download the client library for your language from
+   https://lexstandard.org/libraries into your project.
+   No package manager required for Python or JavaScript.</p>
+</li>
+<li>
+<p><strong>Send a test lead.</strong> Use the minimal example from Chapter 6.1. Validate it with
+   <code>client.validate()</code> before sending. If it passes, send it and check the ACKNOWLEDGMENT.</p>
+</li>
+<li>
+<p><strong>Implement closure.</strong> Wire up LEAD_CLOSURE for your won and lost outcomes.
+   This is the data that makes the network useful for every upstream participant.</p>
+</li>
+<li>
+<p><strong>Pick your conformance level.</strong> If you are receiving leads, L1 is sufficient to start.
+   If you are a DMS or aggregator, target L2. See Chapter 8 for the checklists.</p>
+</li>
+</ol>
+<h2>12.2 Useful Resources</h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Where to find it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Online specification &amp; field dictionary</td>
+<td>https://lexstandard.org/spec</td>
+</tr>
+<tr>
+<td>Conformance test suite</td>
+<td>https://lexstandard.org/conformance</td>
+</tr>
+<tr>
+<td>Extension registry</td>
+<td>https://lexstandard.org/registry</td>
+</tr>
+<tr>
+<td>Client libraries (Python, JS, Java, C#)</td>
+<td>https://lexstandard.org/libraries</td>
+</tr>
+<tr>
+<td>JSON Schemas (all 5 message types)</td>
+<td>https://lexstandard.org/schemas</td>
+</tr>
+<tr>
+<td>OpenAPI 3.1 definition (REST)</td>
+<td>https://lexstandard.org/api/lex-openapi.yaml</td>
+</tr>
+<tr>
+<td>AsyncAPI 3.0 definition (event-driven)</td>
+<td>https://lexstandard.org/api/lex-asyncapi.yaml</td>
+</tr>
+<tr>
+<td>Industry examples repository</td>
+<td>https://github.com/lexstandard/examples</td>
+</tr>
+</tbody>
+</table>
+<h2>12.3 Register an Extension Namespace</h2>
+<p>If you need industry-specific fields not covered by the core or existing extensions,
+submit a registration request at https://lexstandard.org/registry.
+Registration is free and reviewed within two weeks.</p>
+<h2>12.4 Report a Problem</h2>
+<p>If you find an ambiguity, a contradiction, or a missing case in this specification,
+open an issue at https://lexstandard.org/issues. Every adopter benefits from corrections being public.</p>
+<h2>12.5 Industry Examples</h2>
+<p>Complete worked examples for each supported industry are published at
+https://github.com/lexstandard/examples:</p>
+<ul>
+<li><strong>Automotive</strong> — Retail vehicle leads in JSON-EDI, XML-EDI, X12, and EDIFACT</li>
+<li><strong>Heavy Equipment</strong> — Construction, mining, and agricultural fleet procurement</li>
+<li><strong>Maritime</strong> — Vessel, yacht, and commercial shipping enquiries</li>
+<li><strong>Aviation</strong> — Aircraft, rotary, and UAV acquisition flows</li>
+<li><strong>Real Estate</strong> — Residential, commercial, and industrial property enquiries</li>
+<li><strong>Technology</strong> — Enterprise software, hardware, and managed services channel leads</li>
+</ul>
+<div class="highlight"><pre><code>Apache License, Version 2.0
+SPDX-License-Identifier: Apache-2.0
+Copyright (c) 2026 LEX Lead Exchange Standard Contributors
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
+
+CANONICAL SPECIFICATION: https://lexstandard.org
+Any derivative must disclose it is not the canonical specification.
+</code></pre></div>
+<p>Any entity — DMS provider, OEM, aggregator, or individual — may implement LEX freely
+without payment, approval, or membership.</p>
+<h2>11.2 Open Participation</h2>
+<p>Contributions to the specification are open to all via public pull request. No financial
+contribution, dues payment, or membership fee is required to:</p>
+<ul>
+<li>Propose changes to the core specification</li>
+<li>Register extension namespaces</li>
+<li>Be credited as a contributor</li>
+<li>Build commercial products on LEX</li>
+</ul>
+<h2>11.3 Anti-Capture Provisions</h2>
+<p>Any entity that introduces mandatory participation fees, access restrictions, proprietary
+data requirements, or vendor-specific dependencies into the core LEX specification is
+acting in violation of LEX governance.</p>
+<p>This clause exists because shared standards in high-value sales ecosystems have historically
+been captured by dominant platform vendors. Proprietary variants, integration brokerage fees,
+and incumbent governance control have turned open standards into revenue mechanisms. Some
+governance bodies have evolved into dues-paying organisations where the largest payers
+control the roadmap, at the expense of the broader ecosystem. LEX explicitly rejects both
+of these patterns.</p>
+<h2>11.4 No Mandatory Certification</h2>
+<p>Conformance levels (L1, L2, L3) are self-declared against published test vectors. Any
+third-party organisation may offer certification services, but no certification body is
+mandatory. No implementation is blocked from the LEX ecosystem because it has not paid
+for assessment.</p>
+<h2>11.5 Extension Registry Governance</h2>
+<p>The extension namespace registry (lexstandard.org/registry) accepts all
+registrations that follow the naming convention. Grounds for rejection are limited to:</p>
+<ol>
+<li>Collision with the <code>lex.core.*</code> reserved namespace</li>
+<li>Demonstrable impersonation of another organisation</li>
+<li>Format does not match the documented schema</li>
+</ol>
+<p>There is no editorial veto, no review fee, and no approval delay beyond format validation.
+Namespace registration is not an endorsement by any governing body.</p>
+<h2>11.6 Simplicity Budget</h2>
+<p>The LEX core message structure (header + payload) must remain understandable by a
+competent developer without reading more than two specification documents. This is an
+explicit design constraint, not an aspiration.</p>
+<p>Every new field proposed for the LEX core must be justified against this budget. Optional
+extension blocks are additive — a developer does not need to understand <code>lex.captive</code>,
+<code>lex.governance</code>, or <code>lex.lineage</code> to build a conformant L1 system.</p>
+<p>When a proposed addition to the core is rejected in favour of an optional block, the
+specification will document the reason so future contributors understand the constraint.</p>
+<h2>11.7 Versioning and Deprecation</h2>
+<p>No field may be removed from the core specification without:</p>
+<ol>
+<li>A MAJOR version bump</li>
+<li>A minimum 18-month deprecation period during which the field is marked <code>deprecated</code>
+   but still valid</li>
+<li>A published migration guide</li>
+</ol>
+<p>This constraint exists because participants in the LEX network operate on independent
+release cycles. A field removal that breaks an L1 receiver causes silent data loss in
+production — the worst possible failure mode for a lead interchange standard.</p></div>
+<div class="chapter-break chapter"><h1><a id="bibliography"></a>Bibliography</h1>
+<p>The following standards, specifications, and informational references are cited or
+directly relevant to the LEX Lead Exchange Standard.</p>
+<hr />
+<h2>Data Format Standards</h2>
+<p><strong>[JSON]</strong> Bray, T. (Ed.). <em>The JavaScript Object Notation (JSON) Data Interchange Format.</em>
+IETF RFC 8259, December 2017.
+https://www.rfc-editor.org/rfc/rfc8259</p>
+<p><strong>[JSON-Schema]</strong> Wright, A., Andrews, H., Hutton, B. (Eds.). <em>JSON Schema: A Media Type
+for Describing JSON Documents.</em> Internet-Draft draft-bhutton-json-schema-01, December 2020.
+https://json-schema.org/specification</p>
+<p><strong>[XML]</strong> Bray, T. et al. <em>Extensible Markup Language (XML) 1.0 (Fifth Edition).</em>
+W3C Recommendation, November 2008.
+https://www.w3.org/TR/xml/</p>
+<p><strong>[EDIFACT]</strong> <em>ISO 9735: Electronic Data Interchange for Administration, Commerce and
+Transport (EDIFACT) — Application level syntax rules.</em>
+International Organization for Standardization, 2002.</p>
+<p><strong>[X12]</strong> <em>ASC X12 Standards for Electronic Data Interchange.</em>
+Accredited Standards Committee X12, Washington D.C.
+https://www.x12.org/</p>
+<p><strong>[ISO-8601]</strong> <em>ISO 8601-1:2019 — Date and time — Representations for information
+interchange — Part 1: Basic rules.</em>
+International Organization for Standardization, 2019.</p>
+<hr />
+<h2>Transport and Security Standards</h2>
+<p><strong>[HTTPS]</strong> Fielding, R. et al. <em>HTTP/1.1: Message Syntax and Routing.</em>
+IETF RFC 7230, June 2014. Updated by RFC 9110 (HTTP Semantics), June 2022.
+https://www.rfc-editor.org/rfc/rfc9110</p>
+<p><strong>[TLS13]</strong> Rescorla, E. <em>The Transport Layer Security (TLS) Protocol Version 1.3.</em>
+IETF RFC 8446, August 2018.
+https://www.rfc-editor.org/rfc/rfc8446</p>
+<p><strong>[JWT]</strong> Jones, M., Bradley, J., Sakimura, N. <em>JSON Web Token (JWT).</em>
+IETF RFC 7519, May 2015.
+https://www.rfc-editor.org/rfc/rfc7519</p>
+<p><strong>[WEBHOOK]</strong> Webhooks are a widely adopted, informally standardised pattern. For a
+community-maintained description see: https://www.webhooks.fyi/</p>
+<p><strong>[AMQP]</strong> <em>OASIS AMQP Version 1.0 — Advanced Message Queuing Protocol.</em>
+OASIS Standard, October 2012.
+https://docs.oasis-open.org/amqp/core/v1.0/</p>
+<hr />
+<h2>API and Event Specifications</h2>
+<p><strong>[OpenAPI]</strong> <em>OpenAPI Specification 3.1.0.</em>
+OpenAPI Initiative, February 2021.
+https://spec.openapis.org/oas/v3.1.0</p>
+<p><strong>[AsyncAPI]</strong> Ponchon, F. et al. <em>AsyncAPI Specification 3.0.0.</em>
+AsyncAPI Initiative, 2023.
+https://www.asyncapi.com/docs/reference/specification/v3.0.0</p>
+<p><strong>[CloudEvents]</strong> <em>CloudEvents Specification v1.0.2.</em>
+Cloud Native Computing Foundation (CNCF), 2022.
+https://cloudevents.io/</p>
+<hr />
+<h2>Privacy and Regulatory Frameworks</h2>
+<p><strong>[GDPR]</strong> <em>Regulation (EU) 2016/679 of the European Parliament and of the Council —
+General Data Protection Regulation.</em>
+Official Journal of the European Union, May 2018.
+https://gdpr-info.eu/</p>
+<p><strong>[CCPA]</strong> <em>California Consumer Privacy Act of 2018 (CCPA), Cal. Civ. Code § 1798.100 et seq.</em>
+State of California, amended by CPRA (Prop. 24), effective January 2023.
+https://oag.ca.gov/privacy/ccpa</p>
+<hr />
+<h2>Informational References</h2>
+<p><strong>[RFC2119]</strong> Bradner, S. <em>Key Words for Use in RFCs to Indicate Requirement Levels.</em>
+IETF RFC 2119, March 1997. LEX uses MUST/SHOULD/MAY with the semantics defined here.
+https://www.rfc-editor.org/rfc/rfc2119</p>
+<p><strong>[RFC8174]</strong> Leiba, B. <em>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words.</em>
+IETF RFC 8174, May 2017.
+https://www.rfc-editor.org/rfc/rfc8174</p>
+<p><strong>[SemVer]</strong> Preston-Werner, T. <em>Semantic Versioning 2.0.0.</em>
+https://semver.org/ — LEX version numbers follow SemVer conventions.</p>
+<hr />
+<h2>LEX Project Resources</h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Online specification &amp; field dictionary</td>
+<td>https://lexstandard.org/spec</td>
+</tr>
+<tr>
+<td>JSON Schemas</td>
+<td>https://lexstandard.org/schemas</td>
+</tr>
+<tr>
+<td>Conformance test suite</td>
+<td>https://lexstandard.org/conformance</td>
+</tr>
+<tr>
+<td>Extension registry</td>
+<td>https://lexstandard.org/registry</td>
+</tr>
+<tr>
+<td>Client libraries (Python, JS, Java, C#)</td>
+<td>https://lexstandard.org/libraries</td>
+</tr>
+<tr>
+<td>GitHub repository</td>
+<td>https://github.com/lexstandard/</td>
+</tr>
+</tbody>
+</table></div>
+</body>
+</html>
