@@ -30,7 +30,7 @@
 
     <!-- LEX Java library — local install: mvn install -f ../../libraries/java/pom.xml -->
     <dependency>
-      <groupId>io.lexstandard</groupId>
+      <groupId>org.lexstandard</groupId>
       <artifactId>lex-java</artifactId>
       <version>1.0.0</version>
     </dependency>
