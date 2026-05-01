@@ -2,9 +2,9 @@ package org.lexstandard.samples;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.lexstandard.dsl.Lex;
-import com.lexstandard.dsl.LexTypes.*;
-import com.lexstandard.dsl.LexEnums.*;
+import org.lexstandard.Lex;
+import org.lexstandard.LexTypes.*;
+import org.lexstandard.LexEnums.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
