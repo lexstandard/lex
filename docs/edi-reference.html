@@ -62,11 +62,13 @@
   <!-- ── Navigation ─────────────────────────────────────────────────────── -->
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-      <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
-        <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg">
-          <span class="text-white font-bold text-sm">L</span>
-        </span>
-        <span class="font-bold text-slate-900 text-lg">LEX</span>
+       <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+           <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(45 16 16)" fill="#7dd3fc"/>
+           <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(-45 16 16)" fill="#38bdf8"/>
+           <text x="16" y="19" font-family="Arial, sans-serif" font-size="7" fill="#1e293b" text-anchor="middle" font-weight="900">LEX</text>
+         </svg>
+         <span class="font-bold text-slate-900 text-lg">LEX</span>
         <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
       </a>
 
@@ -79,6 +81,7 @@
         <a href="conformance.html"     class="nav-link" data-nav-href="conformance.html">Conformance</a>
         <a href="edi-reference.html"   class="nav-link nav-link-active" data-nav-href="edi-reference.html">EDI Reference</a>
         <a href="faq.html"             class="nav-link" data-nav-href="faq.html">FAQ</a>
+        <a href="blog.html"        class="nav-link" data-nav-href="blog.html">Blog</a>
       </div>
 
       <div class="hidden md:flex items-center gap-3">
@@ -663,10 +666,12 @@ UNZ+1+000000001'</code></pre>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <!-- Brand -->
         <div class="lg:col-span-1">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="flex items-center justify-center w-7 h-7 bg-lex-600 rounded-md">
-              <span class="text-white font-bold text-xs">L</span>
-            </span>
+<div class="flex items-center gap-2 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32">
+                <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(45 16 16)" fill="#7dd3fc"/>
+                <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(-45 16 16)" fill="#38bdf8"/>
+                <text x="16" y="19" font-family="Arial, sans-serif" font-size="7" fill="#1e293b" text-anchor="middle" font-weight="900">LEX</text>
+              </svg>
             <span class="font-bold text-white text-base">LEX</span>
           </div>
           <p class="text-sm leading-relaxed">The open standard for modern sales lead exchange. Apache 2.0. No fees. No gatekeepers.</p>

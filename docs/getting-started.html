@@ -65,11 +65,13 @@
   <!-- ── Navigation ──────────────────────────────────────────────────────── -->
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-      <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
-        <span class="flex items-center justify-center w-8 h-8 bg-lex-600 rounded-lg">
-          <span class="text-white font-bold text-sm">L</span>
-        </span>
-        <span class="font-bold text-slate-900 text-lg">LEX</span>
+       <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+           <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(45 16 16)" fill="#7dd3fc"/>
+           <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(-45 16 16)" fill="#38bdf8"/>
+           <text x="16" y="19" font-family="Arial, sans-serif" font-size="7" fill="#1e293b" text-anchor="middle" font-weight="900">LEX</text>
+         </svg>
+         <span class="font-bold text-slate-900 text-lg">LEX</span>
         <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
       </a>
       <div class="hidden md:flex items-center gap-6">
@@ -81,6 +83,7 @@
         <a href="conformance.html"     class="nav-link" data-nav-href="conformance.html">Conformance</a>
         <a href="edi-reference.html"   class="nav-link" data-nav-href="edi-reference.html">EDI Reference</a>
         <a href="faq.html"             class="nav-link" data-nav-href="faq.html">FAQ</a>
+        <a href="blog.html"        class="nav-link" data-nav-href="blog.html">Blog</a>
       </div>
       <div class="hidden md:flex items-center gap-3">
         <a href="https://github.com/lexstandard/lex" target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-4">
@@ -596,10 +599,12 @@ http.<span class="text-amber-300">send</span>(req, HttpResponse.BodyHandlers.<sp
 
   <footer class="bg-slate-950 text-slate-400 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
-      <div class="flex items-center gap-2">
-        <span class="flex items-center justify-center w-6 h-6 bg-lex-600 rounded">
-          <span class="text-white font-bold text-xs">L</span>
-        </span>
+       <div class="flex items-center gap-2">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+           <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(45 16 16)" fill="#7dd3fc"/>
+           <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(-45 16 16)" fill="#38bdf8"/>
+           <text x="16" y="19" font-family="Arial, sans-serif" font-size="7" fill="#1e293b" text-anchor="middle" font-weight="900">LEX</text>
+         </svg>
         <span class="font-semibold text-white">LEX</span>
         <span class="text-slate-600">— Lead Exchange Standard</span>
       </div>

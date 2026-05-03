@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is LEX? The Open Standard for Sales Lead Exchange</title>
+  <meta name="description" content="LEX is an open standard for exchanging sales leads between manufacturers, dealers, CRM systems, and platforms. Learn who uses it, how it works, and why it matters." />
+  <meta name="keywords" content="lead exchange standard, sales lead format, lead data exchange, automotive lead format, dealer lead integration, CRM lead transfer, EDI lead standard, open lead protocol, JSON lead format, XML lead format, lead distribution" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="LEX Contributors" />
+  <link rel="canonical" href="https://lexstandard.org/blog.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LEX Lead Exchange Standard" />
+  <meta property="og:url" content="https://lexstandard.org/blog.html" />
+  <meta property="og:title" content="What is LEX? The Open Standard for Sales Lead Exchange" />
+  <meta property="og:description" content="LEX is an open standard for exchanging sales leads between manufacturers, dealers, CRM systems, and platforms." />
+  <meta property="og:image" content="https://lexstandard.org/assets/img/og-image.png" />
+  <!-- Structured Data for Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What is LEX? The Open Standard for Sales Lead Exchange",
+    "description": "LEX is an open standard for exchanging sales leads between manufacturers, dealers, CRM systems, and platforms.",
+    "author": { "@type": "Organization", "name": "LEX Contributors" },
+    "publisher": { "@type": "Organization", "name": "LEX Contributors" },
+    "datePublished": "2026-05-03",
+    "dateModified": "2026-05-03"
+  }
+  </script>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <style>
+    .blog-container { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; }
+    .blog-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e8f0; }
+    .blog-title { font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; line-height: 1.2; }
+    .blog-meta { font-size: 0.875rem; color: #64748b; }
+    .blog-section { margin-bottom: 2.5rem; }
+    .blog-section h2 { font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
+    .blog-section p { font-size: 1.0625rem; line-height: 1.75; color: #334155; margin-bottom: 1rem; }
+    .blog-section ul { margin: 1rem 0; padding-left: 1.5rem; }
+    .blog-section li { font-size: 1.0625rem; line-height: 1.75; color: #334155; margin-bottom: 0.5rem; }
+    .use-case { background: #f8fafc; border-left: 3px solid #3b82f6; padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+    .use-case h3 { font-size: 1.125rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem; }
+    .use-case p { font-size: 1rem; color: #475569; }
+    .cta-box { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 2rem; border-radius: 12px; text-align: center; margin: 3rem 0; }
+    .cta-box h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .cta-box p { color: #dbeafe; font-size: 1rem; }
+    code { background: #e2e8f0; padding: 0.125rem 0.375rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; }
+    .highlight { background: #fef3c7; padding: 0.125rem 0.375rem; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-white font-sans">
+
+  <!-- Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-slate-200">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2.5" aria-label="LEX Home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+          <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(45 16 16)" fill="#7dd3fc"/>
+          <rect x="12" y="3" width="8" height="26" rx="4" transform="rotate(-45 16 16)" fill="#38bdf8"/>
+          <text x="16" y="19" font-family="Arial, sans-serif" font-size="7" fill="#1e293b" text-anchor="middle" font-weight="900">LEX</text>
+        </svg>
+        <span class="font-bold text-slate-900 text-lg">LEX</span>
+        <span class="hidden sm:block text-xs text-slate-400 font-medium border-l border-slate-200 pl-2.5">Lead Exchange Standard</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="spec.html" class="nav-link">Specification</a>
+        <a href="getting-started.html" class="nav-link">Get Started</a>
+        <a href="blog.html" class="nav-link nav-link-active">Blog</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="blog-container">
+    <article>
+      <header class="blog-header">
+        <h1 class="blog-title">What is LEX? The Open Standard for Sales Lead Exchange</h1>
+        <p class="blog-meta">Published May 3, 2026 · By LEX Contributors</p>
+      </header>
+
+      <section class="blog-section">
+        <h2>What is LEX?</h2>
+        <p>LEX (Lead Exchange Standard) is an open format for sharing sales leads between companies. When a customer shows interest in a product, that information needs to move from the website or dealership to the manufacturer, dealer, or CRM system. LEX makes that data transfer simple, reliable, and vendor-free.</p>
+        <p>Think of LEX as a universal language for sales lead data. Instead of every company building custom integrations, LEX provides a standard format that any system can understand. It works with <code>JSON</code>, <code>XML</code>, and traditional EDI formats like <code>X12</code> and <code>EDIFACT</code>.</p>
+      </section>
+
+      <section class="blog-section">
+        <h2>Who Uses LEX?</h2>
+        <p>Anyone who moves sales lead data between systems:</p>
+        <ul>
+          <li><strong>Manufacturers</strong> — receiving leads from dealerships or retail partners</li>
+          <li><strong>Dealers</strong> — receiving leads from manufacturer allocation systems</li>
+          <li><strong>Lead Aggregators</strong> — distributing leads to multiple dealers or brands</li>
+          <li><strong>CRM Systems</strong> — importing and processing lead data</li>
+          <li><strong>Marketing Platforms</strong> — passing leads to sales teams</li>
+          <li><strong>Field Service Companies</strong> — coordinating leads across regions</li>
+        </ul>
+        <p>LEX works across industries: automotive, heavy equipment, real estate, aviation, maritime, and general B2B sales.</p>
+      </section>
+
+      <section class="blog-section">
+        <h2>Why Not Use the Existing Formats?</h2>
+        <p>Several legacy formats exist, but they come with problems:</p>
+        <ul>
+          <li><strong>Proprietary lock-in</strong> — one well-known automotive format is controlled by a single vendor who changes rules anytime they want</li>
+          <li><strong>Cost to use</strong> — some older standards require membership fees or certification costs</li>
+          <li><strong>Limited format support</strong> — many legacy formats only work with one format (often XML only)</li>
+          <li><strong>Dealer system silos</strong> — some DMS-linked leads only work within one vendor ecosystem</li>
+          <li><strong>No clear governance</strong> — unclear who controls the standard and how changes are proposed</li>
+        </ul>
+        <p>LEX solves these by being <span class="highlight">open, free, multi-format, and community-governed</span>.</p>
+      </section>
+
+      <section class="blog-section">
+        <h2>How LEX Works</h2>
+        <p>Every LEX message contains:</p>
+        <ul>
+          <li><strong>Header</strong> — who sent it, who receives it, timestamp, message type</li>
+          <li><strong>Payload</strong> — the actual lead data (customer info, vehicle, status)</li>
+          <li><strong>Optional blocks</strong> — consent records, vehicle history, trade-in details</li>
+        </ul>
+        <p>Messages flow from lead creation through closure: shopping, inquiry, reservation, negotiation, order, delivery, and archive.</p>
+      </section>
+
+      <section class="blog-section">
+        <h2>Use Cases</h2>
+
+        <div class="use-case">
+          <h3>Use Case 1: Regional Dealership Network</h3>
+          <p>A regional dealer group operates 15 dealerships. Each dealership uses a different DMS. With LEX, all dealerships send leads in one format. The group headquarters receives统一 data regardless of which DMS each dealer uses.</p>
+        </div>
+
+        <div class="use-case">
+          <h3>Use Case 2: Manufacturer to Dealer Allocation</h3>
+          <p>A vehicle manufacturer allocates new inventory to dealers. Instead of email or manual spreadsheets, they send structured LEX messages with vehicle details, dealer assignment, and customer information. Dealers receive complete data in their preferred format.</p>
+        </div>
+
+        <div class="use-case">
+          <h3>Use Case 3: Cross-Border Lead Routing</h3>
+          <p>A lead aggregatorserves customers across multiple countries. LEX handles the country-specific phone number formats, currency, and language metadata automatically. Leads route to the correct regional dealer with all necessary context.</p>
+        </div>
+
+        <div class="use-case">
+          <h3>Use Case 4: CRM to Field Service</h3>
+          <p>A company generates a sale, and the CRM creates a LEX message. The field service dispatch system receives the complete lead data, schedules service, and updates status back through the same LEX format.</p>
+        </div>
+      </section>
+
+      <section class="blog-section">
+        <h2>What Makes LEX Different?</h2>
+        <ul>
+          <li><strong>Open Governance</strong> — No single company controls LEX. Changes require community agreement.</li>
+          <li><strong>Zero Cost</strong> — MIT licensed. No membership fees, ever.</li>
+          <li><strong>Multi-Format</strong> — JSON, XML, X12, EDIFACT. Pick what your system speaks.</li>
+          <li><strong>Privacy Built-In</strong> — Consent records are core, not an afterthought.</li>
+          <li><strong>Long-Term Stable</strong> — Designed to last decades, not quarters.</li>
+        </ul>
+      </section>
+
+      <div class="cta-box">
+        <h3>Ready to Learn More?</h3>
+        <p>Explore the technicalspecification or start integrating with our getting started guide.</p>
+        <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="spec.html" style="background: white; color: #2563eb; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">Read the Spec</a>
+          <a href="getting-started.html" style="background: transparent; border: 2px solid white; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">Get Started</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <p>&copy; 2026 LEX Contributors. Released under the <a href="https://github.com/lexstandard/lex/blob/main/LICENSE" class="text-lex-400 hover:text-lex-300">Apache 2.0 License</a>.</p>
+      <p class="mt-2 text-sm text-slate-600">No fees. No lock-in. Just open lead exchange.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
